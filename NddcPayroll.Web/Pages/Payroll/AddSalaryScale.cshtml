@@ -1,0 +1,82 @@
+﻿@page
+@model NddcPayroll.Web.Pages.Payroll.AddSalaryScaleModel
+@{
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <h4 class="mb-sm-0">Salary Scale</h4>
+
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Salary Scale</a></li>
+                    <li class="breadcrumb-item active">Add New Salary Scale</li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header align-items-center d-flex">
+                <h4 class="card-title mb-0 flex-grow-1">New Salary Scale</h4>
+            </div><!-- end card header -->
+            <div class="card-body">
+                <form method="post">
+                    <div class="row mb-3">
+                        <div class="col-lg-3">
+                            <label asp-for="@Model.SalaryScale.GradeLevel" class="form-label">Grade Level</label>
+                        </div>
+                        @*<div class="col-lg-9">
+                            <div class="col-md-12">
+                                <div class="mb-3">
+
+                                    <select class="form-select" asp-for="@Model.SalaryScale.GradeLevel" asp-items="@Model.MyGradeLevels">
+                                        <option selected="">Choose...</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>*@
+                        <div class="col-lg-9">
+                            <input class="form-control" asp-for="@Model.SalaryScale.GradeLevel" placeholder="Enter Grade Level">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-lg-3">
+                            <label for="nameInput" class="form-label">Category</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    
+                                    <select class="form-select" asp-for="@Model.SalaryScale.Category" asp-items="@Model.Categories">
+                                        <option selected="">Choose...</option>
+                                       
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-lg-3">
+                            <label for="nameInput" class="form-label">Basic Salary</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input class="form-control" placeholder="Enter Amount" asp-for="@Model.SalaryScale.BasicSalary">
+                        </div>
+                    </div>
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-primary">Add Salary Scale</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--end col-->
+</div>

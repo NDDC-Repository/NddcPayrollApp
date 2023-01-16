@@ -1,0 +1,63 @@
+﻿@page "{gradeLevelID:int?}"
+@model NddcPayroll.Web.Pages.Payroll.AddBenefitsModel
+@{
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <h4 class="mb-sm-0">Add Benefits</h4>
+
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Benefits</a></li>
+                    <li class="breadcrumb-item active">Add New Benefit</li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-5">
+        <div class="card">
+            <div class="card-header align-items-center d-flex">
+                <h4 class="card-title mb-0 flex-grow-1">New Benefit</h4>
+            </div><!-- end card header -->
+            <div class="card-body">
+                <form method="post">
+                   
+                    <div class="row mb-3">
+                        <div class="col-lg-3">
+                            <label for="nameInput" class="form-label">Benefit Type</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <div class="col-md-12">
+                                <div class="mb-3"><select class="form-select" asp-for="@Model.MyBenefit.Benefit" asp-items="@Model.BenefitsTypes">
+                                    <option selected="">Choose...</option>
+
+                                </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-lg-3">
+                            <label for="nameInput" class="form-label">Rate Per Anum (%)</label>
+                        </div>
+                        <div class="col-lg-3">
+                            @*<input class="form-control" placeholder="Enter Rate" asp-for="@Model.MyBenefit.Percentage">*@
+                            <input asp-for="@Model.MyBenefit.Percentage" class="form-control rounded-end flag-input" placeholder="Enter Rate" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
+                        </div>
+                    </div>
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-primary">Add Benefit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--end col-->
+</div>
