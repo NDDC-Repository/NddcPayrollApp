@@ -69,12 +69,12 @@ namespace NddcPayrollLibrary.Data.Company
             //GradeLevel.CreatedBy = "User";
             //GradeLevel.DateCreated = DateTime.Now;
 
-            db.SaveData("Insert Into GradeLevel (GradeLevel, Description, Category, BasicSalary, CreatedBy, DateCreated) values(@GradeLevel, @Description, @Category, @BasicSalary, @CreatedBy, @DateCreated)", new { GradeLevel = GradeLevel.GradeLevel, Description = GradeLevel.Description, Category = GradeLevel.Category, BasicSalary = GradeLevel.BasicSalary, CreatedBy = "Admin", DateCreated = DateTime.Now }, connectionStringName, false) ;
+            db.SaveData("Insert Into GradeLevel (GradeLevel, Description, BasicSalary, CreatedBy, DateCreated) values(@GradeLevel, @Description, @BasicSalary, @CreatedBy, @DateCreated)", new { GradeLevel = GradeLevel.GradeLevel, Description = GradeLevel.Description, BasicSalary = GradeLevel.BasicSalary, CreatedBy = "Admin", DateCreated = DateTime.Now }, connectionStringName, false) ;
         }
 
         public List<MyGradeLevelGridModel> GetAllGradeLevels()
         {
-            return db.LoadData<MyGradeLevelGridModel, dynamic>("select ROW_NUMBER() OVER (ORDER BY Id ASC) As SrNo, Id, GradeLevel, Description, Category, BasicSalary from GradeLevel", new { }, connectionStringName, false).ToList();
+            return db.LoadData<MyGradeLevelGridModel, dynamic>("select ROW_NUMBER() OVER (ORDER BY Id ASC) As SrNo, Id, GradeLevel, Description, BasicSalary from GradeLevel", new { }, connectionStringName, false).ToList();
         }
 
         public List<MyStatesModel> GetAllStates()
@@ -88,6 +88,30 @@ namespace NddcPayrollLibrary.Data.Company
         public List<MyPensionFundListModel> GetAllPensionAdminsList()
         {
             return db.LoadData<MyPensionFundListModel, dynamic>("select Id, Code, Description from PensionAdministrators", new { }, connectionStringName, false).ToList();
+        }
+        public void AddPaymentDetails(MyPaymentDetailsModel PaymentDetail)
+        {
+
+            //db.SaveData("Insert Into PaymentDetails (PaymentMethod, BankCode, AccountNumber, AccountName, PayInfo1, PayInfo2, SortCode, EmployeeId) " +
+            //    "values(@PaymentMethod, @BankCode, @AccountNumber, @AccountName, @PayInfo1, @PayInfo2, @SortCode, @EmployeeId)", 
+            //    new { PaymentDetail.PaymentMethod, PaymentDetail.BankCode, PaymentDetail.AccountNumber, PaymentDetail.AccountName, 
+            //        PaymentDetail.PayInfo1, PaymentDetail.PayInfo2, PaymentDetail.SortCode, PaymentDetail.EmployeeId }, 
+            //    connectionStringName, false);
+
+            db.SaveData("update Employees set PaymentMethod=@PaymentMethod, BankCode=@BankCode, AccountNumber=@AccountNumber, AccountName=@AccountName, PayInfo1=@PayInfo1, PayInfo2=@PayInfo2, SortCode=@SortCode " +
+                "where Id = @EmployeeId",
+                new
+                {
+                    PaymentDetail.PaymentMethod,
+                    PaymentDetail.BankCode,
+                    PaymentDetail.AccountNumber,
+                    PaymentDetail.AccountName,
+                    PaymentDetail.PayInfo1,
+                    PaymentDetail.PayInfo2,
+                    PaymentDetail.SortCode,
+                    PaymentDetail.EmployeeId
+                },
+                connectionStringName, false);
         }
     }
 }

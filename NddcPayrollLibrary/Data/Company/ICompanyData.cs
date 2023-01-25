@@ -9,6 +9,7 @@ namespace NddcPayrollLibrary.Data.Company
         void AddJobTitle(JobTitleModel JobTitle);
         void AddPensionAdmin(PensionAdminModel PensionAdmin);
         void AddGradeLevel(MyGradeLevelModel GradeLevel);
+        void AddPaymentDetails(MyPaymentDetailsModel PaymentDetail);
         List<BankModel> GetAllBanks();
         List<DepartmentModel> GetAllDepartments();
         List<JobTitleModel> GetAllJobTitles();

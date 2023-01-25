@@ -1,0 +1,167 @@
+﻿@page "/payment"
+
+@using NddcPayrollLibrary.Model.Company;
+@inject ICompanyData CompanyData
+@inject NavigationManager NavigationManager
+@inject IHttpClientFactory _clientFactory
+
+
+<EditForm Model="@Bank" OnValidSubmit="HandleValidSubmit">
+    <div class="row">
+    <div class="col-md-8">
+        <div class="mb-3">
+            <label>Payment Method</label>
+                <select class="form-select" @bind="PaymentDetail.PaymentMethod">
+                    <option selected-disabled="true">Select Payment Method ...</option>
+                    <option value="Cheque">Cheque</option>
+                     <option value="Cash">Cash</option>
+                    <option value="ACB">ACB</option>
+                    <option value="Pay Wallet">Pay Wallet</option>
+                </select>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="mb-3">
+                <label>Bank Code</label>
+                <select class="form-select" @bind="@SelectedBankCode" >
+                    <option selected-disabled="true">Select Bank ...</option>
+                    @foreach (var item in BankList)
+                    {
+                        <option value="@item.Code">@item.BankName</option>
+                    }
+                </select>
+                
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="mb-3">
+                <label>Account Number</label>
+                <InputText @bind-Value="BankDetails.account_number" class="form-control" @onfocusout="GetAccountDetails" ></InputText>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="mb-3">
+            <label>Account Name</label>
+            <InputText @bind-Value="BankDetails.account_name" readonly="true" class="form-control"></InputText>
+            <p>@LoadingText</p>
+        </div>
+    </div>
+    </div>
+    <div class="col-md-12 mt-4"></div>
+    <hr />
+    <div class="col-md-12 mt-4"></div>
+    <div class="col-md-8">
+        <div class="mb-3">
+            <label for="compnayNameinput" class="form-label">Add Pay Info 1</label>
+            <input @bind-value="PaymentDetail.PayInfo1" class="form-control" placeholder="">
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="mb-3">
+            <label for="compnayNameinput" class="form-label">Add Pay Info 2</label>
+            <input @bind-value="PaymentDetail.PayInfo2" class="form-control" placeholder="">
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="mb-3">
+            <label for="compnayNameinput" class="form-label">Sort Code</label>
+            <input @bind-value="PaymentDetail.SortCode" class="form-control" placeholder="">
+        </div>
+    </div>
+    <button class="btn btn-success" type="submit">Save and Continue</button>
+    <div class="d-flex align-items-start gap-3 mt-4 mb-4">
+        @*<a href="Employee/StatutoryDetails" class="btn btn-light btn-label previestab" data-previous="steparrow-gen-info-tab"><i class="ri-arrow-left-line label-icon align-middle fs-16 me-2"></i> Back to Statutory Details</a>*@
+        @*<a href="AnalysisDetails" class="btn btn-success btn-label right ms-auto nexttab nexttab" data-nexttab="pills-experience-tab"><i class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>Save and Continue</a>*@
+        @*<button class="btn btn-success btn-label right ms-auto nexttab nexttab" data-nexttab="pills-experience-tab" type="submit"><i class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>Save and Continue</button>*@
+       
+    </div>
+</EditForm>
+
+@code {
+    public string LoadingText { get; set; }
+    public string SelectedBankCode { get; set; }
+    [Parameter]
+    public int EmpId { get; set; }
+
+    private MyPaymentDetailsModel PaymentDetail = new();
+
+    private BankModel Bank = new();
+
+    NubanModel BankDetails =new();
+
+    //protected override void OnParametersSet()
+    //{
+    //    base.OnParametersSet();
+    //    PaymentDetail.EmployeeId = EmpId;
+    //}
+
+    private void HandleValidSubmit()
+    {
+        PaymentDetail.BankCode = SelectedBankCode;
+        PaymentDetail.AccountName = BankDetails.Bank_name;
+        PaymentDetail.AccountNumber = BankDetails.account_number;
+        PaymentDetail.AccountName = BankDetails.account_name;
+        PaymentDetail.EmployeeId = EmpId;
+
+        CompanyData.AddPaymentDetails(PaymentDetail);
+
+        //CompanyData.AddBank(Bank);
+        //Bank = new BankModel();
+        NavigationManager.NavigateTo($"Employee/AnalysisDetails/{ EmpId }", true);
+
+    }
+
+    private void ClearValue()
+    {
+        BankDetails.account_number = "";
+    }
+
+
+    List<BankModel> BankList = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        ////var request = new HttpRequestMessage(HttpMethod.Get, "https://app.nuban.com.ng/api/NUBAN-LHFUIYLP1396?bank_code=058&acc_no=0038989042/");
+        //var request = new HttpRequestMessage(HttpMethod.Get, "https://maylancer.org/api/nuban/banklist.php");
+
+        //var client = _clientFactory.CreateClient();
+
+        //HttpResponseMessage response = await client.SendAsync(request);
+
+        //if (response.IsSuccessStatusCode)
+        //{
+        //    BankList = await response.Content.ReadFromJsonAsync<BankCodes>();
+        //    errorString = null;
+        //}
+        //else
+        //{
+        //    errorString = $"There was an error getting the bank details: {response.ReasonPhrase}";
+        //}
+
+        BankList = CompanyData.GetAllBanks();
+    }
+
+
+    private async Task GetAccountDetails()
+    {
+        LoadingText = "Retrieving Account Name ......";
+
+        var request = new HttpRequestMessage(HttpMethod.Get, $"https://maylancer.org/api/nuban/api.php?account_number={BankDetails.account_number}&bank_code={SelectedBankCode}");
+
+        var client = _clientFactory.CreateClient();
+
+        HttpResponseMessage response = await client.SendAsync(request);
+
+        if (response.IsSuccessStatusCode)
+        {
+            BankDetails = await response.Content.ReadFromJsonAsync<NubanModel>();
+            LoadingText = null;
+        }
+        else
+        {
+            LoadingText = $"There was an error getting the bank details: {response.ReasonPhrase}";
+        }
+    }
+
+
+}

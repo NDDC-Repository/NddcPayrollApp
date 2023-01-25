@@ -4,6 +4,7 @@ using Microsoft.Identity.Web.UI;
 using NddcPayrollLibrary.Data;
 using NddcPayrollLibrary.Data.Company;
 using NddcPayrollLibrary.Data.EmployeeData;
+using NddcPayrollLibrary.Data.Helper;
 using NddcPayrollLibrary.Data.Payroll;
 using NddcPayrollLibrary.Databases;
 
@@ -15,6 +16,9 @@ builder.Services.AddTransient<ISqlDataAccess, SqlDataAccess>();
 builder.Services.AddTransient<ICompanyData, SQLCompany>();
 builder.Services.AddTransient<IPayrollData, SQLPayroll>();
 builder.Services.AddTransient<IEmployeeData, SQLEmployee>();
+builder.Services.AddTransient<IHelperData, SQLHelper>();
+builder.Services.AddServerSideBlazor();
+builder.Services.AddHttpClient();
 
 builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
         .AddMicrosoftIdentityWebApp(builder.Configuration.GetSection("AzureADB2C"));
@@ -51,5 +55,7 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 app.MapControllers();
+
+app.MapBlazorHub();
 
 app.Run();

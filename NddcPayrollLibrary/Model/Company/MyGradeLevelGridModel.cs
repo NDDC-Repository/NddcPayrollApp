@@ -14,6 +14,5 @@ namespace NddcPayrollLibrary.Model.Company
         public string GradeLevel { get; set; }
         public string Description { get; set; }
         public double BasicSalary { get; set; }
-        public Categories Category { get; set; }
     }
 }

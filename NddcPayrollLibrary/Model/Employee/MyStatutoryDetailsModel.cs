@@ -21,6 +21,8 @@ namespace NddcPayrollLibrary.Model.Employee
         public bool NHISStatus { get; set; }
         public string MedicalAidName { get; set; }
         public string MedicalAidNumber { get; set; }
+        public int PensionFundId { get; set; }
+        public string PensionFundNumber { get; set; }
         public bool NSITFSTatus { get; set; }
         public bool ITFStatus { get; set; }
         public string CreatedBy { get; set; }

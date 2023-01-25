@@ -1,5 +1,6 @@
-﻿@page
+﻿@page "{EmpId:int?}"
 @model NddcPayroll.Web.Pages.Employee.PaymentDetailsModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
 }
 
@@ -11,7 +12,7 @@
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li>
-                    <li class="breadcrumb-item active">Starter</li>
+                    <li class="breadcrumb-item active">Payment Details</li>
                 </ol>
             </div>
 
@@ -47,127 +48,25 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-lg-10">
-        <div class="card">
-            <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Payment Details</h4>
-            </div><!-- end card header -->
-            <div class="card-body">
-                <div class="col-md-8">
-                    <div class="mb-3">
-                        <label for="firstNameinput" class="form-label">Payment Method</label>
-                        <select id="ForminputState" class="form-select" data-choices="" data-choices-sorting="true">
-                            <option selected="">Choose...</option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-    </div>
-    <div class="col-lg-10">
+     <div class="col-md-8">
         <div class="card">
             <div class="card-header align-items-center d-flex">
                 <h4 class="card-title mb-0 flex-grow-1">Primary Banking Details</h4>
             </div><!-- end card header -->
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-8">
+                   
+                    <div class="col-md-12">
                         <div class="mb-3">
-                            <label for="firstNameinput" class="form-label">Branch Code</label>
-                            <select id="ForminputState" class="form-select" data-choices="" data-choices-sorting="true">
-                                <option selected="">Choose...</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                            </select>
+                            <component type="typeof(NddcPayroll.Web.MyComponents.NubanChecker)" param-EmpId="@Model.MyEmpId" render-mode="ServerPrerendered" />
+                            
                         </div>
                     </div>
-                    <div class="col-md-8">
-                        <div class="mb-3">
-                            <label for="compnayNameinput" class="form-label">Bank Name</label>
-                            <input type="text" class="form-control" placeholder="" id="compnayNameinput">
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="mb-3">
-                            <label for="compnayNameinput" class="form-label">Bank Branch Name</label>
-                            <input type="text" class="form-control" placeholder="" id="compnayNameinput">
-                        </div>
-                    </div>
-                    <div class="col-md-8 mt-4"></div>
-                    <hr />
-                    <div class="col-md-12 mt-4"></div>
-                    <div class="col-md-8">
-                        <div class="mb-3">
-                            <label for="compnayNameinput" class="form-label">Account Number</label>
-                            <input type="text" class="form-control" placeholder="" id="compnayNameinput">
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="mb-3">
-                            <label for="firstNameinput" class="form-label">Type of Account</label>
-                            <select id="ForminputState" class="form-select" data-choices="" data-choices-sorting="true">
-                                <option selected="">Choose...</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="mb-3">
-                            <label for="compnayNameinput" class="form-label">Account Holder Name</label>
-                            <input type="text" class="form-control" placeholder="" id="compnayNameinput">
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="mb-3">
-                            <label for="firstNameinput" class="form-label">Account Holder Relationship</label>
-                            <select id="ForminputState" class="form-select" data-choices="" data-choices-sorting="true">
-                                <option selected="">Choose...</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-12 mt-4"></div>
-                    <hr />
-                    <div class="col-md-12 mt-4"></div>
-                    <div class="col-md-8">
-                        <div class="mb-3">
-                            <label for="compnayNameinput" class="form-label">Add Pay Info 1</label>
-                            <input type="text" class="form-control" placeholder="" id="compnayNameinput">
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="mb-3">
-                            <label for="compnayNameinput" class="form-label">Add Pay Info 2</label>
-                            <input type="text" class="form-control" placeholder="" id="compnayNameinput">
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="mb-3">
-                            <label for="compnayNameinput" class="form-label">Sort Code</label>
-                            <input type="text" class="form-control" placeholder="" id="compnayNameinput">
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
         </div>
     </div>
-    <div class="d-flex align-items-start gap-3 mt-4 mb-4">
-        <a href="StatutoryDetails" class="btn btn-light btn-label previestab" data-previous="steparrow-gen-info-tab"><i class="ri-arrow-left-line label-icon align-middle fs-16 me-2"></i> Back to Statutory Details</a>
-        <a href="AnalysisDetails" class="btn btn-success btn-label right ms-auto nexttab nexttab" data-nexttab="pills-experience-tab"><i class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>Save and Continue</a>
     </div>
+   
     <!--end col-->
-</div>

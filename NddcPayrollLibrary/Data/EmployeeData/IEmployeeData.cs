@@ -4,7 +4,9 @@ namespace NddcPayrollLibrary.Data.EmployeeData
 {
     public interface IEmployeeData
     {
-        void AddEmployee(EmployeeModel Employee);
+        int AddEmployee(EmployeeModel Employee);
         List<EmployeeGridModel> GetAllEmployees();
+        void AddStatutoryDetails(MyStatutoryDetailsModel Employee);
+        void AddAnalysisDetails(MyAnalysisDetailsModel AnalysisDetails);
     }
 }

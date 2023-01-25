@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Components.Web;
+<!DOCTYPE html>
 <html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="light" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable">
 <head>
     <meta charset="utf-8" />
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WebTemplateTheme.styles.css" asp-append-version="true" />*@
 
+    <base href="~/" />
     <!-- App favicon -->
     <link rel="shortcut icon" href="~/images/favicon.ico">
     <!-- jsvectormap css -->
@@ -26,6 +28,8 @@
     <link href="~/css/app.min.css" rel="stylesheet" type="text/css" />
     <!-- custom Css-->
     <link href="~/css/custom.min.css" rel="stylesheet" type="text/css" />
+
+    <component type="typeof(HeadOutlet)", render-mode="ServerPrerendered" />
 </head>
 <body>
    
@@ -159,7 +163,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link menu-link @ViewData["AddEmployee"]" href="/Employee/AddEmployee">
+                                <a class="nav-link menu-link @ViewData["AddEmployee"]" href="/Employee/Employees">
                                     <i data-feather="user" class="icon-dual"></i> <span data-key="t-dashboards">Employee</span>
                                 </a>
                             </li>
@@ -306,6 +310,6 @@
     <!-- App js -->
     <script src="~/js/app.js"></script>
 
-    
+    <script src="_framework/blazor.server.js"></script>
 </body>
 </html>

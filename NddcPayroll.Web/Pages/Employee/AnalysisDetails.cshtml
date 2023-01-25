@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{EmpId:int?}"
 @model NddcPayroll.Web.Pages.Employee.AnalysisDetailsModel
 @{
 }
@@ -45,102 +45,73 @@
     </div>
 </div>
 
+<form method="post">
 <div class="row">
-    <div class="col-lg-10">
-        <div class="card">
-            <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Analysis Codes</h4>
-            </div><!-- end card header -->
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="mb-3">
-                            <label for="firstNameinput" class="form-label">Job Grade</label>
-                            <select class="form-select" asp-items="@(new SelectList(Model.MyGradeLevels, "Id", "GradeLevel"))">
-                                <option selected="">Choose...</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="mb-3">
-                            <label for="firstNameinput" class="form-label">Job Title</label>
-                            <select id="ForminputState" class="form-select" data-choices="" data-choices-sorting="true">
-                                <option selected="">Choose...</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="mb-3">
-                            <label for="firstNameinput" class="form-label">Category</label>
-                            <select id="ForminputState" class="form-select" data-choices="" data-choices-sorting="true">
-                                <option selected="">Choose...</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="mb-3">
-                            <label for="firstNameinput" class="form-label">Department</label>
-                            <select id="ForminputState" class="form-select" data-choices="" data-choices-sorting="true">
-                                <option selected="">Choose...</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="mb-3">
-                            <label for="firstNameinput" class="form-label">Pay Point</label>
-                            <select id="ForminputState" class="form-select" data-choices="" data-choices-sorting="true">
-                                <option selected="">Choose...</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="mb-3">
-                            <label for="firstNameinput" class="form-label">Zone Code</label>
-                            <select id="ForminputState" class="form-select" data-choices="" data-choices-sorting="true">
-                                <option selected="">Choose...</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="mb-3">
-                        <label for="firstNameinput" class="form-label">Job Grade</label>
-                        <select id="ForminputState" class="form-select" data-choices="" data-choices-sorting="true">
-                            <option selected="">Choose...</option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                        </select>
-                    </div>
+<div class="col-lg-10">
+<div class="card">
+    <div class="card-header align-items-center d-flex">
+        <h4 class="card-title mb-0 flex-grow-1">Analysis Codes</h4>
+    </div><!-- end card header -->
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="mb-3">
+                    <label for="firstNameinput" class="form-label">Job Grade Level</label>
+                    <select class="form-select" asp-for="@Model.AnalysisDetail.GradeLevelId" asp-items="@(new SelectList(Model.MyGradeLevels, "Id", "GradeLevel"))">
+                        <option selected="">Choose...</option>
+                    </select>
                 </div>
             </div>
-        </div>
-
+            <div class="col-md-8">
+                <div class="mb-3">
+                    <label for="firstNameinput" class="form-label">Job Title</label>
+                    <select class="form-select" asp-for="@Model.AnalysisDetail.JobTitleId" asp-items="@(new SelectList(Model.JobTitles, "Id", "Description"))">
+                        <option selected="">Choose...</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="mb-3">
+                    <label for="firstNameinput" class="form-label">Category</label>
+                    <select id="ForminputState" asp-for="@Model.AnalysisDetail.Category" class="form-select" data-choices="" data-choices-sorting="true">
+                        <option selected="">Choose...</option>
+                        <option value="CONT">Contract Staff</option>
+                        <option value="PERM">Permanent Staff</option>
+                        <option value="POLI">Political</option>
+                        <option value="SABB">Sabbatical OFFR</option>
+                        <option value="TEMP">Temprorary Staff</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="mb-3">
+                    <label for="firstNameinput" class="form-label">Department</label>
+                    <select class="form-select" asp-for="@Model.AnalysisDetail.DepartmentId" asp-items="@(new SelectList(Model.Departments, "Id", "DepartmentName"))">
+                        <option selected="">Choose...</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="mb-3">
+                    <label for="firstNameinput" class="form-label">Pay Point</label>
+                    <select class="form-select" asp-for="@Model.AnalysisDetail.PayPointId" asp-items="@(new SelectList(Model.PayPoints, "Id", "PayPoint"))">
+                        <option selected="">Choose...</option>
+                    </select>
+                </div>
+            </div>
+                   
     </div>
-    <div class="d-flex align-items-start gap-3 mt-4 mb-4">
-        <a href="Employee/PaymentDetails" class="btn btn-light btn-label previestab" data-previous="steparrow-gen-info-tab"><i class="ri-arrow-left-line label-icon align-middle fs-16 me-2"></i> Back to Payment Details</a>
-        <a href="Employee/AnalysisDetails" class="btn btn-success btn-label right ms-auto nexttab nexttab" data-nexttab="pills-experience-tab"><i class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>Save and Exit</a>
-    </div>
-    <!--end col-->
 </div>
+
+</div>
+<div class="d-flex align-items-start gap-3 mt-4 mb-4">
+<a href="Employee/PaymentDetails" class="btn btn-light btn-label previestab" data-previous="steparrow-gen-info-tab"><i class="ri-arrow-left-line label-icon align-middle fs-16 me-2"></i> Back to Payment Details</a>
+    <button type="submit" class="btn btn-success btn-label right ms-auto nexttab nexttab">
+        <i class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>
+        Save and Continue
+    </button>
+</div>
+<!--end col-->
+</div>
+</div>
+</form>

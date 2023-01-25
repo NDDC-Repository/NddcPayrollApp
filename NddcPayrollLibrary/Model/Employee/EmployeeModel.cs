@@ -30,7 +30,8 @@ namespace NddcPayrollLibrary.Model.Employee
         public DateTime DateEngaged { get; set; }
         public string ContactName { get; set; }
         public string ContactPhone { get; set; }
-
+        public string CreatedBy { get; set; }
+        public DateTime DateCreated { get; set; }
 
     }
 }

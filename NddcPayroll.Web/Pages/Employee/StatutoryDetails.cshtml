@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{EmpId:int?}"
 @model NddcPayroll.Web.Pages.Employee.StatutoryDetailsModel
 @{
 }
@@ -54,13 +54,13 @@
             <div class="card-body">
 
                 <div class="live-preview">
-                    <form action="javascript:void(0);">
+                    <form method="post">
                         <div class="row">
 
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="firstNameinput" class="form-label">State Province</label>
-                                    <select class="form-select" asp-items="@(new SelectList(Model.States, "Id", "FullDescription"))">
+                                    <select asp-for="@Model.StatutoryDetails.SID" class="form-select" asp-items="@(new SelectList(Model.States, "Id", "FullDescription"))">
                                         <option selected="">Choose...</option>
                                     </select>
                                 </div>
@@ -68,7 +68,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="firstNameinput" class="form-label">Tax Status</label>
-                                    <select id="ForminputState" class="form-select" data-choices="" data-choices-sorting="true">
+                                    <select asp-for="@Model.StatutoryDetails.TaxStatus" id="ForminputState" class="form-select" data-choices="" data-choices-sorting="true">
                                         <option selected="">Choose...</option>
                                         <option>Tax Tables</option>
                                         <option>No Tax</option>
@@ -83,27 +83,27 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="firstNameinput" class="form-label">Tax Office</label>
-                                    <input type="text" class="form-control" placeholder="Enter First Name" id="firstNameinput">
+                                    <input type="text" class="form-control" placeholder="Enter First Name" asp-for="@Model.StatutoryDetails.TaxOffice">
                                 </div>
                             </div>
                             <!--end col-->
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="lastNameinput" class="form-label">Tax Number</label>
-                                    <input type="text" class="form-control" placeholder="Enter your lastname" id="lastNameinput">
+                                    <input type="text" class="form-control" placeholder="Enter your lastname" asp-for="@Model.StatutoryDetails.TaxNumber">
                                 </div>
                             </div>
                             <!--end col-->
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="compnayNameinput" class="form-label">Tax Start Date</label>
-                                    <input type="date" class="form-control" id="exampleInputdate">
+                                    <input type="date" class="form-control" asp-for="@Model.StatutoryDetails.TaxStartDate">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="compnayNameinput" class="form-label">Age (Tax Year)</label>
-                                    <input type="text" readonly class="form-control" id="exampleInputdate">
+                                    <label asp-for="@Model.Age" class="form-label">Age (Tax Year)</label>
+                                    <input asp-for="@Model.Age" readonly class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-12 mt-4"></div>
@@ -112,14 +112,14 @@
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <label for="compnayNameinput" class="form-label">National Housing Fund (NHF) Number</label>
-                                    <input type="text" class="form-control" placeholder="Enter NHF Number" id="compnayNameinput">
+                                    <input type="text" class="form-control" placeholder="Enter NHF Number" asp-for="@Model.StatutoryDetails.NHFNumber">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="mb-3">
 
                                     <div class="form-check form-switch form-switch-md" dir="ltr">
-                                        <input type="checkbox" class="form-check-input" id="customSwitchsizemd">
+                                        <input type="checkbox" class="form-check-input" asp-for="@Model.StatutoryDetails.NHFStatus">
                                         <label class="form-check-label" for="customSwitchsizemd">National Housing Fund (NHF) Status</label>
                                     </div>
                                 </div>
@@ -127,14 +127,14 @@
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <label for="compnayNameinput" class="form-label">National Health Insurance Fund (NHIS) </label>
-                                    <input type="text" class="form-control" placeholder="Enter NHF Number" id="compnayNameinput">
+                                    <input type="text" class="form-control" placeholder="Enter NHF Number" asp-for="@Model.StatutoryDetails.NHIS">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="mb-3">
 
                                     <div class="form-check form-switch form-switch-md" dir="ltr">
-                                        <input type="checkbox" class="form-check-input" id="customSwitchsizemd">
+                                        <input type="checkbox" class="form-check-input" asp-for="@Model.StatutoryDetails.NHISStatus">
                                         <label class="form-check-label" for="customSwitchsizemd">National Health Insurance Status (NHIS)</label>
                                     </div>
                                 </div>
@@ -143,7 +143,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="compnayNameinput" class="form-label">Medical AId Health Insurance Name </label>
-                                    <select id="ForminputState" class="form-select" data-choices="" data-choices-sorting="true">
+                                    <select asp-for="@Model.StatutoryDetails.MedicalAidName" class="form-select" data-choices="" data-choices-sorting="true">
                                         <option selected="">Choose...</option>
                                         
                                     </select>
@@ -155,7 +155,7 @@
                                     <div class="form-check form-switch form-switch-md" dir="ltr">
                                         <div class="mb-3">
                                             <label for="compnayNameinput" class="form-label">Medical Aid Number</label>
-                                            <input type="text" class="form-control" placeholder="" id="compnayNameinput">
+                                            <input type="text" class="form-control" placeholder="" asp-for="@Model.StatutoryDetails.MedicalAidNumber">
                                         </div>
                                     </div>
                                 </div>
@@ -164,7 +164,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="compnayNameinput" class="form-label">Pension Fund Code </label>
-                                    <select class="form-select" asp-items="@(new SelectList(Model.PensionAdmins, "Id", "FullDescription"))">
+                                    <select class="form-select" asp-for="@Model.StatutoryDetails.PensionFundId" asp-items="@(new SelectList(Model.PensionAdmins, "Id", "FullDescription"))">
                                         <option selected="">Choose...</option>
                                     </select>
                                 </div>
@@ -175,7 +175,7 @@
                                     <div class="form-check form-switch form-switch-md" dir="ltr">
                                         <div class="mb-3">
                                             <label for="compnayNameinput" class="form-label">Pension Fund Number</label>
-                                            <input type="text" class="form-control" placeholder="" id="compnayNameinput">
+                                            <input type="text" class="form-control" placeholder="" asp-for="@Model.StatutoryDetails.PensionFundNumber">
                                         </div>
                                     </div>
                                 </div>
@@ -187,7 +187,7 @@
                                 <div class="mb-3">
 
                                     <div class="form-check form-switch form-switch-md" dir="ltr">
-                                        <input type="checkbox" class="form-check-input" id="customSwitchsizemd">
+                                        <input type="checkbox" class="form-check-input" asp-for="@Model.StatutoryDetails.NSITFSTatus">
                                         <label class="form-check-label" for="customSwitchsizemd">Employee Compensation Scheme (NSITF) Status</label>
                                     </div>
                                 </div>
@@ -196,7 +196,7 @@
                                 <div class="mb-3">
 
                                     <div class="form-check form-switch form-switch-md" dir="ltr">
-                                        <input type="checkbox" class="form-check-input" id="customSwitchsizemd">
+                                        <input type="checkbox" class="form-check-input" asp-for="@Model.StatutoryDetails.ITFStatus">
                                         <label class="form-check-label" for="customSwitchsizemd">Industrial Training Fund (ITF) Status</label>
                                     </div>
                                 </div>
@@ -212,7 +212,11 @@
                         <!--end row-->
                         <div class="d-flex align-items-start gap-3 mt-4 mb-4">
                             <a href="AddEmployee" class="btn btn-light btn-label previestab" data-previous="steparrow-gen-info-tab"><i class="ri-arrow-left-line label-icon align-middle fs-16 me-2"></i> Back to Personal Details</a>
-                            <a href="PaymentDetails" class="btn btn-success btn-label right ms-auto nexttab nexttab" data-nexttab="pills-experience-tab"><i class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>Save and Continue</a>
+                            
+                            <button type="submit" class="btn btn-success btn-label right ms-auto nexttab nexttab">
+                                <i class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>
+                                Save and Continue
+                            </button>
                         </div>
                     </form>
                 </div>
