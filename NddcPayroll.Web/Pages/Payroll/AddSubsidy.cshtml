@@ -1,19 +1,17 @@
 ﻿@page "{gradeLevelID:int?}"
-@model NddcPayroll.Web.Pages.Payroll.AddBenefitsModel
+@model NddcPayroll.Web.Pages.Payroll.AddSubsidyModel
 @{
-    ViewData["Title"] = "Add Benefits";
-    ViewData["Benefits"] = "active";
 }
 
 <div class="row">
     <div class="col-12">
         <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-            <h4 class="mb-sm-0">Add Benefits</h4>
+            <h4 class="mb-sm-0">Add Subsidy</h4>
 
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Benefits</a></li>
-                    <li class="breadcrumb-item active">Add New Benefit</li>
+                    <li class="breadcrumb-item active">Add Subsidy</li>
                 </ol>
             </div>
 
@@ -29,25 +27,35 @@
             </div><!-- end card header -->
             <div class="card-body">
                 <form method="post">
-                   
+
                     <div class="row mb-3">
                         <div class="col-lg-3">
-                            <label for="nameInput" class="form-label">Benefit Type</label>
+                            <label for="nameInput" class="form-label">Subsidy Type</label>
                         </div>
                         <div class="col-lg-9">
                             <div class="col-md-6">
                                 @*<div class="mb-3"><select class="form-select" asp-for="@Model.MyBenefit.Benefit" asp-items="@Model.BenefitsTypes">
-                                    <option selected="">Choose...</option>
+                                <option selected="">Choose...</option>
                                 </select>
                                 </div>*@
                                 <div class="mb-3">
-                                    <select class="form-select" asp-for="@Model.MyBenefit.BenefitTypeId" asp-items="@(new SelectList(Model.BenefitTypes, "Id", "BenefitType"))">
+                                    <select class="form-select" asp-for="@Model.Subsidy.SubsidyType">
                                         <option selected="">Choose...</option>
+                                        <option value="Meal">Meal</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
                     </div>
+                     <div class="row mb-3">
+                        <div class="col-lg-3">
+                            <label for="nameInput" class="form-label">Amount</label>
+                        </div>
+                            <div class="col-lg-3">
+                                <input asp-for="@Model.Subsidy.Amount" class="form-control rounded-end flag-input" placeholder="Enter Rate" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
+                            </div>
+                        </div>
+                    
                     <div class="row mb-3">
                         <div class="col-lg-3">
                             <label for="nameInput" class="form-label">Cycle</label>
@@ -59,7 +67,7 @@
                                 </select>
                                 </div>*@
                                 <div class="mb-3">
-                                    <select class="form-select" asp-for="@Model.MyBenefit.Cycle">
+                                    <select class="form-select" asp-for="@Model.Subsidy.Cycle">
                                         <option selected="">Choose...</option>
                                         <option value="Monthly">Monthly</option>
                                         <option value="Yearly">Yearly</option>
@@ -69,17 +77,9 @@
                         </div>
                     </div>
 
-                    <div class="row mb-3">
-                        <div class="col-lg-3">
-                            <label for="nameInput" class="form-label">Rate(%)</label>
-                        </div>
-                        <div class="col-lg-3">
-                            @*<input class="form-control" placeholder="Enter Rate" asp-for="@Model.MyBenefit.Percentage">*@
-                            <input asp-for="@Model.MyBenefit.Percentage" class="form-control rounded-end flag-input" placeholder="Enter Rate" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
-                        </div>
-                    </div>
+                    
                     <div class="text-end">
-                        <button type="submit" class="btn btn-primary">Add Benefit</button>
+                        <button type="submit" class="btn btn-primary">Add Subsidy</button>
                     </div>
                 </form>
             </div>

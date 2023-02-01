@@ -8,5 +8,6 @@ namespace NddcPayrollLibrary.Data.EmployeeData
         List<EmployeeGridModel> GetAllEmployees();
         void AddStatutoryDetails(MyStatutoryDetailsModel Employee);
         void AddAnalysisDetails(MyAnalysisDetailsModel AnalysisDetails);
+        EmployeeModel GetEmployeeDetails(int EmpId);
     }
 }

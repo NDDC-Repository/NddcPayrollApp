@@ -11,10 +11,12 @@ namespace NddcPayrollLibrary.Model.Payroll
     {
         public int Id { get; set; }
         public int GradeLevelID { get; set; }
-        public BenefitTypes Benefit { get; set; }
+        public int BenefitTypeId { get; set; }
         public double Percentage { get; set; }
+        public string Cycle { get; set; }
         public DateTime DateCreated { get; set; }
         public string CreatedBy { get; set; }
+        public string BenefitType { get; set; }
     }
 }
 

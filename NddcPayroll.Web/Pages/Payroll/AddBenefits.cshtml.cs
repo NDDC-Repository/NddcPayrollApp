@@ -16,7 +16,8 @@ namespace NddcPayroll.Web.Pages.Payroll
         public MyBenefitsModel MyBenefit { get; set; }
         public string Benefit { get; set; }
         public double Percentage { get; set; }
-        public IEnumerable<SelectListItem> BenefitsTypes { get; set; }
+        //public IEnumerable<SelectListItem> BenefitsTypes { get; set; }
+        public List<MyBenefitsTypeModel> BenefitTypes { get; set; }
         public IHtmlHelper HtmlHelper { get; }
 
         public AddBenefitsModel(IPayrollData db, IHtmlHelper htmlHelper)
@@ -26,7 +27,8 @@ namespace NddcPayroll.Web.Pages.Payroll
         }
         public void OnGet()
         {
-            BenefitsTypes = HtmlHelper.GetEnumSelectList<BenefitTypes>();
+            //BenefitsTypes = HtmlHelper.GetEnumSelectList<BenefitTypes>();
+            BenefitTypes = db.GetBenefitTypes();
         }
 
         public IActionResult OnPost(int? gradeLevelID)

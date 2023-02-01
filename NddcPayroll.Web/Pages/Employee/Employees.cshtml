@@ -88,7 +88,7 @@
                                         <td>@item.Description</td>
                                         <td>@item.Phone</td>
                                         <td>
-                                            <button type="button" class="btn btn-sm btn-light">Details</button>
+                                            <a asp-page="EmployeeDetails" asp-route-EmpID="@item.Id" class="btn btn-sm btn-light">Details</a>
                                         </td>
                                     </tr>
                                 }

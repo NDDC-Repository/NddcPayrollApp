@@ -54,6 +54,8 @@
                             <th scope="col">Description</th>
                             <th scope="col">Basic Salary</th>
                             <th scope="col"></th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -70,7 +72,21 @@
                                         <a href="javascript:void(0);"><i class="ri-settings-4-line"></i></a>
                                         <a href="javascript:void(0);" class="link-success"><i class="ri-delete-bin-5-line"></i></a>
                                     </div>*@
-                                    <a class="btn btn-primary" asp-page="ViewBenefits" asp-route-gradeLevelID="@item.Id"><i data-feather="search" class="icon-dual"></i> <span data-key="t-dashboards"> View Benefits</span></a>
+                                    <a class="btn btn-soft-primary" asp-page="ViewBenefits" asp-route-gradeLevelID="@item.Id"><i data-feather="search" class="icon-dual"></i> <span data-key="t-dashboards"> Percentage Benefits</span></a>
+                                </td>
+                                <td>
+                                    @*<div class="hstack gap-3 fs-15">
+                                <a href="javascript:void(0);"><i class="ri-settings-4-line"></i></a>
+                                <a href="javascript:void(0);" class="link-success"><i class="ri-delete-bin-5-line"></i></a>
+                                </div>*@
+                                    <a class="btn btn-primary" asp-page="ViewLinkedBenefits" asp-route-gradeLevelID="@item.Id"><i data-feather="search" class="icon-dual"></i> <span data-key="t-dashboards"> Linked Benefits</span></a>
+                                </td>
+                                <td>
+                                    @*<div class="hstack gap-3 fs-15">
+                                <a href="javascript:void(0);"><i class="ri-settings-4-line"></i></a>
+                                <a href="javascript:void(0);" class="link-success"><i class="ri-delete-bin-5-line"></i></a>
+                                </div>*@
+                                    <a class="btn btn-primary" asp-page="ViewSubsidies" asp-route-gradeLevelID="@item.Id"><i data-feather="search" class="icon-dual"></i> <span data-key="t-dashboards"> Subsidies</span></a>
                                 </td>
                             </tr>
                         }    

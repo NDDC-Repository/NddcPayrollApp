@@ -44,6 +44,12 @@ namespace NddcPayrollLibrary.Data.EmployeeData
             return db.LoadData<EmployeeGridModel, dynamic>(SQL, new { }, connectionStringName, false).ToList();
         }
 
+        public EmployeeModel GetEmployeeDetails(int EmpId)
+        {
+            string SQL = "SELECT EmployeeCode, Gender, MaritalStatus, FirstName, LastName, OtherNames, SpouseName, Email, Phone, DateOfBirth, Address, City, SID, Passport, EmploymentStatus, DateEngaged, ContactName, ContactPhone from Employees Where Id = @Id";
+            return db.LoadData<EmployeeModel, dynamic>(SQL, new { Id = EmpId }, connectionStringName, false).First();
+        }
+
         public void AddStatutoryDetails(MyStatutoryDetailsModel Employee)
         {
             Employee.DateCreated= DateTime.Now;

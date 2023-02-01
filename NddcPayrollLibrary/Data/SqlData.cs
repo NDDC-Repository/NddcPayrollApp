@@ -30,7 +30,7 @@ namespace NddcPayrollLibrary.Data
 
         public void AddBenefit(MyBenefitsModel Benefit)
         {
-            db.SaveData("Insert Into Benefits (SalaryScaleId, Benefit, Percentage) values(@SalaryScaleId, @Benefit, @Percentage)", new { Benefit.GradeLevelID, Benefit.Benefit, Benefit.Percentage }, connectionStringName, false);
+            db.SaveData("Insert Into Benefits (SalaryScaleId, Benefit, Percentage) values(@SalaryScaleId, @Benefit, @Percentage)", new { Benefit.GradeLevelID, Benefit.BenefitTypeId, Benefit.Percentage }, connectionStringName, false);
         }
         public List<MyBenefitsModel> GetBenefitsById(int SalaryScaleId)
         {
