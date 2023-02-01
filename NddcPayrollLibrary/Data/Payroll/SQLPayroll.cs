@@ -76,6 +76,11 @@ namespace NddcPayrollLibrary.Data.Payroll
         }
         private int GetBenefitPercentage(int gradeLevelId)
         {
+            string check = db.LoadData<string, dynamic>("Select Sum(Percentage) As Benefit From Benefits Where GradeLevelId = @GradeLevelId And Cycle = @Cycle", new { GradeLevelId = gradeLevelId, Cycle = "Monthly" }, connectionStringName, false).First();
+            if (check is null)
+            {
+                return 0;
+            }
             return db.LoadData<int, dynamic>("Select Sum(Percentage) As Benefit From Benefits Where GradeLevelId = @GradeLevelId And Cycle = @Cycle", new { GradeLevelId = gradeLevelId, Cycle = "Monthly" }, connectionStringName, false).First();
         }
         public double GetLinkedBenefitsAmount(int empId)
@@ -94,6 +99,12 @@ namespace NddcPayrollLibrary.Data.Payroll
         public double GetSubsidyAmount(int empId)
         {
             int gradeLevelId = GetGradeLevelId(empId);
+
+            string check = db.LoadData<string, dynamic>("SELECT Sum(Amount * 30) As Amount From Subsidies Where GradeLevelId = @GradeLevelId", new { GradeLevelId = gradeLevelId }, connectionStringName, false).FirstOrDefault();
+            if (check is null)
+            {
+                return 0.00;
+            }
             return db.LoadData<double, dynamic>("SELECT Sum(Amount * 30) As Amount From Subsidies Where GradeLevelId = @GradeLevelId", new { GradeLevelId = gradeLevelId }, connectionStringName, false).FirstOrDefault();
         }
         public double GetBenefits(int empId)
