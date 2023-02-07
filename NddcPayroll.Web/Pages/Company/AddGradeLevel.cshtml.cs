@@ -22,14 +22,31 @@ namespace NddcPayroll.Web.Pages.Company
             this.db = db;
             this.htmlHelper = htmlHelper;
         }
-        public void OnGet()
+        public void OnGet(int? gradeLevelId)
         {
             Categories = htmlHelper.GetEnumSelectList<Categories>();
+
+            if (gradeLevelId.HasValue)
+            {
+                GradeLevel = db.GetGradeLevelById(gradeLevelId.Value);
+            }
+            else
+            {
+                GradeLevel = new MyGradeLevelModel();
+            }
         }
 
         public IActionResult OnPost()
         {
-            db.AddGradeLevel(GradeLevel);
+            if (GradeLevel.Id > 0)
+            {
+                db.UpdateGradeLevel(GradeLevel);
+            }
+            else
+            {
+                db.AddGradeLevel(GradeLevel);
+            }
+            
             return RedirectToPage("GradeLevels");
         }
     }

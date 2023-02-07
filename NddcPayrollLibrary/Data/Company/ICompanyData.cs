@@ -18,6 +18,7 @@ namespace NddcPayrollLibrary.Data.Company
         List<MyStatesModel> GetAllStates();
         List<MyPayPointModel> GetAllPayPoints();
         List<MyPensionFundListModel> GetAllPensionAdminsList();
-
+        MyGradeLevelModel GetGradeLevelById(int Id);
+        void UpdateGradeLevel(MyGradeLevelModel GradeLevel);
     }
 }

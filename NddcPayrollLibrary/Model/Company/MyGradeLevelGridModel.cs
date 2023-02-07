@@ -13,6 +13,8 @@ namespace NddcPayrollLibrary.Model.Company
         public int Id { get; set; }
         public string GradeLevel { get; set; }
         public string Description { get; set; }
-        public double BasicSalary { get; set; }
+        public decimal BasicSalary { get; set; }
+        public decimal MonthlyGross { get; set; }
+        public string Rank { get; set; }
     }
 }

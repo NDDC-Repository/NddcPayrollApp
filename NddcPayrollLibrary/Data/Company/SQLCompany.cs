@@ -74,7 +74,18 @@ namespace NddcPayrollLibrary.Data.Company
 
         public List<MyGradeLevelGridModel> GetAllGradeLevels()
         {
-            return db.LoadData<MyGradeLevelGridModel, dynamic>("select ROW_NUMBER() OVER (ORDER BY Id ASC) As SrNo, Id, GradeLevel, Description, BasicSalary from GradeLevel", new { }, connectionStringName, false).ToList();
+            return db.LoadData<MyGradeLevelGridModel, dynamic>("select ROW_NUMBER() OVER (ORDER BY Id ASC) As SrNo, Id, GradeLevel, Description, BasicSalary, MonthlyGross, Rank from GradeLevel", new { }, connectionStringName, false).ToList();
+        }
+        public MyGradeLevelModel GetGradeLevelById(int Id)
+        {
+            return db.LoadData<MyGradeLevelModel, dynamic>("select Id, GradeLevel, Description, BasicSalary, MonthlyGross, Rank from GradeLevel Where Id = @Id", new { Id }, connectionStringName, false).First();
+        }
+        public void UpdateGradeLevel(MyGradeLevelModel GradeLevel)
+        {
+            //GradeLevel.CreatedBy = "User";
+            //GradeLevel.DateCreated = DateTime.Now;
+
+            db.SaveData("Update GradeLevel Set GradeLevel = @GradeLevel, Description = @Description, BasicSalary = @BasicSalary, MonthlyGross = @MonthlyGross, Rank = @Rank Where Id = @Id", new { GradeLevel = GradeLevel.GradeLevel, Description = GradeLevel.Description, BasicSalary = GradeLevel.BasicSalary, MonthlyGross = GradeLevel.MonthlyGross, Rank = GradeLevel.Rank, Id = GradeLevel.Id }, connectionStringName, false);
         }
 
         public List<MyStatesModel> GetAllStates()

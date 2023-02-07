@@ -56,6 +56,8 @@
                             <th scope="col">Grade Level</th>
                             <th scope="col">Description</th>
                             <th scope="col">Basic Salary</th>
+                            <th scope="col">Monthly Gross</th>
+                            <th scope="col">Rank</th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
@@ -67,8 +69,10 @@
                                 <td>@item.GradeLevel</td>
                                 <td>@item.Description</td>
                                 <td>@item.BasicSalary</td>
+                                <td>@item.MonthlyGross</td>
+                                <td>@item.Rank</td>
                                 <td>
-                                    <a class="btn btn-sm btn-light" asp-page="Benefits" asp-route-salaryScaleId="@item.Id">Edit</a>
+                                    <a class="btn btn-sm btn-light" asp-page="AddGradeLevel" asp-route-gradeLevelId="@item.Id">Edit</a>
                                 </td>
                             </tr>
                         }

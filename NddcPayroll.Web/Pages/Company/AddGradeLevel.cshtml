@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{gradeLevelId:int?}"
 @model NddcPayroll.Web.Pages.Company.AddGradeLevelModel
 @{
     ViewData["Title"] = "Grade Level";
@@ -29,6 +29,7 @@
             </div><!-- end card header -->
             <div class="card-body">
                 <form method="post">
+                    <input type="hidden" asp-for="GradeLevel.Id" />
                     <div class="row mb-3">
                         <div class="col-lg-3">
                             <label asp-for="@Model.GradeLevel.GradeLevel" class="form-label">Grade Level</label>
