@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'NddcPayroll'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_DF6869CC08FA400883D9C9F0E5632754 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_3DB5BF2508724BC8AAE083D15652E3B7 }}
           package: .
