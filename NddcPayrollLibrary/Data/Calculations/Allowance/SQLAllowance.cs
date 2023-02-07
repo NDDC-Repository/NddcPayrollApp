@@ -440,6 +440,11 @@ namespace NddcPayrollLibrary.Data.Calculations.Allowance
                 decimal vehicleAllowanceAmount = (vehicleMaintenancePerc / (decimal)100) * annualBasicSalary;
                 return vehicleAllowanceAmount / 12;
 
+                //int vehicleMaintenancePerc = db.LoadData<int, dynamic>("Select Percentage From Benefits Where GradeLevelId = @GradeLevelId And BenefitTypeId = @BenefitTypeId", new { GradeLevelId = gradeLevelId, BenefitTypeId = benefitTypeId }, connectionStringName, false).FirstOrDefault();
+                //decimal annualBasicSalary = GetPermStaffBasicSalary(empId) * 12;
+                //decimal vehicleAllowanceAmount = (vehicleMaintenancePerc / (decimal)100) * annualBasicSalary;
+                //return vehicleAllowanceAmount / 12;
+
             }
             else
             {
