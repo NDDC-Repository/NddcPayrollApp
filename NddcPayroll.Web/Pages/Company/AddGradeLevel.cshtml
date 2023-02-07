@@ -57,6 +57,27 @@
                             <input class="form-control" placeholder="Enter Basic Salary" asp-for="@Model.GradeLevel.BasicSalary">
                         </div>
                     </div>
+                    <div class="row mb-3">
+                        <div class="col-lg-3">
+                            <label asp-for="@Model.GradeLevel.Description" class="form-label">Gross</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input class="form-control" placeholder="Enter Gross Salary" asp-for="@Model.GradeLevel.MonthlyGross">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-lg-3">
+                            <label asp-for="@Model.GradeLevel.Rank" class="form-label">Rank</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <select asp-for="@Model.GradeLevel.Rank" class="form-select" data-choices="" data-choices-sorting="true">
+                                <option selected="">Choose...</option>
+                                <option value="SS">Senior Staff</option>
+                                <option value="JS">Junior Staff</option>
+                            </select>
+                        </div>
+                    </div>
+                    
                     <div class="text-end">
                         <button type="submit" class="btn btn-primary">Add Grade Level</button>
                     </div>

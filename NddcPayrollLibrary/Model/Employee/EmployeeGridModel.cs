@@ -31,5 +31,6 @@ namespace NddcPayrollLibrary.Model.Employee
         public string GradeLevel { get; set; }
         public string DepartmentName { get; set; }
         public string Description { get; set; }
+        public string Category { get; set; }
     }
 }

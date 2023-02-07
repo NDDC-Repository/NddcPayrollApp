@@ -70,7 +70,7 @@
                                     <th scope="col">Grade Level</th>
                                     <th scope="col">Department</th>
                                     <th scope="col">JobTitle</th>
-                                    <th scope="col">Phone</th>
+                                    <th scope="col">Category</th>
                                     <th scope="col" style="width: 150px;">Action</th>
                                 </tr>
                             </thead>
@@ -86,7 +86,7 @@
                                         <td>@item.GradeLevel</td>
                                         <td>@item.DepartmentName</td>
                                         <td>@item.Description</td>
-                                        <td>@item.Phone</td>
+                                        <td>@item.Category</td>
                                         <td>
                                             <a asp-page="EmployeeDetails" asp-route-EmpID="@item.Id" class="btn btn-sm btn-light">Details</a>
                                         </td>

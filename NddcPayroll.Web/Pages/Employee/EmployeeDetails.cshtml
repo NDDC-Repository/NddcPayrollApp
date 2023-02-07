@@ -47,32 +47,112 @@
                             <!--end card-->
                            
                             <div class="card">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center mb-4">
-                                        <div class="flex-grow-1">
-                                            <h5 class="card-title mb-0">Salary Profile</h5>
+                                <div class="card-header align-items-center d-flex">
+                                    @*<h4 class="card-title mb-0 flex-grow-1">Salary Details</h4>*@
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar-sm flex-shrink-0">
+                                            <span class="avatar-title bg-soft-primary rounded fs-3">
+                                                <i class="bx bx-wallet text-primary"></i>
+                                            </span>
                                         </div>
-                                        @*<div class="flex-shrink-0">
-                                            <a href="javascript:void(0);" class="badge bg-light text-secondary fs-12"><i class="ri-add-fill align-bottom me-1"></i> Add</a>
-                                        </div>*@
+                                        <div class="flex-grow-1 ps-3">
+                                            <h5 class="text-muted text-uppercase fs-16 mb-0">Salary Details</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                   @* <div class="d-flex align-items-center mb-4">
+                                        <div class="flex-grow-1">
+                                            <h5 class="card-title mb-0">Earnings Analysis</h5>
+                                        </div>
                                     </div>
                                     <div class="col-md-12 mt-4"></div>
                                     <hr />
-                                    <div class="col-md-12 mt-4"></div>
+                                    <div class="col-md-12 mt-4"></div>*@
                     <div class="table-responsive">
-                        <table class="table table-borderless mb-0">
+                        <table class="table caption-top">
+                            <caption>Earnings</caption>
                             <tbody>
                                 <tr>
                                     <th class="ps-0" scope="row">Basic Salary :</th>
                                     <td class="text-muted">@string.Format("{0:C}", Model.BasicSalary)</td>
                                 </tr>
                                 <tr>
-                                    <th class="ps-0" scope="row">Benefits :</th>
-                                    <td class="text-muted">@string.Format("{0:C}", Model.MySalaryBenefits)</td>
+                                    <th class="ps-0" scope="row">Housing Allowance :</th>
+                                    <td class="text-muted">@string.Format("{0:C}", Model.HousingAllowance)</td>
                                 </tr>
                                 <tr>
-                                    <th class="ps-0" scope="row">Gross :</th>
-                                    <td class="text-muted">@string.Format("{0:C}", Model.MonthlyGross)</td>
+                                    <th class="ps-0" scope="row">Furniture Allowance :</th>
+                                    <td class="text-muted">@string.Format("{0:C}", Model.FurnitureAllowance)</td>
+                                </tr>
+                                <tr>
+                                    <th class="ps-0" scope="row">Transport Allowance :</th>
+                                    <td class="text-muted">@string.Format("{0:C}", Model.TransportAllowance)</td>
+                                </tr>
+                                 <tr>
+                                    <th class="ps-0" scope="row">Meal Allowance :</th>
+                                    <td class="text-muted">@string.Format("{0:C}", Model.MealAllowance)</td>
+                                </tr>
+                                <tr>
+                                    <th class="ps-0" scope="row">Utility Allowance :</th>
+                                    <td class="text-muted">@string.Format("{0:C}", Model.UtilityAllowance)</td>
+                                </tr>
+                                <tr>
+                                    <th class="ps-0" scope="row">Education Allowance :</th>
+                                    <td class="text-muted">@string.Format("{0:C}", Model.EducationAllowance)</td>
+                                </tr>
+                                <tr>
+                                    <th class="ps-0" scope="row">Security Allowance :</th>
+                                    <td class="text-muted">@string.Format("{0:C}", Model.SecurityAllowance)</td>
+                                </tr>
+                                <tr>
+                                    <th class="ps-0" scope="row">Domestic Servant Allowance :</th>
+                                    <td class="text-muted">@string.Format("{0:C}", Model.DomesticServantAllowance)</td>
+                                </tr>
+                                <tr>
+                                    <th class="ps-0" scope="row">Medical Allowance :</th>
+                                    <td class="text-muted">@string.Format("{0:C}", Model.MedicalAllowance)</td>
+                                </tr>
+                                <tr>
+                                    <th class="ps-0" scope="row">Driver Allowance :</th>
+                                    <td class="text-muted">@string.Format("{0:C}", Model.DriverAllowance)</td>
+                                </tr>
+                                <tr>
+                                    <th class="ps-0" scope="row">Vehicle Maintenance Allowance :</th>
+                                    <td class="text-muted">@string.Format("{0:C}", Model.VehicleMaintenance)</td>
+                                </tr>
+                                <tr>
+                                    <th class="ps-0" scope="row">Hazard Allowance :</th>
+                                    <td class="text-muted">@string.Format("{0:C}", Model.Hazard)</td>
+                                </tr>
+                               
+                                <tr>
+                                    <th class="ps-0" scope="row">Total Benefits :</th>
+                                    <td class="text-muted">@string.Format("{0:C}", Model.MySalaryBenefits)</td>
+                                </tr>
+                            </tbody>
+                            <tfoot class="table-light">
+                                <tr>
+                                    <th class="text-warning">Total Earnings</th>
+                                    <td class="text-warning">@string.Format("{0:C}", Model.MonthlyGross)</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                       @* <div class="d-flex align-items-center mb-4">
+                            <div class="flex-grow-1">
+                                <h5 class="card-title mb-0 card-title-primary">Deduction Analysis</h5>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt-1"></div>
+                        <hr />
+                        <div class="col-md-12 mt-1"></div>*@
+                        <table class="table caption-top">
+                            <caption>Deductions </caption>
+                            <tbody>
+                                <tr>
+                                    <th class="ps-0" scope="row">Tax :</th>
+                                    <td class="text-muted">@string.Format("{0:C}", Model.PayeTax)</td>
                                 </tr>
                                 <tr>
                                     <th class="ps-0" scope="row">Deductions :</th>
@@ -80,14 +160,14 @@
                                         0.00
                                     </td>
                                 </tr>
-                                <tr>
-                                    <th class="ps-0" scope="row">Net</th>
-                                    <td class="text-muted">0.00</td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
                                 </div>
+                            <div class="card-footer">
+                                <a href="javascript:void(0);" class="float-end">Read More <i class="ri-arrow-right-s-line align-middle ms-1 lh-1"></i></a>
+                                <p class="text-bold fs-20 mb-0">Net Pay</p>
+                            </div>
                             </div>
                             <!--end card-->
                         </div>

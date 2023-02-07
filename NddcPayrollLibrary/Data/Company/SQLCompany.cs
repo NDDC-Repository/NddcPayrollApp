@@ -69,7 +69,7 @@ namespace NddcPayrollLibrary.Data.Company
             //GradeLevel.CreatedBy = "User";
             //GradeLevel.DateCreated = DateTime.Now;
 
-            db.SaveData("Insert Into GradeLevel (GradeLevel, Description, BasicSalary, CreatedBy, DateCreated) values(@GradeLevel, @Description, @BasicSalary, @CreatedBy, @DateCreated)", new { GradeLevel = GradeLevel.GradeLevel, Description = GradeLevel.Description, BasicSalary = GradeLevel.BasicSalary, CreatedBy = "Admin", DateCreated = DateTime.Now }, connectionStringName, false) ;
+            db.SaveData("Insert Into GradeLevel (GradeLevel, Description, BasicSalary, MonthlyGross, Rank, CreatedBy, DateCreated) values(@GradeLevel, @Description, @BasicSalary, @MonthlyGross, @Rank, @CreatedBy, @DateCreated)", new { GradeLevel = GradeLevel.GradeLevel, Description = GradeLevel.Description, BasicSalary = GradeLevel.BasicSalary, MonthlyGross = GradeLevel.MonthlyGross, Rank = GradeLevel.Rank, CreatedBy = "Admin", DateCreated = DateTime.Now }, connectionStringName, false) ;
         }
 
         public List<MyGradeLevelGridModel> GetAllGradeLevels()

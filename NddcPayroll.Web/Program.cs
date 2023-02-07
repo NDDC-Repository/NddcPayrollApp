@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
 using NddcPayrollLibrary.Data;
+using NddcPayrollLibrary.Data.Calculations.Allowance;
+using NddcPayrollLibrary.Data.Calculations.Deductions;
 using NddcPayrollLibrary.Data.Company;
 using NddcPayrollLibrary.Data.EmployeeData;
 using NddcPayrollLibrary.Data.Helper;
@@ -19,6 +21,8 @@ builder.Services.AddTransient<IEmployeeData, SQLEmployee>();
 builder.Services.AddTransient<IHelperData, SQLHelper>();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddHttpClient();
+builder.Services.AddTransient<IAllowanceData, SQLAllowance>();
+builder.Services.AddTransient<IDeductionData, SQLDeduction>();
 
 builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
         .AddMicrosoftIdentityWebApp(builder.Configuration.GetSection("AzureADB2C"));
