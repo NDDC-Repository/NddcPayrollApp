@@ -37,7 +37,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
         }
         public decimal GetPensionAmount(int empId)
         {
-            decimal totalEarnings = payDb.GetMonthlyGross(empId) * 12;
+            decimal totalEarnings = GetMonthlyGross(empId) * 12;
             decimal pensionAmount = ((decimal)8 / (decimal)100) * totalEarnings;
             return pensionAmount;
         }
@@ -80,13 +80,20 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
 
             return pensionAmount + NHFAmount;
         }
+        private decimal GetCRATotal(int empId)
+        {
+            decimal relief = ApplyCompanyRelief(empId);
+            decimal originalEarnings = payDb.GetMonthlyGross(empId) * 12M;
+            return originalEarnings - relief;
+        }
         public decimal GetPAYEAmount(int empId)
         {
-            decimal totalEarnings = payDb.GetMonthlyGross(empId) * (decimal)12;
-            decimal stateReliefAmount = ApplyStateRelief(totalEarnings);
+            decimal OriginalTotalEarnings = payDb.GetMonthlyGross(empId) * (decimal)12;
+            decimal craTotalEarnings = GetCRATotal(empId);
+            decimal stateReliefAmount = ApplyStateRelief(craTotalEarnings);
             decimal companyReliefAmount = ApplyCompanyRelief(empId);
             decimal totalRelief = stateReliefAmount + companyReliefAmount;
-            decimal taxabaleIncome = totalEarnings - totalRelief;
+            decimal taxabaleIncome = OriginalTotalEarnings - totalRelief;
 
             decimal levelTax = taxabaleIncome;
             decimal taxValue = 0.00M;

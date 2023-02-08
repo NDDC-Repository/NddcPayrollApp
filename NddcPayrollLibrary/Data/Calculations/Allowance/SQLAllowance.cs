@@ -299,7 +299,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Allowance
         {
             int gradeLevelId = GetGradeLevelId(empId);
             int benefitTypeId = db.LoadData<int, dynamic>("Select Id From BenefitType Where BenefitType = @BenefitType", new { BenefitType = "Domestic Servant" }, connectionStringName, false).FirstOrDefault();
-            string check = db.LoadData<string, dynamic>("SELECT (GradeLevel.MonthlyGross * LinkedBenefits.MultiplyBy) FROM  LinkedBenefits INNER JOIN GradeLevel ON LinkedBenefits.LinkedGradeLevelId = GradeLevel.Id WHERE LinkedBenefits.GradeLevelId = @GradeLevelId And BenefitTypeId = @BenefitTypeId", new { GradeLevelId = gradeLevelId, BenefitTypeId = benefitTypeId }, connectionStringName, false).FirstOrDefault();
+            string check = db.LoadData<string, dynamic>("SELECT (GradeLevel.MonthlyGross * LinkedBenefits.MultiplyBy) FROM  LinkedBenefits LEFT JOIN GradeLevel ON LinkedBenefits.LinkedGradeLevelId = GradeLevel.Id WHERE LinkedBenefits.GradeLevelId = @GradeLevelId And BenefitTypeId = @BenefitTypeId", new { GradeLevelId = gradeLevelId, BenefitTypeId = benefitTypeId }, connectionStringName, false).FirstOrDefault();
             string empCategory = GetEmpCategory(empId);
 
             if (empCategory == "CONT")

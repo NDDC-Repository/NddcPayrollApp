@@ -116,7 +116,7 @@ namespace NddcPayrollLibrary.Data.Payroll
         {
             int gradeLevelId = GetGradeLevelId(empId);
            //use the method below to return 0.00 if the querry return null
-            string check = db.LoadData<string, dynamic>("SELECT Sum(GradeLevel.BasicSalary * LinkedBenefits.MultiplyBy) FROM  LinkedBenefits INNER JOIN GradeLevel ON LinkedBenefits.LinkedGradeLevelId = GradeLevel.Id WHERE LinkedBenefits.GradeLevelId = @GradeLevelId", new { GradeLevelId = gradeLevelId }, connectionStringName, false).FirstOrDefault();
+            string check = db.LoadData<string, dynamic>("SELECT Sum(GradeLevel.BasicSalary * LinkedBenefits.MultiplyBy) FROM  LinkedBenefits LEFT JOIN GradeLevel ON LinkedBenefits.LinkedGradeLevelId = GradeLevel.Id WHERE LinkedBenefits.GradeLevelId = @GradeLevelId", new { GradeLevelId = gradeLevelId }, connectionStringName, false).FirstOrDefault();
             if (check is null)
             {
                 return 0.00M;
