@@ -14,9 +14,9 @@ namespace NddcPayroll.Web.Pages
         {
             this.db = db;
         }
-        public void OnGet()
+        public void OnGet(string searchItem)
         {
-            Employees = db.GetAllEmployees();
+            Employees = db.GetAllEmployees(searchItem);
         }
     }
 }

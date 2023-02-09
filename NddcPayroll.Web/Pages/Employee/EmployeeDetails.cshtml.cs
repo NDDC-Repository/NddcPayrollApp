@@ -40,6 +40,11 @@ namespace NddcPayroll.Web.Pages.Employee
         public decimal VehicleMaintenance { get; set; }
         public decimal Hazard { get; set; }
         public decimal PayeTax { get; set; }
+        public decimal Pension { get; set; }
+        public decimal NHF { get; set; }
+        public decimal JSA { get; set; }
+        public decimal SSA { get; set; }
+        public decimal TotalDeductions { get; set; }
 
         public EmployeeDetailsModel(ICompanyData db, IEmployeeData EmpDb, IPayrollData PayDb, IAllowanceData allowDb, IDeductionData dedDb)
         {
@@ -69,6 +74,12 @@ namespace NddcPayroll.Web.Pages.Employee
             DriverAllowance = allowDb.GetDriverAllowance(EmpId.Value);
             VehicleMaintenance = allowDb.GetVehicleMaintenanceAllowance(EmpId.Value);
             Hazard = allowDb.GetHazardAllowance(EmpId.Value);
+
+            Pension = dedDb.GetPensionAmount(EmpId.Value);
+            NHF = dedDb.GetNHFAmount(EmpId.Value);
+            JSA = dedDb.GetJSA(EmpId.Value);
+            SSA = dedDb.GetSSA(EmpId.Value);
+            TotalDeductions = dedDb.GetTotalDeductions(EmpId.Value);
         }
     }
 }

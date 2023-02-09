@@ -1,5 +1,6 @@
 ﻿using NddcPayrollLibrary.Data.Payroll;
 using NddcPayrollLibrary.Databases;
+using NddcPayrollLibrary.Model.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,10 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
         {
             return db.LoadData<int, dynamic>("Select GradeLevelId From Employees Where Id = @Id", new { Id = EmpId }, connectionStringName, false).First();
         }
+        private string GetEmpCategory(int empId)
+        {
+            return db.LoadData<string, dynamic>("Select Category From Employees Where Id = @Id", new { Id = empId }, connectionStringName, false).FirstOrDefault();
+        }
 
         public decimal GetMonthlyGross(int empId)
         {
@@ -35,13 +40,57 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
             int gradeLevelId = GetGradeLevelId(empId);
             return db.LoadData<int, dynamic>("Select BasicSalary From GradeLevel Where Id = @GradeLevelId", new { GradeLevelId = gradeLevelId }, connectionStringName, false).First();
         }
+        public decimal GetJSA(int empId)
+        {
+            string category = GetEmpCategory(empId);
+            int gradeLevelId = GetGradeLevelId(empId);
+            string rank = db.LoadData<string, dynamic>("Select Rank From GradeLevel Where Id = @GradeLevelId", new { GradeLevelId = gradeLevelId }, connectionStringName, false).First();
+
+            if (rank == "JS" && category == "PERM")
+            {
+                decimal basicSalary = GetBasicSalary(empId);
+                return 2M/100M * basicSalary;
+            }
+            else
+            {
+                return 0.00M;
+            }
+        }
+        public decimal GetSSA(int empId)
+        {
+            string category = GetEmpCategory(empId);
+            int gradeLevelId = GetGradeLevelId(empId);
+            string rank = db.LoadData<string, dynamic>("Select Rank From GradeLevel Where Id = @GradeLevelId", new { GradeLevelId = gradeLevelId }, connectionStringName, false).First();
+
+            if (rank == "SS" && category == "PERM")
+            {
+                decimal basicSalary = GetBasicSalary(empId);
+                return 2M / 100M * basicSalary;
+            }
+            else
+            {
+                return 0.00M;
+            }
+        }
         public decimal GetPensionAmount(int empId)
+        {
+            decimal totalEarnings = GetMonthlyGross(empId) * 12;
+            decimal pensionAmount = ((decimal)8 / (decimal)100) * totalEarnings;
+            return pensionAmount / 12M;
+        }
+        public decimal GetNHFAmount(int empId)
+        {
+            decimal annualBasic = GetBasicSalary(empId) * 12;
+            decimal NHFAmount = ((decimal)2.5 / (decimal)100) * annualBasic;
+            return NHFAmount / 12M;
+        }
+        public decimal GetAnnualPensionAmount(int empId)
         {
             decimal totalEarnings = GetMonthlyGross(empId) * 12;
             decimal pensionAmount = ((decimal)8 / (decimal)100) * totalEarnings;
             return pensionAmount;
         }
-        public decimal GetNHFAmount(int empId)
+        public decimal GetAnnualNHFAmount(int empId)
         {
             decimal annualBasic = GetBasicSalary(empId) * 12;
             decimal NHFAmount = ((decimal)2.5 / (decimal)100) * annualBasic;
@@ -75,8 +124,8 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
             //decimal annualBasic = GetBasicSalary(empId) * 12;
             //decimal NHFAmount = ((decimal)2.5 / (decimal)100) * annualBasic;
 
-            decimal pensionAmount = GetPensionAmount(empId);
-            decimal NHFAmount = GetNHFAmount(empId);
+            decimal pensionAmount = GetAnnualPensionAmount(empId);
+            decimal NHFAmount = GetAnnualNHFAmount(empId);
 
             return pensionAmount + NHFAmount;
         }
@@ -135,6 +184,12 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
             decimal totalTax = (finalAmount + taxValue) / (decimal)12;
 
             return totalTax;
+        }
+
+        public decimal GetTotalDeductions(int empId)
+        {
+            decimal totalDeductions = GetPAYEAmount(empId) + GetNHFAmount(empId) + GetPensionAmount(empId) + GetJSA(empId) + GetSSA(empId);
+            return totalDeductions;
         }
     }
 }

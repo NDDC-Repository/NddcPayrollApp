@@ -38,10 +38,10 @@ namespace NddcPayrollLibrary.Data.EmployeeData
 
             return Id;
         }
-        public List<EmployeeGridModel> GetAllEmployees()
+        public List<EmployeeGridModel> GetAllEmployees(string name)
         {
-            string SQL = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id DESC) As SrNo, Employees.Id, Employees.EmployeeCode, Employees.Gender, Employees.FirstName, Employees.LastName, Employees.Email, Employees.Phone, Employees.Category, GradeLevel.GradeLevel, Departments.DepartmentName, JobTitles.Description FROM Employees LEFT JOIN GradeLevel ON Employees.GradeLevelId = GradeLevel.Id LEFT JOIN Departments ON Employees.DepartmentId = Departments.Id LEFT JOIN JobTitles ON Employees.JobTitleId = JobTitles.Id ORDER BY Employees.Id DESC";
-            return db.LoadData<EmployeeGridModel, dynamic>(SQL, new { }, connectionStringName, false).ToList();
+            string SQL = "SELECT TOP 200 ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, Employees.Id, Employees.EmployeeCode, Employees.Gender, Employees.FirstName, Employees.LastName, Employees.Email, Employees.Phone, Employees.Category, GradeLevel.GradeLevel, Departments.DepartmentName, JobTitles.Description FROM Employees LEFT JOIN GradeLevel ON Employees.GradeLevelId = GradeLevel.Id LEFT JOIN Departments ON Employees.DepartmentId = Departments.Id LEFT JOIN JobTitles ON Employees.JobTitleId = JobTitles.Id Where Employees.FirstName Like @Name Or Departments.DepartmentName Like @Name ORDER BY Employees.Id ASC";
+            return db.LoadData<EmployeeGridModel, dynamic>(SQL, new { Name = "%" + name + "%"  }, connectionStringName, false).ToList();
         }
 
         public EmployeeModel GetEmployeeDetails(int EmpId)
@@ -54,7 +54,7 @@ namespace NddcPayrollLibrary.Data.EmployeeData
         {
             Employee.DateCreated= DateTime.Now;
 
-            string SQL = "update Employees set StateId=@SID, TaxStatus=@TaxStatus, TaxOffice=@TaxOffice, TaxNumber=@TaxNumber, TaxStartDate=@TaxStartDate, NHFNumber=@NHFNumber, NHFStatus=@NHFStatus, " +
+            string SQL = "update Employees set TaxStateProvince=@TaxStateProvince, TaxStatus=@TaxStatus, TaxOffice=@TaxOffice, TaxNumber=@TaxNumber, TaxStartDate=@TaxStartDate, NHFNumber=@NHFNumber, NHFStatus=@NHFStatus, " +
                 "NHIS=@NHIS, NHISStatus=@NHISStatus, MedicalAidName=@MedicalAidName, MedicalAidNumber=@MedicalAidNumber, PensionFundId=@PensionFundId, PensionFundNumber=@PensionFundNumber, NSITFStatus=@NSITFStatus, ITFStatus=@ITFStatus where Id = @EmployeeId ";
 
             //db.SaveData("Insert Into StatutoryDetails (EmployeeId, SID, TaxStatus, TaxOffice, TaxNumber, TaxStartDate, NHFNumber, NHFStatus, " +
@@ -65,7 +65,7 @@ namespace NddcPayrollLibrary.Data.EmployeeData
                new
                 {
                     Employee.EmployeeId,
-                    Employee.SID,
+                    Employee.TaxStateProvince,
                     Employee.TaxStatus,
                     Employee.TaxOffice,
                     Employee.TaxNumber,
@@ -89,7 +89,7 @@ namespace NddcPayrollLibrary.Data.EmployeeData
         public void AddAnalysisDetails(MyAnalysisDetailsModel AnalysisDetails)
         {
 
-            string SQL = "update Employees Set GradeLevelId = @GradeLevelId, JobTitleId = @JobTitleId, Category = @Category, DepartmentId = @DepartmentId, PayPointId = @PayPointId where Id = @EmployeeId";
+            string SQL = "update Employees Set GradeLevelId = @GradeLevelId, JobTitleId = @JobTitleId, Category = @Category, DepartmentId = @DepartmentId, PayPoint = @PayPoint where Id = @EmployeeId";
 
             db.SaveData(SQL,
                new
@@ -98,7 +98,7 @@ namespace NddcPayrollLibrary.Data.EmployeeData
                    AnalysisDetails.JobTitleId,
                    AnalysisDetails.Category,
                    AnalysisDetails.DepartmentId,
-                   AnalysisDetails.PayPointId,
+                   AnalysisDetails.PayPoint,
                    AnalysisDetails.EmployeeId
                },
                 connectionStringName, false);

@@ -62,7 +62,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="firstNameinput" class="form-label">State Province</label>
-                                    <select asp-for="@Model.StatutoryDetails.SID" class="form-select" asp-items="@(new SelectList(Model.States, "Id", "FullDescription"))">
+                                    <select asp-for="@Model.StatutoryDetails.TaxStateProvince" class="form-select" asp-items="@(new SelectList(Model.PayPoints, "Code", "PayPoint"))">
                                         <option selected="">Choose...</option>
                                     </select>
                                 </div>

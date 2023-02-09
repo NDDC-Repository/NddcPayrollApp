@@ -96,7 +96,7 @@
             <div class="col-md-8">
                 <div class="mb-3">
                     <label for="firstNameinput" class="form-label">Pay Point</label>
-                    <select class="form-select" asp-for="@Model.AnalysisDetail.PayPointId" asp-items="@(new SelectList(Model.PayPoints, "Id", "PayPoint"))">
+                    <select class="form-select" asp-for="@Model.AnalysisDetail.PayPoint" asp-items="@(new SelectList(Model.PayPoints, "Code", "PayPoint"))">
                         <option selected="">Choose...</option>
                     </select>
                 </div>

@@ -9,6 +9,8 @@ namespace NddcPayroll.Web.Pages.Employee
     {
         private readonly IEmployeeData db;
         public List<EmployeeGridModel> Employees { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string SearchTerm { get; set; }
 
         public EmployeesModel(IEmployeeData db)
         {
@@ -16,7 +18,7 @@ namespace NddcPayroll.Web.Pages.Employee
         }
         public void OnGet()
         {
-           Employees = db.GetAllEmployees();
+           Employees = db.GetAllEmployees(SearchTerm);
         }
     }
 }

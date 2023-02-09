@@ -14,7 +14,7 @@ namespace NddcPayroll.Web.Pages.Employee
         private readonly IHelperData helperDb;
         private readonly IEmployeeData empDb;
 
-        public IEnumerable<MyStatesModel> States { get; set; }
+        public IEnumerable<MyPayPointModel> PayPoints { get; set; }
         public IEnumerable<MyPensionFundListModel> PensionAdmins { get; set; }
         [BindProperty]
         public int Age { get; set; }
@@ -31,7 +31,7 @@ namespace NddcPayroll.Web.Pages.Employee
         }
         public void OnGet(int EmpId)
         {
-            States = db.GetAllStates();
+            PayPoints = db.GetAllPayPoints();
             PensionAdmins = db.GetAllPensionAdminsList();
 
             DateTime dob = helperDb.GetAnyRecord<DateTime, int>("Employees", "DateOfBirth", "Id", EmpId);

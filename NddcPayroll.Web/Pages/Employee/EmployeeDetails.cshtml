@@ -155,12 +155,28 @@
                                     <td class="text-muted">@string.Format("{0:C}", Model.PayeTax)</td>
                                 </tr>
                                 <tr>
-                                    <th class="ps-0" scope="row">Deductions :</th>
-                                    <td class="text-muted">
-                                        0.00
-                                    </td>
+                                    <th class="ps-0" scope="row">Pension :</th>
+                                    <td class="text-muted">@string.Format("{0:C}", Model.Pension)</td>
+                                </tr>
+                                <tr>
+                                    <th class="ps-0" scope="row">NHF :</th>
+                                    <td class="text-muted">@string.Format("{0:C}", Model.NHF)</td>
+                                </tr>
+                                <tr>
+                                    <th class="ps-0" scope="row">AUPTRE JSA :</th>
+                                    <td class="text-muted">@string.Format("{0:C}", Model.JSA)</td>
+                                </tr>
+                                <tr>
+                                    <th class="ps-0" scope="row">AUPTRE SSA :</th>
+                                    <td class="text-muted">@string.Format("{0:C}", Model.SSA)</td>
                                 </tr>
                             </tbody>
+                            <tfoot class="table-light">
+                                <tr>
+                                    <th class="text-warning">Total Deductions</th>
+                                    <td class="text-warning">@string.Format("{0:C}", Model.TotalDeductions)</td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                                 </div>

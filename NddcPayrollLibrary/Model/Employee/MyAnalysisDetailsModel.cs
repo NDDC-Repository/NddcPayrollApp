@@ -12,7 +12,7 @@ namespace NddcPayrollLibrary.Model.Employee
         public int JobTitleId { get; set; }
         public string Category { get; set; }
         public int DepartmentId { get; set; }
-        public int PayPointId { get; set; }
+        public string PayPoint { get; set; }
         public int EmployeeId { get; set; }
     }
 }

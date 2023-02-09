@@ -10,7 +10,7 @@ namespace NddcPayrollLibrary.Model.Employee
     {
         public int Id { get; set; }
         public int EmployeeId { get; set; }
-        public int SID { get; set; }
+        public string TaxStateProvince { get; set; }
         public string TaxStatus { get; set; }
         public string TaxOffice { get; set; }
         public string TaxNumber { get; set; }
