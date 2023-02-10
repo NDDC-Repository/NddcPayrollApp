@@ -71,20 +71,36 @@ namespace NddcPayrollLibrary.Data.Payroll
         //Benefits Calculations
         private int GetGradeLevelId(int EmpId)
         {
+            string check = db.LoadData<string, dynamic>("Select GradeLevelId From Employees Where Id = @Id", new { Id = EmpId }, connectionStringName, false).First();
+            if (check == null)
+            {
+                return 0;
+            }
             return db.LoadData<int, dynamic>("Select GradeLevelId From Employees Where Id = @Id", new { Id = EmpId }, connectionStringName, false).First();
         }
         public decimal GetBasicSalary(int EmpId)
         {
+            string check = string.Empty;
             string empCategory = GetEmployeeCategory(EmpId);
             if (empCategory == "PERM")
             {
                 int GradeLevelId = GetGradeLevelId(EmpId);
+                //check = db.LoadData<string, dynamic>("Select BasicSalary From GradeLevel Where Id = @Id", new { Id = GradeLevelId }, connectionStringName, false).First();
+                //if (GradeLevelId == 0)
+                //{
+                //    return 0.00M;
+                //}
                 decimal basicSalary = db.LoadData<decimal, dynamic>("Select BasicSalary From GradeLevel Where Id = @Id", new { Id = GradeLevelId }, connectionStringName, false).First();
                 return basicSalary;
             }
             else if (empCategory == "CONT")
             {
                 int GradeLevelId = GetGradeLevelId(EmpId);
+                //check = db.LoadData<string, dynamic>("Select BasicSalary From GradeLevel Where Id = @Id", new { Id = GradeLevelId }, connectionStringName, false).First();
+                //if (GradeLevelId == 0)
+                //{
+                //    return 0.00M;
+                //}
                 decimal basicSalary = db.LoadData<decimal, dynamic>("Select BasicSalary From GradeLevel Where Id = @Id", new { Id = GradeLevelId }, connectionStringName, false).First();
                 return (80M/100M) * basicSalary;
             }

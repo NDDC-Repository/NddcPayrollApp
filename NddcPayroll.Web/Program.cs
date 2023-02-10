@@ -9,6 +9,7 @@ using NddcPayrollLibrary.Data.DataManagement;
 using NddcPayrollLibrary.Data.EmployeeData;
 using NddcPayrollLibrary.Data.Helper;
 using NddcPayrollLibrary.Data.Payroll;
+using NddcPayrollLibrary.Data.Reports;
 using NddcPayrollLibrary.Databases;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,6 +26,7 @@ builder.Services.AddHttpClient();
 builder.Services.AddTransient<IAllowanceData, SQLAllowance>();
 builder.Services.AddTransient<IDeductionData, SQLDeduction>();
 builder.Services.AddTransient<IDataMigration, SQLMigration>();
+builder.Services.AddTransient<IReportsData, SQLReports>();
 
 builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
         .AddMicrosoftIdentityWebApp(builder.Configuration.GetSection("AzureADB2C"));
