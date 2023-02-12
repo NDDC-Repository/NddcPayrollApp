@@ -9,5 +9,6 @@ namespace NddcPayrollLibrary.Data.EmployeeData
         void AddStatutoryDetails(MyStatutoryDetailsModel Employee);
         void AddAnalysisDetails(MyAnalysisDetailsModel AnalysisDetails);
         EmployeeModel GetEmployeeDetails(int EmpId);
+        MyStatutoryDetailsModel GetStatutoryDetails(int EmpId);
     }
 }

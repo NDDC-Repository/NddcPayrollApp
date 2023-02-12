@@ -40,7 +40,7 @@
                                             </div>
                                         </div>
                                         <h5 class="fs-16 mb-1">@Model.Employee.FirstName @Model.Employee.LastName</h5>
-                                        <p class="text-muted mb-0">Lead Designer / Developer</p>
+                                        <p class="text-muted mb-0"></p>
                                     </div>
                                 </div>
                             </div>
@@ -75,66 +75,66 @@
                             <tbody>
                                 <tr>
                                     <th class="ps-0" scope="row">Basic Salary :</th>
-                                    <td class="text-muted">@string.Format("{0:C}", Model.BasicSalary)</td>
+                                    <td class="text-muted">@string.Format("{0:N}", Model.BasicSalary)</td>
                                 </tr>
                                 <tr>
                                     <th class="ps-0" scope="row">Housing Allowance :</th>
-                                    <td class="text-muted">@string.Format("{0:C}", Model.HousingAllowance)</td>
+                                    <td class="text-muted">@string.Format("{0:N}", Model.HousingAllowance)</td>
                                 </tr>
                                 <tr>
                                     <th class="ps-0" scope="row">Furniture Allowance :</th>
-                                    <td class="text-muted">@string.Format("{0:C}", Model.FurnitureAllowance)</td>
+                                    <td class="text-muted">@string.Format("{0:N}", Model.FurnitureAllowance)</td>
                                 </tr>
                                 <tr>
                                     <th class="ps-0" scope="row">Transport Allowance :</th>
-                                    <td class="text-muted">@string.Format("{0:C}", Model.TransportAllowance)</td>
+                                    <td class="text-muted">@string.Format("{0:N}", Model.TransportAllowance)</td>
                                 </tr>
                                  <tr>
                                     <th class="ps-0" scope="row">Meal Allowance :</th>
-                                    <td class="text-muted">@string.Format("{0:C}", Model.MealAllowance)</td>
+                                    <td class="text-muted">@string.Format("{0:N}", Model.MealAllowance)</td>
                                 </tr>
                                 <tr>
                                     <th class="ps-0" scope="row">Utility Allowance :</th>
-                                    <td class="text-muted">@string.Format("{0:C}", Model.UtilityAllowance)</td>
+                                    <td class="text-muted">@string.Format("{0:N}", Model.UtilityAllowance)</td>
                                 </tr>
                                 <tr>
                                     <th class="ps-0" scope="row">Education Allowance :</th>
-                                    <td class="text-muted">@string.Format("{0:C}", Model.EducationAllowance)</td>
+                                    <td class="text-muted">@string.Format("{0:N}", Model.EducationAllowance)</td>
                                 </tr>
                                 <tr>
                                     <th class="ps-0" scope="row">Security Allowance :</th>
-                                    <td class="text-muted">@string.Format("{0:C}", Model.SecurityAllowance)</td>
+                                    <td class="text-muted">@string.Format("{0:N}", Model.SecurityAllowance)</td>
                                 </tr>
                                 <tr>
                                     <th class="ps-0" scope="row">Domestic Servant Allowance :</th>
-                                    <td class="text-muted">@string.Format("{0:C}", Model.DomesticServantAllowance)</td>
+                                    <td class="text-muted">@string.Format("{0:N}", Model.DomesticServantAllowance)</td>
                                 </tr>
                                 <tr>
                                     <th class="ps-0" scope="row">Medical Allowance :</th>
-                                    <td class="text-muted">@string.Format("{0:C}", Model.MedicalAllowance)</td>
+                                    <td class="text-muted">@string.Format("{0:N}", Model.MedicalAllowance)</td>
                                 </tr>
                                 <tr>
                                     <th class="ps-0" scope="row">Driver Allowance :</th>
-                                    <td class="text-muted">@string.Format("{0:C}", Model.DriverAllowance)</td>
+                                    <td class="text-muted">@string.Format("{0:N}", Model.DriverAllowance)</td>
                                 </tr>
                                 <tr>
                                     <th class="ps-0" scope="row">Vehicle Maintenance Allowance :</th>
-                                    <td class="text-muted">@string.Format("{0:C}", Model.VehicleMaintenance)</td>
+                                    <td class="text-muted">@string.Format("{0:N}", Model.VehicleMaintenance)</td>
                                 </tr>
                                 <tr>
                                     <th class="ps-0" scope="row">Hazard Allowance :</th>
-                                    <td class="text-muted">@string.Format("{0:C}", Model.Hazard)</td>
+                                    <td class="text-muted">@string.Format("{0:N}", Model.Hazard)</td>
                                 </tr>
                                
                                 <tr>
                                     <th class="ps-0" scope="row">Total Benefits :</th>
-                                    <td class="text-muted">@string.Format("{0:C}", Model.MySalaryBenefits)</td>
+                                    <td class="text-muted">@string.Format("{0:N}", Model.MySalaryBenefits)</td>
                                 </tr>
                             </tbody>
                             <tfoot class="table-light">
                                 <tr>
                                     <th class="text-warning">Total Earnings</th>
-                                    <td class="text-warning">@string.Format("{0:C}", Model.MonthlyGross)</td>
+                                    <td class="text-warning">@string.Format("{0:N}", Model.MonthlyGross)</td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -152,29 +152,29 @@
                             <tbody>
                                 <tr>
                                     <th class="ps-0" scope="row">Tax :</th>
-                                    <td class="text-muted">@string.Format("{0:C}", Model.PayeTax)</td>
+                                    <td class="text-muted">@string.Format("{0:N}", Model.PayeTax)</td>
                                 </tr>
                                 <tr>
                                     <th class="ps-0" scope="row">Pension :</th>
-                                    <td class="text-muted">@string.Format("{0:C}", Model.Pension)</td>
+                                    <td class="text-muted">@string.Format("{0:N}", Model.Pension)</td>
                                 </tr>
                                 <tr>
                                     <th class="ps-0" scope="row">NHF :</th>
-                                    <td class="text-muted">@string.Format("{0:C}", Model.NHF)</td>
+                                    <td class="text-muted">@string.Format("{0:N}", Model.NHF)</td>
                                 </tr>
                                 <tr>
                                     <th class="ps-0" scope="row">AUPTRE JSA :</th>
-                                    <td class="text-muted">@string.Format("{0:C}", Model.JSA)</td>
+                                    <td class="text-muted">@string.Format("{0:N}", Model.JSA)</td>
                                 </tr>
                                 <tr>
                                     <th class="ps-0" scope="row">AUPTRE SSA :</th>
-                                    <td class="text-muted">@string.Format("{0:C}", Model.SSA)</td>
+                                    <td class="text-muted">@string.Format("{0:N}", Model.SSA)</td>
                                 </tr>
                             </tbody>
                             <tfoot class="table-light">
                                 <tr>
                                     <th class="text-warning">Total Deductions</th>
-                                    <td class="text-warning">@string.Format("{0:C}", Model.TotalDeductions)</td>
+                                    <td class="text-warning">@string.Format("{0:N}", Model.TotalDeductions)</td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -234,8 +234,8 @@
                                             <label asp-for="@Model.Employee.Gender" class="form-label">Gender</label>
                                             <select asp-for="@Model.Employee.Gender" class="form-select" data-choices="" data-choices-sorting="true">
                                                 <option selected="">Choose...</option>
-                                                <option>Male</option>
-                                                <option>Female</option>
+                                                <option value="M">Male</option>
+                                                <option value="F">Female</option>
                                             </select>
                                         </div>
                                     </div>
@@ -420,7 +420,169 @@
                                         <!--end tab-pane-->
                                         <div class="tab-pane" id="changePassword" role="tabpanel">
                                             <form action="javascript:void(0);">
-                                               
+                                                <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="firstNameinput" class="form-label">State Province</label>
+                                            <select asp-for="@Model.StatutoryDetails.TaxStateProvince" class="form-select" asp-items="@(new SelectList(Model.PayPoints, "Code", "PayPoint"))">
+                                        <option selected="">Choose...</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="firstNameinput" class="form-label">Tax Status</label>
+                                    <select asp-for="@Model.StatutoryDetails.TaxStatus" id="ForminputState" class="form-select" data-choices="" data-choices-sorting="true">
+                                        <option selected="">Choose...</option>
+                                        <option>Tax Tables</option>
+                                        <option>No Tax</option>
+                                        
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="firstNameinput" class="form-label">Tax Office</label>
+                                    <input type="text" class="form-control" placeholder="Enter First Name" asp-for="@Model.StatutoryDetails.TaxOffice">
+                                </div>
+                            </div>
+                            <!--end col-->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="lastNameinput" class="form-label">Tax Number</label>
+                                    <input type="text" class="form-control" placeholder="Enter your lastname" asp-for="@Model.StatutoryDetails.TaxNumber">
+                                </div>
+                            </div>
+                            <!--end col-->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="compnayNameinput" class="form-label">Tax Start Date</label>
+                                    <input type="date" class="form-control" asp-for="@Model.StatutoryDetails.TaxStartDate">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="@Model.Age" class="form-label">Age (Tax Year)</label>
+                                    <input asp-for="@Model.Age" readonly class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt-4"></div>
+                            <hr />
+                            <div class="col-md-12 mt-4"></div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="compnayNameinput" class="form-label">National Housing Fund (NHF) Number</label>
+                                    <input type="text" class="form-control" placeholder="Enter NHF Number" asp-for="@Model.StatutoryDetails.NHFNumber">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+
+                                    <div class="form-check form-switch form-switch-md" dir="ltr">
+                                        <input type="checkbox" class="form-check-input" asp-for="@Model.StatutoryDetails.NHFStatus">
+                                        <label class="form-check-label" for="customSwitchsizemd">National Housing Fund (NHF) Status</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="compnayNameinput" class="form-label">National Health Insurance Fund (NHIS) </label>
+                                    <input type="text" class="form-control" placeholder="Enter NHF Number" asp-for="@Model.StatutoryDetails.NHIS">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+
+                                    <div class="form-check form-switch form-switch-md" dir="ltr">
+                                        <input type="checkbox" class="form-check-input" asp-for="@Model.StatutoryDetails.NHISStatus">
+                                        <label class="form-check-label" for="customSwitchsizemd">National Health Insurance Status (NHIS)</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="compnayNameinput" class="form-label">Medical AId Health Insurance Name </label>
+                                    <select asp-for="@Model.StatutoryDetails.MedicalAidName" class="form-select" data-choices="" data-choices-sorting="true">
+                                        <option selected="">Choose...</option>
+                                        
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+
+                                    <div class="form-check form-switch form-switch-md" dir="ltr">
+                                        <div class="mb-3">
+                                            <label for="compnayNameinput" class="form-label">Medical Aid Number</label>
+                                            <input type="text" class="form-control" placeholder="" asp-for="@Model.StatutoryDetails.MedicalAidNumber">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="compnayNameinput" class="form-label">Pension Fund Code </label>
+                                    <select class="form-select" asp-for="@Model.StatutoryDetails.PensionFundId" asp-items="@(new SelectList(Model.PensionAdmins, "Id", "FullDescription"))">
+                                        <option selected="">Choose...</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+
+                                    <div class="form-check form-switch form-switch-md" dir="ltr">
+                                        <div class="mb-3">
+                                            <label for="compnayNameinput" class="form-label">Pension Fund Number</label>
+                                            <input type="text" class="form-control" placeholder="" asp-for="@Model.StatutoryDetails.PensionFundNumber">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt-4"></div>
+                            <hr />
+                            <div class="col-md-12 mt-4"></div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+
+                                    <div class="form-check form-switch form-switch-md" dir="ltr">
+                                        <input type="checkbox" class="form-check-input" asp-for="@Model.StatutoryDetails.NSITFSTatus">
+                                        <label class="form-check-label" for="customSwitchsizemd">Employee Compensation Scheme (NSITF) Status</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+
+                                    <div class="form-check form-switch form-switch-md" dir="ltr">
+                                        <input type="checkbox" class="form-check-input" asp-for="@Model.StatutoryDetails.ITFStatus">
+                                        <label class="form-check-label" for="customSwitchsizemd">Industrial Training Fund (ITF) Status</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end col-->
+                            @*<div class="col-lg-12">
+                            <div class="text-end">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                            </div>*@
+                            <!--end col-->
+                        </div>
+                        <!--end row-->
+                        <div class="d-flex align-items-start gap-3 mt-4 mb-4">
+                            <a href="AddEmployee" class="btn btn-light btn-label previestab" data-previous="steparrow-gen-info-tab"><i class="ri-arrow-left-line label-icon align-middle fs-16 me-2"></i> Back to Personal Details</a>
+                            
+                            <button type="submit" class="btn btn-success btn-label right ms-auto nexttab nexttab">
+                                <i class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>
+                                Save and Continue
+                            </button>
+                        </div>
 
 
                                                 <!--end row-->
@@ -430,10 +592,70 @@
                                         <!--end tab-pane-->
                                         <div class="tab-pane" id="experience" role="tabpanel">
                                             <form>
-                                                
 
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="mb-3">
+                                            <label>Payment Method</label>
+                                            <select class="form-select" asp-for="@Model.PaymentDetails.PaymentMethod" >
+                                                <option selected-disabled="true">Select Payment Method ...</option>
+                                                <option value="Cheque">Cheque</option>
+                                                <option value="Cash">Cash</option>
+                                                <option value="ACB">ACB</option>
+                                                <option value="Pay Wallet">Pay Wallet</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="mb-3">
+                                            <label>Bank Code</label>
+                                           <select class="form-select" asp-for="@Model.PaymentDetails.BankCode" asp-items="@(new SelectList(Model.Banks, "Code", "BankName"))">
+                                                <option selected="">Choose...</option>
+                                            </select>
 
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="mb-3">
+                                            <label>Account Number</label>
+                                            <input type="text" class="form-control" asp-for="@Model.PaymentDetails.AccountNumber">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="mb-3">
+                                            <label>Account Name</label>
+                                            <input type="text" class="form-control" asp-for="@Model.PaymentDetails.AccountName">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mt-4"></div>
+                                <hr />
+                                <div class="col-md-12 mt-4"></div>
+                                <div class="col-md-8">
+                                    <div class="mb-3">
+                                        <label for="compnayNameinput" class="form-label">Add Pay Info 1</label>
+                                        <input type="text" class="form-control" asp-for="@Model.PaymentDetails.PayInfo1">
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="mb-3">
+                                        <label for="compnayNameinput" class="form-label">Add Pay Info 2</label>
+                                        <input type="text" class="form-control" asp-for="@Model.PaymentDetails.PayInfo2">
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="mb-3">
+                                        <label for="compnayNameinput" class="form-label">Sort Code</label>
+                                        <input type="text" class="form-control" asp-for="@Model.PaymentDetails.SortCode">
+                                    </div>
+                                </div>
+                                <button class="btn btn-success" type="submit">Save and Continue</button>
+                                <div class="d-flex align-items-start gap-3 mt-4 mb-4">
+                                    @*<a href="Employee/StatutoryDetails" class="btn btn-light btn-label previestab" data-previous="steparrow-gen-info-tab"><i class="ri-arrow-left-line label-icon align-middle fs-16 me-2"></i> Back to Statutory Details</a>*@
+                                    @*<a href="AnalysisDetails" class="btn btn-success btn-label right ms-auto nexttab nexttab" data-nexttab="pills-experience-tab"><i class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>Save and Continue</a>*@
+                                    @*<button class="btn btn-success btn-label right ms-auto nexttab nexttab" data-nexttab="pills-experience-tab" type="submit"><i class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>Save and Continue</button>*@
 
+                                </div>
                                                 <!--end col-->
                                             </form>
                                         </div>

@@ -5,6 +5,7 @@ using NddcPayrollLibrary.Model.Employee;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -61,6 +62,53 @@ namespace NddcPayrollLibrary.Data.DataManagement
                 jobTitleAbrv = employee.JobTitle;
                 id = db.LoadData<int, dynamic>("Select Id From JobTitles Where Abbreviation = @Abbrv", new { Abbrv = jobTitleAbrv }, connectionStringName, false).FirstOrDefault();
                 db.SaveData("Update Employees Set JobTitleId = @JobTitleId Where EmployeeCode = @EmployeeCode ", new { JobTitleId = id, EmployeeCode = empCode }, connectionStringName, false);
+            }
+        }
+
+        public void UpdateBankCode()
+        {
+            string empCode = string.Empty;
+            string fullBankCode = string.Empty;
+            string trimmedBankCode = string.Empty;
+            int id = 0;
+            MigrationEmployees = db.LoadData<MyEmployeeMigrationModel, dynamic>("Select EmployeeCode, BankCode From Employees", new { }, connectionStringName, false).ToList();
+            foreach (var employee in MigrationEmployees)
+            {
+                empCode = employee.EmployeeCode;
+                fullBankCode = employee.BankCode;
+                trimmedBankCode = fullBankCode.Remove(0, 3);
+                //id = db.LoadData<int, dynamic>("Select Id From JobTitles Where Abbreviation = @Abbrv", new { Abbrv = jobTitleAbrv }, connectionStringName, false).FirstOrDefault();
+                db.SaveData("Update Employees Set BankCode = @BankCode Where EmployeeCode = @EmployeeCode ", new { BankCode = trimmedBankCode, EmployeeCode = empCode }, connectionStringName, false);
+            }
+        }
+
+        public void UpdatePensionAdmin()
+        {
+            string empCode = string.Empty;
+            string pensionCode = string.Empty;
+            int id = 0;
+            MigrationEmployees = db.LoadData<MyEmployeeMigrationModel, dynamic>("Select EmpCode, PensionCode From MigrateEmployees", new { }, connectionStringName, false).ToList();
+            foreach (var employee in MigrationEmployees)
+            {
+                empCode = employee.EmpCode;
+                pensionCode = employee.PensionCode;
+                id = db.LoadData<int, dynamic>("Select Id From PensionAdministrators Where Code = @Code", new { Code = pensionCode }, connectionStringName, false).FirstOrDefault();
+                db.SaveData("Update Employees Set PensionFundId = @PensionFundId Where EmployeeCode = @EmployeeCode ", new { PensionFundId = id, EmployeeCode = empCode }, connectionStringName, false);
+            }
+        }
+
+        public void UpdatePaypoint()
+        {
+            string empCode = string.Empty;
+            string paypoint = string.Empty;
+            //int id = 0;
+            MigrationEmployees = db.LoadData<MyEmployeeMigrationModel, dynamic>("Select EmpCode, State From MigrateEmployees", new { }, connectionStringName, false).ToList();
+            foreach (var employee in MigrationEmployees)
+            {
+                empCode = employee.EmpCode;
+                paypoint = employee.State;
+                //id = db.LoadData<int, dynamic>("Select Id From PensionAdministrators Where Code = @Code", new { Code = pensionCode }, connectionStringName, false).FirstOrDefault();
+                db.SaveData("Update Employees Set PayPoint = @PayPoint Where EmployeeCode = @EmployeeCode ", new { PayPoint = paypoint, EmployeeCode = empCode }, connectionStringName, false);
             }
         }
     }

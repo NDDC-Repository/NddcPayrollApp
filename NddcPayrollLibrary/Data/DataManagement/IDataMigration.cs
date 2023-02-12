@@ -9,5 +9,8 @@ namespace NddcPayrollLibrary.Data.DataManagement
         void UpdateGradeLevel();
         void UpdateDepartment();
         void UpdateJobTitle();
+        void UpdateBankCode();
+        void UpdatePensionAdmin();
+        void UpdatePaypoint();
     }
 }

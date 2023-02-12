@@ -32,6 +32,6 @@ namespace NddcPayrollLibrary.Model.Employee
         public string ContactPhone { get; set; }
         public string CreatedBy { get; set; }
         public DateTime DateCreated { get; set; }
-
+        public string JobTitle { get; set; }
     }
 }

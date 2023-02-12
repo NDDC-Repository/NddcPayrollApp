@@ -1,9 +1,11 @@
+using Azure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NddcPayrollLibrary.Data.Calculations.Allowance;
 using NddcPayrollLibrary.Data.Calculations.Deductions;
 using NddcPayrollLibrary.Data.Company;
 using NddcPayrollLibrary.Data.EmployeeData;
+using NddcPayrollLibrary.Data.Helper;
 using NddcPayrollLibrary.Data.Payroll;
 using NddcPayrollLibrary.Model.Company;
 using NddcPayrollLibrary.Model.Employee;
@@ -18,14 +20,22 @@ namespace NddcPayroll.Web.Pages.Employee
         private readonly IPayrollData payDb;
         private readonly IAllowanceData allowDb;
         private readonly IDeductionData dedDb;
+        private readonly IHelperData helperDb;
 
         public decimal BasicSalary { get; set; }
     
         public decimal MonthlyGross { get; set; }
 
         public EmployeeModel Employee { get; set; }
+        public MyStatutoryDetailsModel StatutoryDetails { get; set; }
         public List<MyStatesModel> States { get; set; }
-    
+        public List<MyPayPointModel> PayPoints { get; set; }
+        public List<MyPensionFundListModel> PensionAdmins { get; set; }
+        [BindProperty]
+        public int Age { get; set; }
+        public List<BankModel> Banks { get; set; }
+        public MyPaymentDetailsModel PaymentDetails { get; set; }
+
         public decimal MySalaryBenefits { get; set; }
         public decimal HousingAllowance { get; set; }
         public decimal FurnitureAllowance { get; set; }
@@ -46,13 +56,14 @@ namespace NddcPayroll.Web.Pages.Employee
         public decimal SSA { get; set; }
         public decimal TotalDeductions { get; set; }
 
-        public EmployeeDetailsModel(ICompanyData db, IEmployeeData EmpDb, IPayrollData PayDb, IAllowanceData allowDb, IDeductionData dedDb)
+        public EmployeeDetailsModel(ICompanyData db, IEmployeeData EmpDb, IPayrollData PayDb, IAllowanceData allowDb, IDeductionData dedDb, IHelperData helperDb)
         {
             this.db = db;
             empDb = EmpDb;
             payDb = PayDb;
             this.allowDb = allowDb;
             this.dedDb = dedDb;
+            this.helperDb = helperDb;
         }
         public void OnGet(int? EmpId)
         {
@@ -80,6 +91,17 @@ namespace NddcPayroll.Web.Pages.Employee
             JSA = dedDb.GetJSA(EmpId.Value);
             SSA = dedDb.GetSSA(EmpId.Value);
             TotalDeductions = dedDb.GetTotalDeductions(EmpId.Value);
+
+            PayPoints = db.GetAllPayPoints();
+            PensionAdmins = db.GetAllPensionAdminsList();
+
+            DateTime dob = helperDb.GetAnyRecord<DateTime, int>("Employees", "DateOfBirth", "Id", EmpId.Value);
+
+            Age = DateTime.Now.Year - dob.Year;
+            StatutoryDetails = empDb.GetStatutoryDetails(EmpId.Value);
+
+            Banks = db.GetAllBanks();
+            PaymentDetails = db.GetPaymentDetails(EmpId.Value);
         }
     }
 }

@@ -124,5 +124,9 @@ namespace NddcPayrollLibrary.Data.Company
                 },
                 connectionStringName, false);
         }
+        public MyPaymentDetailsModel GetPaymentDetails(int empId)
+        {
+            return db.LoadData<MyPaymentDetailsModel, dynamic>("Select PaymentMethod, BankCode, AccountNumber, PayInfo1, PayInfo2, SortCode From Employees Where Id = @Id", new { Id = empId }, connectionStringName, false).First();
+        }
     }
 }

@@ -10,6 +10,7 @@ namespace NddcPayrollLibrary.Model.DataManagement.DataMigration
     {
         public int Id { get; set; }
         public string EmpCode { get; set; }
+        public string EmployeeCode { get; set; }
         public string Surname { get; set; }
         public string OtherNames { get; set; }
         public string JobTitle { get; set; }
@@ -26,6 +27,7 @@ namespace NddcPayrollLibrary.Model.DataManagement.DataMigration
         public string BankName { get; set; }
         public string BankCode { get; set; }
         public string BankAccountNo { get; set; }
+        public string AccountNumber { get; set; }
         public string PensionCode { get; set; }
         public string PensionNumber { get; set; }
         public DateOnly TaxYearStart { get; set; }
