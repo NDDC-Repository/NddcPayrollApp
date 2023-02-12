@@ -29,7 +29,7 @@ else
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">Recently Created Employees</h4>
+                    <h4 class="card-title mb-0 flex-grow-1">Payroll Listings Report</h4>
 
 
                 </div><!-- end card header -->
@@ -38,7 +38,7 @@ else
 
                     <div class="live-preview">
                         <div class="table-responsive table-card">
-                            <table class="table-sm align-middle table-bordered mb-0">
+                            <table class="table-sm table-hover align-middle table-bordered mb-0">
                                 <thead class="table-light">
                                     <tr>
                                         <th scope="col">S/N</th>
@@ -58,8 +58,18 @@ else
                                         <th scope="col">Security Allowance</th>
                                         <th scope="col">Domestic Servant Allowance</th>
                                         <th scope="col">Medical Allowance</th>
+                                        <th scope="col">Driver Allowance</th>
                                         <th scope="col">Vehicle Allowance</th>
                                         <th scope="col">Hazard Allowance</th>
+
+                                        <th scope="col">DD-Tax</th>
+                                        <th scope="col">DD-NHF</th>
+                                        <th scope="col">DD-Pension</th>
+                                        <th scope="col">DD-NDDC AUPTRE JSA</th>
+                                        <th scope="col">DD-NDDC AUPTRE SSA</th>
+                                        <th scope="col">Total Earningd</th>
+                                        <th scope="col">Total Deductions</th>
+                                        <th scope="col">Net Pay</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -74,17 +84,27 @@ else
                                             <td>@item.DepartmentName</td>
                                             <td>@item.Category</td>
                                             <td>@string.Format("{0:N}", item.BasicSalary)</td>
-                                            <td>@item.TransportAllowance</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td>@string.Format("{0:N}", item.TransportAllowance)</td>
+                                            <td>@string.Format("{0:N}", item.HousingAllowance)</td>
+                                            <td>@string.Format("{0:N}", item.FurnitureAllowance)</td>
+                                            <td>@string.Format("{0:N}", item.MealAllowance)</td>
+                                            <td>@string.Format("{0:N}", item.UtilityAllowance)</td>
+                                            <td>@string.Format("{0:N}", item.EducationAllowance)</td>
+                                            <td>@string.Format("{0:N}", item.SecurityAllowance)</td>
+                                            <td>@string.Format("{0:N}", item.DomesticServantAllowance)</td>
+                                            <td>@string.Format("{0:N}", item.MedicalAllowance)</td>
+                                            <td>@string.Format("{0:N}", item.DriversAllowance)</td>
+                                            <td>@string.Format("{0:N}", item.VehicleMaintenanceAllowance)</td>
+                                            <td>@string.Format("{0:N}", item.HazardAllowance)</td>
+                                            <td>@string.Format("{0:N}", item.TaxDeduction)</td>
+
+                                            <td>@string.Format("{0:N}", item.NHFDeduction)</td>
+                                            <td>@string.Format("{0:N}", item.PensionDeduction)</td>
+                                            <td>@string.Format("{0:N}", item.JSADeduction)</td>
+                                            <td>@string.Format("{0:N}", item.SSADeduction)</td>
+                                            <td>@string.Format("{0:N}", item.TotalEarnings)</td>
+                                            <td>@string.Format("{0:N}", item.TotalDeductions)</td>
+                                            <td>@string.Format("{0:N}", item.NetPay)</td>
                                         </tr>
                                     }
 

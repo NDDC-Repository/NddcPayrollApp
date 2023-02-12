@@ -154,27 +154,52 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
             {
                 taxValue = 21000.00M;
                 levelTax = levelTax - 300000.00M;
+                if (levelTax < 300000M)
+                {
+                    levelTax = levelTax + 300000M;
+                    taxValue = 7M / 100M * levelTax;
+                }
             }
             if (levelTax >= 300000.00M)
             {
                 taxValue = taxValue + 33000.00M;
                 levelTax = levelTax - 300000.00M;
+                if (levelTax < 500000M)
+                {
+                    levelTax = levelTax + 300000M;
+                    taxValue = (taxValue - 33000M) + (11M/100M * levelTax);
+                }
 
             }
            if (levelTax >= 500000.00M)
             {
                 taxValue = taxValue + 75000.00M;
                 levelTax = levelTax - 500000.00M;
+                if (levelTax < 500000M)
+                {
+                    levelTax = levelTax + 500000M;
+                    taxValue = (taxValue - 75000M) + (15M / 100M * levelTax);
+                }
             }
             if (levelTax >= 500000.00M)
             {
                 taxValue = taxValue + 95000.00M;
                 levelTax = levelTax - 500000.00M;
+                if (levelTax < 1600000M)
+                {
+                    levelTax = levelTax + 500000M;
+                    taxValue = (taxValue - 95000M) + (19M / 100M * levelTax);
+                }
             }
             if (levelTax >= 1600000.00M)
             {
                 taxValue = taxValue + 336000.00M;
                 levelTax = levelTax - 1600000.00M;
+                if (levelTax < 3200000M)
+                {
+                    levelTax = levelTax + 1600000M;
+                    taxValue = (taxValue - 336000M) + (21M / 100M * levelTax);
+                }
             }
             if (levelTax >= 3200000.00M)
             {
