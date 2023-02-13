@@ -344,12 +344,12 @@ namespace NddcPayrollLibrary.Data.Calculations.Allowance
                     return 0.00M;
                 }
 
-                //int medicalPerc = db.LoadData<int, dynamic>("Select Percentage From Benefits Where GradeLevelId = @GradeLevelId And BenefitTypeId = @BenefitTypeId", new { GradeLevelId = gradeLevelId, BenefitTypeId = benefitTypeId }, connectionStringName, false).FirstOrDefault();
-                //decimal annualBasicSalary = GetContStaffBasicSalary(empId) * 12;
-                //decimal medicalAllowanceAmount = (medicalPerc / (decimal)100) * annualBasicSalary;
-                //return medicalAllowanceAmount / 12;
+                int medicalPerc = db.LoadData<int, dynamic>("Select Percentage From Benefits Where GradeLevelId = @GradeLevelId And BenefitTypeId = @BenefitTypeId", new { GradeLevelId = gradeLevelId, BenefitTypeId = benefitTypeId }, connectionStringName, false).FirstOrDefault();
+                decimal annualBasicSalary = GetContStaffBasicSalary(empId) * 12M;
+                decimal medicalAllowanceAmount = (medicalPerc / (decimal)100) * annualBasicSalary;
+                return medicalAllowanceAmount / 12M;
 
-                return 0.00M;
+                //return 0.00M;
             }
             else if (empCategory == "PERM")
             {
@@ -360,9 +360,9 @@ namespace NddcPayrollLibrary.Data.Calculations.Allowance
                 }
 
                 int medicalPerc = db.LoadData<int, dynamic>("Select Percentage From Benefits Where GradeLevelId = @GradeLevelId And BenefitTypeId = @BenefitTypeId", new { GradeLevelId = gradeLevelId, BenefitTypeId = benefitTypeId }, connectionStringName, false).FirstOrDefault();
-                decimal annualBasicSalary = GetPermStaffBasicSalary(empId) * 12;
+                decimal annualBasicSalary = GetPermStaffBasicSalary(empId) * 12M;
                 decimal medicalAllowanceAmount = (medicalPerc / (decimal)100) * annualBasicSalary;
-                return medicalAllowanceAmount / 12;
+                return medicalAllowanceAmount / 12M;
             }
             else
             {

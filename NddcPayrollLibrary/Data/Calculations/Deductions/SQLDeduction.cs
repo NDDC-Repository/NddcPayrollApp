@@ -74,15 +74,31 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
         }
         public decimal GetPensionAmount(int empId)
         {
-            decimal totalEarnings = GetMonthlyGross(empId) * 12;
-            decimal pensionAmount = ((decimal)8 / (decimal)100) * totalEarnings;
-            return pensionAmount / 12M;
+            if (GetEmpCategory(empId) == "PERM")
+            {
+                decimal totalEarnings = GetMonthlyGross(empId) * 12;
+                decimal pensionAmount = ((decimal)8 / (decimal)100) * totalEarnings;
+                return pensionAmount / 12M;
+            }
+            else
+            {
+                return 0.00M;
+            }
+            
         }
         public decimal GetNHFAmount(int empId)
         {
-            decimal annualBasic = GetBasicSalary(empId) * 12;
-            decimal NHFAmount = ((decimal)2.5 / (decimal)100) * annualBasic;
-            return NHFAmount / 12M;
+            if (GetEmpCategory(empId) == "PERM")
+            {
+                decimal annualBasic = GetBasicSalary(empId) * 12;
+                decimal NHFAmount = ((decimal)2.5 / (decimal)100) * annualBasic;
+                return NHFAmount / 12M;
+            }
+            else
+            {
+                return 0.00M;
+            }
+            
         }
         public decimal GetAnnualPensionAmount(int empId)
         {
@@ -137,78 +153,161 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
         }
         public decimal GetPAYEAmount(int empId)
         {
-            decimal OriginalTotalEarnings = payDb.GetMonthlyGross(empId) * (decimal)12;
-            decimal craTotalEarnings = GetCRATotal(empId);
-            decimal stateReliefAmount = ApplyStateRelief(craTotalEarnings);
-            decimal companyReliefAmount = ApplyCompanyRelief(empId);
-            decimal totalRelief = stateReliefAmount + companyReliefAmount;
-            decimal taxabaleIncome = OriginalTotalEarnings - totalRelief;
-
-            decimal levelTax = taxabaleIncome;
-            decimal taxValue = 0.00M;
-            //decimal finalLevel = 0.00M;
-
-            decimal finalAmount = 0.00M;
-
-            if (levelTax >= 300000.00M)
+            if (GetEmpCategory(empId) == "PERM")
             {
-                taxValue = 21000.00M;
-                levelTax = levelTax - 300000.00M;
-                if (levelTax < 300000M)
+                decimal OriginalTotalEarnings = payDb.GetMonthlyGross(empId) * (decimal)12;
+                decimal craTotalEarnings = GetCRATotal(empId);
+                decimal stateReliefAmount = ApplyStateRelief(craTotalEarnings);
+                decimal companyReliefAmount = ApplyCompanyRelief(empId);
+                decimal totalRelief = stateReliefAmount + companyReliefAmount;
+                decimal taxabaleIncome = OriginalTotalEarnings - totalRelief;
+
+                decimal levelTax = taxabaleIncome;
+                decimal taxValue = 0.00M;
+                //decimal finalLevel = 0.00M;
+
+                decimal finalAmount = 0.00M;
+
+                if (levelTax >= 300000.00M)
                 {
-                    levelTax = levelTax + 300000M;
-                    taxValue = 7M / 100M * levelTax;
+                    taxValue = 21000.00M;
+                    levelTax = levelTax - 300000.00M;
+                    if (levelTax < 300000M)
+                    {
+                        levelTax = levelTax + 300000M;
+                        taxValue = 7M / 100M * levelTax;
+                    }
                 }
-            }
-            if (levelTax >= 300000.00M)
-            {
-                taxValue = taxValue + 33000.00M;
-                levelTax = levelTax - 300000.00M;
-                if (levelTax < 500000M)
+                if (levelTax >= 300000.00M)
                 {
-                    levelTax = levelTax + 300000M;
-                    taxValue = (taxValue - 33000M) + (11M/100M * levelTax);
+                    taxValue = taxValue + 33000.00M;
+                    levelTax = levelTax - 300000.00M;
+                    if (levelTax < 500000M)
+                    {
+                        levelTax = levelTax + 300000M;
+                        taxValue = (taxValue - 33000M) + (11M / 100M * levelTax);
+                    }
+
+                }
+                if (levelTax >= 500000.00M)
+                {
+                    taxValue = taxValue + 75000.00M;
+                    levelTax = levelTax - 500000.00M;
+                    if (levelTax < 500000M)
+                    {
+                        levelTax = levelTax + 500000M;
+                        taxValue = (taxValue - 75000M) + (15M / 100M * levelTax);
+                    }
+                }
+                if (levelTax >= 500000.00M)
+                {
+                    taxValue = taxValue + 95000.00M;
+                    levelTax = levelTax - 500000.00M;
+                    if (levelTax < 1600000M)
+                    {
+                        levelTax = levelTax + 500000M;
+                        taxValue = (taxValue - 95000M) + (19M / 100M * levelTax);
+                    }
+                }
+                if (levelTax >= 1600000.00M)
+                {
+                    taxValue = taxValue + 336000.00M;
+                    levelTax = levelTax - 1600000.00M;
+                    if (levelTax < 3200000M)
+                    {
+                        levelTax = levelTax + 1600000M;
+                        taxValue = (taxValue - 336000M) + (21M / 100M * levelTax);
+                    }
+                }
+                if (levelTax >= 3200000.00M)
+                {
+                    finalAmount = ((decimal)24 / (decimal)100) * levelTax;
                 }
 
-            }
-           if (levelTax >= 500000.00M)
-            {
-                taxValue = taxValue + 75000.00M;
-                levelTax = levelTax - 500000.00M;
-                if (levelTax < 500000M)
-                {
-                    levelTax = levelTax + 500000M;
-                    taxValue = (taxValue - 75000M) + (15M / 100M * levelTax);
-                }
-            }
-            if (levelTax >= 500000.00M)
-            {
-                taxValue = taxValue + 95000.00M;
-                levelTax = levelTax - 500000.00M;
-                if (levelTax < 1600000M)
-                {
-                    levelTax = levelTax + 500000M;
-                    taxValue = (taxValue - 95000M) + (19M / 100M * levelTax);
-                }
-            }
-            if (levelTax >= 1600000.00M)
-            {
-                taxValue = taxValue + 336000.00M;
-                levelTax = levelTax - 1600000.00M;
-                if (levelTax < 3200000M)
-                {
-                    levelTax = levelTax + 1600000M;
-                    taxValue = (taxValue - 336000M) + (21M / 100M * levelTax);
-                }
-            }
-            if (levelTax >= 3200000.00M)
-            {
-                finalAmount = ((decimal)24 / (decimal)100) * levelTax;
-            }
+                decimal totalTax = (finalAmount + taxValue) / (decimal)12;
 
-            decimal totalTax = (finalAmount + taxValue) / (decimal)12;
+                return totalTax;
+            }
+            else if (GetEmpCategory(empId) == "CONT")
+            {
+                decimal OriginalTotalEarnings = payDb.GetMonthlyGross(empId) * (decimal)12;
+                //decimal craTotalEarnings = GetCRATotal(empId);
+                decimal stateReliefAmount = ApplyStateRelief(OriginalTotalEarnings);
+                //decimal companyReliefAmount = ApplyCompanyRelief(empId);
+                //decimal totalRelief = stateReliefAmount + companyReliefAmount;
+                decimal taxabaleIncome = OriginalTotalEarnings - stateReliefAmount;
 
-            return totalTax;
+                decimal levelTax = taxabaleIncome;
+                decimal taxValue = 0.00M;
+                //decimal finalLevel = 0.00M;
+
+                decimal finalAmount = 0.00M;
+
+                if (levelTax >= 300000.00M)
+                {
+                    taxValue = 21000.00M;
+                    levelTax = levelTax - 300000.00M;
+                    if (levelTax < 300000M)
+                    {
+                        levelTax = levelTax + 300000M;
+                        taxValue = 7M / 100M * levelTax;
+                    }
+                }
+                if (levelTax >= 300000.00M)
+                {
+                    taxValue = taxValue + 33000.00M;
+                    levelTax = levelTax - 300000.00M;
+                    if (levelTax < 500000M)
+                    {
+                        levelTax = levelTax + 300000M;
+                        taxValue = (taxValue - 33000M) + (11M / 100M * levelTax);
+                    }
+
+                }
+                if (levelTax >= 500000.00M)
+                {
+                    taxValue = taxValue + 75000.00M;
+                    levelTax = levelTax - 500000.00M;
+                    if (levelTax < 500000M)
+                    {
+                        levelTax = levelTax + 500000M;
+                        taxValue = (taxValue - 75000M) + (15M / 100M * levelTax);
+                    }
+                }
+                if (levelTax >= 500000.00M)
+                {
+                    taxValue = taxValue + 95000.00M;
+                    levelTax = levelTax - 500000.00M;
+                    if (levelTax < 1600000M)
+                    {
+                        levelTax = levelTax + 500000M;
+                        taxValue = (taxValue - 95000M) + (19M / 100M * levelTax);
+                    }
+                }
+                if (levelTax >= 1600000.00M)
+                {
+                    taxValue = taxValue + 336000.00M;
+                    levelTax = levelTax - 1600000.00M;
+                    if (levelTax < 3200000M)
+                    {
+                        levelTax = levelTax + 1600000M;
+                        taxValue = (taxValue - 336000M) + (21M / 100M * levelTax);
+                    }
+                }
+                if (levelTax >= 3200000.00M)
+                {
+                    finalAmount = ((decimal)24 / (decimal)100) * levelTax;
+                }
+
+                decimal totalTax = (finalAmount + taxValue) / (decimal)12;
+
+                return totalTax;
+            }
+            else
+            {
+                return 0.00M;
+            }
+            
         }
 
         public decimal GetTotalDeductions(int empId)
