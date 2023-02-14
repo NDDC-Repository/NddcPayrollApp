@@ -42,17 +42,21 @@ namespace NddcPayrollLibrary.Data.Reports
             foreach (var item in Reports)
             {
                 item.BasicSalary = payDb.GetBasicSalary(item.Id);
-                item.TransportAllowance = allowDb.GetTransportAllowance(item.Id);
+                //item.TransportAllowance = allowDb.GetTransportAllowance(item.Id);
+                item.TransportAllowance = (50M / 100M) * item.BasicSalary;
                 item.HousingAllowance = allowDb.GetHousingAllowance(item.Id);
                 item.FurnitureAllowance = allowDb.GetFurnitureAllowance(item.Id);
                 item.MealAllowance = allowDb.GetMealAllowance(item.Id);
-                item.UtilityAllowance = allowDb.GetUtilityAllowance(item.Id);   
-                item.EducationAllowance = allowDb.GetEducationAllowance(item.Id);
+                item.UtilityAllowance = allowDb.GetUtilityAllowance(item.Id);
+                //item.EducationAllowance = allowDb.GetEducationAllowance(item.Id);
+                item.EducationAllowance = (20M/100M) * item.BasicSalary;
                 item.SecurityAllowance = allowDb.GetSecurityAllowance(item.Id);
                 item.DomesticServantAllowance = allowDb.GetDomesticServantAllowance(item.Id);
-                item.MedicalAllowance = allowDb.GetMedicalAllowance(item.Id);
+                //item.MedicalAllowance = allowDb.GetMedicalAllowance(item.Id);
+                item.MedicalAllowance = (15M/100M) * item.BasicSalary;
                 item.VehicleMaintenanceAllowance = allowDb.GetVehicleMaintenanceAllowance(item.Id);
-                item.HazardAllowance = allowDb.GetHazardAllowance(item.Id);
+                //item.HazardAllowance = allowDb.GetHazardAllowance(item.Id);
+                item.HazardAllowance = (20M/100M) * item.BasicSalary;
                 item.DriversAllowance = allowDb.GetDriverAllowance(item.Id);
 
                 item.TaxDeduction = dedDb.GetPAYEAmount(item.Id);
