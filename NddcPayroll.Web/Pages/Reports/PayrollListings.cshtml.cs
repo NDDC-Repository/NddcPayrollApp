@@ -17,7 +17,7 @@ namespace NddcPayroll.Web.Pages.Reports
         }
         public void OnGet()
         {
-            PayrollList = db.GetPayrollListReport();
+           // PayrollList = db.GetPayrollListReport();
 
         }
     }

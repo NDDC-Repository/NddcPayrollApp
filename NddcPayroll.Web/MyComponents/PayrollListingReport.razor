@@ -1,27 +1,31 @@
-﻿@page
-@model NddcPayroll.Web.Pages.Reports.PayrollListingsModel
-@{
-}
+﻿@page "/listingreport"
+
+@using NddcPayrollLibrary.Data.Reports;
+@using NddcPayrollLibrary.Model.Report;
+@inject IReportsData db;
 
 <div class="row">
-    <div class="col-12">
-        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-            <h4 class="mb-sm-0">Starter</h4>
-
-            <div class="page-title-right">
-                <ol class="breadcrumb m-0">
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li>
-                    <li class="breadcrumb-item active">Starter</li>
-                </ol>
+    <div class="col-xl-6">
+        <div class="card overflow-hidden">
+            <div class="card-body bg-marketplace d-flex">
+                <div class="flex-grow-1">
+                    <h4 class="fs-18 lh-base mb-0">Payroll Listings Report <br></h4>
+                    <p class="mb-0 mt-2 pt-1 text-muted">View Report of Benefits and Deductions for Entire Workforce</p>
+                    <div class="d-flex gap-3 mt-4">
+                        <a @onclick="GenerateReport" class="btn btn-primary">Generate Report </a>
+                    </div>
+                    
+                </div>
+                <img src="assets/images/bg-d.png" alt="" class="img-fluid">
             </div>
-
         </div>
-    </div>
+    </div><!--end col-->
+    
 </div>
-@*
-@if (Model.PayrollList == null)
+
+@if (PayrollList == null)
 {
-    <h4>Loading Report ..........</h4>
+    <h4>@Message</h4>
 }
 else
 {
@@ -73,7 +77,7 @@ else
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in Model.PayrollList)
+                                    @foreach (var item in PayrollList)
                                     {
                                         <tr>
                                             <td>@item.SrNo</td>
@@ -118,7 +122,23 @@ else
             </div><!-- end card -->
         </div><!-- end col -->
     </div>
-}*@
+}
 
-<component type="typeof(NddcPayroll.Web.MyComponents.PayrollListingReport)" render-mode="ServerPrerendered" />
 
+@code {
+    public string Message { get; set; }
+    public List<MyPayRollListModel> PayrollList { get; set; }
+
+    //protected override async Task OnInitializedAsync()
+    //{
+    //    //PayrollList = db.GetPayrollListReport();
+    //    //Message = "";
+    //}
+
+    private async Task GenerateReport()
+    {
+        Message = "Loading Report Please Wait ........";
+        PayrollList = await Task.Run(() => db.GetPayrollListReport());
+        //Message = "";
+    }
+}
