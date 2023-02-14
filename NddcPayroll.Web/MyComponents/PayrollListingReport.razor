@@ -25,6 +25,9 @@
 
 @if (PayrollList == null)
 {
+   @* <div class="spinner-grow text-primary" role="status">
+        <span class="sr-only">Loading Report Please Wait...</span>
+    </div>*@
     <h4>@Message</h4>
 }
 else
@@ -133,6 +136,9 @@ else
     //{
     //    //PayrollList = db.GetPayrollListReport();
     //    //Message = "";
+    //    //Message = "Loading Report Please Wait ........";
+    //    PayrollList = await Task.Run(() => db.GetPayrollListReport());
+
     //}
 
     private async Task GenerateReport()
