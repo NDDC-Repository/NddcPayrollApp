@@ -350,11 +350,11 @@ else
         <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
         <GridEvents OnToolbarClick="ToolbarBtnClickHandler" TValue="MyPayRollListModel"></GridEvents>
         <GridColumns>
-            <GridColumn HeaderText="ID" Width="50" Field="@nameof(MyPayRollListModel.SrNo)"></GridColumn>
-            <GridColumn HeaderText="Code" Width="50" Field="@nameof(MyPayRollListModel.EmployeeCode)"></GridColumn>
-            <GridColumn HeaderText="Last Name" Width="120" Field="@nameof(MyPayRollListModel.LastName)"></GridColumn>
-            <GridColumn HeaderText="First Name"  Width="120" Field="@nameof(MyPayRollListModel.FirstName)"></GridColumn>
-            <GridColumn HeaderText="Grade Level" Width="120" Field="@nameof(MyPayRollListModel.GradeLevel)"></GridColumn>
+            <GridColumn HeaderText="S/N" IsFrozen="true" Width="50" Field="@nameof(MyPayRollListModel.SrNo)"></GridColumn>
+            <GridColumn HeaderText="Code" Width="100" IsFrozen="true" Field="@nameof(MyPayRollListModel.EmployeeCode)"></GridColumn>
+            <GridColumn HeaderText="Last Name" IsFrozen="true" Width="120" Field="@nameof(MyPayRollListModel.LastName)"></GridColumn>
+            <GridColumn HeaderText="First Name" IsFrozen="true"  Width="120" Field="@nameof(MyPayRollListModel.FirstName)"></GridColumn>
+            <GridColumn HeaderText="Grade Level" IsFrozen="true" Width="120" Field="@nameof(MyPayRollListModel.GradeLevel)"></GridColumn>
             <GridColumn HeaderText="Department" Field="@nameof(MyPayRollListModel.DepartmentName)"></GridColumn>
             <GridColumn HeaderText="Category" Width="120" Field="@nameof(MyPayRollListModel.Category)"></GridColumn>
             <GridColumn HeaderText="Basic Salary" Width="120" Format="N" Field="@nameof(MyPayRollListModel.BasicSalary)"></GridColumn>
