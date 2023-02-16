@@ -11,6 +11,7 @@ using NddcPayrollLibrary.Data.Helper;
 using NddcPayrollLibrary.Data.Payroll;
 using NddcPayrollLibrary.Data.Reports;
 using NddcPayrollLibrary.Databases;
+using Syncfusion.Blazor;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,7 @@ builder.Services.AddTransient<IAllowanceData, SQLAllowance>();
 builder.Services.AddTransient<IDeductionData, SQLDeduction>();
 builder.Services.AddTransient<IDataMigration, SQLMigration>();
 builder.Services.AddTransient<IReportsData, SQLReports>();
+builder.Services.AddSyncfusionBlazor();
 
 builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
         .AddMicrosoftIdentityWebApp(builder.Configuration.GetSection("AzureADB2C"));
@@ -44,6 +46,7 @@ builder.Services.AddRazorPages(options => {
 .AddMicrosoftIdentityUI();
 
 var app = builder.Build();
+Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Mgo+DSMBaFt/QHRqVVhkVFpFdEBBXHxAd1p/VWJYdVt5flBPcDwsT3RfQF5jS39WdkJgXHtfdnZRQQ==;Mgo+DSMBPh8sVXJ0S0J+XE9AflRDX3xKf0x/TGpQb19xflBPallYVBYiSV9jS31TdERmWXhddXBUQGRcVg==;ORg4AjUWIQA/Gnt2VVhkQlFacldJXGFWfVJpTGpQdk5xdV9DaVZUTWY/P1ZhSXxQdkdiXH9Zc3FRR2dfVkM=;MTEzNTM3NkAzMjMwMmUzNDJlMzBqYlZSNjRzK09VWGpDbXYzdFh6RnlHTiszL3U0cXhlTTFCNzVJWXdwVzBjPQ==;MTEzNTM3N0AzMjMwMmUzNDJlMzBFNk9lZWc4ckdDbFlNOVFvWFpscGpRNE8vNUJoKzNjSG85R2tXZnY1S0RRPQ==;NRAiBiAaIQQuGjN/V0Z+WE9EaFtKVmJLYVB3WmpQdldgdVRMZVVbQX9PIiBoS35RdUVhWHped3dQQmFUUEB0;MTEzNTM3OUAzMjMwMmUzNDJlMzBBSmdKc01lcnpnUVBrNndRNlpiWkFOQlVieUZyTm83VTl5Zjd3eWlHMnZBPQ==;MTEzNTM4MEAzMjMwMmUzNDJlMzBneEViVis0Y3JIaitpR3RjZ0hkdGV3RGRRakVsTmlHdjhUeTNZelpqd3drPQ==;Mgo+DSMBMAY9C3t2VVhkQlFacldJXGFWfVJpTGpQdk5xdV9DaVZUTWY/P1ZhSXxQdkdiXH9Zc3FRR2hUVEM=;MTEzNTM4MkAzMjMwMmUzNDJlMzBnYlJDMDk2VXZpa3JJdk5EVEszTWxwcHZWbTFlNjFSbHE3SitxNDdsLzM0PQ==;MTEzNTM4M0AzMjMwMmUzNDJlMzBIZ09NQ2s2QkIzYU1WUGlxdHpMNnlVVUdEQnpRZ0JSb0ErUlVybzJBRnNnPQ==;MTEzNTM4NEAzMjMwMmUzNDJlMzBBSmdKc01lcnpnUVBrNndRNlpiWkFOQlVieUZyTm83VTl5Zjd3eWlHMnZBPQ==");
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
