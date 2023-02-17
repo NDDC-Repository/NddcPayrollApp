@@ -96,11 +96,11 @@ namespace NddcPayrollLibrary.Data.Payroll
             else if (empCategory == "CONT")
             {
                 int GradeLevelId = GetGradeLevelId(EmpId);
-                //check = db.LoadData<string, dynamic>("Select BasicSalary From GradeLevel Where Id = @Id", new { Id = GradeLevelId }, connectionStringName, false).First();
-                //if (GradeLevelId == 0)
-                //{
-                //    return 0.00M;
-                //}
+                check = db.LoadData<string, dynamic>("Select BasicSalary From GradeLevel Where Id = @Id", new { Id = GradeLevelId }, connectionStringName, false).First();
+                if (GradeLevelId == 0)
+                {
+                    return 0.00M;
+                }
                 decimal basicSalary = db.LoadData<decimal, dynamic>("Select BasicSalary From GradeLevel Where Id = @Id", new { Id = GradeLevelId }, connectionStringName, false).First();
                 return (80M/100M) * basicSalary;
             }
@@ -131,19 +131,23 @@ namespace NddcPayrollLibrary.Data.Payroll
         public decimal GetLinkedBenefitsAmount(int empId)
         {
             int gradeLevelId = GetGradeLevelId(empId);
-           //use the method below to return 0.00 if the querry return null
+
+            //use the method below to return 0.00 if the querry return null
             string check = db.LoadData<string, dynamic>("SELECT Sum(GradeLevel.BasicSalary * LinkedBenefits.MultiplyBy) FROM  LinkedBenefits LEFT JOIN GradeLevel ON LinkedBenefits.LinkedGradeLevelId = GradeLevel.Id WHERE LinkedBenefits.GradeLevelId = @GradeLevelId", new { GradeLevelId = gradeLevelId }, connectionStringName, false).FirstOrDefault();
             if (check is null)
             {
                 return 0.00M;
             }
-            decimal linkedMonthlyGross = db.LoadData<decimal, dynamic>("SELECT Sum(GradeLevel.MonthlyGross * LinkedBenefits.MultiplyBy) FROM  LinkedBenefits INNER JOIN GradeLevel ON LinkedBenefits.LinkedGradeLevelId = GradeLevel.Id WHERE LinkedBenefits.GradeLevelId = @GradeLevelId", new { GradeLevelId = gradeLevelId }, connectionStringName, false).FirstOrDefault();
+            decimal linkedMonthlyGross = db.LoadData<decimal, dynamic>("SELECT Sum(GradeLevel.MonthlyGross * LinkedBenefits.MultiplyBy) FROM  LinkedBenefits INNER JOIN GradeLevel ON LinkedBenefits.LinkedGradeLevelId = GradeLevel.Id WHERE LinkedBenefits.GradeLevelId = @GradeLevelId", new { GradeLevelId = gradeLevelId }, connectionStringName, false).First();
             //decimal annualBasic = linkedBasicSalary * 12;
             //int linkedGradeLevelId = db.LoadData<int, dynamic>("SELECT LinkedBenefits.LinkedGradeLevelId FROM  LinkedBenefits INNER JOIN GradeLevel ON LinkedBenefits.LinkedGradeLevelId = GradeLevel.Id WHERE LinkedBenefits.GradeLevelId = @GradeLevelId", new { GradeLevelId = gradeLevelId }, connectionStringName, false).FirstOrDefault();
             //decimal grossBenefitsPercenatage = GetGrossBenefitPercentage(linkedGradeLevelId);
             //decimal grossBenefitAmount = ((decimal)grossBenefitsPercenatage / (decimal)100) * (annualBasic);
             //decimal totalLinkedBenefit = (linkedBasicSalary) + (grossBenefitAmount / 12) + ((decimal)13500);
+           
             return linkedMonthlyGross;
+            
+            
         }
         public decimal GetSubsidyAmount(int empId)
         {

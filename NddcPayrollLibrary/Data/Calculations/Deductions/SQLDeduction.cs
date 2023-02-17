@@ -270,8 +270,10 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
                     levelTax = levelTax - 300000.00M;
                     if (levelTax < 500000M)
                     {
-                        levelTax = levelTax + 300000M;
-                        taxValue = (taxValue - 33000M) + (11M / 100M * levelTax);
+                        //levelTax = levelTax + 300000M;
+                        //taxValue = (taxValue - 33000M) + (11M / 100M * levelTax);
+
+                        taxValue = (taxValue) + (15M / 100M * levelTax);
                     }
 
                 }
@@ -281,8 +283,10 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
                     levelTax = levelTax - 500000.00M;
                     if (levelTax < 500000M)
                     {
-                        levelTax = levelTax + 500000M;
-                        taxValue = (taxValue - 75000M) + (15M / 100M * levelTax);
+                        //levelTax = levelTax + 500000M;
+                        //taxValue = (taxValue - 75000M) + (15M / 100M * levelTax);
+
+                        taxValue = (taxValue) + (19M / 100M * levelTax);
                     }
                 }
                 if (levelTax >= 500000.00M)
@@ -291,8 +295,10 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
                     levelTax = levelTax - 500000.00M;
                     if (levelTax < 1600000M)
                     {
-                        levelTax = levelTax + 500000M;
-                        taxValue = (taxValue - 95000M) + (19M / 100M * levelTax);
+                        //levelTax = levelTax + 500000M;
+                        //taxValue = (taxValue - 95000M) + (19M / 100M * levelTax);
+
+                        taxValue = (taxValue) + (21M / 100M * levelTax);
                     }
                 }
                 if (levelTax >= 1600000.00M)
@@ -301,8 +307,10 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
                     levelTax = levelTax - 1600000.00M;
                     if (levelTax < 3200000M)
                     {
-                        levelTax = levelTax + 1600000M;
-                        taxValue = (taxValue - 336000M) + (21M / 100M * levelTax);
+                        //levelTax = levelTax + 1600000M;
+                        //taxValue = (taxValue - 336000M) + (21M / 100M * levelTax);
+
+                        taxValue = (taxValue) + (24M / 100M * levelTax);
                     }
                 }
                 if (levelTax >= 3200000.00M)

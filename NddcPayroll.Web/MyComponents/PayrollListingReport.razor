@@ -125,9 +125,9 @@ else
             </div><!-- end card -->
         </div><!-- end col -->
     </div>*@
-
-    <SfGrid @ref="SfEmployeeGrid" DataSource="PayrollList" AllowResizing="true" ShowColumnChooser="true" EnableHeaderFocus="true" Height="600" AllowExcelExport="true" AllowPaging="true" AllowFiltering="true" AllowSorting="true" AllowGrouping="true" Toolbar="@toolbar">
-        <GridPageSettings PageSize="50"></GridPageSettings>
+    <p>Time Elasped: @OpsTime Seconds</p>
+    <SfGrid @ref="SfEmployeeGrid" DataSource="PayrollList" AllowResizing="true"  EnableVirtualization="true" ShowColumnChooser="true" EnableHeaderFocus="true" Height="600" AllowExcelExport="true" AllowPaging="true" AllowFiltering="true" AllowSorting="true" AllowGrouping="true" Toolbar="@toolbar">
+        <GridPageSettings PageSize="50" PageSizes="@(new string[] { "20", "50", "100", "200", "500", "All" })"></GridPageSettings>
         <GridAggregates>
             <GridAggregate>
                 <GridAggregateColumns>
@@ -414,12 +414,15 @@ else
             Console.Write("Export to Xml functionality");
         }
     }
-
+    public double OpsTime { get; set; }
     private async Task GenerateReport()
     {
+        var watch = System.Diagnostics.Stopwatch.StartNew();
         Message = "Loading Report Please Wait ........";
-        PayrollList = await Task.Run(() => db.GetPayrollListReport());
+        PayrollList = await Task.Run(() => db.GetPayrollListReportAsync());
         //Message = "";
+        watch.Stop();
+        OpsTime = watch.ElapsedMilliseconds/1000;
     }
 
 

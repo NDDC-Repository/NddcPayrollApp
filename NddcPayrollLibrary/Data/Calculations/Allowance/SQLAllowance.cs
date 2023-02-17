@@ -54,7 +54,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Allowance
                 {
                     return 0.00M;
                 }
-                
+
                 int housingPerc = db.LoadData<int, dynamic>("Select Percentage From Benefits Where GradeLevelId = @GradeLevelId And BenefitTypeId = @BenefitTypeId", new { GradeLevelId = gradeLevelId, BenefitTypeId = benefitTypeId }, connectionStringName, false).FirstOrDefault();
                 decimal annualBasicSalary = GetContStaffBasicSalary(empId) * 12;
                 decimal housingAllowance = (housingPerc / 100M) * annualBasicSalary;
@@ -143,7 +143,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Allowance
             
             if (empCategory == "CONT")
             {
-                
+
                 if (check is null)
                 {
                     return 0.00M;
