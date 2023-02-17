@@ -419,7 +419,7 @@ else
     {
         var watch = System.Diagnostics.Stopwatch.StartNew();
         Message = "Loading Report Please Wait ........";
-        PayrollList = await Task.Run(() => db.GetPayrollListReportAsync());
+        PayrollList = await Task.Run(() => db.GetPayrollListReport());
         //Message = "";
         watch.Stop();
         OpsTime = watch.ElapsedMilliseconds/1000;
