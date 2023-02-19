@@ -25,14 +25,19 @@ namespace NddcPayroll.Web.Pages.Payroll
             this.db = db;
             HtmlHelper = htmlHelper;
         }
-        public void OnGet()
+        public void OnGet(int? gradeLevelID)
         {
             //BenefitsTypes = HtmlHelper.GetEnumSelectList<BenefitTypes>();
             BenefitTypes = db.GetBenefitTypes();
+            if (gradeLevelID.HasValue)
+            {
+               
+            }
         }
 
         public IActionResult OnPost(int? gradeLevelID)
         {
+            
             MyBenefit.GradeLevelID = gradeLevelID.Value;
             db.AddBenefit(MyBenefit);
             return RedirectToPage("ViewBenefits", new { gradeLevelID = gradeLevelID.Value});

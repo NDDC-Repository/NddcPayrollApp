@@ -1,6 +1,7 @@
 ﻿using NddcPayrollLibrary.Databases;
 using NddcPayrollLibrary.Model.Company;
 using NddcPayrollLibrary.Model.Employee;
+using NddcPayrollLibrary.Model.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,6 +50,31 @@ namespace NddcPayrollLibrary.Data.EmployeeData
             //string SQL2 = "SELECT Employees.EmployeeCode, Employees.Gender, Employees.MaritalStatus, Employees.FirstName, Employees.LastName, Employees.OtherNames, Employees.SpouseName, Employees.Email, Employees.Phone, Employees.DateOfBirth, Employees.Address, Employees.City, Employees.SID, Employees.Passport, Employees.EmploymentStatus, Employees.DateEngaged, Employees.ContactName, Employees.ContactPhone, Employees.Category, GradeLevel.GradeLevel, Departments.DepartmentName, JobTitles.Description FROM Employees LEFT JOIN GradeLevel ON Employees.GradeLevelId = GradeLevel.Id LEFT JOIN Departments ON Employees.DepartmentId = Departments.Id LEFT JOIN JobTitles ON Employees.JobTitleId = JobTitles.Id Where Id = @Id";
             string SQL = "SELECT EmployeeCode, Gender, MaritalStatus, FirstName, LastName, OtherNames, SpouseName, Email, Phone, DateOfBirth, Address, City, SID, Passport, EmploymentStatus, DateEngaged, ContactName, ContactPhone from Employees Where Id = @Id";
             return db.LoadData<EmployeeModel, dynamic>(SQL, new { Id = EmpId }, connectionStringName, false).First();
+        }
+        public decimal GetEmployeeInsurance(int EmpId)
+        {
+            string check = db.LoadData<string, dynamic>("SELECT Insurance from Employees Where Id = @Id", new { Id = EmpId }, connectionStringName, false).FirstOrDefault();
+            if (check is null)
+            {
+                return 0.00M;
+            }
+            string SQL = "SELECT Insurance from Employees Where Id = @Id";
+            return db.LoadData<decimal, dynamic>(SQL, new { Id = EmpId }, connectionStringName, false).First();
+        }
+        public bool GetPensionStatus(int EmpId)
+        {
+            string check = db.LoadData<string, dynamic>("SELECT PensionFundNumber from Employees Where Id = @Id", new { Id = EmpId }, connectionStringName, false).FirstOrDefault();
+            if (check is null)
+            {
+                return false;
+            }
+            string SQL = "SELECT PensionFundNumber from Employees Where Id = @Id";
+            string penNum = db.LoadData<string, dynamic>(SQL, new { Id = EmpId }, connectionStringName, false).First();
+            if (!string.IsNullOrEmpty(penNum))
+            {
+                return true;
+            }
+            return false;
         }
 
         public void AddStatutoryDetails(MyStatutoryDetailsModel Employee)
@@ -107,6 +133,67 @@ namespace NddcPayrollLibrary.Data.EmployeeData
                    AnalysisDetails.DepartmentId,
                    AnalysisDetails.PayPoint,
                    AnalysisDetails.EmployeeId
+               },
+                connectionStringName, false);
+
+
+        }
+
+        public void UpdateInsurance(string EmployeeCode, string Amount)
+        {
+
+            string SQL = "update Employees Set Insurance = @Insurance where EmployeeCode = @EmployeeCode";
+
+            db.SaveData(SQL,
+               new
+               {
+                   Insurance = Amount,
+                   EmployeeCode = EmployeeCode
+               },
+                connectionStringName, false) ;
+
+
+        }
+        public void UpdateCooporative(string EmployeeCode, string cooporativeDed)
+        {
+
+            string SQL = "update Employees Set CooporativeDed = @CooporativeDed where EmployeeCode = @EmployeeCode";
+
+            db.SaveData(SQL,
+               new
+               {
+                   Insurance = cooporativeDed,
+                   EmployeeCode = EmployeeCode
+               },
+                connectionStringName, false);
+
+
+        }
+        public void UpdateSecretarialAllow(string EmployeeCode, string secretarialAllow)
+        {
+
+            string SQL = "update Employees Set SecretarialAllow = @SecretarialAllow where EmployeeCode = @EmployeeCode";
+
+            db.SaveData(SQL,
+               new
+               {
+                   Insurance = secretarialAllow,
+                   EmployeeCode = EmployeeCode
+               },
+                connectionStringName, false);
+
+
+        }
+        public void UpdateVoluntaryPension(string EmployeeCode, string voluntaryPension)
+        {
+
+            string SQL = "update Employees Set VoluntaryPension = @VoluntaryPension where EmployeeCode = @EmployeeCode";
+
+            db.SaveData(SQL,
+               new
+               {
+                   Insurance = voluntaryPension,
+                   EmployeeCode = EmployeeCode
                },
                 connectionStringName, false);
 

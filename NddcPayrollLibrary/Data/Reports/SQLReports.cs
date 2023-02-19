@@ -80,7 +80,7 @@ namespace NddcPayrollLibrary.Data.Reports
             List<MyPayRollListModel> Reports = new List<MyPayRollListModel>();
             List<Task<decimal>> tasks = new List<Task<decimal>>();
 
-            string SQL = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, Employees.Id, Employees.EmployeeCode, Employees.FirstName, Employees.LastName, Employees.Email, Employees.Category, GradeLevel.GradeLevel, Departments.DepartmentName FROM Employees LEFT JOIN GradeLevel ON Employees.GradeLevelId = GradeLevel.Id LEFT JOIN Departments ON Employees.DepartmentId = Departments.Id LEFT JOIN JobTitles ON Employees.JobTitleId = JobTitles.Id ORDER BY Employees.Id ASC";
+            string SQL = "SELECT Top 20 ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, Employees.Id, Employees.EmployeeCode, Employees.FirstName, Employees.LastName, Employees.Email, Employees.Category, GradeLevel.GradeLevel, Departments.DepartmentName FROM Employees LEFT JOIN GradeLevel ON Employees.GradeLevelId = GradeLevel.Id LEFT JOIN Departments ON Employees.DepartmentId = Departments.Id LEFT JOIN JobTitles ON Employees.JobTitleId = JobTitles.Id ORDER BY Employees.Id ASC";
 
             Reports = db.LoadData<MyPayRollListModel, dynamic>(SQL, new { }, connectionStringName, false).ToList();
                 foreach (var item in Reports)
@@ -139,6 +139,57 @@ namespace NddcPayrollLibrary.Data.Reports
             }
 
                 
+            return Reports;
+        }
+
+        public async Task<List<MyRemitaUploadModel>> GetRemitaReportAsync()
+        {
+
+            //MyPayRollListModel reportModel;
+            List<MyRemitaUploadModel> Reports = new List<MyRemitaUploadModel>();
+            List<Task<decimal>> tasks = new List<Task<decimal>>();
+
+            string SQL = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, Employees.Id, Employees.EmployeeCode, (Employees.FirstName + ' ' + Employees.LastName) As EmployeeName, Employees.BankCode, Employees.AccountNumber FROM Employees ORDER BY Employees.Id ASC";
+
+            Reports = db.LoadData<MyRemitaUploadModel, dynamic>(SQL, new { }, connectionStringName, false).ToList();
+            foreach (var item in Reports)
+            {
+                
+                tasks.Add(Task.Run(() => item.PayableAmount = payDb.GetMonthlyGross(item.Id) - dedDb.GetTotalDeductions(item.Id)));
+                //tasks.Add(Task.Run(() => item.AccountType = "20"));
+
+
+
+                await Task.WhenAll(tasks);
+            }
+
+
+            return Reports;
+        }
+
+        public async Task<List<MyNHFReportModel>> GetNHFReportAsync()
+        {
+
+            //MyPayRollListModel reportModel;
+            List<MyNHFReportModel> Reports = new List<MyNHFReportModel>();
+            List<Task<decimal>> tasks = new List<Task<decimal>>();
+
+            string SQL2 = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, Employees.Id, Employees.EmployeeCode, Employees.FirstName, Employees.LastName, Employees.NHFNumber, Employees.PayPoint, GradeLevel.BasicSalary FROM Employees LEFT JOIN GradeLevel ON Employees.GradeLevelId = GradeLevel.Id ORDER BY Employees.Id ASC";
+            string SQL = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, Employees.Id, Employees.EmployeeCode, Employees.FirstName, Employees.LastName, Employees.NHFNumber, Employees.AccountNumber FROM Employees ORDER BY Employees.Id ASC";
+
+            Reports = db.LoadData<MyNHFReportModel, dynamic>(SQL2, new { }, connectionStringName, false).ToList();
+            foreach (var item in Reports)
+            {
+
+                tasks.Add(Task.Run(() => item.NHFAmount = 2.5M/100M * item.BasicSalary));
+                //tasks.Add(Task.Run(() => item.AccountType = "20"));
+
+
+
+                await Task.WhenAll(tasks);
+            }
+
+
             return Reports;
         }
     }

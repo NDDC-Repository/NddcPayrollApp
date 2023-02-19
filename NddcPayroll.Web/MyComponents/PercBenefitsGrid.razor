@@ -1,0 +1,25 @@
+﻿@page "/percbenefits"
+@using NddcPayrollLibrary.Data.Payroll;
+@using NddcPayrollLibrary.Model.Payroll;
+@using Syncfusion.Blazor.Grids
+@inject IPayrollData payDb
+
+
+<SfGrid @ref="SfEmployeeGrid" DataSource="Benefits" AllowResizing="true" AllowTextWrap="true" EnableHeaderFocus="true" Height="600" Toolbar="@toolbar">
+        @*<GridPageSettings PageSize="50" PageSizes="@(new string[] { "20", "50", "100", "200", "500", "All" })"></GridPageSettings>*@
+        <GridColumns>
+            <GridColumn HeaderText="S/N" Width="50" Field="@nameof(MyBenefitsModel.BenefitType)">
+                
+            </GridColumn>
+        </GridColumns>
+    </SfGrid>
+
+
+@code {
+    public SfGrid<MyBenefitsModel>? SfEmployeeGrid { get; set; }
+    public List<MyBenefitsModel> Benefits { get; set; }
+
+    private List<object> toolbar = new List<object> { "Search", "ExcelExport", "ColumnChooser" };
+
+   
+}

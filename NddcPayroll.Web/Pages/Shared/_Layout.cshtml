@@ -175,6 +175,16 @@
                                     <i data-feather="archive" class="icon-dual"></i> <span data-key="t-dashboards">Payroll Listing</span>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link menu-link" href="/Reports/RemitaUploadReport">
+                                    <i data-feather="archive" class="icon-dual"></i> <span data-key="t-dashboards">Remita Upload Report</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link menu-link" href="/Reports/NHFReportSummary">
+                                    <i data-feather="archive" class="icon-dual"></i> <span data-key="t-dashboards">NHF Summary Report</span>
+                                </a>
+                            </li>
                             @*<li class="nav-item">
                                 <a class="nav-link menu-link" href="widgets.html">
                                     <i data-feather="copy" class="icon-dual"></i> <span data-key="t-dashboards">Leave</span>
@@ -226,6 +236,22 @@
                              <li class="nav-item">
                                 <a class="nav-link menu-link" href="widgets.html">
                                     <i data-feather="bar-chart-2" class="icon-dual"></i> <span data-key="t-dashboards">PAYE</span>
+                                </a>
+                            </li>
+                            <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Data Management</span></li>
+                            <li class="nav-item">
+                                <a class="nav-link menu-link @ViewData["Benefits"]" href="/DataManagement/ExcelUploads/UpdateInsurance">
+                                    <i data-feather="layers" class="icon-dual"></i> <span data-key="t-dashboards">Update Insurance</span>
+                                </a>
+                            </li>
+                             <li class="nav-item">
+                                <a class="nav-link menu-link @ViewData["Benefits"]" href="/DataManagement/ExcelUploads/UpdateCooporativeData">
+                                    <i data-feather="layers" class="icon-dual"></i> <span data-key="t-dashboards">Update Cooporative</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link menu-link @ViewData["Benefits"]" href="/DataManagement/ExcelUploads/UpdateSecretarial">
+                                    <i data-feather="layers" class="icon-dual"></i> <span data-key="t-dashboards">Update Secretarial</span>
                                 </a>
                             </li>
                         </ul>

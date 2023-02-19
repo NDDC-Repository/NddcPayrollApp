@@ -12,6 +12,7 @@
     <PackageReference Include="Syncfusion.Blazor.Core" Version="20.4.0.50" />
     <PackageReference Include="Syncfusion.Blazor.Grid" Version="20.4.0.50" />
     <PackageReference Include="Syncfusion.Blazor.Themes" Version="20.4.0.50" />
+    <PackageReference Include="Syncfusion.XlsIO.Net.Core" Version="20.4.0.50" />
     <PackageReference Include="System.Net.Http.Json" Version="7.0.0" />
   </ItemGroup>
 

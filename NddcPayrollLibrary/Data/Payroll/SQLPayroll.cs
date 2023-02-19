@@ -42,6 +42,10 @@ namespace NddcPayrollLibrary.Data.Payroll
         {
             return db.LoadData<MyBenefitsModel, dynamic>("SELECT ROW_NUMBER() OVER (ORDER BY Benefits.Id ASC) As SrNo, Benefits.Id, Benefits.Cycle, Benefits.Percentage, BenefitType.BenefitType FROM  Benefits LEFT JOIN BenefitType ON Benefits.BenefitTypeId = BenefitType.Id Where Benefits.GradeLevelID = @GradeLevelID", new { GradeLevelID = GradeLevelID }, connectionStringName, false);
         }
+        public MyBenefitsModel GetBenefitsByBenefitId(int GradeLevelID)
+        {
+            return db.LoadData<MyBenefitsModel, dynamic>("SELECT Benefits.Id, Benefits.Cycle, Benefits.Percentage, BenefitType.BenefitType FROM  Benefits LEFT JOIN BenefitType ON Benefits.BenefitTypeId = BenefitType.Id Where Benefits.GradeLevelID = @GradeLevelID", new { GradeLevelID = GradeLevelID }, connectionStringName, false).First();
+        }
         public IEnumerable<SalaryScale> GetGradeLevels()
         {
             return db.LoadData<SalaryScale, dynamic>("select ROW_NUMBER() OVER (ORDER BY Id ASC) As SrNo, Id, GradeLevel from SalaryScale", new { }, connectionStringName, false);

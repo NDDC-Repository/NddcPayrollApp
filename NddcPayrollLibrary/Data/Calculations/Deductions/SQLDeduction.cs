@@ -1,4 +1,5 @@
-﻿using NddcPayrollLibrary.Data.Payroll;
+﻿using NddcPayrollLibrary.Data.EmployeeData;
+using NddcPayrollLibrary.Data.Payroll;
 using NddcPayrollLibrary.Databases;
 using NddcPayrollLibrary.Model.Enums;
 using System;
@@ -13,12 +14,14 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
     {
         private readonly ISqlDataAccess db;
         private readonly IPayrollData payDb;
+        private readonly IEmployeeData empDb;
         private const string connectionStringName = "SqlDb";
 
-        public SQLDeduction(ISqlDataAccess db, IPayrollData payDb)
+        public SQLDeduction(ISqlDataAccess db, IPayrollData payDb, IEmployeeData empDb)
         {
             this.db = db;
             this.payDb = payDb;
+            this.empDb = empDb;
         }
 
         private int GetGradeLevelId(int EmpId)
@@ -76,9 +79,13 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
         {
             if (GetEmpCategory(empId) == "PERM")
             {
-                decimal totalEarnings = GetMonthlyGross(empId) * 12;
-                decimal pensionAmount = ((decimal)8 / (decimal)100) * totalEarnings;
-                return pensionAmount / 12M;
+                if (empDb.GetPensionStatus(empId))
+                {
+                    decimal totalEarnings = GetMonthlyGross(empId) * 12;
+                    decimal pensionAmount = ((decimal)8 / (decimal)100) * totalEarnings;
+                    return pensionAmount / 12M;
+                }
+                return 0.00M;
             }
             else
             {
@@ -102,7 +109,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
         }
         public decimal GetAnnualPensionAmount(int empId)
         {
-            decimal totalEarnings = GetMonthlyGross(empId) * 12;
+            decimal totalEarnings = GetPensionAmount(empId) * 12;
             decimal pensionAmount = ((decimal)8 / (decimal)100) * totalEarnings;
             return pensionAmount;
         }
@@ -139,11 +146,11 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
             //decimal pensionAmount = ((decimal)8 / (decimal)100) * totalEarnings;
             //decimal annualBasic = GetBasicSalary(empId) * 12;
             //decimal NHFAmount = ((decimal)2.5 / (decimal)100) * annualBasic;
-
+            decimal insurance = empDb.GetEmployeeInsurance(empId) * 12M;
             decimal pensionAmount = GetAnnualPensionAmount(empId);
             decimal NHFAmount = GetAnnualNHFAmount(empId);
 
-            return pensionAmount + NHFAmount;
+            return pensionAmount + NHFAmount + insurance;
         }
         private decimal GetCRATotal(int empId)
         {

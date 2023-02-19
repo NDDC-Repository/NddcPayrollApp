@@ -1,0 +1,126 @@
+﻿@page "/remitagreport"
+@using Syncfusion.Blazor.Grids
+@using NddcPayrollLibrary.Data.Reports;
+@using NddcPayrollLibrary.Model.Report;
+@inject IReportsData db;
+
+
+<div class="card">
+    <div class="card-body">
+        <div class="row g-2">
+            <div class="col-sm-4">
+                <div class="search-box">
+                    @*<input type="text" class="form-control" id="searchMemberList" placeholder="Search for name or designation...">
+                    <i class="ri-search-line search-icon"></i>*@
+                    <h4 class="fs-18 lh-base mb-0">Remita Upload Report</h4>
+                </div>
+            </div>
+            <!--end col-->
+            <div class="col-sm-auto ms-auto">
+                <div class="list-grid-nav hstack gap-1">
+                    <button @onclick="GenerateReport" class="btn btn-success addMembers-modal"><i class="ri-profile-line me-1 align-bottom"></i> Generate Report</button>
+                    <button type="button" id="dropdownMenuLink1" data-bs-toggle="dropdown" aria-expanded="false" class="btn btn-soft-info btn-icon fs-14"><i class="ri-more-2-fill"></i></button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink1" style="">
+                        <li><a class="dropdown-item" href="#">Save Report</a></li>
+                        <li><a class="dropdown-item" href="#">Post Journal</a></li>
+                        <li><a class="dropdown-item" href="#">Retreive Saved Report</a></li>
+                    </ul>
+
+                </div>
+            </div>
+            <!--end col-->
+        </div>
+        <!--end row-->
+    </div>
+</div>
+
+@if (ShowAnim == true)
+{
+    @*<div class="spinner-grow text-primary" role="status">
+        <span>Loading Report Please Wait...</span>
+    </div>*@
+    <div class="text-center mb-3">
+        <a href="javascript:void(0);" class="text-success"><i class="mdi mdi-loading mdi-spin fs-40 align-middle me-2"></i> Generating Report Please Wait </a>
+    </div>
+    @*<h4>@Message</h4>*@
+}
+else if (ShowGrid == true)
+{
+
+    <p>Time Elasped: @OpsTime Seconds</p>
+    <SfGrid @ref="SfEmployeeGrid" DataSource="RemitaReportList" AllowResizing="true" AllowTextWrap="true" EnableVirtualization="true" ShowColumnChooser="true" EnableHeaderFocus="true" Height="600" AllowExcelExport="true" AllowPaging="false" AllowFiltering="true" AllowSorting="true" AllowGrouping="false" Toolbar="@toolbar">
+        @*<GridPageSettings PageSize="50" PageSizes="@(new string[] { "20", "50", "100", "200", "500", "All" })"></GridPageSettings>*@
+        
+
+        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+        <GridEvents OnToolbarClick="ToolbarBtnClickHandler" TValue="MyRemitaUploadModel"></GridEvents>
+        <GridColumns>
+            <GridColumn HeaderText="BANK CODE" Width="100" Field="@nameof(MyRemitaUploadModel.BankCode)"></GridColumn>
+            <GridColumn HeaderText="ACCOUNT NUMBER" Width="120" Field="@nameof(MyRemitaUploadModel.AccountNumber)"></GridColumn>
+            <GridColumn HeaderText="ACCOUNT TYPE" Width="120" Field="@nameof(MyRemitaUploadModel.AccountType)"></GridColumn>
+            <GridColumn HeaderText="PAYABLE AMOUNT" Width="150"  Format="N" Field="@nameof(MyRemitaUploadModel.PayableAmount)"></GridColumn>
+            <GridColumn HeaderText="SHORT DESCRIPTION" Width="150" Field="@nameof(MyRemitaUploadModel.ShortDescription)"></GridColumn>
+            <GridColumn HeaderText="LONG DESCRIPTION" Width="150" Field="@nameof(MyRemitaUploadModel.LongDescription)"></GridColumn>
+            <GridColumn HeaderText="EMPLOYEE NAME" Width="150" Field="@nameof(MyRemitaUploadModel.EmployeeName)"></GridColumn>
+            <GridColumn HeaderText="MOBILE" Width="120" Format="N" Field="@nameof(MyRemitaUploadModel.Mobile)"></GridColumn>
+            <GridColumn HeaderText="EMAIL" Width="120" Field="@nameof(MyRemitaUploadModel.Email)"></GridColumn>
+            <GridColumn HeaderText="WITHOLDING TAX" Format="N" Width="120" Field="@nameof(MyRemitaUploadModel.WitholdingTax)"></GridColumn>
+            <GridColumn HeaderText="TAX OFFICE" Format="N" Width="120" Field="@nameof(MyRemitaUploadModel.TaxOffice)"></GridColumn>
+        </GridColumns>
+    </SfGrid>
+}
+
+
+@code {
+    public string Message { get; set; }
+    public List<MyRemitaUploadModel> RemitaReportList { get; set; }
+
+    private List<object> toolbar = new List<object> { "Search", "ExcelExport", "CsvExport", "ColumnChooser" };
+    private SfGrid<MyRemitaUploadModel>? SfEmployeeGrid { get; set; }
+
+    //protected override async Task OnInitializedAsync()
+    //{
+    //    //PayrollList = db.GetPayrollListReport();
+    //    //Message = "";
+    //    //Message = "Loading Report Please Wait ........";
+    //    PayrollList = await Task.Run(() => db.GetPayrollListReport());
+
+    //}
+    public async void ToolbarBtnClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+    {
+        if (args.Item.Id.Contains("_excelexport"))
+        {
+            await SfEmployeeGrid.ExportToExcelAsync();
+
+        }
+        else if (args.Item.Id.Contains("_pdfexport"))
+        {
+            await SfEmployeeGrid.ExportToPdfAsync();
+        }
+        else if (args.Item.Id.Contains("_csvexport"))
+        {
+            await SfEmployeeGrid.ExportToCsvAsync();
+        }
+        else if (args.Item.Id == "XmlExport")
+        {
+            Console.Write("Export to Xml functionality");
+        }
+    }
+    public double OpsTime { get; set; }
+    public bool ShowAnim { get; set; }
+    public bool ShowGrid { get; set; }
+    private async Task GenerateReport()
+    {
+        ShowAnim = true;
+        var watch = System.Diagnostics.Stopwatch.StartNew();
+        Message = "Loading Report Please Wait ........";
+        RemitaReportList = await Task.Run(() => db.GetRemitaReportAsync());
+        //Message = "";
+        watch.Stop();
+        OpsTime = watch.ElapsedMilliseconds / 1000;
+        ShowAnim = false;
+        ShowGrid = true;
+    }
+
+
+}
