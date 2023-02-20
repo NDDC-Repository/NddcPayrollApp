@@ -21,5 +21,6 @@ namespace NddcPayrollLibrary.Data.Company
         MyGradeLevelModel GetGradeLevelById(int Id);
         void UpdateGradeLevel(MyGradeLevelModel GradeLevel);
         MyPaymentDetailsModel GetPaymentDetails(int empId);
+        string GetGradeLevelNameById(int Id);
     }
 }

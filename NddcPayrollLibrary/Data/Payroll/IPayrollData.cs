@@ -19,5 +19,8 @@ namespace NddcPayrollLibrary.Data.Payroll
         List<MySubsidiesModel> GetSubsidies(int gradeLevelId);
         void AddSubsidies(MySubsidiesModel Subsidy);
         decimal GetLinkedBenefitsAmount(int empId);
+        MyBenefitsModel GetBenefitsByBenefitId(int GradeLevelID);
+        void UpdateBenefit(MyBenefitsModel Benefit);
+        void DeleteBenefit(int Id);
     }
 }

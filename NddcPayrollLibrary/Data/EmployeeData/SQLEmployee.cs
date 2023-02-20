@@ -61,6 +61,17 @@ namespace NddcPayrollLibrary.Data.EmployeeData
             string SQL = "SELECT Insurance from Employees Where Id = @Id";
             return db.LoadData<decimal, dynamic>(SQL, new { Id = EmpId }, connectionStringName, false).First();
         }
+
+        public int GetEmployeeCount()
+        {
+            string check = db.LoadData<string, dynamic>("SELECT Count(Id) As EmpCount from Employees", new {  }, connectionStringName, false).FirstOrDefault();
+            if (check is null)
+            {
+                return 0;
+            }
+            string SQL = "SELECT Count(Id) As EmpCount from Employees";
+            return db.LoadData<int, dynamic>(SQL, new {  }, connectionStringName, false).First();
+        }
         public bool GetPensionStatus(int EmpId)
         {
             string check = db.LoadData<string, dynamic>("SELECT PensionFundNumber from Employees Where Id = @Id", new { Id = EmpId }, connectionStringName, false).FirstOrDefault();

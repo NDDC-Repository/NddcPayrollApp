@@ -16,5 +16,6 @@ namespace NddcPayrollLibrary.Data.EmployeeData
         void UpdateCooporative(string EmployeeCode, string cooporativeDed);
         void UpdateSecretarialAllow(string EmployeeCode, string secretarialAllow);
         void UpdateVoluntaryPension(string EmployeeCode, string voluntaryPension);
+        int GetEmployeeCount();
     }
 }

@@ -80,6 +80,10 @@ namespace NddcPayrollLibrary.Data.Company
         {
             return db.LoadData<MyGradeLevelModel, dynamic>("select Id, GradeLevel, Description, BasicSalary, MonthlyGross, Rank from GradeLevel Where Id = @Id", new { Id }, connectionStringName, false).First();
         }
+        public string GetGradeLevelNameById(int Id)
+        {
+            return db.LoadData<string, dynamic>("select GradeLevel from GradeLevel Where Id = @Id", new { Id }, connectionStringName, false).First();
+        }
         public void UpdateGradeLevel(MyGradeLevelModel GradeLevel)
         {
             //GradeLevel.CreatedBy = "User";

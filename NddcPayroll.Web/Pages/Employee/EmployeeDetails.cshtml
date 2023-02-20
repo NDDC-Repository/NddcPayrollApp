@@ -170,6 +170,10 @@
                                     <th class="ps-0" scope="row">AUPTRE SSA :</th>
                                     <td class="text-muted">@string.Format("{0:N}", Model.SSA)</td>
                                 </tr>
+                                <tr>
+                                    <th class="ps-0" scope="row">Insurance Premium :</th>
+                                    <td class="text-muted">@string.Format("{0:N}", Model.InsurancePremium)</td>
+                                </tr>
                             </tbody>
                             <tfoot class="table-light">
                                 <tr>
@@ -181,7 +185,7 @@
                     </div>
                                 </div>
                             <div class="card-footer">
-                                <a href="javascript:void(0);" class="float-end">Read More <i class="ri-arrow-right-s-line align-middle ms-1 lh-1"></i></a>
+                                <a href="javascript:void(0);" class="float-end">@string.Format("{0:N}", Model.NetPay) <i class="ri-arrow-right-s-line align-middle ms-1 lh-1"></i></a>
                                 <p class="text-bold fs-20 mb-0">Net Pay</p>
                             </div>
                             </div>

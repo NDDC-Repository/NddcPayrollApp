@@ -38,13 +38,21 @@ namespace NddcPayrollLibrary.Data.Payroll
         {
             db.SaveData("Insert Into Benefits (GradeLevelID, BenefitTypeId, Percentage, Cycle) values(@GradeLevelID, @BenefitTypeId, @Percentage, @Cycle)", new { Benefit.GradeLevelID, Benefit.BenefitTypeId, Benefit.Percentage, Benefit.Cycle }, connectionStringName, false);
         }
+        public void UpdateBenefit(MyBenefitsModel Benefit)
+        {
+            db.SaveData("Update Benefits Set BenefitTypeId = @BenefitTypeId, Percentage = @Percentage, Cycle = @Cycle Where Id = @Id", new { Benefit.BenefitTypeId, Benefit.Percentage, Benefit.Cycle, Benefit.Id }, connectionStringName, false);
+        }
+        public void DeleteBenefit(int Id)
+        {
+            db.SaveData("Delete Benefits Where Id = @Id", new { Id }, connectionStringName, false);
+        }
         public List<MyBenefitsModel> GetBenefitsById(int GradeLevelID)
         {
             return db.LoadData<MyBenefitsModel, dynamic>("SELECT ROW_NUMBER() OVER (ORDER BY Benefits.Id ASC) As SrNo, Benefits.Id, Benefits.Cycle, Benefits.Percentage, BenefitType.BenefitType FROM  Benefits LEFT JOIN BenefitType ON Benefits.BenefitTypeId = BenefitType.Id Where Benefits.GradeLevelID = @GradeLevelID", new { GradeLevelID = GradeLevelID }, connectionStringName, false);
         }
-        public MyBenefitsModel GetBenefitsByBenefitId(int GradeLevelID)
+        public MyBenefitsModel GetBenefitsByBenefitId(int benefitId)
         {
-            return db.LoadData<MyBenefitsModel, dynamic>("SELECT Benefits.Id, Benefits.Cycle, Benefits.Percentage, BenefitType.BenefitType FROM  Benefits LEFT JOIN BenefitType ON Benefits.BenefitTypeId = BenefitType.Id Where Benefits.GradeLevelID = @GradeLevelID", new { GradeLevelID = GradeLevelID }, connectionStringName, false).First();
+            return db.LoadData<MyBenefitsModel, dynamic>("SELECT Id, BenefitTypeId, Percentage, Cycle FROM  Benefits Where Id = @Id", new { Id = benefitId }, connectionStringName, false).First();
         }
         public IEnumerable<SalaryScale> GetGradeLevels()
         {

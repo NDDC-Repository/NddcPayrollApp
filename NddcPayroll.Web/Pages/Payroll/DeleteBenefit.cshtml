@@ -1,0 +1,24 @@
+﻿@page "{benefitId:int?}"
+@model NddcPayroll.Web.Pages.Payroll.DeleteBenefitModel
+@{
+}
+
+<div class="row">
+    <div class="col-xl-6">
+        <div class="card overflow-hidden">
+            <div class="card-body bg-marketplace d-flex">
+                <div class="flex-grow-1">
+                    <h4 class="fs-18 lh-base mb-0">Delete Benefit Item <br></h4>
+                    <p class="mb-0 mt-2 pt-1 text-muted">Are you sure you want to delete this item</p>
+                    <div class="d-flex gap-3 mt-4">
+                        <form method="post">
+                            <button type="submit" class="btn btn-danger">Continue to Delete</button>
+                        </form>
+                    </div>
+                </div>
+                <img src="assets/images/bg-d.png" alt="" class="img-fluid">
+            </div>
+        </div>
+    </div><!--end col-->
+
+</div>

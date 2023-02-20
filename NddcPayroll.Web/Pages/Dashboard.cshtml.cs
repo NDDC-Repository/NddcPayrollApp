@@ -9,6 +9,7 @@ namespace NddcPayroll.Web.Pages
     {
         private readonly IEmployeeData db;
         public List<EmployeeGridModel> Employees { get; set; }
+        public int EmpCount { get; set; }
 
         public DashboardModel(IEmployeeData db)
         {
@@ -17,6 +18,7 @@ namespace NddcPayroll.Web.Pages
         public void OnGet(string searchItem)
         {
             Employees = db.GetAllEmployees(searchItem);
+            EmpCount = db.GetEmployeeCount();
         }
     }
 }

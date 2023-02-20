@@ -110,8 +110,8 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
         public decimal GetAnnualPensionAmount(int empId)
         {
             decimal totalEarnings = GetPensionAmount(empId) * 12;
-            decimal pensionAmount = ((decimal)8 / (decimal)100) * totalEarnings;
-            return pensionAmount;
+            //decimal pensionAmount = ((decimal)8 / (decimal)100) * totalEarnings;
+            return totalEarnings;
         }
         public decimal GetAnnualNHFAmount(int empId)
         {

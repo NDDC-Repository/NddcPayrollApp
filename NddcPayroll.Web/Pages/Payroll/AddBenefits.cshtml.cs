@@ -29,10 +29,7 @@ namespace NddcPayroll.Web.Pages.Payroll
         {
             //BenefitsTypes = HtmlHelper.GetEnumSelectList<BenefitTypes>();
             BenefitTypes = db.GetBenefitTypes();
-            if (gradeLevelID.HasValue)
-            {
-               
-            }
+           
         }
 
         public IActionResult OnPost(int? gradeLevelID)

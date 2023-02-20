@@ -54,7 +54,9 @@ namespace NddcPayroll.Web.Pages.Employee
         public decimal NHF { get; set; }
         public decimal JSA { get; set; }
         public decimal SSA { get; set; }
+        public decimal InsurancePremium { get; set; }
         public decimal TotalDeductions { get; set; }
+        public decimal NetPay { get; set; }
 
         public EmployeeDetailsModel(ICompanyData db, IEmployeeData EmpDb, IPayrollData PayDb, IAllowanceData allowDb, IDeductionData dedDb, IHelperData helperDb)
         {
@@ -90,7 +92,9 @@ namespace NddcPayroll.Web.Pages.Employee
             NHF = dedDb.GetNHFAmount(EmpId.Value);
             JSA = dedDb.GetJSA(EmpId.Value);
             SSA = dedDb.GetSSA(EmpId.Value);
+            InsurancePremium = empDb.GetEmployeeInsurance(EmpId.Value);
             TotalDeductions = dedDb.GetTotalDeductions(EmpId.Value);
+            NetPay = MonthlyGross - TotalDeductions;
 
             PayPoints = db.GetAllPayPoints();
             PensionAdmins = db.GetAllPensionAdminsList();
