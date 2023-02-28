@@ -8,6 +8,7 @@
 @inject ISqlDataAccess db;
 
 
+
 <EditForm Model="@Bank" OnValidSubmit="HandleValidSubmit">
     <div class="row">
     <div class="col-md-8">
@@ -49,6 +50,7 @@
         </div>
     </div>
     </div>
+
     <div class="col-md-12 mt-4"></div>
     <hr />
     <div class="col-md-12 mt-4"></div>
@@ -82,6 +84,8 @@
 <button class="btn btn-success" @onclick="UpdateAccountName">Update Account Name</button>
 
 @code {
+
+    
     public string LoadingText { get; set; }
     public string SelectedBankCode { get; set; }
     [Parameter]
@@ -145,6 +149,10 @@
         //}
 
         BankList = CompanyData.GetAllBanks();
+        //if (EmpId > 0)
+        //{
+        //    PaymentDetail = CompanyData.GetPaymentDetails(EmpId);
+        //}
     }
 
 

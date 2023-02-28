@@ -220,6 +220,12 @@
                                                 Analysis Details
                                             </a>
                                         </li>
+                                         <li class="nav-item" role="presentation">
+                                            <a class="nav-link" data-bs-toggle="tab" href="#links" role="tab" aria-selected="false" tabindex="-1">
+                                                <i class="far fa-envelope"></i>
+                                                Employee Links
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
                                 <div class="card-body p-4">
@@ -666,13 +672,84 @@
                                         <!--end tab-pane-->
                                         <div class="tab-pane" id="privacy" role="tabpanel">
                                             <form>
+                                <form method="post">
+                                    <div class="row">
+                                        <div class="col-lg-10">
+                                            <div class="card">
+                                                <div class="card-header align-items-center d-flex">
+                                                    <h4 class="card-title mb-0 flex-grow-1">Analysis Codes</h4>
+                                                </div><!-- end card header -->
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-8">
+                                                            <div class="mb-3">
+                                                                <label for="firstNameinput" class="form-label">Job Grade Level</label>
+                                                                <select class="form-select" asp-for="@Model.AnalysisDetails.GradeLevelId" asp-items="@(new SelectList(Model.GradeLevels, "Id", "GradeLevel"))">
+                                                                    <option selected="">Choose...</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="mb-3">
+                                                                <label for="firstNameinput" class="form-label">Job Title</label>
+                                                                <select class="form-select" asp-for="@Model.AnalysisDetails.JobTitleId" asp-items="@(new SelectList(Model.JobTitles, "Id", "Description"))">
+                                                                    <option selected="">Choose...</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="mb-3">
+                                                                <label for="firstNameinput" class="form-label">Category</label>
+                                                                <select id="ForminputState" asp-for="@Model.AnalysisDetails.Category" class="form-select" data-choices="" data-choices-sorting="true">
+                                                                    <option selected="">Choose...</option>
+                                                                    <option value="CONT">Contract Staff</option>
+                                                                    <option value="PERM">Permanent Staff</option>
+                                                                    <option value="POLI">Political</option>
+                                                                    <option value="SABB">Sabbatical OFFR</option>
+                                                                    <option value="TEMP">Temprorary Staff</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="mb-3">
+                                                                <label for="firstNameinput" class="form-label">Department</label>
+                                                                <select class="form-select" asp-for="@Model.AnalysisDetails.DepartmentId" asp-items="@(new SelectList(Model.Departments, "Id", "DepartmentName"))">
+                                                                    <option selected="">Choose...</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="mb-3">
+                                                                <label for="firstNameinput" class="form-label">Pay Point</label>
+                                                                <select class="form-select" asp-for="@Model.AnalysisDetails.PayPoint" asp-items="@(new SelectList(Model.PayPoints, "Code", "PayPoint"))">
+                                                                    <option selected="">Choose...</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
 
+                                                    </div>
+                                                </div>
 
-
-
+                                            </div>
+                                            <div class="d-flex align-items-start gap-3 mt-4 mb-4">
+                                                <a href="Employee/PaymentDetails" class="btn btn-light btn-label previestab" data-previous="steparrow-gen-info-tab"><i class="ri-arrow-left-line label-icon align-middle fs-16 me-2"></i> Back to Payment Details</a>
+                                                <button type="submit" class="btn btn-success btn-label right ms-auto nexttab nexttab">
+                                                    <i class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>
+                                                    Save and Continue
+                                                </button>
+                                            </div>
+                                            <!--end col-->
+                                        </div>
+                                    </div>
+                                </form>
                                                 <!--end col-->
                                             </form>
                                         </div>
+                        <div class="tab-pane" id="links" role="tabpanel">
+                             
+                           <component type="typeof(NddcPayroll.Web.MyComponents.EmployeeLinksComp)" param-MyEmpId="@Model.MyEmpId" render-mode="ServerPrerendered" />
+                            
+                       </div>
                                         <!--end tab-pane-->
                                     </div>
                                 </div>

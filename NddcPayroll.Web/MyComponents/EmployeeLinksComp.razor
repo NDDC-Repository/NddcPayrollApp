@@ -1,0 +1,461 @@
+﻿@page "/employeelink"
+
+@using NddcPayrollLibrary.Data.Calculations.Allowance;
+@using NddcPayrollLibrary.Data.Calculations.Deductions;
+@using NddcPayrollLibrary.Data.EmployeeData;
+@using NddcPayrollLibrary.Data.Payroll;
+@using NddcPayrollLibrary.Model.Company;
+@using NddcPayrollLibrary.Model.Employee;
+@inject ICompanyData compDb;
+@inject IEmployeeData empDb;
+@inject IAllowanceData allowDb;
+@inject IDeductionData dedDb;
+@inject IPayrollData payDb;
+
+@if (StatusMsg == true)
+{
+    <p>Loading .......</p>
+}
+else
+{
+<div class="row">
+    <div class="col-md-8">
+        <div class="mb-3">
+            <label>Category</label>
+            <select class="form-select" @bind="Employee.Category">
+                <option selected="">Choose...</option>
+                <option value="CONT">Contract Staff</option>
+                <option value="PERM">Permanent Staff</option>
+                <option value="POLI">Political</option>
+                <option value="SABB">Sabbatical OFFR</option>
+                <option value="TEMP">Temprorary Staff</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="mb-3">
+            <label>Grade Level</label>
+            <select class="form-select" @bind="@Employee.GradeLevelId">
+                <option selected-disabled="true">Select Bank ...</option>
+                @foreach (var item in GradeLevels)
+                {
+                    <option value="@item.Id">@item.GradeLevel</option>
+                }
+            </select>
+
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="mt-4">
+            <button @onclick="RecalculateAndSave" class="btn btn-danger">Recalculate Emoluments</button>
+        </div>
+    </div>
+
+    <div class="col-md-12 mt-4"><h4>Allowances</h4></div>
+    <hr />
+    <div class="col-md-12 mt-4"></div>
+        <div class="row">
+
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label>Basic Salary</label>
+                    <input type="text" disabled="true" class="form-control" @bind="@Employee.BasicSalary" id="compnayNameinput">
+
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label>Medical Allowance</label>
+                    <input type="text" disabled="true" class="form-control" @bind="@Employee.MedicalAllow" id="compnayNameinput">
+
+                </div>
+            </div>
+        </div>
+    <div class="row">
+           
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label>Transport Allowance</label>
+                <input type="text" disabled="true" class="form-control" @bind="@Employee.TransportAllow" id="compnayNameinput">
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label>Housing Allowance</label>
+                <input type="text" disabled="true" class="form-control" @bind="@Employee.HousingAllow" id="compnayNameinput">
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label>Furniture Allowance</label>
+                <input type="text" disabled="true" class="form-control" @bind="@Employee.FurnitureAllow" id="compnayNameinput">
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label>Meal Allowance</label>
+                <input type="text" disabled="true" class="form-control" @bind="@Employee.MealAllow" id="compnayNameinput">
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label>Utility Allowance</label>
+                <input type="text" disabled="true" class="form-control" @bind="@Employee.UtilityAllow" id="compnayNameinput">
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label>Education Allowance</label>
+                <input type="text" disabled="true" class="form-control" @bind="@Employee.EducationAllow" id="compnayNameinput">
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label>Security Allowance</label>
+                <input type="text" disabled="true" class="form-control" @bind="@Employee.SecurityAllow" id="compnayNameinput">
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label>Doemstic Servant Allowance</label>
+                <input type="text" disabled="true" class="form-control" @bind="@Employee.DomesticServantAllow" id="compnayNameinput">
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label>Driver Allowance</label>
+                <input type="text" disabled="true" class="form-control" @bind="@Employee.DriverAllow" id="compnayNameinput">
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label>Vehicle Maintenance Allowance</label>
+                <input type="text" disabled="true" class="form-control" @bind="@Employee.VehicleAllow" id="compnayNameinput">
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label>Hazard Allowance</label>
+                <input type="text" disabled="true" class="form-control" @bind="@Employee.HazardAllow" id="compnayNameinput">
+
+            </div>
+        </div>
+       <div class="col-md-4">
+                <div class="mb-3">
+                    <label>Secretarial Allowance</label>
+                    <input type="text" class="form-control" @onfocusout="SetTotalEarnings" @bind="@Employee.SecretarialAllow" id="compnayNameinput">
+
+                </div>
+            </div>
+    </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label>Leave Allowance</label>
+                    <input type="text" class="form-control" @onfocusout="SetTotalEarnings" @bind="@Employee.LeaveAllow" id="compnayNameinput">
+
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label>Acting Allowance</label>
+                    <input type="text" class="form-control" @onfocusout="SetTotalEarnings" @bind="@Employee.ActingAllow" id="compnayNameinput">
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label>Shift Allowance</label>
+                    <input type="text" class="form-control" @onfocusout="SetTotalEarnings" @bind="@Employee.ShiftAllow" id="compnayNameinput">
+
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label>Uniform Allowance</label>
+                    <input type="text" class="form-control" @onfocusout="SetTotalEarnings" @bind="@Employee.UniformAllow" id="compnayNameinput">
+
+                </div>
+            </div>
+        </div>
+    <div class="row">
+         <div class="col-md-4">
+            <div class="mb-3">
+                <label>Total Earnings</label>
+                <input type="text" disabled="true" class="form-control" @bind="@Employee.TotalEarnings" id="compnayNameinput">
+
+            </div>
+        </div>
+           
+        @* <div class="col-md-4">
+        <div class="mb-3">
+        <label>Housing Allowance</label>
+        <input type="text" disabled="true" class="form-control" @bind="@Employee.TransportAllow" id="compnayNameinput">
+
+        </div>
+        </div>*@
+    </div>
+
+    <div class="col-md-12 mt-4"><h4>Deductions</h4></div>
+    <hr />
+    <div class="col-md-12 mt-4"></div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label>Tax</label>
+                    <input type="text" class="form-control" @onfocusout="SetTotalDeductions" @bind="@Employee.Tax" id="compnayNameinput">
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label>Voluntary Pension</label>
+                    <input type="text" class="form-control" @onfocusout="SetTotalDeductions" @bind="@Employee.VoluntaryPension" id="compnayNameinput">
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label>Insurance</label>
+                    <input type="text" class="form-control" @bind="@Employee.Insurance" id="compnayNameinput">
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label>Cooporative</label>
+                    <input type="text" class="form-control" @onfocusout="SetTotalDeductions" @bind="@Employee.CooperativeDed" id="compnayNameinput">
+
+            </div>
+        </div>
+    </div>
+     <div class="row">
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label>Pension</label>
+                <input type="text" disabled="true" class="form-control" @bind="@Employee.Pension" id="compnayNameinput">
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label>JSA</label>
+                <input type="text" disabled="true" class="form-control" @bind="@Employee.JSA" id="compnayNameinput">
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        @*Add here*@
+          <div class="col-md-4">
+            <div class="mb-3">
+                <label>NHF</label>
+                <input type="text" disabled="true" class="form-control" @bind="@Employee.NHF" id="compnayNameinput">
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label>SSA</label>
+                <input type="text" disabled="true" class="form-control" @bind="@Employee.SSA" id="compnayNameinput">
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+       
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label>Total Deductions</label>
+                    <input type="text" disabled="true" class="form-control" @bind="@Employee.TotalDeductions" id="compnayNameinput">
+
+                </div>
+            </div>
+    </div>
+  <div class="col-md-12 mt-4"></div>
+    <hr />
+    <div class="col-md-12 mt-4"></div>
+
+        <div class="row">
+           
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label>NetPay</label>
+                    <input type="text" disabled="true" class="form-control" @bind="@Employee.NetPay" id="compnayNameinput">
+
+                </div>
+            </div>
+        </div>
+
+    <div class="col-md-12 mt-4"></div>
+    <hr />
+    <div class="col-md-12 mt-4"></div>
+
+
+    @*<div class="col-md-8">
+    <div class="mb-3">
+    <label>Account Number</label>
+    <InputText @bind-Value="BankDetails.account_number" class="form-control" @onfocusout="GetAccountDetails"></InputText>
+    </div>
+    </div>
+    <div class="col-md-8">
+    <div class="mb-3">
+    <label>Account Name</label>
+    <InputText @bind-Value="BankDetails.account_name" readonly="true" class="form-control"></InputText>
+    <p>@LoadingText</p>
+    </div>
+    </div>*@
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="mb-3">
+            <button @onclick="RecalculateAndSave" class="btn btn-danger">Recalculate and Save</button>
+        </div>
+    </div>
+    @*<div class="col-md-4">
+    <div class="mb-3">
+    <button class="btn btn-success" @onclick="HandleValidSubmit">Edit and Update</button>
+    </div>
+    </div>*@
+
+
+</div>
+
+@*<div class="row">
+    <div class="col-md-4">
+        <div class="mb-3">
+            <button class="btn btn-danger" @onclick="RecalculateAndSave">Recalculate and Save</button>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="mb-3">
+            <button class="btn btn-success" @onclick="HandleValidSubmit">Edit and Update</button>
+        </div>
+    </div>
+
+
+</div>*@
+
+<button class="btn btn-danger" @onclick="RecalculateAndSave">Recalculate and Save</button>
+}
+ 
+   
+
+
+
+
+@code {
+
+    public bool StatusMsg { get; set; }
+    public string Message { get; set; }
+    public bool InitCond { get; set; }
+    [Parameter]
+    public int MyEmpId { get; set; }
+    public EmployeeLinksModel Employee = new();
+    public List<MyGradeLevelGridModel> GradeLevels = new();
+
+    //private void HandleValidSubmit()
+    //{
+    //    empDb.UpdateForLinkCalc(Employee.GradeLevelId, Employee.Category);
+    //    Employee.TransportAllow = allowDb.GetTransportAllowance(MyEmpId);
+    //}
+
+    private void RecalculateAndSave()
+    {
+        Message = "Testing ....";
+        StatusMsg = true;
+        InitCond = true;
+
+        empDb.UpdateForLinkCalc(Employee.GradeLevelId, Employee.Category, MyEmpId);
+
+        Employee.BasicSalary = payDb.GetBasicSalary(MyEmpId);
+        Employee.TransportAllow = allowDb.GetTransportAllowance(MyEmpId);
+        Employee.HousingAllow = allowDb.GetHousingAllowance(MyEmpId);
+        Employee.FurnitureAllow = allowDb.GetFurnitureAllowance(MyEmpId);
+        Employee.MealAllow = allowDb.GetMealAllowance(MyEmpId);
+        Employee.UtilityAllow = allowDb.GetUtilityAllowance(MyEmpId);
+        Employee.EducationAllow = allowDb.GetEducationAllowance(MyEmpId);
+        Employee.SecurityAllow = allowDb.GetSecurityAllowance(MyEmpId);
+        Employee.DomesticServantAllow = allowDb.GetDomesticServantAllowance(MyEmpId);
+        Employee.MedicalAllow = allowDb.GetMedicalAllowance(MyEmpId);
+        Employee.DriverAllow = allowDb.GetDriverAllowance(MyEmpId);
+        Employee.VehicleAllow = allowDb.GetVehicleMaintenanceAllowance(MyEmpId);
+        Employee.HazardAllow = allowDb.GetHazardAllowance(MyEmpId);
+        Employee.Tax = dedDb.GetPAYEAmount(MyEmpId);
+        Employee.Pension = dedDb.GetPensionAmount(MyEmpId);
+        Employee.JSA = dedDb.GetJSA(MyEmpId);
+        Employee.SSA = dedDb.GetSSA(MyEmpId);
+        Employee.NHF = dedDb.GetNHFAmount(MyEmpId);
+        SetTotalEarnings();
+        SetTotalDeductions();
+        SetNetPay();
+        StatusMsg = false;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (InitCond == false)
+        {
+            GradeLevels = compDb.GetAllGradeLevels();
+            Employee = empDb.GetEmployeeLinks(MyEmpId);
+            SetTotalEarnings();
+            SetTotalDeductions();
+            SetNetPay();
+        }
+
+
+    }
+
+    private decimal EarningsCompute()
+    {
+        return Employee.BasicSalary + Employee.MedicalAllow + Employee.TransportAllow + Employee.HousingAllow + Employee.FurnitureAllow + Employee.MealAllow + Employee.UtilityAllow + Employee.EducationAllow + Employee.SecurityAllow + Employee.DomesticServantAllow + Employee.DriverAllow + Employee.VehicleAllow + Employee.HazardAllow + Employee.SecretarialAllow + Employee.LeaveAllow + Employee.ActingAllow + Employee.ActingAllow + Employee.ShiftAllow + Employee.UniformAllow;
+    }
+
+    private decimal ComputeDeductions()
+    {
+        return Employee.Tax + Employee.VoluntaryPension + Employee.CooperativeDed + Employee.Pension + Employee.JSA + Employee.SSA + Employee.NHF;
+    }
+
+    private void SetTotalEarnings()
+    {
+       
+        Employee.TotalEarnings = EarningsCompute();
+       
+        SetNetPay();
+    }
+    private void SetTotalDeductions()
+    {
+        Employee.TotalDeductions = ComputeDeductions();
+        SetNetPay();
+    }
+
+    private void SetNetPay()
+    {
+        Employee.NetPay = Employee.TotalEarnings - Employee.TotalDeductions;
+    }
+}

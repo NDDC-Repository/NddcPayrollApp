@@ -41,6 +41,11 @@ namespace NddcPayrollLibrary.Data.Calculations.Allowance
             decimal contBasic = ((decimal)80 / (decimal)100) * permBasic;
             return contBasic;
         }
+        public decimal GetSecretarialAllowance(int EmpId)
+        {
+            return db.LoadData<decimal, dynamic>("Select SecretarialAllow From Employees Where Id = @Id", new { Id = EmpId }, connectionStringName, false).First();
+            
+        }
         public decimal GetHousingAllowance(int empId)
         {
             int gradeLevelId = GetGradeLevelId(empId);

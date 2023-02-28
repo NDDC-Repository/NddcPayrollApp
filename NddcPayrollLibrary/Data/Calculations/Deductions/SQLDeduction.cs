@@ -75,6 +75,18 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
                 return 0.00M;
             }
         }
+        public decimal GetCooperative(int empId)
+        {
+            
+            return db.LoadData<decimal, dynamic>("Select CooperativeDed From Employees Where Id = @Id", new { Id = empId }, connectionStringName, false).First();
+
+        }
+        public decimal GetVoluntaryPension(int empId)
+        {
+
+            return db.LoadData<decimal, dynamic>("Select VoluntaryPension From Employees Where Id = @Id", new { Id = empId }, connectionStringName, false).First();
+
+        }
         public decimal GetPensionAmount(int empId)
         {
             if (GetEmpCategory(empId) == "PERM")
@@ -220,7 +232,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
                         //levelTax = levelTax + 500000M;
                         //taxValue = (taxValue - 95000M) + (19M / 100M * levelTax);
 
-                        taxValue = taxValue + (21M / 100M * levelTax);
+                        taxValue = (taxValue) + (21M / 100M * levelTax);
                     }
                 }
                 if (levelTax >= 1600000.00M)
@@ -338,7 +350,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
 
         public decimal GetTotalDeductions(int empId)
         {
-            decimal totalDeductions = GetPAYEAmount(empId) + GetNHFAmount(empId) + GetPensionAmount(empId) + GetJSA(empId) + GetSSA(empId);
+            decimal totalDeductions = GetPAYEAmount(empId) + GetNHFAmount(empId) + GetPensionAmount(empId) + GetJSA(empId) + GetSSA(empId) + GetCooperative(empId) + GetVoluntaryPension(empId);
             return totalDeductions;
         }
     }

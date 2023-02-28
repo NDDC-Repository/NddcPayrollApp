@@ -16,5 +16,6 @@
         decimal GetDriverAllowance(int empId);
         decimal GetVehicleMaintenanceAllowance(int empId);
         decimal GetHazardAllowance(int empId);
+        decimal GetSecretarialAllowance(int EmpId);
     }
 }

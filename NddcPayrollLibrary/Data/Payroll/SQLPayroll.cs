@@ -190,8 +190,9 @@ namespace NddcPayrollLibrary.Data.Payroll
                 decimal percentageBenefits = benefitAmount / 12;
                 linkedBenefits = GetLinkedBenefitsAmount(empId);
                 decimal subsidyAmount = GetSubsidyAmount(empId);
+                decimal secretarialAllow = allowDb.GetSecretarialAllowance(empId);
 
-                decimal totalBenefits = percentageBenefits + linkedBenefits + subsidyAmount;
+                decimal totalBenefits = percentageBenefits + linkedBenefits + subsidyAmount + secretarialAllow;
                 return totalBenefits;
             }
             else if (staffCategory == "CONT")

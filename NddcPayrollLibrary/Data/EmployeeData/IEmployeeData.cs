@@ -17,5 +17,9 @@ namespace NddcPayrollLibrary.Data.EmployeeData
         void UpdateSecretarialAllow(string EmployeeCode, string secretarialAllow);
         void UpdateVoluntaryPension(string EmployeeCode, string voluntaryPension);
         int GetEmployeeCount();
+        void UpdateEmployeePayroll(EmployeeModel employee);
+        EmployeeModel GetAnalysisDetails(int EmpId);
+        EmployeeLinksModel GetEmployeeLinks(int EmpId);
+        void UpdateForLinkCalc(int gradeLevelId, string category, int EmpId);
     }
 }

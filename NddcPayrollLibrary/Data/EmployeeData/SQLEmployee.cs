@@ -51,6 +51,12 @@ namespace NddcPayrollLibrary.Data.EmployeeData
             string SQL = "SELECT EmployeeCode, Gender, MaritalStatus, FirstName, LastName, OtherNames, SpouseName, Email, Phone, DateOfBirth, Address, City, SID, Passport, EmploymentStatus, DateEngaged, ContactName, ContactPhone from Employees Where Id = @Id";
             return db.LoadData<EmployeeModel, dynamic>(SQL, new { Id = EmpId }, connectionStringName, false).First();
         }
+        public EmployeeModel GetAnalysisDetails(int EmpId)
+        {
+            //string SQL2 = "SELECT Employees.EmployeeCode, Employees.Gender, Employees.MaritalStatus, Employees.FirstName, Employees.LastName, Employees.OtherNames, Employees.SpouseName, Employees.Email, Employees.Phone, Employees.DateOfBirth, Employees.Address, Employees.City, Employees.SID, Employees.Passport, Employees.EmploymentStatus, Employees.DateEngaged, Employees.ContactName, Employees.ContactPhone, Employees.Category, GradeLevel.GradeLevel, Departments.DepartmentName, JobTitles.Description FROM Employees LEFT JOIN GradeLevel ON Employees.GradeLevelId = GradeLevel.Id LEFT JOIN Departments ON Employees.DepartmentId = Departments.Id LEFT JOIN JobTitles ON Employees.JobTitleId = JobTitles.Id Where Id = @Id";
+            string SQL = "SELECT GradeLevelId, JobTitleId, Category, DepartmentId, PayPoint from Employees Where Id = @Id";
+            return db.LoadData<EmployeeModel, dynamic>(SQL, new { Id = EmpId }, connectionStringName, false).First();
+        }
         public decimal GetEmployeeInsurance(int EmpId)
         {
             string check = db.LoadData<string, dynamic>("SELECT Insurance from Employees Where Id = @Id", new { Id = EmpId }, connectionStringName, false).FirstOrDefault();
@@ -168,12 +174,12 @@ namespace NddcPayrollLibrary.Data.EmployeeData
         public void UpdateCooporative(string EmployeeCode, string cooporativeDed)
         {
 
-            string SQL = "update Employees Set CooporativeDed = @CooporativeDed where EmployeeCode = @EmployeeCode";
+            string SQL = "update Employees Set CooperativeDed = @CooperativeDed where EmployeeCode = @EmployeeCode";
 
             db.SaveData(SQL,
                new
                {
-                   Insurance = cooporativeDed,
+                   CooperativeDed = cooporativeDed,
                    EmployeeCode = EmployeeCode
                },
                 connectionStringName, false);
@@ -188,7 +194,7 @@ namespace NddcPayrollLibrary.Data.EmployeeData
             db.SaveData(SQL,
                new
                {
-                   Insurance = secretarialAllow,
+                   SecretarialAllow = secretarialAllow,
                    EmployeeCode = EmployeeCode
                },
                 connectionStringName, false);
@@ -205,6 +211,66 @@ namespace NddcPayrollLibrary.Data.EmployeeData
                {
                    Insurance = voluntaryPension,
                    EmployeeCode = EmployeeCode
+               },
+                connectionStringName, false);
+
+
+        }
+        public void UpdateEmployeePayroll(EmployeeModel employee)
+        {
+
+            string SQL = "update Employees Set TransportAllow = @TransportAllow, HousingAllow = @HousingAllow, FurnitureAllow = @FurnitureAllow, " +
+                "MealAllow = @MealAllow, UtilityAllow = @UtilityAllow, EducationAllow = @EducationAllow, DomesticServantAllow = @DomesticServantAllow, " +
+                "DriverAllow = @DriverAllow, VehicleAllow = @VehicleAllow, HazardAllow = @HazardAllow, Tax = @Tax, NHF = @NHF, JSA = @JSA, SSA = @SSA, " +
+                "TotalEarnings = @TotalEarnings, Pension = @Pension, TotalDeductions = @TotalDeductions, NetPay = @NetPay, BasicSalary = @BasicSalary, MedicalAllow = @MedicalAllow, SecurityAllow = @SecurityAllow where EmployeeCode = @EmployeeCode";
+
+            db.SaveData(SQL,
+               new
+               {
+                   EmployeeCode = employee.EmployeeCode,
+                   TransportAllow = employee.TransportAllow,
+                   HousingAllow = employee.HousingAllow,
+                   FurnitureAllow = employee.FurnitureAllow,
+                   MealAllow = employee.MealAllow,
+                   UtilityAllow = employee.UtilityAllow,
+                   EducationAllow = employee.EducationAllow,
+                   DomesticServantAllow = employee.DomesticServantAllow,
+                   DriverAllow = employee.DriverAllow,
+                   VehicleAllow = employee.VehicleAllow,
+                   HazardAllow = employee.HazardAllow,
+                   Tax = employee.Tax,
+                   NHF = employee.NHF,
+                   JSA = employee.JSA,
+                   SSA = employee.SSA,
+                   TotalEarnings = employee.TotalEarnings,
+                   TotalDeductions = employee.TotalDeductions,
+                   NetPay = employee.NetPay,
+                   BasicSalary = employee.BasicSalary,
+                   MedicalAllow = employee.MedicalAllow,
+                   SecurityAllow = employee.SecurityAllow,
+                   Pension = employee.Pension
+               },
+                connectionStringName, false);
+
+
+        }
+        public EmployeeLinksModel GetEmployeeLinks(int EmpId)
+        {
+            string SQL = "SELECT BasicSalary, GradeLevelId, JobTitleId, Category, Insurance, SecretarialAllow, LeaveAllow, ActingAllow, ShiftAllow, UniformAllow, CooperativeDed, VoluntaryPension, TransportAllow, HousingAllow, FurnitureAllow, MealAllow, UtilityAllow, EducationAllow, SecurityAllow, MedicalAllow, DomesticServantAllow, DriverAllow, VehicleAllow, HazardAllow, Tax, NHF, JSA, SSA, TotalEarnings, TotalDeductions, NetPay, Pension From Employees Where Id = @Id";
+            return db.LoadData<EmployeeLinksModel, dynamic>(SQL, new { Id = EmpId }, connectionStringName, false).First();
+        }
+
+        public void UpdateForLinkCalc(int gradeLevelId, string category, int EmpId)
+        {
+
+            string SQL = "update Employees Set GradeLevelId = @GradeLevelId, Category = @Category where Id = @EmpId";
+
+            db.SaveData(SQL,
+               new
+               {
+                   GradeLevelId = gradeLevelId,
+                   Category = category,
+                   EmpId = EmpId
                },
                 connectionStringName, false);
 

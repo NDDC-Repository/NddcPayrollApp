@@ -20,19 +20,55 @@
 </div>
 
 <div class="row">
-    <div class="col-xl-6">
-        <div class="card overflow-hidden">
-            <div class="card-body bg-marketplace d-flex">
-                <div class="flex-grow-1">
-                    <h4 class="fs-18 lh-base mb-0">Payroll Listings Report <br></h4>
-                    <p class="mb-0 mt-2 pt-1 text-muted">View Report of Benefits and Deductions for Entire Workforce</p>
-                    <div class="d-flex gap-3 mt-4">
-                        <a asp-page="PayrollListings" class="btn btn-primary">Generate Report </a>
-                    </div>
-                </div>
-                <img src="assets/images/bg-d.png" alt="" class="img-fluid">
-            </div>
+    <div class="col-xl-3">
+         <div class="flex-grow-1">
+            <h4>Payroll Report</h4>
+            <p class="fs-14"><a asp-page="PayrollListings"><i class="ri-arrow-right-s-line"></i>Payroll Listings Reports</a></p>
+            <p class="fs-14"><a asp-page="RemitaUploadReport"><i class="ri-arrow-right-s-line"></i>Remita Upload Reports</a></p>
+            <p class="fs-14"><a asp-page="NHFReportSummary"><i class="ri-arrow-right-s-line"></i>NHF Report Summary</a></p>
+            <p class="fs-14"><a asp-page="PayrollSummaryByDept"><i class="ri-arrow-right-s-line"></i>Payroll Summary By Department</a></p>
         </div>
+
     </div><!--end col-->
-   
+<div class="col-xl-3">
+         <div class="flex-grow-1">
+            <h4>PAYE Tax Deductions</h4>
+            <p class="fs-14"><a asp-page="PayeDeductions/PayeDeductionsSummary"><i class="ri-arrow-right-s-line"></i>Summary</a></p>
+            <p class="fs-14"><a asp-page="PayeDeductions/StaffPayeDeduction"><i class="ri-arrow-right-s-line"></i>PAYE - Rivers</a></p>
+            <p class="fs-14"><a asp-page="PayeDeductions/StaffPAyeDedOndo"><i class="ri-arrow-right-s-line"></i>PAYE - Ondo</a></p>
+            <p class="fs-14"><a asp-page="PayeDeductions/StaffPayeDedImo"><i class="ri-arrow-right-s-line"></i>PAYE - Imo</a></p>
+            <p class="fs-14"><a asp-page="PayeDeductions/StaffPayDedEdo"><i class="ri-arrow-right-s-line"></i>PAYE - Edo</a></p>
+            <p class="fs-14"><a asp-page="PayeDeductions/StaffPayDedDelta"><i class="ri-arrow-right-s-line"></i>PAYE - Delta</a></p>
+            <p class="fs-14"><a asp-page="PayeDeductions/StaffPayeDedCrossRiver"><i class="ri-arrow-right-s-line"></i>PAYE - Cross Rivers</a></p>
+            <p class="fs-14"><a asp-page="PayeDeductions/StaffPareDedBayelsa"><i class="ri-arrow-right-s-line"></i>PAYE - Bayelsa</a></p>
+            <p class="fs-14"><a asp-page="PayeDeductions/StaffPayeDedAkwaIbom"><i class="ri-arrow-right-s-line"></i>PAYE - Akwa Ibom</a></p>
+            <p class="fs-14"><a asp-page="PayeDeductions/StaffPayeDedAbuja"><i class="ri-arrow-right-s-line"></i>PAYE - Abuja</a></p>
+            <p class="fs-14"><a asp-page="PayeDeductions/StaffPayeDedAbia"><i class="ri-arrow-right-s-line"></i>PAYE - Abia</a></p>
+         </div>
+
+    </div>
+    <div class="col-xl-3">
+        <div class="flex-grow-1">
+            <h4>Summary of Pension Contributions</h4>
+            <p class="fs-14"><a asp-page="PayrollListings"><i class="ri-arrow-right-s-line"></i>Summary</a></p>
+            <p class="fs-14"><a asp-page="PayrollListings"><i class="ri-arrow-right-s-line"></i>PFA - Trust Fund</a></p>
+            <p class="fs-14"><a asp-page="PayrollListings"><i class="ri-arrow-right-s-line"></i>PFA - Stanbic IBTC</a></p>
+            <p class="fs-14"><a asp-page="PayrollListings"><i class="ri-arrow-right-s-line"></i>PFA - PAL</a></p>
+            <p class="fs-14"><a asp-page="PayrollListings"><i class="ri-arrow-right-s-line"></i>PFA - Leadway</a></p>
+            <p class="fs-14"><a asp-page="PayrollListings"><i class="ri-arrow-right-s-line"></i>PFA - IE Anchor</a></p>
+            <p class="fs-14"><a asp-page="PayrollListings"><i class="ri-arrow-right-s-line"></i>PFA - ARM</a></p>
+            <p class="fs-14"><a asp-page="PayrollListings"><i class="ri-arrow-right-s-line"></i>PFA - FG</a></p>
+        </div>
+
+    </div>
+    <div class="col-xl-3">
+        <div class="flex-grow-1">
+            <h4>Variance</h4>
+            <p class="fs-14"><a asp-page="PayrollListings"><i class="ri-arrow-right-s-line"></i>Earnings</a></p>
+            <p class="fs-14"><a asp-page="PayrollListings"><i class="ri-arrow-right-s-line"></i>Deductions</a></p>
+            <p class="fs-14"><a asp-page="PayrollListings"><i class="ri-arrow-right-s-line"></i>Net</a></p>
+            <p class="fs-14"><a asp-page="PayrollListings"><i class="ri-arrow-right-s-line"></i>Comp</a></p>
+        </div>
+
+    </div>
 </div>

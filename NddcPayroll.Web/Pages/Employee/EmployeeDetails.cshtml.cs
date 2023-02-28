@@ -23,7 +23,7 @@ namespace NddcPayroll.Web.Pages.Employee
         private readonly IHelperData helperDb;
 
         public decimal BasicSalary { get; set; }
-    
+        public int MyEmpId { get; set; }
         public decimal MonthlyGross { get; set; }
 
         public EmployeeModel Employee { get; set; }
@@ -35,6 +35,12 @@ namespace NddcPayroll.Web.Pages.Employee
         public int Age { get; set; }
         public List<BankModel> Banks { get; set; }
         public MyPaymentDetailsModel PaymentDetails { get; set; }
+        [BindProperty]
+        public EmployeeModel AnalysisDetails { get; set; }
+        public List<MyGradeLevelGridModel> GradeLevels { get; set; }
+        public List<JobTitleModel> JobTitles { get; set; }
+        public List<DepartmentModel> Departments { get; set; }
+        //public List<MyPayPointModel> PayPoints { get; set; }
 
         public decimal MySalaryBenefits { get; set; }
         public decimal HousingAllowance { get; set; }
@@ -58,7 +64,8 @@ namespace NddcPayroll.Web.Pages.Employee
         public decimal TotalDeductions { get; set; }
         public decimal NetPay { get; set; }
 
-        public EmployeeDetailsModel(ICompanyData db, IEmployeeData EmpDb, IPayrollData PayDb, IAllowanceData allowDb, IDeductionData dedDb, IHelperData helperDb)
+        public EmployeeDetailsModel(ICompanyData db, IEmployeeData EmpDb, IPayrollData PayDb, IAllowanceData allowDb, 
+            IDeductionData dedDb, IHelperData helperDb)
         {
             this.db = db;
             empDb = EmpDb;
@@ -69,6 +76,7 @@ namespace NddcPayroll.Web.Pages.Employee
         }
         public void OnGet(int? EmpId)
         {
+            MyEmpId = EmpId.Value;
             States = db.GetAllStates();
             Employee = empDb.GetEmployeeDetails(EmpId.Value);
             BasicSalary = payDb.GetBasicSalary(EmpId.Value);
@@ -106,6 +114,12 @@ namespace NddcPayroll.Web.Pages.Employee
 
             Banks = db.GetAllBanks();
             PaymentDetails = db.GetPaymentDetails(EmpId.Value);
+
+            AnalysisDetails = empDb.GetAnalysisDetails(EmpId.Value);
+            GradeLevels = db.GetAllGradeLevels();
+            JobTitles = db.GetAllJobTitles();
+            Departments = db.GetAllDepartments();
+            //PayPoints = db.GetAllPayPoints();
         }
     }
 }
