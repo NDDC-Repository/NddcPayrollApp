@@ -52,7 +52,7 @@ namespace NddcPayrollLibrary.Data.Payroll
         }
         public MyBenefitsModel GetBenefitsByBenefitId(int benefitId)
         {
-            return db.LoadData<MyBenefitsModel, dynamic>("SELECT Id, BenefitTypeId, Percentage, Cycle FROM  Benefits Where Id = @Id", new { Id = benefitId }, connectionStringName, false).First();
+            return db.LoadData<MyBenefitsModel, dynamic>("SELECT Id, BenefitTypeId, GradeLevelId, Percentage, Cycle FROM  Benefits Where Id = @Id", new { Id = benefitId }, connectionStringName, false).First();
         }
         public IEnumerable<SalaryScale> GetGradeLevels()
         {
@@ -65,6 +65,18 @@ namespace NddcPayrollLibrary.Data.Payroll
         public List<MyLinkedBenefitsModel> GetLinkedBenefits(int gradeLevelId)
         {
             return db.LoadData<MyLinkedBenefitsModel, dynamic>("SELECT LinkedBenefits.Id, GradeLevel.GradeLevel, GradeLevel.Description, GradeLevel.BasicSalary, LinkedBenefits.MultiplyBy, GradeLevel.BasicSalary * LinkedBenefits.MultiplyBy AS Amount, BenefitType.BenefitType FROM  LinkedBenefits INNER JOIN BenefitType ON LinkedBenefits.BenefitTypeId = BenefitType.Id LEFT OUTER JOIN GradeLevel ON LinkedBenefits.LinkedGradeLevelId = GradeLevel.Id WHERE LinkedBenefits.GradeLevelId = @GradeLevelId", new { GradeLevelId = gradeLevelId }, connectionStringName, false);
+        }
+        public MyLinkedBenefitsModel GetLinkedBenefitByLinkBenefitId(int linkedBenefitId)
+        {
+            return db.LoadData<MyLinkedBenefitsModel, dynamic>("SELECT Id, GradeLevelId, LinkedGradeLevelId, BenefitTypeId, MultiplyBy, Amount, Cycle  FROM  LinkedBenefits Where Id = @Id", new { Id = linkedBenefitId }, connectionStringName, false).First();
+        }
+        public void UpdateLinkedBenefit(MyLinkedBenefitsModel LinkedBenefit)
+        {
+            db.SaveData("Update LinkedBenefits Set LinkedGradeLevelId = @LinkedGradeLevelId, BenefitTypeId = @BenefitTypeId, MultiplyBy = @MultiplyBy, Cycle = @Cycle Where Id = @Id", new { LinkedBenefit.Id, LinkedBenefit.LinkedGradeLevelId, LinkedBenefit.BenefitTypeId, LinkedBenefit.MultiplyBy, LinkedBenefit.Amount, LinkedBenefit.Cycle }, connectionStringName, false);
+        }
+        public void DeleteLinkedBenefit(int Id)
+        {
+            db.SaveData("Delete linkedBenefits Where Id = @Id", new { Id }, connectionStringName, false);
         }
         public void AddLinkedBenefits(MyLinkedBenefitsModel LinkBenefit)
         {

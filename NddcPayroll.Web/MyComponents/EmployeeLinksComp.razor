@@ -223,6 +223,17 @@ else
     <div class="col-md-12 mt-4"></div>
 
     <div class="row">
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label>Tax Calculation Setting</label>
+                    <select @bind="@Employee.TaxCalc" class="form-select" data-choices="" data-choices-sorting="true">
+                        <option value="Automatic">Automatic</option>
+                        <option value="Manual">Manual</option>
+                    </select>
+                </div>
+            </div>
+    </div>
+    <div class="row">
         <div class="col-md-4">
             <div class="mb-3">
                 <label>Tax</label>
@@ -316,52 +327,18 @@ else
     <hr />
     <div class="col-md-12 mt-4"></div>
 
-
-    @*<div class="col-md-8">
-    <div class="mb-3">
-    <label>Account Number</label>
-    <InputText @bind-Value="BankDetails.account_number" class="form-control" @onfocusout="GetAccountDetails"></InputText>
-    </div>
-    </div>
-    <div class="col-md-8">
-    <div class="mb-3">
-    <label>Account Name</label>
-    <InputText @bind-Value="BankDetails.account_name" readonly="true" class="form-control"></InputText>
-    <p>@LoadingText</p>
-    </div>
-    </div>*@
 </div>
 <div class="row">
     <div class="col-md-4">
         <div class="mb-3">
-            <button @onclick="RecalculateAndSave" class="btn btn-danger">Recalculate and Save</button>
+                <button @onclick="SaveEmployeeLink" class="btn btn-primary">Save Changes</button>
+                    <label>@Message</label>
         </div>
     </div>
-    @*<div class="col-md-4">
-    <div class="mb-3">
-    <button class="btn btn-success" @onclick="HandleValidSubmit">Edit and Update</button>
-    </div>
-    </div>*@
-
+   
 
 </div>
 
-@*<div class="row">
-    <div class="col-md-4">
-        <div class="mb-3">
-            <button class="btn btn-danger" @onclick="RecalculateAndSave">Recalculate and Save</button>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="mb-3">
-            <button class="btn btn-success" @onclick="HandleValidSubmit">Edit and Update</button>
-        </div>
-    </div>
-
-
-</div>*@
-
-<button class="btn btn-danger" @onclick="RecalculateAndSave">Recalculate and Save</button>
 }
  
    
@@ -387,7 +364,6 @@ else
 
     private void RecalculateAndSave()
     {
-        Message = "Testing ....";
         StatusMsg = true;
         InitCond = true;
 
@@ -443,9 +419,9 @@ else
 
     private void SetTotalEarnings()
     {
-       
+
         Employee.TotalEarnings = EarningsCompute();
-       
+
         SetNetPay();
     }
     private void SetTotalDeductions()
@@ -457,5 +433,11 @@ else
     private void SetNetPay()
     {
         Employee.NetPay = Employee.TotalEarnings - Employee.TotalDeductions;
+    }
+
+    private void SaveEmployeeLink()
+    {
+        empDb.SaveEmployeeLink(Employee);
+        Message = "Employee Data Has Been Successfully Updated!";
     }
 }

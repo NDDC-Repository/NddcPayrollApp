@@ -8,6 +8,7 @@ namespace NddcPayrollLibrary.Model.Employee
 {
     public class EmployeeLinksModel
     {
+        public int Id { get; set; }
         public int GradeLevelId { get; set; }
         public int JobTitleId { get; set; }
         public string Category { get; set; }
@@ -43,5 +44,6 @@ namespace NddcPayrollLibrary.Model.Employee
         public decimal ActingAllow { get; set; }
         public decimal ShiftAllow { get; set; }
         public decimal UniformAllow { get; set; }
+        public string TaxCalc { get; set; }
     }
 }

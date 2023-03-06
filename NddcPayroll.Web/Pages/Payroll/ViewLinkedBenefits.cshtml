@@ -1,4 +1,4 @@
-﻿@page "{gradeLevelID:int?}"
+﻿@page "{benefitId:int?}"
 @model NddcPayroll.Web.Pages.Payroll.ViewLinkedBenefitsModel
 @{
 }
@@ -23,7 +23,7 @@
     <div class="col-12">
         <div class="d-flex align-items-lg-center flex-lg-row flex-column">
             <div class="flex-grow-1">
-                <h3 class="fs-22 mb-1">Benefits List</h3>
+                <h3 class="fs-22 mb-1">Benefits List for @Model.GradeLevelName</h3>
                 @*<p class="text-muted mb-0">
                 List of Approved Salary Scale
                 </p>*@
@@ -70,7 +70,7 @@
                                 <td>
                                     <div class="hstack gap-3 fs-15">
                                         @*<a href="javascript:void(0);"><i class="ri-settings-4-line"></i></a>*@
-                                        <a href="javascript:void(0);" class="link-success"><i class="ri-delete-bin-5-line"></i></a>
+                                        <a class="btn btn-sm btn-light" asp-page="EditLinkedBenefit" asp-route-benefitId="@item.Id">Edit</a>
                                     </div>
                                     @*<a class="btn btn-sm btn-light" asp-page="AddBenefits" asp-route-salaryScaleId="@item.Id">Add Benefits</a>*@
                                 </td>

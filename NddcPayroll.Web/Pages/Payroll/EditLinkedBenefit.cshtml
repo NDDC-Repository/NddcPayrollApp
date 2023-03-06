@@ -1,0 +1,130 @@
+﻿@page
+@model NddcPayroll.Web.Pages.Payroll.EditLinkedBenefitModel
+@{
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <h4 class="mb-sm-0">Edit Linked Benefits</h4>
+
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Benefits</a></li>
+                    <li class="breadcrumb-item active">Edit Linked Benefit</li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-5">
+        <div class="card">
+            <div class="card-header align-items-center d-flex">
+                <h4 class="card-title mb-0 flex-grow-1">Linked Benefits for @Model.GradeLevelName</h4>
+            </div><!-- end card header -->
+            <div class="card-body">
+                <form method="post">
+                    <input asp-for="@Model.LinkedBenefit.Id" hidden="true" class="form-label" />
+                    <input asp-for="@Model.LinkedBenefit.GradeLevelId" hidden="true" class="form-label" />
+                    <div class="row mb-3">
+                        <div class="col-lg-3">
+                            <label for="nameInput" class="form-label">Linked Grade Level</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <div class="col-md-6">
+                                @*<div class="mb-3"><select class="form-select" asp-for="@Model.MyBenefit.Benefit" asp-items="@Model.BenefitsTypes">
+                                <option selected="">Choose...</option>
+                                </select>
+                                </div>*@
+                                <div class="mb-3">
+                                    <select class="form-select" asp-for="@Model.LinkedBenefit.LinkedGradeLevelId" asp-items="@(new SelectList(Model.GradeLevels, "Id", "GradeLevel"))">
+                                        <option selected="">Choose...</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-lg-3">
+                            <label for="nameInput" class="form-label">Benefit Type</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <div class="col-md-6">
+                                @*<div class="mb-3"><select class="form-select" asp-for="@Model.MyBenefit.Benefit" asp-items="@Model.BenefitsTypes">
+                                <option selected="">Choose...</option>
+                                </select>
+                                </div>*@
+                                <div class="mb-3">
+                                    <select class="form-select" asp-for="@Model.LinkedBenefit.BenefitTypeId" asp-items="@(new SelectList(Model.BenefitTypes, "Id", "BenefitType"))">
+                                        <option selected="">Choose...</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-lg-3">
+                            <label for="nameInput" class="form-label">Multiples</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <div class="col-md-6">
+                                @*<div class="mb-3"><select class="form-select" asp-for="@Model.MyBenefit.Benefit" asp-items="@Model.BenefitsTypes">
+                                <option selected="">Choose...</option>
+                                </select>
+                                </div>*@
+                                <div class="mb-3">
+                                    <select class="form-select" asp-for="@Model.LinkedBenefit.MultiplyBy">
+                                        <option selected="">Choose...</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-lg-3">
+                            <label for="nameInput" class="form-label">Cycle</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <div class="col-md-6">
+                                @*<div class="mb-3"><select class="form-select" asp-for="@Model.MyBenefit.Benefit" asp-items="@Model.BenefitsTypes">
+                                <option selected="">Choose...</option>
+                                </select>
+                                </div>*@
+                                <div class="mb-3">
+                                    <select class="form-select" asp-for="@Model.LinkedBenefit.Cycle">
+                                        <option selected="">Choose...</option>
+                                        <option value="Monthly">Monthly</option>
+                                        <option value="Yearly">Yearly</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* <div class="row mb-3">
+                    <div class="col-lg-3">
+                    <label for="nameInput" class="form-label">Rate(%)</label>
+                    </div>
+                    <div class="col-lg-3">
+
+                    <input asp-for="@Model.MyBenefit.Percentage" class="form-control rounded-end flag-input" placeholder="Enter Rate" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
+                    </div>
+                    </div>*@
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-primary">Update</button>
+                        <a type="submit" asp-page="DeleteLinkedBenefit" class="btn btn-danger" asp-route-benefitId="@Model.LinkedBenefit.Id">Delete</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--end col-->
+</div>

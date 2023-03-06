@@ -305,6 +305,85 @@ namespace NddcPayrollLibrary.Data.Reports
 
             //return Reports;
         }
+
+        public async Task UpdateEmployeesPayrollByGradeLevelAsync(int gradeLevelId)
+        {
+
+            //MyPayRollListModel reportModel;
+            List<EmployeeModel> Employees = new List<EmployeeModel>();
+            List<Task<decimal>> tasks = new List<Task<decimal>>();
+
+            string SQL = "SELECT Id, EmployeeCode From Employees Where GradeLevelId = @GradeLevelId And TaxCalc = 'Automatic'";
+
+            Employees = db.LoadData<EmployeeModel, dynamic>(SQL, new { gradeLevelId }, connectionStringName, false).ToList();
+            foreach (var item in Employees)
+            {
+                EmployeeModel employee = new EmployeeModel();
+
+                //item.BasicSalary = payDb.GetBasicSalary(item.Id);
+                tasks.Add(Task.Run(() => employee.TotalEarnings = payDb.GetMonthlyGross(item.Id)));
+                //tasks.Add(Task.Run(() => employee.EmployeeCode = item.EmployeeCode));
+                employee.EmployeeCode = item.EmployeeCode;
+                tasks.Add(Task.Run(() => employee.TotalDeductions = dedDb.GetTotalDeductions(item.Id)));
+                tasks.Add(Task.Run(() => employee.BasicSalary = payDb.GetBasicSalary(item.Id)));
+                tasks.Add(Task.Run(() => employee.TransportAllow = allowDb.GetTransportAllowance(item.Id)));
+                tasks.Add(Task.Run(() => employee.HousingAllow = allowDb.GetHousingAllowance(item.Id)));
+                tasks.Add(Task.Run(() => employee.FurnitureAllow = allowDb.GetFurnitureAllowance(item.Id)));
+                tasks.Add(Task.Run(() => employee.MealAllow = allowDb.GetMealAllowance(item.Id)));
+                tasks.Add(Task.Run(() => employee.UtilityAllow = allowDb.GetUtilityAllowance(item.Id)));
+                tasks.Add(Task.Run(() => employee.EducationAllow = allowDb.GetEducationAllowance(item.Id)));
+                tasks.Add(Task.Run(() => employee.SecurityAllow = allowDb.GetSecurityAllowance(item.Id)));
+                tasks.Add(Task.Run(() => employee.DomesticServantAllow = allowDb.GetDomesticServantAllowance(item.Id)));
+                tasks.Add(Task.Run(() => employee.MedicalAllow = allowDb.GetMedicalAllowance(item.Id)));
+                tasks.Add(Task.Run(() => employee.VehicleAllow = allowDb.GetVehicleMaintenanceAllowance(item.Id)));
+                tasks.Add(Task.Run(() => employee.HazardAllow = allowDb.GetHazardAllowance(item.Id)));
+                tasks.Add(Task.Run(() => employee.DriverAllow = allowDb.GetDriverAllowance(item.Id)));
+                tasks.Add(Task.Run(() => employee.Tax = dedDb.GetPAYEAmount(item.Id)));
+                tasks.Add(Task.Run(() => employee.NHF = dedDb.GetNHFAmount(item.Id)));
+                tasks.Add(Task.Run(() => employee.Pension = dedDb.GetPensionAmount(item.Id)));
+                tasks.Add(Task.Run(() => employee.JSA = dedDb.GetJSA(item.Id)));
+                tasks.Add(Task.Run(() => employee.SSA = dedDb.GetSSA(item.Id)));
+                //tasks.Add(Task.Run(() => employee.MonthlyGross = dedDb.GetSSA(item.Id)));
+                tasks.Add(Task.Run(() => employee.NetPay = payDb.GetMonthlyGross(item.Id) - dedDb.GetTotalDeductions(item.Id)));
+
+
+
+                await Task.WhenAll(tasks);
+
+                //not async
+
+                ////item.BasicSalary = payDb.GetBasicSalary(item.Id);
+                //employee.TotalEarnings = payDb.GetMonthlyGross(item.Id);
+                ////tasks.Add(Task.Run(() => employee.EmployeeCode = item.EmployeeCode));
+                //employee.EmployeeCode = item.EmployeeCode;
+                //employee.TotalDeductions = dedDb.GetTotalDeductions(item.Id);
+                //employee.BasicSalary = payDb.GetBasicSalary(item.Id);
+                //employee.TransportAllow = allowDb.GetTransportAllowance(item.Id);
+                //employee.HousingAllow = allowDb.GetHousingAllowance(item.Id);
+                //employee.FurnitureAllow = allowDb.GetFurnitureAllowance(item.Id);
+                //employee.MealAllow = allowDb.GetMealAllowance(item.Id);
+                //employee.UtilityAllow = allowDb.GetUtilityAllowance(item.Id);
+                //employee.EducationAllow = allowDb.GetEducationAllowance(item.Id);
+                //employee.SecurityAllow = allowDb.GetSecurityAllowance(item.Id);
+                //employee.DomesticServantAllow = allowDb.GetDomesticServantAllowance(item.Id);
+                //employee.MedicalAllow = allowDb.GetMedicalAllowance(item.Id);
+                //employee.VehicleAllow = allowDb.GetVehicleMaintenanceAllowance(item.Id);
+                //employee.HazardAllow = allowDb.GetHazardAllowance(item.Id);
+                //employee.DriverAllow = allowDb.GetDriverAllowance(item.Id);
+                //employee.Tax = dedDb.GetPAYEAmount(item.Id);
+                //employee.NHF = dedDb.GetNHFAmount(item.Id);
+                //employee.Pension = dedDb.GetPensionAmount(item.Id);
+                //employee.JSA = dedDb.GetJSA(item.Id);
+                //employee.SSA = dedDb.GetSSA(item.Id);
+                ////tasks.Add(Task.Run(() => employee.MonthlyGross = dedDb.GetSSA(item.Id)));
+
+
+                empDb.UpdateEmployeePayroll(employee);
+            }
+
+
+            //return Reports;
+        }
         public async Task<List<MyRemitaUploadModel>> GetRemitaReportAsync()
         {
 
@@ -313,18 +392,19 @@ namespace NddcPayrollLibrary.Data.Reports
             List<Task<decimal>> tasks = new List<Task<decimal>>();
 
             string SQL = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, Employees.Id, Employees.EmployeeCode, (Employees.FirstName + ' ' + Employees.LastName) As EmployeeName, Employees.BankCode, Employees.AccountNumber FROM Employees ORDER BY Employees.Id ASC";
+            string SQL2 = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, Employees.Id, Employees.EmployeeCode, (Employees.FirstName + ' ' + Employees.LastName) As EmployeeName, Employees.BankCode, Employees.AccountNumber, (Employees.NetPay) As PayableAmount FROM Employees ORDER BY Employees.Id ASC";
 
-            Reports = db.LoadData<MyRemitaUploadModel, dynamic>(SQL, new { }, connectionStringName, false).ToList();
-            foreach (var item in Reports)
-            {
+            Reports = db.LoadData<MyRemitaUploadModel, dynamic>(SQL2, new { }, connectionStringName, false).ToList();
+            //foreach (var item in Reports)
+            //{
                 
-                tasks.Add(Task.Run(() => item.PayableAmount = payDb.GetMonthlyGross(item.Id) - dedDb.GetTotalDeductions(item.Id)));
-                //tasks.Add(Task.Run(() => item.AccountType = "20"));
+            //    tasks.Add(Task.Run(() => item.PayableAmount = payDb.GetMonthlyGross(item.Id) - dedDb.GetTotalDeductions(item.Id)));
+            //    //tasks.Add(Task.Run(() => item.AccountType = "20"));
 
 
 
-                await Task.WhenAll(tasks);
-            }
+            //    await Task.WhenAll(tasks);
+            //}
 
 
             return Reports;
@@ -339,18 +419,19 @@ namespace NddcPayrollLibrary.Data.Reports
 
             string SQL2 = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, Employees.Id, Employees.EmployeeCode, Employees.FirstName, Employees.LastName, Employees.NHFNumber, Employees.PayPoint, GradeLevel.BasicSalary FROM Employees LEFT JOIN GradeLevel ON Employees.GradeLevelId = GradeLevel.Id ORDER BY Employees.Id ASC";
             string SQL = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, Employees.Id, Employees.EmployeeCode, Employees.FirstName, Employees.LastName, Employees.NHFNumber, Employees.AccountNumber FROM Employees ORDER BY Employees.Id ASC";
+            string SQL3 = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, Employees.Id, Employees.EmployeeCode, Employees.FirstName, Employees.LastName, Employees.NHFNumber, Employees.PayPoint, (Employees.NHF) As NHFAmount FROM Employees ORDER BY Employees.Id ASC";
 
-            Reports = db.LoadData<MyNHFReportModel, dynamic>(SQL2, new { }, connectionStringName, false).ToList();
-            foreach (var item in Reports)
-            {
+            Reports = db.LoadData<MyNHFReportModel, dynamic>(SQL3, new { }, connectionStringName, false).ToList();
+            //foreach (var item in Reports)
+            //{
 
-                tasks.Add(Task.Run(() => item.NHFAmount = 2.5M/100M * item.BasicSalary));
-                //tasks.Add(Task.Run(() => item.AccountType = "20"));
+            //    tasks.Add(Task.Run(() => item.NHFAmount = 2.5M / 100M * item.BasicSalary));
+            //    //tasks.Add(Task.Run(() => item.AccountType = "20"));
 
 
 
-                await Task.WhenAll(tasks);
-            }
+            //    await Task.WhenAll(tasks);
+            //}
 
 
             return Reports;

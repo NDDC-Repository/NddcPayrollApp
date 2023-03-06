@@ -21,5 +21,6 @@ namespace NddcPayrollLibrary.Data.EmployeeData
         EmployeeModel GetAnalysisDetails(int EmpId);
         EmployeeLinksModel GetEmployeeLinks(int EmpId);
         void UpdateForLinkCalc(int gradeLevelId, string category, int EmpId);
+        void SaveEmployeeLink(EmployeeLinksModel employee);
     }
 }

@@ -22,5 +22,8 @@ namespace NddcPayrollLibrary.Data.Payroll
         MyBenefitsModel GetBenefitsByBenefitId(int GradeLevelID);
         void UpdateBenefit(MyBenefitsModel Benefit);
         void DeleteBenefit(int Id);
+        MyLinkedBenefitsModel GetLinkedBenefitByLinkBenefitId(int linkedBenefitId);
+        void UpdateLinkedBenefit(MyLinkedBenefitsModel LinkedBenefit);
+        void DeleteLinkedBenefit(int Id);
     }
 }
