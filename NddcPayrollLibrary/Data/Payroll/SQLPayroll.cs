@@ -102,11 +102,20 @@ namespace NddcPayrollLibrary.Data.Payroll
             }
             return db.LoadData<int, dynamic>("Select GradeLevelId From Employees Where Id = @Id", new { Id = EmpId }, connectionStringName, false).First();
         }
+        private decimal GetArreas(int EmpId)
+        {
+            string check = db.LoadData<string, dynamic>("Select Arreas From Employees Where Id = @Id", new { Id = EmpId }, connectionStringName, false).First();
+            if (check == null)
+            {
+                return 0;
+            }
+            return db.LoadData<int, dynamic>("Select Arreas From Employees Where Id = @Id", new { Id = EmpId }, connectionStringName, false).First();
+        }
         public decimal GetBasicSalary(int EmpId)
         {
             string check = string.Empty;
             string empCategory = GetEmployeeCategory(EmpId);
-            if (empCategory == "PERM")
+            if (empCategory == "PERM" || empCategory == "POLI")
             {
                 int GradeLevelId = GetGradeLevelId(EmpId);
                 //check = db.LoadData<string, dynamic>("Select BasicSalary From GradeLevel Where Id = @Id", new { Id = GradeLevelId }, connectionStringName, false).First();
@@ -191,7 +200,7 @@ namespace NddcPayrollLibrary.Data.Payroll
         public decimal GetBenefits(int empId)
         {
             string staffCategory = db.LoadData<string, dynamic>("Select Category From Employees Where Id = @Id", new { Id = empId }, connectionStringName, false).FirstOrDefault();
-            if (staffCategory == "PERM")
+            if (staffCategory == "PERM" || staffCategory == "POLI")
             {
                 decimal linkedBenefits = 0.00M;
                 int gradeLevelId = GetGradeLevelId(empId);
@@ -245,9 +254,10 @@ namespace NddcPayrollLibrary.Data.Payroll
         }
         public decimal GetMonthlyGross(int empId)
         {
+            decimal arreas = GetArreas(empId);
             decimal basicSalary = GetBasicSalary(empId);
             decimal benefitsAmount = GetBenefits(empId);
-            decimal monthlyGross = (basicSalary + benefitsAmount);
+            decimal monthlyGross = (basicSalary + benefitsAmount + arreas);
             return monthlyGross;
         }
     }

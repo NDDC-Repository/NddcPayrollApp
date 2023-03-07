@@ -74,6 +74,10 @@ namespace NddcPayrollLibrary.Data.EmployeeData
         {
             db.SaveData("Update Employees Set Archived = 1 Where Id = @Id", new { Id }, connectionStringName, false);
         }
+        public void UnArchiveEmployee(int Id)
+        {
+            db.SaveData("Update Employees Set Archived = 0 Where Id = @Id", new { Id }, connectionStringName, false);
+        }
         public List<EmployeeGridModel> GetAllEmployees(string name)
         {
             string SQL = "SELECT Top 20 ROW_NUMBER() OVER (ORDER BY Employees.Id DESC) As SrNo, Employees.Id, Employees.EmployeeCode, Employees.Gender, Employees.FirstName, Employees.LastName, Employees.Email, Employees.Phone, Employees.Category, Employees.Archived, GradeLevel.GradeLevel, Departments.DepartmentName, JobTitles.Description FROM Employees LEFT JOIN GradeLevel ON Employees.GradeLevelId = GradeLevel.Id LEFT JOIN Departments ON Employees.DepartmentId = Departments.Id LEFT JOIN JobTitles ON Employees.JobTitleId = JobTitles.Id Where Employees.FirstName Like @Name Or Departments.DepartmentName Like @Name Or Employees.LastName Like @Name Or GradeLevel.GradeLevel Like @Name ORDER BY Employees.Id DESC";

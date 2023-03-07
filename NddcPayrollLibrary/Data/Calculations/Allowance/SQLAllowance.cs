@@ -117,7 +117,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Allowance
                 decimal transportAllowanceAmount = (transportPerc / (decimal)100) * annualBasicSalary;
                 return transportAllowanceAmount / 12;
             }
-            else if (empCategory == "PERM")
+            else if (empCategory == "PERM" || empCategory == "POLI")
             {
 
                 if (check is null)
@@ -156,7 +156,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Allowance
                 decimal mealAllowance = db.LoadData<decimal, dynamic>("SELECT (Amount * 30) As Amount From Subsidies Where GradeLevelId = @GradeLevelId And SubsidyType = @SubsidyType", new { GradeLevelId = gradeLevelId, SubsidyType = "Meal" }, connectionStringName, false).FirstOrDefault();
                 return (80M / 100M) * mealAllowance;
             }
-            else if (empCategory == "PERM")
+            else if (empCategory == "PERM" || empCategory == "POLI")
             {
                 if (check is null)
                 {
@@ -193,7 +193,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Allowance
                 decimal utilityAllowanceAmount = (utilityPerc / (decimal)100) * annualBasicSalary;
                 return utilityAllowanceAmount / 12;
             }
-            else if (empCategory == "PERM")
+            else if (empCategory == "PERM" || empCategory == "POLI")
             {
 
                 if (check is null)
@@ -235,7 +235,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Allowance
                 decimal educationAllowanceAmount = (educationPerc / (decimal)100) * annualBasicSalary;
                 return educationAllowanceAmount / 12;
             }
-            else if (empCategory == "PERM")
+            else if (empCategory == "PERM" || empCategory == "POLI")
             {
 
                 if (check is null)
@@ -277,7 +277,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Allowance
                 decimal securityAllowanceAmount = (securityPerc / (decimal)100) * annualBasicSalary;
                 return securityAllowanceAmount / 12;
             }
-            else if (empCategory == "PERM")
+            else if (empCategory == "PERM" || empCategory == "POLI")
             {
 
                 if (check is null)
@@ -317,7 +317,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Allowance
                 decimal domeasticServantAllowance = db.LoadData<decimal, dynamic>("SELECT (GradeLevel.MonthlyGross * LinkedBenefits.MultiplyBy) FROM  LinkedBenefits INNER JOIN GradeLevel ON LinkedBenefits.LinkedGradeLevelId = GradeLevel.Id WHERE LinkedBenefits.GradeLevelId = @GradeLevelId And BenefitTypeId = @BenefitTypeId", new { GradeLevelId = gradeLevelId, BenefitTypeId = benefitTypeId }, connectionStringName, false).FirstOrDefault();
                 return (80M / 100M) * domeasticServantAllowance;
             }
-            else if (empCategory == "PERM")
+            else if (empCategory == "PERM" || empCategory == "POLI" )
             {
                 if (check is null)
                 {
@@ -356,7 +356,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Allowance
 
                 //return 0.00M;
             }
-            else if (empCategory == "PERM")
+            else if (empCategory == "PERM" || empCategory == "POLI")
             {
 
                 if (check is null)
@@ -395,7 +395,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Allowance
                 decimal driverAllowance = db.LoadData<decimal, dynamic>("SELECT (GradeLevel.MonthlyGross * LinkedBenefits.MultiplyBy) FROM  LinkedBenefits INNER JOIN GradeLevel ON LinkedBenefits.LinkedGradeLevelId = GradeLevel.Id WHERE LinkedBenefits.GradeLevelId = @GradeLevelId And BenefitTypeId = @BenefitTypeId", new { GradeLevelId = gradeLevelId, BenefitTypeId = benefitTypeId }, connectionStringName, false).FirstOrDefault();
                 return (80M / 100M) * driverAllowance;
             }
-            else if (empCategory == "PERM")
+            else if (empCategory == "PERM" || empCategory == "POLI")
             {
                 if (check is null)
                 {
@@ -432,7 +432,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Allowance
                 decimal vehicleAllowanceAmount = (vehicleMaintenancePerc / (decimal)100) * annualBasicSalary;
                 return vehicleAllowanceAmount / 12;
             }
-            else if (empCategory == "PERM")
+            else if (empCategory == "PERM" || empCategory == "POLI")
             {
 
                 if (check is null)
@@ -479,7 +479,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Allowance
                 decimal hazardAllowanceAmount = (hazardAllowancePerc / (decimal)100) * annualBasicSalary;
                 return hazardAllowanceAmount / 12;
             }
-            else if (empCategory == "PERM")
+            else if (empCategory == "PERM" || empCategory == "POLI")
             {
 
                 if (check is null)
