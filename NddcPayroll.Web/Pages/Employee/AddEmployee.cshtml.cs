@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using NddcPayrollLibrary.Data.Company;
 using NddcPayrollLibrary.Data.EmployeeData;
+using NddcPayrollLibrary.Data.Reports;
 using NddcPayrollLibrary.Model.Company;
 using NddcPayrollLibrary.Model.Employee;
 using NddcPayrollLibrary.Model.Enums;
@@ -37,6 +38,7 @@ namespace NddcPayroll.Web.Pages.Employee
         public IActionResult OnPost()
         {
             int Id = dbEmp.AddEmployee(Employee);
+
             return RedirectToPage("StatutoryDetails", new { EmpId = Id});
         }
     }

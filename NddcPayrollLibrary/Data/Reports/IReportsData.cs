@@ -13,6 +13,7 @@ namespace NddcPayrollLibrary.Data.Reports
         Task<List<MyRemitaUploadModel>> GetRemitaReportAsync();
         Task<List<MyStaffPayeDeductionsModel>> GetStaffPayeDeductionByLocationAsync(string staffStateProvince);
         Task UpdateEmployeesPayrollAsync();
+        Task UpdateEmployeesPayrollByEmpIdAsync(int empId);
         Task UpdateEmployeesPayrollByGradeLevelAsync(int gradeLevelId);
     }
 }

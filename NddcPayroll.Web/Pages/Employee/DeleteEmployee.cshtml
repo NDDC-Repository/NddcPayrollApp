@@ -1,0 +1,29 @@
+﻿@page "{EmpId:int?}"
+@model NddcPayroll.Web.Pages.Employee.DeleteEmployeeModel
+@{
+}
+
+<div class="row">
+    <div class="col-xl-6">
+        <div class="card overflow-hidden">
+            <div class="card-body bg-marketplace d-flex">
+                <div class="flex-grow-1">
+                    <h4 class="fs-18 lh-base mb-0">Delete @Model.EmpName <br></h4>
+                    <p class="mb-0 mt-2 pt-1 text-muted">
+                        You are about to Parmanently Delete the Payroll Records of @Model.EmpName.<br />
+                        This action would completely erase the current employee Payroll Records.<br />
+                        If your intended action was to retire or resign an Employee please use the Archive option instead.
+                    </p>
+                    <div class="d-flex gap-3 mt-4">
+                        <form method="post">
+                            <button type="submit" class="btn btn-danger">Continue to Delete</button>
+                            <a asp-page="Employees" class="btn btn-primary">Cancel</a>
+                        </form>
+                    </div>
+                </div>
+                <img src="assets/images/bg-d.png" alt="" class="img-fluid">
+            </div>
+        </div>
+    </div><!--end col-->
+
+</div>

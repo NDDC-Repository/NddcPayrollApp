@@ -79,26 +79,61 @@
                                     <th scope="col">Department</th>
                                     <th scope="col">JobTitle</th>
                                     <th scope="col">Category</th>
-                                    <th scope="col" style="width: 150px;">Action</th>
+                                    
+                                    
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in Model.Employees)
                                 {
-                                    <tr>
-                                        <td>@item.SrNo</td>
-                                        <td><a href="#" class="fw-medium">@item.EmployeeCode</a></td>
-                                        <td>@item.FullName</td>
-                                        <td>@item.Gender</td>
-                                        <td>@item.Email</td>
-                                        <td>@item.GradeLevel</td>
-                                        <td>@item.DepartmentName</td>
-                                        <td>@item.Description</td>
-                                        <td>@item.Category</td>
-                                        <td>
-                                            <a asp-page="EmployeeDetails" asp-route-EmpID="@item.Id" class="btn btn-sm btn-light">Details</a>
-                                        </td>
-                                    </tr>
+                                    @if (item.Archived == true)
+                                    {
+                                        <tr class="table-warning">
+                                            <td>@item.SrNo</td>
+                                            <td><a asp-page="EmployeeDetails" asp-route-EmpID="@item.Id" class="fw-medium">@item.EmployeeCode</a></td>
+                                            <td>@item.FullName</td>
+                                            <td>@item.Gender</td>
+                                            <td>@item.Email</td>
+                                            <td>@item.GradeLevel</td>
+                                            <td>@item.DepartmentName</td>
+                                            <td>@item.Description</td>
+                                            <td>@item.Category</td>
+                                            <td>
+                                                <a asp-page="EmployeeDetails" asp-route-EmpID="@item.Id" class="btn btn-sm btn-light">Details</a>
+                                            </td>
+                                            <td>
+                                                Archived
+                                            </td>
+                                            <td>
+                                                <a asp-page="ArchiveEmployee" asp-route-EmpID="@item.Id" class="btn btn-sm btn-success">Un-Archive</a>
+                                            </td>
+                                            
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td>@item.SrNo</td>
+                                            <td><a asp-page="EmployeeDetails" asp-route-EmpID="@item.Id" class="fw-medium">@item.EmployeeCode</a></td>
+                                            <td>@item.FullName</td>
+                                            <td>@item.Gender</td>
+                                            <td>@item.Email</td>
+                                            <td>@item.GradeLevel</td>
+                                            <td>@item.DepartmentName</td>
+                                            <td>@item.Description</td>
+                                            <td>@item.Category</td>
+                                            <td>
+                                                <a asp-page="EmployeeDetails" asp-route-EmpID="@item.Id" class="btn btn-sm btn-light">Details</a>
+                                            </td>
+                                            <td>
+                                                <a asp-page="ArchiveEmployee" asp-route-EmpID="@item.Id" class="btn btn-sm btn-warning">Archive</a>
+                                            </td>
+                                            <td>
+                                                <a asp-page="DeleteEmployee" asp-route-EmpID="@item.Id" class="btn btn-sm btn-danger">Delete</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                    
                                 }
 
 

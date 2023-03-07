@@ -1,0 +1,30 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using NddcPayrollLibrary.Data.EmployeeData;
+using NddcPayrollLibrary.Data.Helper;
+
+namespace NddcPayroll.Web.Pages.Employee
+{
+    public class ArchiveEmployeeModel : PageModel
+    {
+        private readonly IHelperData helpDb;
+        private readonly IEmployeeData empDb;
+
+        public string EmpName { get; set; }
+        public ArchiveEmployeeModel(IHelperData helpDb, IEmployeeData empDb)
+        {
+            this.helpDb = helpDb;
+            this.empDb = empDb;
+        }
+        public void OnGet(int? EmpId)
+        {
+            EmpName = helpDb.GetAnyRecord<string, int>("Employees", "(FirstName + ' ' + LastName) As Name", "ID", EmpId.Value);
+        }
+
+        public IActionResult OnPost(int? EmpId)
+        {
+            empDb.ArchiveEmployee(EmpId.Value);
+            return RedirectToPage("Employees");
+        }
+    }
+}

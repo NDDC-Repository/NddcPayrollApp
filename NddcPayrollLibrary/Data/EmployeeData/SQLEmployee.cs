@@ -1,4 +1,8 @@
-﻿using NddcPayrollLibrary.Databases;
+﻿using NddcPayrollLibrary.Data.Calculations.Allowance;
+using NddcPayrollLibrary.Data.Calculations.Deductions;
+using NddcPayrollLibrary.Data.Payroll;
+using NddcPayrollLibrary.Data.Reports;
+using NddcPayrollLibrary.Databases;
 using NddcPayrollLibrary.Model.Company;
 using NddcPayrollLibrary.Model.Employee;
 using NddcPayrollLibrary.Model.Enums;
@@ -13,17 +17,28 @@ namespace NddcPayrollLibrary.Data.EmployeeData
     public class SQLEmployee : IEmployeeData
     {
         private readonly ISqlDataAccess db;
+        
         private const string connectionStringName = "SqlDb";
 
         public SQLEmployee(ISqlDataAccess db)
         {
             this.db = db;
+          
         }
 
         public int AddEmployee(EmployeeModel Employee)
         {
             Employee.CreatedBy = "Admin";
             Employee.DateCreated = DateTime.Now;
+
+            string SQL = "Update Employees Set BasicSalary = 0.00," +
+               "Insurance = 0.00, SecretarialAllow = 0.00, LeaveAllow = 0.00, " +
+               "ActingAllow = 0.00, ShiftAllow = 0.00, UniformAllow = 0.00, CooperativeDed = 0.00, " +
+               "VoluntaryPension = 0.00, TransportAllow = 0.00, HousingAllow = 0.00, FurnitureAllow = 0.00," +
+               " MealAllow = 0.00, UtilityAllow = 0.00, EducationAllow = 0.00, SecurityAllow = 0.00," +
+               " MedicalAllow = 0.00, DomesticServantAllow = 0.00, DriverAllow = 0.00, VehicleAllow =0.00," +
+               " HazardAllow = 0.00, Tax = 0.00, NHF = 0.00, JSA = 0.00, SSA = 0.00, TotalEarnings = 0.00, " +
+               "TotalDeductions = 0.00, NetPay = 0.00, Pension = 0.00, TaxCalc = 'Automatic', Archived = 0 Where Id = @Id";
 
             db.SaveData("Insert Into Employees (EmployeeCode, Gender, MaritalStatus, firstName, LastName, OtherNames, MaidenName," +
                 " SpouseName, Email, Phone, DateOfBirth, Address, City, SID, Passport, EmploymentStatus, DateEngaged, ContactName, ContactPhone, CreatedBy, DateCreated) " +
@@ -37,11 +52,31 @@ namespace NddcPayrollLibrary.Data.EmployeeData
             int Id = db.LoadData<int, dynamic>("select Id from Employees where EmployeeCode = @EmployeeCode",
                 new { Employee.EmployeeCode }, connectionStringName, false).First();
 
+            db.SaveData(SQL,
+               new
+               {
+                   Id
+               },
+               connectionStringName, false);
+
+           
+            
+
             return Id;
+        }
+
+        public void DeleteEmployee(int Id)
+        {
+            db.SaveData("Delete Employees Where Id = @Id", new { Id }, connectionStringName, false);
+        }
+
+        public void ArchiveEmployee(int Id)
+        {
+            db.SaveData("Update Employees Set Archived = 1 Where Id = @Id", new { Id }, connectionStringName, false);
         }
         public List<EmployeeGridModel> GetAllEmployees(string name)
         {
-            string SQL = "SELECT Top 20 ROW_NUMBER() OVER (ORDER BY Employees.Id DESC) As SrNo, Employees.Id, Employees.EmployeeCode, Employees.Gender, Employees.FirstName, Employees.LastName, Employees.Email, Employees.Phone, Employees.Category, GradeLevel.GradeLevel, Departments.DepartmentName, JobTitles.Description FROM Employees LEFT JOIN GradeLevel ON Employees.GradeLevelId = GradeLevel.Id LEFT JOIN Departments ON Employees.DepartmentId = Departments.Id LEFT JOIN JobTitles ON Employees.JobTitleId = JobTitles.Id Where Employees.FirstName Like @Name Or Departments.DepartmentName Like @Name Or Employees.LastName Like @Name Or GradeLevel.GradeLevel Like @Name ORDER BY Employees.Id DESC";
+            string SQL = "SELECT Top 20 ROW_NUMBER() OVER (ORDER BY Employees.Id DESC) As SrNo, Employees.Id, Employees.EmployeeCode, Employees.Gender, Employees.FirstName, Employees.LastName, Employees.Email, Employees.Phone, Employees.Category, Employees.Archived, GradeLevel.GradeLevel, Departments.DepartmentName, JobTitles.Description FROM Employees LEFT JOIN GradeLevel ON Employees.GradeLevelId = GradeLevel.Id LEFT JOIN Departments ON Employees.DepartmentId = Departments.Id LEFT JOIN JobTitles ON Employees.JobTitleId = JobTitles.Id Where Employees.FirstName Like @Name Or Departments.DepartmentName Like @Name Or Employees.LastName Like @Name Or GradeLevel.GradeLevel Like @Name ORDER BY Employees.Id DESC";
             return db.LoadData<EmployeeGridModel, dynamic>(SQL, new { Name = "%" + name + "%"  }, connectionStringName, false).ToList();
         }
 

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using NddcPayrollLibrary.Data.Company;
 using NddcPayrollLibrary.Data.EmployeeData;
 using NddcPayrollLibrary.Data.Payroll;
+using NddcPayrollLibrary.Data.Reports;
 using NddcPayrollLibrary.Model;
 using NddcPayrollLibrary.Model.Company;
 using NddcPayrollLibrary.Model.Employee;
@@ -16,6 +17,7 @@ namespace NddcPayroll.Web.Pages.Employee
     {
         private readonly ICompanyData db;
         private readonly IEmployeeData empDb;
+        private readonly IReportsData repDb;
 
         public List<MyGradeLevelGridModel> MyGradeLevels { get; set; }
         public List<JobTitleModel> JobTitles { get; set; }
@@ -24,10 +26,11 @@ namespace NddcPayroll.Web.Pages.Employee
         [BindProperty]
         public MyAnalysisDetailsModel AnalysisDetail { get; set; }
 
-        public AnalysisDetailsModel(ICompanyData db, IEmployeeData EmpDb)
+        public AnalysisDetailsModel(ICompanyData db, IEmployeeData EmpDb, IReportsData repDb)
         {
             this.db = db;
             empDb = EmpDb;
+            this.repDb = repDb;
         }
         public void OnGet()
         {
@@ -37,10 +40,13 @@ namespace NddcPayroll.Web.Pages.Employee
             PayPoints = db.GetAllPayPoints();
         }
 
-        public IActionResult OnPost(int? EmpId)
+        public async Task<IActionResult> OnPostAsync(int? EmpId)
         {
             AnalysisDetail.EmployeeId = EmpId.Value;
             empDb.AddAnalysisDetails(AnalysisDetail);
+
+            await (Task.Run(() => repDb.UpdateEmployeesPayrollByEmpIdAsync(EmpId.Value)));
+
             return RedirectToPage("Employees");
         }
     }
