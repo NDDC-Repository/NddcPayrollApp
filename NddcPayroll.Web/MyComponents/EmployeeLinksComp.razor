@@ -313,7 +313,13 @@ else
     <div class="col-md-12 mt-4"></div>
 
         <div class="row">
-           
+           <div class="col-md-4">
+                <div class="mb-3">
+                    <label>Arreas</label>
+                    <input type="text" @onfocusout="SetNetPay" class="form-control" @bind="@Employee.Arreas" id="compnayNameinput">
+
+                </div>
+            </div>
             <div class="col-md-4">
                 <div class="mb-3">
                     <label>NetPay</label>
@@ -432,7 +438,7 @@ else
 
     private void SetNetPay()
     {
-        Employee.NetPay = Employee.TotalEarnings - Employee.TotalDeductions;
+        Employee.NetPay = Employee.Arreas + (Employee.TotalEarnings - Employee.TotalDeductions);
     }
 
     private void SaveEmployeeLink()

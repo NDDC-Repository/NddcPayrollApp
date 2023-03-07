@@ -38,7 +38,7 @@ namespace NddcPayrollLibrary.Data.EmployeeData
                " MealAllow = 0.00, UtilityAllow = 0.00, EducationAllow = 0.00, SecurityAllow = 0.00," +
                " MedicalAllow = 0.00, DomesticServantAllow = 0.00, DriverAllow = 0.00, VehicleAllow =0.00," +
                " HazardAllow = 0.00, Tax = 0.00, NHF = 0.00, JSA = 0.00, SSA = 0.00, TotalEarnings = 0.00, " +
-               "TotalDeductions = 0.00, NetPay = 0.00, Pension = 0.00, TaxCalc = 'Automatic', Archived = 0 Where Id = @Id";
+               "TotalDeductions = 0.00, NetPay = 0.00, Pension = 0.00, TaxCalc = 'Automatic', Archived = 0, Arreas = 0.00 Where Id = @Id";
 
             db.SaveData("Insert Into Employees (EmployeeCode, Gender, MaritalStatus, firstName, LastName, OtherNames, MaidenName," +
                 " SpouseName, Email, Phone, DateOfBirth, Address, City, SID, Passport, EmploymentStatus, DateEngaged, ContactName, ContactPhone, CreatedBy, DateCreated) " +
@@ -291,7 +291,7 @@ namespace NddcPayrollLibrary.Data.EmployeeData
         }
         public EmployeeLinksModel GetEmployeeLinks(int EmpId)
         {
-            string SQL = "SELECT Id, BasicSalary, GradeLevelId, JobTitleId, Category, Insurance, SecretarialAllow, LeaveAllow, ActingAllow, ShiftAllow, UniformAllow, CooperativeDed, VoluntaryPension, TransportAllow, HousingAllow, FurnitureAllow, MealAllow, UtilityAllow, EducationAllow, SecurityAllow, MedicalAllow, DomesticServantAllow, DriverAllow, VehicleAllow, HazardAllow, Tax, NHF, JSA, SSA, TotalEarnings, TotalDeductions, NetPay, Pension, TaxCalc From Employees Where Id = @Id";
+            string SQL = "SELECT Id, BasicSalary, GradeLevelId, JobTitleId, Category, Insurance, SecretarialAllow, LeaveAllow, ActingAllow, ShiftAllow, UniformAllow, CooperativeDed, VoluntaryPension, TransportAllow, HousingAllow, FurnitureAllow, MealAllow, UtilityAllow, EducationAllow, SecurityAllow, MedicalAllow, DomesticServantAllow, DriverAllow, VehicleAllow, HazardAllow, Tax, NHF, JSA, SSA, TotalEarnings, TotalDeductions, NetPay, Pension, TaxCalc, Arreas From Employees Where Id = @Id";
             return db.LoadData<EmployeeLinksModel, dynamic>(SQL, new { Id = EmpId }, connectionStringName, false).First();
         }
 
@@ -320,7 +320,7 @@ namespace NddcPayrollLibrary.Data.EmployeeData
                 " MealAllow = @MealAllow, UtilityAllow = @UtilityAllow, EducationAllow = @EducationAllow, SecurityAllow = @SecurityAllow," +
                 " MedicalAllow = @MedicalAllow, DomesticServantAllow = @DomesticServantAllow, DriverAllow = @DriverAllow, VehicleAllow =@VehicleAllow," +
                 " HazardAllow = @HazardAllow, Tax = @Tax, NHF = @NHF, JSA = @JSA, SSA = @SSA, TotalEarnings = @TotalEarnings, " +
-                "TotalDeductions = @TotalDeductions, NetPay = @NetPay, Pension = @Pension, TaxCalc = @TaxCalc Where Id = @Id";
+                "TotalDeductions = @TotalDeductions, NetPay = @NetPay, Pension = @Pension, TaxCalc = @TaxCalc, Arreas = @Arreas Where Id = @Id";
             db.SaveData(SQL,
                 new
                 {
@@ -354,7 +354,8 @@ namespace NddcPayrollLibrary.Data.EmployeeData
                     employee.TotalDeductions,
                     employee.NetPay,
                     employee.Pension,
-                    employee.TaxCalc
+                    employee.TaxCalc,
+                    employee.Arreas
                 },
                  connectionStringName, false);
         }

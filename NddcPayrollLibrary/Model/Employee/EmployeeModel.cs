@@ -85,5 +85,6 @@ namespace NddcPayrollLibrary.Model.Employee
         public decimal NetPay { get; set; }
         public decimal BasicSalary { get; set; }
         public decimal MonthlyGross { get; set; }
+        public decimal Arreas { get; set; }
     }
 }

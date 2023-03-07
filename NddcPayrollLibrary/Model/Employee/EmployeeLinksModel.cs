@@ -45,5 +45,6 @@ namespace NddcPayrollLibrary.Model.Employee
         public decimal ShiftAllow { get; set; }
         public decimal UniformAllow { get; set; }
         public string TaxCalc { get; set; }
+        public decimal Arreas { get; set; }
     }
 }
