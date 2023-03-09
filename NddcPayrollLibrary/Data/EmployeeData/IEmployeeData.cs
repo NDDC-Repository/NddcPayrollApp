@@ -23,6 +23,8 @@ namespace NddcPayrollLibrary.Data.EmployeeData
         void UpdateForLinkCalc(int gradeLevelId, string category, int EmpId);
         void SaveEmployeeLink(EmployeeLinksModel employee);
         void DeleteEmployee(int Id);
-        void ArchiveEmployee(int Id);
+        void ArchiveEmployee(int Id, string ExitCondition, DateTime ExitDate);
+        void UnArchiveEmployee(int Id);
+        List<EmployeeGridModel> GetArchivedEmployees(string name);
     }
 }

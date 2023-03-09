@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NddcPayrollLibrary.Model.Employee
+namespace NddcPayrollLibrary.Model.Payroll
 {
-    public class EmployeeModel
+    public class MyPayrollJournalModel
     {
         public int Id { get; set; }
         public string EmployeeCode { get; set; }
@@ -25,15 +25,9 @@ namespace NddcPayrollLibrary.Model.Employee
         public string City { get; set; }
         public int SID { get; set; }
         public MyStatesModel State { get; set; }
-        public string Passport { get; set; }
         public string EmploymentStatus { get; set; }
         public DateTime DateEngaged { get; set; }
-        public string ContactName { get; set; }
-        public string ContactPhone { get; set; }
-        public string CreatedBy { get; set; }
-        public DateTime DateCreated { get; set; }
         public string JobTitle { get; set; }
-
         public string TaxStateProvince { get; set; }
         public bool TaxStatus { get; set; }
         public string TaxOffice { get; set; }
@@ -61,7 +55,7 @@ namespace NddcPayrollLibrary.Model.Employee
         public string PayPoint { get; set; }
         public decimal Insurance { get; set; }
         public decimal SecretarialAllow { get; set; }
-        public decimal CooporativeDed { get; set; }
+        public decimal CooperativeDed { get; set; }
         public decimal VoluntaryPension { get; set; }
         public decimal TransportAllow { get; set; }
         public decimal HousingAllow { get; set; }
@@ -85,9 +79,20 @@ namespace NddcPayrollLibrary.Model.Employee
         public decimal NetPay { get; set; }
         public decimal BasicSalary { get; set; }
         public decimal MonthlyGross { get; set; }
+        public decimal LeaveAllow { get; set; }
+        public decimal ActingAllow { get; set; }
+        public decimal ShiftAllow { get; set; }
+        public decimal UniformAllow { get; set; }
+        public string TaxCalc { get; set; }
         public decimal Arreas { get; set; }
-        public string ExitCondition { get; set; }
         public decimal EmployerPension { get; set; }
-        public DateTime ExitDate { get; set; }
+        public decimal TaxAdjustment { get; set; }
+        public int PayrollJournalTitleID { get; set; }
+        public string JournalName { get; set; }
+        public int Month { get; set; }
+        public string MonthYear { get; set; }
+        public DateTime CurrentPeriod { get; set; }
+        public DateTime DateCreated { get; set; }
+        public string CreatedBy { get; set; }
     }
 }

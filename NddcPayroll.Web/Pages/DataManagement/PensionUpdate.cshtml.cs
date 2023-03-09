@@ -26,5 +26,10 @@ namespace NddcPayroll.Web.Pages.DataManagement
             db.UpdatePaypoint();
         }
 
+        public void OnPostUpdateEmployerPension()
+        {
+            db.UpdateEmployerPension();
+        }
+
     }
 }

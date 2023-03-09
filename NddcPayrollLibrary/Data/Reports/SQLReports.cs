@@ -241,6 +241,39 @@ namespace NddcPayrollLibrary.Data.Reports
             return PayrollSummaryList;
         }
 
+        public async Task<List<MyPayrollSummaryByDepartmentModel>> GetPayrollTotalsReportAsync()
+        {
+
+            //MyPayRollListModel reportModel;
+            List<MyPayrollSummaryByDepartmentModel> PayrollSummaryList = new List<MyPayrollSummaryByDepartmentModel>();
+            //List<Task<decimal>> tasks = new List<Task<decimal>>();
+
+            string SQL = "SELECT Sum(Employees.SecretarialAllow) As SecretarialAllow, Sum(Employees.CooperativeDed) As CooporativeDed, " +
+                "Sum(Employees.VoluntaryPension) As VoluntaryPension, Sum(Employees.TransportAllow) As TransportAllow, " +
+                "Sum(Employees.HousingAllow) As HousingAllow, Count(Employees.Id) As EmployeeCount, Sum(Employees.FurnitureAllow) As FurnitureAllow, " +
+                "Sum(Employees.MealAllow) As MealAllow, Sum(Employees.UtilityAllow) As UtilityAllow, " +
+                "Sum(Employees.EducationAllow) As EducationAllow, Sum(Employees.SecurityAllow) As SecurityAllow, " +
+                "Sum(Employees.MedicalAllow) As MedicalAllow, Sum(Employees.DomesticServantAllow) As DomesticServantAllow, " +
+                "Sum(Employees.DriverAllow) As DriverAllow, Sum(Employees.VehicleAllow) As VehicleAllow, " +
+                "Sum(Employees.HazardAllow) As HazardAllow, Sum(Employees.Tax) As Tax, Sum(Employees.NHF) As NHF, " +
+                "Sum(Employees.JSA) As JSA, Sum(Employees.SSA) As SSA, Sum(Employees.TotalEarnings) As TotalEarnings, " +
+                "Sum(Employees.NetPay) As NetPay, Sum(Employees.BasicSalary) As BasicSalary, " +
+                "Sum(Employees.MonthlyGross) As MonthlyGross, Sum(Employees.Pension) As Pension FROM  Employees" +
+                " Where Employees.Archived = 0";
+
+            await (Task.Run(() => PayrollSummaryList = db.LoadData<MyPayrollSummaryByDepartmentModel, dynamic>(SQL, new { }, connectionStringName, false).ToList()));
+
+            foreach (var item in PayrollSummaryList)
+            {
+                item.TotalEarnings = (item.BasicSalary + item.TransportAllow + item.MealAllow + item.UtilityAllow + item.EducationAllow + item.SecurityAllow +
+                    item.DomesticServantAllow + item.MedicalAllow + item.DriverAllow + item.VehicleAllow + item.HazardAllow + item.SecretarialAllow);
+                item.TotalDeductions = (item.Tax + item.NHF + item.Pension + item.JSA + item.CooporativeDed + item.SSA);
+                item.NetPay = item.TotalEarnings - item.TotalDeductions;
+            }
+
+            return PayrollSummaryList;
+        }
+
         public async Task<List<MyStaffPayeDeductionsModel>> GetStaffPayeDeductionByLocationAsync(string staffStateProvince)
         {
 
@@ -248,7 +281,7 @@ namespace NddcPayrollLibrary.Data.Reports
             List<MyStaffPayeDeductionsModel> StaffPayeList = new List<MyStaffPayeDeductionsModel>();
             //List<Task<decimal>> tasks = new List<Task<decimal>>();
 
-            string SQL = "select ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, EmployeeCode, LastName, FirstName, TotalEarnings, Tax From Employees Where TaxStateProvince = @TaxStateProvince";
+            string SQL = "select ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, EmployeeCode, LastName, FirstName, TotalEarnings, Tax From Employees Where TaxStateProvince = @TaxStateProvince And Archived = 0";
 
             await (Task.Run(() => StaffPayeList = db.LoadData<MyStaffPayeDeductionsModel, dynamic>(SQL, new { TaxStateProvince = staffStateProvince }, connectionStringName, false).ToList()));
 
@@ -262,7 +295,7 @@ namespace NddcPayrollLibrary.Data.Reports
             List<EmployeeModel> Employees = new List<EmployeeModel>();
             List<Task<decimal>> tasks = new List<Task<decimal>>();
 
-            string SQL = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, Employees.Id, Employees.EmployeeCode, Employees.FirstName, Employees.LastName, Employees.Email, Employees.Category, GradeLevel.GradeLevel, Departments.DepartmentName FROM Employees LEFT JOIN GradeLevel ON Employees.GradeLevelId = GradeLevel.Id LEFT JOIN Departments ON Employees.DepartmentId = Departments.Id LEFT JOIN JobTitles ON Employees.JobTitleId = JobTitles.Id ORDER BY Employees.Id ASC";
+            string SQL = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, Employees.Id, Employees.EmployeeCode, Employees.FirstName, Employees.LastName, Employees.Email, Employees.Category, GradeLevel.GradeLevel, Departments.DepartmentName FROM Employees LEFT JOIN GradeLevel ON Employees.GradeLevelId = GradeLevel.Id LEFT JOIN Departments ON Employees.DepartmentId = Departments.Id LEFT JOIN JobTitles ON Employees.JobTitleId = JobTitles.Id Where Archived = 0 ORDER BY Employees.Id ASC";
 
             Employees = db.LoadData<EmployeeModel, dynamic>(SQL, new { }, connectionStringName, false).ToList();
             foreach (var item in Employees)
@@ -292,6 +325,8 @@ namespace NddcPayrollLibrary.Data.Reports
                 tasks.Add(Task.Run(() => employee.Pension = dedDb.GetPensionAmount(item.Id)));
                 tasks.Add(Task.Run(() => employee.JSA = dedDb.GetJSA(item.Id)));
                 tasks.Add(Task.Run(() => employee.SSA = dedDb.GetSSA(item.Id)));
+                tasks.Add(Task.Run(() => employee.SSA = dedDb.GetSSA(item.Id)));
+                tasks.Add(Task.Run(() => employee.EmployerPension = dedDb.GetEmployerPensionAmount(item.Id)));
                 //tasks.Add(Task.Run(() => employee.MonthlyGross = dedDb.GetSSA(item.Id)));
                 tasks.Add(Task.Run(() => employee.NetPay = payDb.GetMonthlyGross(item.Id) - dedDb.GetTotalDeductions(item.Id)));
 
@@ -313,7 +348,7 @@ namespace NddcPayrollLibrary.Data.Reports
             List<EmployeeModel> Employees = new List<EmployeeModel>();
             List<Task<decimal>> tasks = new List<Task<decimal>>();
 
-            string SQL = "SELECT Id, EmployeeCode From Employees Where GradeLevelId = @GradeLevelId And TaxCalc = 'Automatic'";
+            string SQL = "SELECT Id, EmployeeCode From Employees Where GradeLevelId = @GradeLevelId And TaxCalc = 'Automatic' And Archived = 0";
 
             Employees = db.LoadData<EmployeeModel, dynamic>(SQL, new { gradeLevelId }, connectionStringName, false).ToList();
             foreach (var item in Employees)
@@ -343,6 +378,7 @@ namespace NddcPayrollLibrary.Data.Reports
                 tasks.Add(Task.Run(() => employee.Pension = dedDb.GetPensionAmount(item.Id)));
                 tasks.Add(Task.Run(() => employee.JSA = dedDb.GetJSA(item.Id)));
                 tasks.Add(Task.Run(() => employee.SSA = dedDb.GetSSA(item.Id)));
+                tasks.Add(Task.Run(() => employee.EmployerPension = dedDb.GetEmployerPensionAmount(item.Id)));
                 //tasks.Add(Task.Run(() => employee.MonthlyGross = dedDb.GetSSA(item.Id)));
                 tasks.Add(Task.Run(() => employee.NetPay = payDb.GetMonthlyGross(item.Id) - dedDb.GetTotalDeductions(item.Id)));
 
@@ -392,7 +428,7 @@ namespace NddcPayrollLibrary.Data.Reports
             List<EmployeeModel> Employees = new List<EmployeeModel>();
             List<Task<decimal>> tasks = new List<Task<decimal>>();
 
-            string SQL = "SELECT Id, EmployeeCode From Employees Where Id = @Id";
+            string SQL = "SELECT Id, EmployeeCode From Employees Where Id = @Id And Archived = 0";
 
             Employees = db.LoadData<EmployeeModel, dynamic>(SQL, new { @Id = empId }, connectionStringName, false).ToList();
             foreach (var item in Employees)
@@ -422,6 +458,7 @@ namespace NddcPayrollLibrary.Data.Reports
                 tasks.Add(Task.Run(() => employee.Pension = dedDb.GetPensionAmount(item.Id)));
                 tasks.Add(Task.Run(() => employee.JSA = dedDb.GetJSA(item.Id)));
                 tasks.Add(Task.Run(() => employee.SSA = dedDb.GetSSA(item.Id)));
+                tasks.Add(Task.Run(() => employee.EmployerPension = dedDb.GetEmployerPensionAmount(item.Id)));
                 //tasks.Add(Task.Run(() => employee.MonthlyGross = dedDb.GetSSA(item.Id)));
                 tasks.Add(Task.Run(() => employee.NetPay = payDb.GetMonthlyGross(item.Id) - dedDb.GetTotalDeductions(item.Id)));
 
@@ -441,7 +478,7 @@ namespace NddcPayrollLibrary.Data.Reports
             List<Task<decimal>> tasks = new List<Task<decimal>>();
 
             string SQL = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, Employees.Id, Employees.EmployeeCode, (Employees.FirstName + ' ' + Employees.LastName) As EmployeeName, Employees.BankCode, Employees.AccountNumber FROM Employees ORDER BY Employees.Id ASC";
-            string SQL2 = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, Employees.Id, Employees.EmployeeCode, (Employees.FirstName + ' ' + Employees.LastName) As EmployeeName, Employees.BankCode, Employees.AccountNumber, (Employees.NetPay) As PayableAmount FROM Employees ORDER BY Employees.Id ASC";
+            string SQL2 = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, Employees.Id, Employees.EmployeeCode, (Employees.FirstName + ' ' + Employees.LastName) As EmployeeName, Employees.BankCode, Employees.AccountNumber, (Employees.NetPay) As PayableAmount FROM Employees Where Archived = 0 ORDER BY Employees.Id ASC";
 
             Reports = db.LoadData<MyRemitaUploadModel, dynamic>(SQL2, new { }, connectionStringName, false).ToList();
             //foreach (var item in Reports)
@@ -468,7 +505,7 @@ namespace NddcPayrollLibrary.Data.Reports
 
             string SQL2 = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, Employees.Id, Employees.EmployeeCode, Employees.FirstName, Employees.LastName, Employees.NHFNumber, Employees.PayPoint, GradeLevel.BasicSalary FROM Employees LEFT JOIN GradeLevel ON Employees.GradeLevelId = GradeLevel.Id ORDER BY Employees.Id ASC";
             string SQL = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, Employees.Id, Employees.EmployeeCode, Employees.FirstName, Employees.LastName, Employees.NHFNumber, Employees.AccountNumber FROM Employees ORDER BY Employees.Id ASC";
-            string SQL3 = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, Employees.Id, Employees.EmployeeCode, Employees.FirstName, Employees.LastName, Employees.NHFNumber, Employees.PayPoint, (Employees.NHF) As NHFAmount FROM Employees ORDER BY Employees.Id ASC";
+            string SQL3 = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, Employees.Id, Employees.EmployeeCode, Employees.FirstName, Employees.LastName, Employees.NHFNumber, Employees.PayPoint, (Employees.NHF) As NHFAmount FROM Employees WHERE Archived = 0 ORDER BY Employees.Id ASC";
 
             Reports = db.LoadData<MyNHFReportModel, dynamic>(SQL3, new { }, connectionStringName, false).ToList();
             //foreach (var item in Reports)

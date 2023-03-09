@@ -1,0 +1,48 @@
+﻿@page
+@model NddcPayroll.Web.Pages.Payroll.RunPayrollModel
+@{
+}
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <h4 class="mb-sm-0">Run Payroll</h4>
+
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li>
+                    <li class="breadcrumb-item active">Run Payroll</li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="row g-2">
+            <div class="col-sm-4">
+                <div class="search-box">
+                    @*<input type="text" class="form-control" id="searchMemberList" placeholder="Search for name or designation...">
+                    <i class="ri-search-line search-icon"></i>*@
+                    <h4 class="fs-18 lh-base mb-0">All Listings</h4>
+                </div>
+            </div>
+            <!--end col-->
+            <div class="col-sm-auto ms-auto">
+                <div class="list-grid-nav hstack gap-1">
+                    <a asp-page="ExecutePayroll" class="btn btn-success addMembers-modal"><i class="ri-play-circle-line me-1 align-bottom"></i>Run Payroll</a>
+                    @*<button type="button" id="dropdownMenuLink1" data-bs-toggle="dropdown" aria-expanded="false" class="btn btn-soft-info btn-icon fs-14"><i class="ri-more-2-fill"></i></button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink1" style="">
+                    <li><a class="dropdown-item" href="#">Save Report</a></li>
+                    <li><a class="dropdown-item" href="#">Post Journal</a></li>
+                    <li><a class="dropdown-item" href="#">Retreive Saved Report</a></li>
+                    </ul>*@
+
+                </div>
+            </div>
+            <!--end col-->
+        </div>
+        <!--end row-->
+    </div>
+</div>

@@ -12,5 +12,6 @@ namespace NddcPayrollLibrary.Data.DataManagement
         void UpdateBankCode();
         void UpdatePensionAdmin();
         void UpdatePaypoint();
+        void UpdateEmployerPension();
     }
 }

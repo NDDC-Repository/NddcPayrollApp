@@ -1,27 +1,8 @@
-﻿@page "/listingreport"
+﻿@page "/runpayroll"
 @using Syncfusion.Blazor.Grids
 @using NddcPayrollLibrary.Data.Reports;
 @using NddcPayrollLibrary.Model.Report;
 @inject IReportsData db;
-
-@*<div class="row">
-    <div class="col-xl-6">
-        <div class="card overflow-hidden">
-            <div class="card-body bg-marketplace d-flex">
-                <div class="flex-grow-1">
-                    <h4 class="fs-18 lh-base mb-0">Payroll Listings Report <br></h4>
-                    <p class="mb-0 mt-2 pt-1 text-muted">View Report of Benefits and Deductions for Entire Workforce</p>
-                    <div class="d-flex gap-3 mt-4">
-                        <a @onclick="GenerateReport" class="btn btn-primary">Generate Report </a>
-                    </div>
-                    
-                </div>
-                <img src="assets/images/bg-d.png" alt="" class="img-fluid">
-            </div>
-        </div>
-    </div><!--end col-->
-    
-</div>*@
 
 <div class="card">
     <div class="card-body">
@@ -33,17 +14,17 @@
                     <h4 class="fs-18 lh-base mb-0">Payroll Listings Report</h4>
                 </div>
             </div>
-                        <!--end col-->
+            <!--end col-->
             <div class="col-sm-auto ms-auto">
                 <div class="list-grid-nav hstack gap-1">
-                    <button @onclick="GenerateReport" class="btn btn-success addMembers-modal"><i class="ri-profile-line me-1 align-bottom"></i> Generate Report</button>
-                    <button type="button" id="dropdownMenuLink1" data-bs-toggle="dropdown" aria-expanded="false" class="btn btn-soft-info btn-icon fs-14"><i class="ri-more-2-fill"></i></button>
+                    <button @onclick="GenerateReport" class="btn btn-primary addMembers-modal"><i class="ri-profile-line me-1 align-bottom"></i> Preview Listing</button>
+                    @*<button type="button" id="dropdownMenuLink1" data-bs-toggle="dropdown" aria-expanded="false" class="btn btn-soft-info btn-icon fs-14"><i class="ri-more-2-fill"></i></button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink1" style="">
                         <li><a class="dropdown-item" href="#">Save Report</a></li>
                         <li><a class="dropdown-item" href="#">Post Journal</a></li>
                         <li><a class="dropdown-item" href="#">Retreive Saved Report</a></li>
-                    </ul>
-                   
+                    </ul>*@
+
                 </div>
             </div>
             <!--end col-->
@@ -64,14 +45,14 @@
 }
 else if (ShowGrid == true)
 {
-  
+
     <p>Time Elasped: @OpsTime Seconds</p>
-    <SfGrid @ref="SfEmployeeGrid" DataSource="PayrollList" AllowResizing="true"  EnableVirtualization="true" ShowColumnChooser="true" EnableHeaderFocus="true" Height="600" AllowExcelExport="true" AllowPaging="true" AllowFiltering="true" AllowSorting="true" AllowGrouping="true" Toolbar="@toolbar">
+    <SfGrid @ref="SfEmployeeGrid" DataSource="PayrollList" AllowResizing="true" EnableVirtualization="true" ShowColumnChooser="true" EnableHeaderFocus="true" Height="600" AllowExcelExport="true" AllowPaging="true" AllowFiltering="true" AllowSorting="true" AllowGrouping="true" Toolbar="@toolbar">
         <GridPageSettings PageSize="50" PageSizes="@(new string[] { "20", "50", "100", "200", "500", "All" })"></GridPageSettings>
         <GridAggregates>
             <GridAggregate>
                 <GridAggregateColumns>
-                   
+
                     <GridAggregateColumn Field=@nameof(MyPayRollListModel.BasicSalary) Type="AggregateType.Sum" Format="N">
                         <FooterTemplate>
                             @{
@@ -102,7 +83,7 @@ else if (ShowGrid == true)
                             }
                         </FooterTemplate>
                     </GridAggregateColumn>
-                     <GridAggregateColumn Field=@nameof(MyPayRollListModel.FurnitureAllowance) Type="AggregateType.Sum" Format="N">
+                    <GridAggregateColumn Field=@nameof(MyPayRollListModel.FurnitureAllowance) Type="AggregateType.Sum" Format="N">
                         <FooterTemplate>
                             @{
                                 var aggregate = (context as AggregateTemplateContext);
@@ -132,7 +113,7 @@ else if (ShowGrid == true)
                             }
                         </FooterTemplate>
                     </GridAggregateColumn>
-                     <GridAggregateColumn Field=@nameof(MyPayRollListModel.EducationAllowance) Type="AggregateType.Sum" Format="N">
+                    <GridAggregateColumn Field=@nameof(MyPayRollListModel.EducationAllowance) Type="AggregateType.Sum" Format="N">
                         <FooterTemplate>
                             @{
                                 var aggregate = (context as AggregateTemplateContext);
@@ -142,7 +123,7 @@ else if (ShowGrid == true)
                             }
                         </FooterTemplate>
                     </GridAggregateColumn>
-                     <GridAggregateColumn Field=@nameof(MyPayRollListModel.SecurityAllowance) Type="AggregateType.Sum" Format="N">
+                    <GridAggregateColumn Field=@nameof(MyPayRollListModel.SecurityAllowance) Type="AggregateType.Sum" Format="N">
                         <FooterTemplate>
                             @{
                                 var aggregate = (context as AggregateTemplateContext);
@@ -152,7 +133,7 @@ else if (ShowGrid == true)
                             }
                         </FooterTemplate>
                     </GridAggregateColumn>
-                     <GridAggregateColumn Field=@nameof(MyPayRollListModel.DomesticServantAllowance) Type="AggregateType.Sum" Format="N">
+                    <GridAggregateColumn Field=@nameof(MyPayRollListModel.DomesticServantAllowance) Type="AggregateType.Sum" Format="N">
                         <FooterTemplate>
                             @{
                                 var aggregate = (context as AggregateTemplateContext);
@@ -172,7 +153,7 @@ else if (ShowGrid == true)
                             }
                         </FooterTemplate>
                     </GridAggregateColumn>
-                     <GridAggregateColumn Field=@nameof(MyPayRollListModel.DriversAllowance) Type="AggregateType.Sum" Format="N">
+                    <GridAggregateColumn Field=@nameof(MyPayRollListModel.DriversAllowance) Type="AggregateType.Sum" Format="N">
                         <FooterTemplate>
                             @{
                                 var aggregate = (context as AggregateTemplateContext);
@@ -182,7 +163,7 @@ else if (ShowGrid == true)
                             }
                         </FooterTemplate>
                     </GridAggregateColumn>
-                     <GridAggregateColumn Field=@nameof(MyPayRollListModel.VehicleMaintenanceAllowance) Type="AggregateType.Sum" Format="N">
+                    <GridAggregateColumn Field=@nameof(MyPayRollListModel.VehicleMaintenanceAllowance) Type="AggregateType.Sum" Format="N">
                         <FooterTemplate>
                             @{
                                 var aggregate = (context as AggregateTemplateContext);
@@ -192,7 +173,7 @@ else if (ShowGrid == true)
                             }
                         </FooterTemplate>
                     </GridAggregateColumn>
-                     <GridAggregateColumn Field=@nameof(MyPayRollListModel.HazardAllowance) Type="AggregateType.Sum" Format="N">
+                    <GridAggregateColumn Field=@nameof(MyPayRollListModel.HazardAllowance) Type="AggregateType.Sum" Format="N">
                         <FooterTemplate>
                             @{
                                 var aggregate = (context as AggregateTemplateContext);
@@ -202,7 +183,7 @@ else if (ShowGrid == true)
                             }
                         </FooterTemplate>
                     </GridAggregateColumn>
-                     <GridAggregateColumn Field=@nameof(MyPayRollListModel.TaxDeduction) Type="AggregateType.Sum" Format="N">
+                    <GridAggregateColumn Field=@nameof(MyPayRollListModel.TaxDeduction) Type="AggregateType.Sum" Format="N">
                         <FooterTemplate>
                             @{
                                 var aggregate = (context as AggregateTemplateContext);
@@ -212,7 +193,7 @@ else if (ShowGrid == true)
                             }
                         </FooterTemplate>
                     </GridAggregateColumn>
-                     <GridAggregateColumn Field=@nameof(MyPayRollListModel.NHFDeduction) Type="AggregateType.Sum" Format="N">
+                    <GridAggregateColumn Field=@nameof(MyPayRollListModel.NHFDeduction) Type="AggregateType.Sum" Format="N">
                         <FooterTemplate>
                             @{
                                 var aggregate = (context as AggregateTemplateContext);
@@ -232,7 +213,7 @@ else if (ShowGrid == true)
                             }
                         </FooterTemplate>
                     </GridAggregateColumn>
-                     <GridAggregateColumn Field=@nameof(MyPayRollListModel.JSADeduction) Type="AggregateType.Sum" Format="N">
+                    <GridAggregateColumn Field=@nameof(MyPayRollListModel.JSADeduction) Type="AggregateType.Sum" Format="N">
                         <FooterTemplate>
                             @{
                                 var aggregate = (context as AggregateTemplateContext);
@@ -242,7 +223,7 @@ else if (ShowGrid == true)
                             }
                         </FooterTemplate>
                     </GridAggregateColumn>
-                     <GridAggregateColumn Field=@nameof(MyPayRollListModel.SSADeduction) Type="AggregateType.Sum" Format="N">
+                    <GridAggregateColumn Field=@nameof(MyPayRollListModel.SSADeduction) Type="AggregateType.Sum" Format="N">
                         <FooterTemplate>
                             @{
                                 var aggregate = (context as AggregateTemplateContext);
@@ -262,7 +243,7 @@ else if (ShowGrid == true)
                             }
                         </FooterTemplate>
                     </GridAggregateColumn>
-                     <GridAggregateColumn Field=@nameof(MyPayRollListModel.TotalDeductions) Type="AggregateType.Sum" Format="N">
+                    <GridAggregateColumn Field=@nameof(MyPayRollListModel.TotalDeductions) Type="AggregateType.Sum" Format="N">
                         <FooterTemplate>
                             @{
                                 var aggregate = (context as AggregateTemplateContext);
@@ -272,7 +253,7 @@ else if (ShowGrid == true)
                             }
                         </FooterTemplate>
                     </GridAggregateColumn>
-                     <GridAggregateColumn Field=@nameof(MyPayRollListModel.NetPay) Type="AggregateType.Sum" Format="N">
+                    <GridAggregateColumn Field=@nameof(MyPayRollListModel.NetPay) Type="AggregateType.Sum" Format="N">
                         <FooterTemplate>
                             @{
                                 var aggregate = (context as AggregateTemplateContext);
@@ -283,18 +264,18 @@ else if (ShowGrid == true)
                         </FooterTemplate>
                     </GridAggregateColumn>
                 </GridAggregateColumns>
-                
+
             </GridAggregate>
         </GridAggregates>
 
         <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
         <GridEvents OnToolbarClick="ToolbarBtnClickHandler" TValue="MyPayRollListModel"></GridEvents>
-       
+
         <GridColumns>
             <GridColumn HeaderText="S/N" IsFrozen="true" Width="50" Field="@nameof(MyPayRollListModel.SrNo)"></GridColumn>
             <GridColumn HeaderText="Code" Width="100" IsFrozen="true" Field="@nameof(MyPayRollListModel.EmployeeCode)"></GridColumn>
             <GridColumn HeaderText="Last Name" IsFrozen="true" Width="120" Field="@nameof(MyPayRollListModel.LastName)"></GridColumn>
-            <GridColumn HeaderText="First Name" IsFrozen="true"  Width="120" Field="@nameof(MyPayRollListModel.FirstName)"></GridColumn>
+            <GridColumn HeaderText="First Name" IsFrozen="true" Width="120" Field="@nameof(MyPayRollListModel.FirstName)"></GridColumn>
             <GridColumn HeaderText="Grade Level" IsFrozen="true" Width="120" Field="@nameof(MyPayRollListModel.GradeLevel)"></GridColumn>
             <GridColumn HeaderText="Department" Field="@nameof(MyPayRollListModel.DepartmentName)"></GridColumn>
             <GridColumn HeaderText="Category" Width="120" Field="@nameof(MyPayRollListModel.Category)"></GridColumn>
@@ -323,8 +304,8 @@ else if (ShowGrid == true)
     </SfGrid>
 }
 
-
 @code {
+
     public string Message { get; set; }
     public List<MyPayRollListModel> PayrollList { get; set; }
 
@@ -356,8 +337,8 @@ else if (ShowGrid == true)
         }
     }
     public double OpsTime { get; set; }
-    public bool ShowAnim { get; set; }    
-    public bool ShowGrid { get; set; }    
+    public bool ShowAnim { get; set; }
+    public bool ShowGrid { get; set; }
     private async Task GenerateReport()
     {
         ShowAnim = true;
@@ -366,23 +347,9 @@ else if (ShowGrid == true)
         PayrollList = await Task.Run(() => db.GetPayrollListReport2Async());
         //Message = "";
         watch.Stop();
-        OpsTime = watch.ElapsedMilliseconds/1000;
+        OpsTime = watch.ElapsedMilliseconds / 1000;
         ShowAnim = false;
         ShowGrid = true;
     }
-
-    //private async Task UpdateEmployeePayroll()
-    //{
-    //    ShowAnim = true;
-    //    var watch = System.Diagnostics.Stopwatch.StartNew();
-    //    Message = "Updating Employees Please Wait ........";
-    //    await Task.Run(() => db.UpdateEmployeesPayrollAsync());
-    //    //Message = "";
-    //    watch.Stop();
-    //    OpsTime = watch.ElapsedMilliseconds / 1000;
-    //    ShowAnim = false;
-    //    ShowGrid = true;
-    //}
-
 
 }

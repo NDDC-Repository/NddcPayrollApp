@@ -61,25 +61,25 @@
                             </a>
                         </div>
 
-                        <button type="button" class="btn btn-sm px-3 fs-16 header-item vertical-menu-btn topnav-hamburger" id="topnav-hamburger-icon">
+                       @* <button type="button" class="btn btn-sm px-3 fs-16 header-item vertical-menu-btn topnav-hamburger" id="topnav-hamburger-icon">
                             <span class="hamburger-icon">
                                 <span></span>
                                 <span></span>
                                 <span></span>
                             </span>
-                        </button>
+                        </button>*@
 
                         <!-- App Search-->
                         <!-- Stacks - Horizontal -->
                         @if (User.Identity?.IsAuthenticated == true)
                         {
-                        <div class="hstack gap-3">
+                            @*<div class="hstack gap-3">
                             <a href="AddEmployee"  class="btn btn-success btn-label waves-effect waves-light"><i class="ri-check-double-line label-icon align-middle fs-16 me-2"></i> Add Employee</a>
                             <div class="bg-light border p-1 px-2">Second item</div>
                             <div class="bg-light border p-1 px-2">Third item</div>
-                        </div>
+                        </div>*@
+                            <component type="typeof(NddcPayroll.Web.MyComponents.HeaderDisplay)" render-mode="ServerPrerendered" />
                         }
-                       
                     </div>
 
                     <div class="d-flex align-items-center">
@@ -223,7 +223,12 @@
                             <!-- Payroll Menu -->
                             <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Payroll</span></li>
                             <li class="nav-item">
-                                <a class="nav-link menu-link @ViewData["Benefits"]" href="/Payroll/Benefits">
+                                <a class="nav-link menu-link @ViewData["Benefits"]" href="/Payroll/PreviewListing">
+                                    <i data-feather="file-text" class="icon-dual"></i> <span data-key="t-dashboards">Preview Listing</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link menu-link @ViewData["Benefits"]" href="/Payroll/RunPayroll">
                                     <i data-feather="play-circle" class="icon-dual"></i> <span data-key="t-dashboards">Run Payroll</span>
                                 </a>
                             </li>

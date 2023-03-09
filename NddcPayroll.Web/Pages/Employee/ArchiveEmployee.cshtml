@@ -16,6 +16,33 @@
                     </p>
                     <div class="d-flex gap-3 mt-4">
                         <form method="post">
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="compnayNameinput" class="form-label">Exit Condition</label>
+                                    <select id="ForminputState" asp-for="@Model.ExitCondition" class="form-select" data-choices="" data-choices-sorting="true">
+                                        <option selected="">Exit Condition...</option>
+                                        <option value="End of Contract">End of Contract</option>
+                                        <option value="End of Appointment">End of Appointment</option>
+                                        <option value="Retirment">Retirement</option>
+                                        <option value="Deceased">Deceased</option>
+                                        <option value="Abscondment">Abscondment</option>
+                                        <option value="Study Leave Without Pay">Study Leave Without Pay</option>
+                                        <option value="Leave of Absence">Leave of Absence</option>
+                                        <option value="Suspension">Suspension</option>
+                                        <option value="Secondment">Secondment</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="compnayNameinput" class="form-label">Exit Date</label>
+                                    <div>
+                                        <input type="date" asp-for="@Model.ExitDate" class="form-control" id="exampleInputdate">
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
                             <button type="submit" class="btn btn-warning">Continue to Archive</button>
                             <a asp-page="Employees" class="btn btn-primary">Cancel</a>
                         </form>

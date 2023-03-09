@@ -1,4 +1,5 @@
-﻿using NddcPayrollLibrary.Databases;
+﻿using NddcPayrollLibrary.Data.Calculations.Deductions;
+using NddcPayrollLibrary.Databases;
 using NddcPayrollLibrary.Model.Company;
 using NddcPayrollLibrary.Model.DataManagement.DataMigration;
 using NddcPayrollLibrary.Model.Employee;
@@ -15,11 +16,14 @@ namespace NddcPayrollLibrary.Data.DataManagement
     {
         private const string connectionStringName = "SqlDb";
         private readonly ISqlDataAccess db;
+        private readonly IDeductionData dedDb;
+
         public List<MyEmployeeMigrationModel> MigrationEmployees { get; set; }
 
-        public SQLMigration(ISqlDataAccess db)
+        public SQLMigration(ISqlDataAccess db, IDeductionData dedDb)
         {
             this.db = db;
+            this.dedDb = dedDb;
         }
 
         public void UpdateGradeLevel()
@@ -79,6 +83,20 @@ namespace NddcPayrollLibrary.Data.DataManagement
                 trimmedBankCode = fullBankCode.Remove(0, 3);
                 //id = db.LoadData<int, dynamic>("Select Id From JobTitles Where Abbreviation = @Abbrv", new { Abbrv = jobTitleAbrv }, connectionStringName, false).FirstOrDefault();
                 db.SaveData("Update Employees Set BankCode = @BankCode Where EmployeeCode = @EmployeeCode ", new { BankCode = trimmedBankCode, EmployeeCode = empCode }, connectionStringName, false);
+            }
+        }
+
+        public void UpdateEmployerPension()
+        {
+            decimal empPensionAmt = 0.00M;
+            string empCode = "";
+            MigrationEmployees = db.LoadData<MyEmployeeMigrationModel, dynamic>("Select Id, EmployeeCode From Employees", new { }, connectionStringName, false).ToList();
+            foreach (var employee in MigrationEmployees)
+            {
+                empPensionAmt = dedDb.GetEmployerPensionAmount(employee.Id);
+                empCode = employee.EmployeeCode;
+                //id = db.LoadData<int, dynamic>("Select Id From JobTitles Where Abbreviation = @Abbrv", new { Abbrv = jobTitleAbrv }, connectionStringName, false).FirstOrDefault();
+                db.SaveData("Update Employees Set EmployerPension = @EmployerPension Where EmployeeCode = @EmployeeCode ", new { EmployeeCode = empCode, EmployerPension = empPensionAmt }, connectionStringName, false);
             }
         }
 

@@ -9,6 +9,7 @@ namespace NddcPayroll.Web.Pages.Employee
     {
         private readonly IEmployeeData db;
         public List<EmployeeGridModel> Employees { get; set; }
+        public List<EmployeeGridModel> ArchivedEmployees { get; set; }
         [BindProperty(SupportsGet = true)]
         public string SearchTerm { get; set; }
 
@@ -19,6 +20,7 @@ namespace NddcPayroll.Web.Pages.Employee
         public void OnGet()
         {
            Employees = db.GetAllEmployees(SearchTerm);
+           ArchivedEmployees = db.GetArchivedEmployees(SearchTerm);
         }
     }
 }

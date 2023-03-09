@@ -38,7 +38,7 @@ namespace NddcPayrollLibrary.Data.EmployeeData
                " MealAllow = 0.00, UtilityAllow = 0.00, EducationAllow = 0.00, SecurityAllow = 0.00," +
                " MedicalAllow = 0.00, DomesticServantAllow = 0.00, DriverAllow = 0.00, VehicleAllow =0.00," +
                " HazardAllow = 0.00, Tax = 0.00, NHF = 0.00, JSA = 0.00, SSA = 0.00, TotalEarnings = 0.00, " +
-               "TotalDeductions = 0.00, NetPay = 0.00, Pension = 0.00, TaxCalc = 'Automatic', Archived = 0, Arreas = 0.00 Where Id = @Id";
+               "TotalDeductions = 0.00, NetPay = 0.00, Pension = 0.00, TaxCalc = 'Automatic', Archived = 0, Arreas = 0.00, ExitCondition = '', EmployerPension = 0.00, EntertainmentAllow = 0.00, NewspaperAllow = 0.00, TaxAdjustment = 0.00 Where Id = @Id";
 
             db.SaveData("Insert Into Employees (EmployeeCode, Gender, MaritalStatus, firstName, LastName, OtherNames, MaidenName," +
                 " SpouseName, Email, Phone, DateOfBirth, Address, City, SID, Passport, EmploymentStatus, DateEngaged, ContactName, ContactPhone, CreatedBy, DateCreated) " +
@@ -70,18 +70,23 @@ namespace NddcPayrollLibrary.Data.EmployeeData
             db.SaveData("Delete Employees Where Id = @Id", new { Id }, connectionStringName, false);
         }
 
-        public void ArchiveEmployee(int Id)
+        public void ArchiveEmployee(int Id, string ExitConditon, DateTime ExitDate)
         {
-            db.SaveData("Update Employees Set Archived = 1 Where Id = @Id", new { Id }, connectionStringName, false);
+            db.SaveData("Update Employees Set Archived = 1, ExitCondition = @ExitConditon, ExitDate = @ExitDate Where Id = @Id", new { Id, ExitConditon, ExitDate }, connectionStringName, false);
         }
         public void UnArchiveEmployee(int Id)
         {
-            db.SaveData("Update Employees Set Archived = 0 Where Id = @Id", new { Id }, connectionStringName, false);
+            db.SaveData("Update Employees Set Archived = 0, ExitCondition = '' Where Id = @Id", new { Id }, connectionStringName, false);
         }
         public List<EmployeeGridModel> GetAllEmployees(string name)
         {
-            string SQL = "SELECT Top 20 ROW_NUMBER() OVER (ORDER BY Employees.Id DESC) As SrNo, Employees.Id, Employees.EmployeeCode, Employees.Gender, Employees.FirstName, Employees.LastName, Employees.Email, Employees.Phone, Employees.Category, Employees.Archived, GradeLevel.GradeLevel, Departments.DepartmentName, JobTitles.Description FROM Employees LEFT JOIN GradeLevel ON Employees.GradeLevelId = GradeLevel.Id LEFT JOIN Departments ON Employees.DepartmentId = Departments.Id LEFT JOIN JobTitles ON Employees.JobTitleId = JobTitles.Id Where Employees.FirstName Like @Name Or Departments.DepartmentName Like @Name Or Employees.LastName Like @Name Or GradeLevel.GradeLevel Like @Name ORDER BY Employees.Id DESC";
+            string SQL = "SELECT Top 20 ROW_NUMBER() OVER (ORDER BY Employees.Id DESC) As SrNo, Employees.Id, Employees.EmployeeCode, Employees.Gender, Employees.FirstName, Employees.LastName, Employees.Email, Employees.Phone, Employees.Category, Employees.Archived, Employees.ExitCondition, GradeLevel.GradeLevel, Departments.DepartmentName, JobTitles.Description FROM Employees LEFT JOIN GradeLevel ON Employees.GradeLevelId = GradeLevel.Id LEFT JOIN Departments ON Employees.DepartmentId = Departments.Id LEFT JOIN JobTitles ON Employees.JobTitleId = JobTitles.Id Where Employees.FirstName Like @Name Or Departments.DepartmentName Like @Name Or Employees.LastName Like @Name Or GradeLevel.GradeLevel Like @Name ORDER BY Employees.Id DESC";
             return db.LoadData<EmployeeGridModel, dynamic>(SQL, new { Name = "%" + name + "%"  }, connectionStringName, false).ToList();
+        }
+        public List<EmployeeGridModel> GetArchivedEmployees(string name)
+        {
+            string SQL = "SELECT Top 20 ROW_NUMBER() OVER (ORDER BY Employees.Id DESC) As SrNo, Employees.Id, Employees.EmployeeCode, Employees.Gender, Employees.FirstName, Employees.LastName, Employees.Email, Employees.Phone, Employees.Category, Employees.Archived, Employees.ExitCondition, GradeLevel.GradeLevel, Departments.DepartmentName, JobTitles.Description FROM Employees LEFT JOIN GradeLevel ON Employees.GradeLevelId = GradeLevel.Id LEFT JOIN Departments ON Employees.DepartmentId = Departments.Id LEFT JOIN JobTitles ON Employees.JobTitleId = JobTitles.Id Where Archived = 1 ORDER BY Employees.Id DESC";
+            return db.LoadData<EmployeeGridModel, dynamic>(SQL, new { Name = "%" + name + "%" }, connectionStringName, false).ToList();
         }
 
         public EmployeeModel GetEmployeeDetails(int EmpId)
@@ -109,7 +114,7 @@ namespace NddcPayrollLibrary.Data.EmployeeData
 
         public int GetEmployeeCount()
         {
-            string check = db.LoadData<string, dynamic>("SELECT Count(Id) As EmpCount from Employees", new {  }, connectionStringName, false).FirstOrDefault();
+            string check = db.LoadData<string, dynamic>("SELECT Count(Id) As EmpCount from Employees Where Archived = 0", new {  }, connectionStringName, false).FirstOrDefault();
             if (check is null)
             {
                 return 0;
@@ -261,7 +266,7 @@ namespace NddcPayrollLibrary.Data.EmployeeData
             string SQL = "update Employees Set TransportAllow = @TransportAllow, HousingAllow = @HousingAllow, FurnitureAllow = @FurnitureAllow, " +
                 "MealAllow = @MealAllow, UtilityAllow = @UtilityAllow, EducationAllow = @EducationAllow, DomesticServantAllow = @DomesticServantAllow, " +
                 "DriverAllow = @DriverAllow, VehicleAllow = @VehicleAllow, HazardAllow = @HazardAllow, Tax = @Tax, NHF = @NHF, JSA = @JSA, SSA = @SSA, " +
-                "TotalEarnings = @TotalEarnings, Pension = @Pension, TotalDeductions = @TotalDeductions, NetPay = @NetPay, BasicSalary = @BasicSalary, MedicalAllow = @MedicalAllow, SecurityAllow = @SecurityAllow where EmployeeCode = @EmployeeCode";
+                "TotalEarnings = @TotalEarnings, Pension = @Pension, TotalDeductions = @TotalDeductions, NetPay = @NetPay, BasicSalary = @BasicSalary, MedicalAllow = @MedicalAllow, SecurityAllow = @SecurityAllow, EmployerPension = @EmployerPension where EmployeeCode = @EmployeeCode";
 
             db.SaveData(SQL,
                new
@@ -295,7 +300,7 @@ namespace NddcPayrollLibrary.Data.EmployeeData
         }
         public EmployeeLinksModel GetEmployeeLinks(int EmpId)
         {
-            string SQL = "SELECT Id, BasicSalary, GradeLevelId, JobTitleId, Category, Insurance, SecretarialAllow, LeaveAllow, ActingAllow, ShiftAllow, UniformAllow, CooperativeDed, VoluntaryPension, TransportAllow, HousingAllow, FurnitureAllow, MealAllow, UtilityAllow, EducationAllow, SecurityAllow, MedicalAllow, DomesticServantAllow, DriverAllow, VehicleAllow, HazardAllow, Tax, NHF, JSA, SSA, TotalEarnings, TotalDeductions, NetPay, Pension, TaxCalc, Arreas From Employees Where Id = @Id";
+            string SQL = "SELECT Id, BasicSalary, GradeLevelId, JobTitleId, Category, Insurance, SecretarialAllow, LeaveAllow, ActingAllow, ShiftAllow, UniformAllow, CooperativeDed, VoluntaryPension, TransportAllow, HousingAllow, FurnitureAllow, MealAllow, UtilityAllow, EducationAllow, SecurityAllow, MedicalAllow, DomesticServantAllow, DriverAllow, VehicleAllow, HazardAllow, Tax, NHF, JSA, SSA, TotalEarnings, TotalDeductions, NetPay, Pension, TaxCalc, Arreas, EmployerPension, TaxAdjustment From Employees Where Id = @Id";
             return db.LoadData<EmployeeLinksModel, dynamic>(SQL, new { Id = EmpId }, connectionStringName, false).First();
         }
 
@@ -324,7 +329,7 @@ namespace NddcPayrollLibrary.Data.EmployeeData
                 " MealAllow = @MealAllow, UtilityAllow = @UtilityAllow, EducationAllow = @EducationAllow, SecurityAllow = @SecurityAllow," +
                 " MedicalAllow = @MedicalAllow, DomesticServantAllow = @DomesticServantAllow, DriverAllow = @DriverAllow, VehicleAllow =@VehicleAllow," +
                 " HazardAllow = @HazardAllow, Tax = @Tax, NHF = @NHF, JSA = @JSA, SSA = @SSA, TotalEarnings = @TotalEarnings, " +
-                "TotalDeductions = @TotalDeductions, NetPay = @NetPay, Pension = @Pension, TaxCalc = @TaxCalc, Arreas = @Arreas Where Id = @Id";
+                "TotalDeductions = @TotalDeductions, NetPay = @NetPay, Pension = @Pension, TaxCalc = @TaxCalc, Arreas = @Arreas, EmployerPension = @EmployerPension, TaxAdjustment = @TaxAdjustment Where Id = @Id";
             db.SaveData(SQL,
                 new
                 {
@@ -359,7 +364,9 @@ namespace NddcPayrollLibrary.Data.EmployeeData
                     employee.NetPay,
                     employee.Pension,
                     employee.TaxCalc,
-                    employee.Arreas
+                    employee.Arreas,
+                    employee.EmployerPension,
+                    employee.TaxAdjustment
                 },
                  connectionStringName, false);
         }

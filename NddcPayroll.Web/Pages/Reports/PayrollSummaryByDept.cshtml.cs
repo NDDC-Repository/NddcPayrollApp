@@ -10,6 +10,7 @@ namespace NddcPayroll.Web.Pages.Reports
         private readonly IReportsData repDb;
 
         public List<MyPayrollSummaryByDepartmentModel> PayrollSumList { get; set; }
+        public List<MyPayrollSummaryByDepartmentModel> PayrollTotals { get; set; }
         public PayrollSummaryByDeptModel(IReportsData repDb)
         {
             this.repDb = repDb;
@@ -17,6 +18,7 @@ namespace NddcPayroll.Web.Pages.Reports
         public async Task OnGetAsync()
         {
             PayrollSumList = await Task.Run(() => repDb.GetPayrollSummaryByDeptReportAsync());
+            PayrollTotals = await Task.Run(() => repDb.GetPayrollTotalsReportAsync());
         }
     }
 }

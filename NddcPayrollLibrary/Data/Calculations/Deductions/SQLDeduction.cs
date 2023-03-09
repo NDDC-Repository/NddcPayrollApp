@@ -87,6 +87,12 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
             return db.LoadData<decimal, dynamic>("Select VoluntaryPension From Employees Where Id = @Id", new { Id = empId }, connectionStringName, false).First();
 
         }
+        public decimal GetTaxAdjustment(int empId)
+        {
+
+            return db.LoadData<decimal, dynamic>("Select TaxAdjustment From Employees Where Id = @Id", new { Id = empId }, connectionStringName, false).First();
+
+        }
         public decimal GetPensionAmount(int empId)
         {
             string category = GetEmpCategory(empId);
@@ -107,6 +113,26 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
             }
             
         }
+        public decimal GetEmployerPensionAmount(int empId)
+        {
+            string category = GetEmpCategory(empId);
+
+            if (GetEmpCategory(empId) == "PERM" || GetEmpCategory(empId) == "POLI")
+            {
+                if (empDb.GetPensionStatus(empId))
+                {
+                    decimal totalEarnings = GetMonthlyGross(empId) * 12;
+                    decimal pensionAmount = ((decimal)22.5 / (decimal)100) * totalEarnings;
+                    return pensionAmount / 12M;
+                }
+                return 0.00M;
+            }
+            else
+            {
+                return 0.00M;
+            }
+
+        }
         public decimal GetNHFAmount(int empId)
         {
             if (GetEmpCategory(empId) == "PERM" || GetEmpCategory(empId) == "POLI")
@@ -121,6 +147,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
             }
             
         }
+        
         public decimal GetAnnualPensionAmount(int empId)
         {
             decimal totalEarnings = GetPensionAmount(empId) * 12;
@@ -256,7 +283,8 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
                     finalAmount = ((decimal)24 / (decimal)100) * levelTax;
                 }
 
-                decimal totalTax = (finalAmount + taxValue) / (decimal)12;
+                decimal taxAdjustment = GetTaxAdjustment(empId);
+                decimal totalTax = ((finalAmount + taxValue) / (decimal)12) - (taxAdjustment);
 
                 return totalTax;
             }

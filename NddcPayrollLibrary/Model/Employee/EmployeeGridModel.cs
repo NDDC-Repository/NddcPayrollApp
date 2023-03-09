@@ -33,5 +33,6 @@ namespace NddcPayrollLibrary.Model.Employee
         public string Description { get; set; }
         public string Category { get; set; }
         public bool Archived { get; set; }
+        public string ExitCondition { get; set; }
     }
 }

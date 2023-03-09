@@ -1,0 +1,12 @@
+﻿<h3>@CurrDate</h3>
+
+@code {
+
+    public string CurrDate { get; set; }   
+
+    protected override async Task OnInitializedAsync()
+    {
+        DateTime currDate = DateTime.Now;
+        CurrDate = currDate.ToString("Y");
+    }
+}

@@ -299,6 +299,22 @@ else
         </div>
     </div>
     <div class="row">
+         <div class="col-md-4">
+                <div class="mb-3">
+                    <label>Employer Pension</label>
+                    <input type="text" disabled="true" class="form-control" @bind="@Employee.EmployerPension" id="compnayNameinput">
+
+                </div>
+            </div>
+             <div class="col-md-4">
+                <div class="mb-3">
+                    <label>Tax Adjustment</label>
+                    <input type="text" class="form-control" @bind="@Employee.TaxAdjustment" id="compnayNameinput">
+
+                </div>
+            </div>
+    </div>
+    <div class="row">
        
             <div class="col-md-4">
                 <div class="mb-3">
@@ -307,6 +323,7 @@ else
 
                 </div>
             </div>
+           
     </div>
   <div class="col-md-12 mt-4"></div>
     <hr />
@@ -393,6 +410,8 @@ else
         Employee.JSA = dedDb.GetJSA(MyEmpId);
         Employee.SSA = dedDb.GetSSA(MyEmpId);
         Employee.NHF = dedDb.GetNHFAmount(MyEmpId);
+        Employee.EmployerPension = dedDb.GetEmployerPensionAmount(MyEmpId);
+        
         SetTotalEarnings();
         SetTotalDeductions();
         SetNetPay();
@@ -443,6 +462,8 @@ else
 
     private void SaveEmployeeLink()
     {
+        empDb.SaveEmployeeLink(Employee);
+        RecalculateAndSave();
         empDb.SaveEmployeeLink(Employee);
         Message = "Employee Data Has Been Successfully Updated!";
     }

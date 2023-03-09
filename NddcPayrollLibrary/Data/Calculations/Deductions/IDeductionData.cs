@@ -12,5 +12,6 @@
         decimal GetSSA(int empId);
         decimal GetJSA(int empId);
         decimal GetTotalDeductions(int empId);
+        decimal GetEmployerPensionAmount(int empId);
     }
 }

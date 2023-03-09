@@ -24,6 +24,8 @@ namespace NddcPayroll.Web.Pages.Employee
 
         public IActionResult OnPost(int? EmpId)
         {
+            empDb.UnArchiveEmployee(EmpId.Value);
+
             return RedirectToPage("Employees");
         }
     }

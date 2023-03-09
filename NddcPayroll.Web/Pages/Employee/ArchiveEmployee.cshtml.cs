@@ -11,6 +11,10 @@ namespace NddcPayroll.Web.Pages.Employee
         private readonly IEmployeeData empDb;
 
         public string EmpName { get; set; }
+        [BindProperty]
+        public string ExitCondition { get; set; }
+        [BindProperty]
+        public DateTime ExitDate { get; set; }
         public ArchiveEmployeeModel(IHelperData helpDb, IEmployeeData empDb)
         {
             this.helpDb = helpDb;
@@ -23,7 +27,7 @@ namespace NddcPayroll.Web.Pages.Employee
 
         public IActionResult OnPost(int? EmpId)
         {
-            empDb.ArchiveEmployee(EmpId.Value);
+            empDb.ArchiveEmployee(EmpId.Value, ExitCondition, ExitDate);
             return RedirectToPage("Employees");
         }
     }
