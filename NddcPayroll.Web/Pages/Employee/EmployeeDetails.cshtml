@@ -125,6 +125,10 @@
                                     <th class="ps-0" scope="row">Hazard Allowance :</th>
                                     <td class="text-muted">@string.Format("{0:N}", Model.Hazard)</td>
                                 </tr>
+                                <tr>
+                                    <th class="ps-0" scope="row">Entertainment Allowance :</th>
+                                    <td class="text-muted">@string.Format("{0:N}", Model.EntertainmentAllowance)</td>
+                                </tr>
                                
                                 <tr>
                                     <th class="ps-0" scope="row">Total Benefits :</th>
@@ -702,6 +706,9 @@
                                                                 <label for="firstNameinput" class="form-label">Category</label>
                                                                 <select id="ForminputState" asp-for="@Model.AnalysisDetails.Category" class="form-select" data-choices="" data-choices-sorting="true">
                                                                     <option selected="">Choose...</option>
+                                                                    <option value="MD">MD/CEO</option>
+                                                                    <option value="EDFA">EDFA</option>
+                                                                    <option value="EDP">EDP</option>
                                                                     <option value="CONT">Contract Staff</option>
                                                                     <option value="PERM">Permanent Staff</option>
                                                                     <option value="POLI">Political</option>

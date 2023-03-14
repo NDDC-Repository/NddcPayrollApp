@@ -54,7 +54,9 @@ namespace NddcPayroll.Web.Pages.Employee
         public decimal MedicalAllowance { get; set; }
         public decimal DriverAllowance { get; set; }
         public decimal VehicleMaintenance { get; set; }
+        public decimal EntertainmentAllowance { get; set; }
         public decimal Hazard { get; set; }
+
         public decimal PayeTax { get; set; }
         public decimal Pension { get; set; }
         public decimal NHF { get; set; }
@@ -95,6 +97,7 @@ namespace NddcPayroll.Web.Pages.Employee
             DriverAllowance = allowDb.GetDriverAllowance(EmpId.Value);
             VehicleMaintenance = allowDb.GetVehicleMaintenanceAllowance(EmpId.Value);
             Hazard = allowDb.GetHazardAllowance(EmpId.Value);
+            EntertainmentAllowance = allowDb.GetEntertainmentAllow(EmpId.Value);
 
             Pension = dedDb.GetPensionAmount(EmpId.Value);
             NHF = dedDb.GetNHFAmount(EmpId.Value);

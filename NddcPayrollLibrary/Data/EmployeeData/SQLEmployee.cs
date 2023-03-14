@@ -266,7 +266,7 @@ namespace NddcPayrollLibrary.Data.EmployeeData
             string SQL = "update Employees Set TransportAllow = @TransportAllow, HousingAllow = @HousingAllow, FurnitureAllow = @FurnitureAllow, " +
                 "MealAllow = @MealAllow, UtilityAllow = @UtilityAllow, EducationAllow = @EducationAllow, DomesticServantAllow = @DomesticServantAllow, " +
                 "DriverAllow = @DriverAllow, VehicleAllow = @VehicleAllow, HazardAllow = @HazardAllow, Tax = @Tax, NHF = @NHF, JSA = @JSA, SSA = @SSA, " +
-                "TotalEarnings = @TotalEarnings, Pension = @Pension, TotalDeductions = @TotalDeductions, NetPay = @NetPay, BasicSalary = @BasicSalary, MedicalAllow = @MedicalAllow, SecurityAllow = @SecurityAllow, EmployerPension = @EmployerPension where EmployeeCode = @EmployeeCode";
+                "TotalEarnings = @TotalEarnings, Pension = @Pension, TotalDeductions = @TotalDeductions, NetPay = @NetPay, BasicSalary = @BasicSalary, MedicalAllow = @MedicalAllow, SecurityAllow = @SecurityAllow, EmployerPension = @EmployerPension, EntertainmentAllow = @EntertainmentAllow, NewspaperAllow = @NewspaperAllow where EmployeeCode = @EmployeeCode";
 
             db.SaveData(SQL,
                new
@@ -292,7 +292,10 @@ namespace NddcPayrollLibrary.Data.EmployeeData
                    BasicSalary = employee.BasicSalary,
                    MedicalAllow = employee.MedicalAllow,
                    SecurityAllow = employee.SecurityAllow,
-                   Pension = employee.Pension
+                   Pension = employee.Pension,
+                   EmployerPension = employee.EmployerPension,
+                   EntertainmentAllow = employee.EntertainmentAllow,
+                   NewspaperAllow = employee.NewspaperAllow
                },
                 connectionStringName, false);
 
@@ -300,7 +303,7 @@ namespace NddcPayrollLibrary.Data.EmployeeData
         }
         public EmployeeLinksModel GetEmployeeLinks(int EmpId)
         {
-            string SQL = "SELECT Id, BasicSalary, GradeLevelId, JobTitleId, Category, Insurance, SecretarialAllow, LeaveAllow, ActingAllow, ShiftAllow, UniformAllow, CooperativeDed, VoluntaryPension, TransportAllow, HousingAllow, FurnitureAllow, MealAllow, UtilityAllow, EducationAllow, SecurityAllow, MedicalAllow, DomesticServantAllow, DriverAllow, VehicleAllow, HazardAllow, Tax, NHF, JSA, SSA, TotalEarnings, TotalDeductions, NetPay, Pension, TaxCalc, Arreas, EmployerPension, TaxAdjustment From Employees Where Id = @Id";
+            string SQL = "SELECT Id, BasicSalary, GradeLevelId, JobTitleId, Category, Insurance, SecretarialAllow, LeaveAllow, ActingAllow, ShiftAllow, UniformAllow, CooperativeDed, VoluntaryPension, TransportAllow, HousingAllow, FurnitureAllow, MealAllow, UtilityAllow, EducationAllow, SecurityAllow, MedicalAllow, DomesticServantAllow, DriverAllow, VehicleAllow, HazardAllow, Tax, NHF, JSA, SSA, TotalEarnings, TotalDeductions, NetPay, Pension, TaxCalc, Arreas, EmployerPension, TaxAdjustment, EntertainmentAllow, NewspaperAllow From Employees Where Id = @Id";
             return db.LoadData<EmployeeLinksModel, dynamic>(SQL, new { Id = EmpId }, connectionStringName, false).First();
         }
 

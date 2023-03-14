@@ -8,6 +8,7 @@ namespace NddcPayrollLibrary.Model.Payroll
 {
     public class MyPayrollJournalTitleModel
     {
+        public int SrNo { get; set; }
         public int Id { get; set; }
         public string JournalName { get; set; }
         public int Month { get; set; }

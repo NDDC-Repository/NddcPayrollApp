@@ -48,5 +48,7 @@ namespace NddcPayrollLibrary.Model.Employee
         public decimal Arreas { get; set; }
         public decimal EmployerPension { get; set; }
         public decimal TaxAdjustment { get; set; }
+        public decimal EntertainmentAllow { get; set; }
+        public decimal NewspaperAllow { get; set; }
     }
 }

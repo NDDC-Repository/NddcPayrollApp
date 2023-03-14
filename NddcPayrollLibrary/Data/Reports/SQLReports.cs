@@ -152,12 +152,12 @@ namespace NddcPayrollLibrary.Data.Reports
             List<MyPayRollListModel> Reports = new List<MyPayRollListModel>();
             //List<Task<decimal>> tasks = new List<Task<decimal>>();
 
-            string SQL = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, Employees.Id, Employees.EmployeeCode, Employees.FirstName, " +
+            string SQL = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id DESC) As SrNo, Employees.Id, Employees.EmployeeCode, Employees.FirstName, Employees.SecretarialAllow, Employees.CooperativeDed, Employees.VoluntaryPension, Employees.EntertainmentAllow, Employees.NewspaperAllow, Employees.Arreas, " +
                 "Employees.LastName, Employees.Email, Employees.Category, (TransportAllow) As TransportAllowance, (HousingAllow) As HousingAllowance, (FurnitureAllow) As FurnitureAllowance, (MealAllow) As MealAllowance, (UtilityAllow) As UtilityAllowance, " +
                 "(EducationAllow) As EducationAllowance, (DomesticServantAllow) As DomesticServantAllowance, (DriverAllow) As DriversAllowance, (VehicleAllow) As VehicleMaintenanceAllowance, (HazardAllow) As HazardAllowance, (Tax) As TaxDeduction, (NHF) As NHFDeduction, (JSA) As JSADeduction, (SSA) As SSADeduction, TotalEarnings, TotalDeductions, " +
                 "NetPay, (Pension) As PensionDeduction, (MedicalAllow) As MedicalAllowance, (SecurityAllow) As SecurityAllowance, GradeLevel.GradeLevel, GradeLevel.BasicSalary, Departments.DepartmentName FROM Employees LEFT JOIN GradeLevel ON Employees.GradeLevelId = " +
                 "GradeLevel.Id LEFT JOIN Departments ON Employees.DepartmentId = Departments.Id LEFT JOIN JobTitles ON Employees.JobTitleId = " +
-                "JobTitles.Id WHERE Employees.Archived = 0 ORDER BY Employees.Id ASC";
+                "JobTitles.Id WHERE Employees.Archived = 0 ORDER BY Employees.Id DESC";
 
             await (Task.Run(() => Reports = db.LoadData<MyPayRollListModel, dynamic>(SQL, new { }, connectionStringName, false).ToList()));
             //foreach (var item in Reports)
@@ -190,6 +190,45 @@ namespace NddcPayrollLibrary.Data.Reports
             //}
 
 
+            return Reports;
+        }
+
+        public async Task<List<MyPayRollListModel>> GetPayrollListSummaryReportAsync(int payrollJournalTitleId)
+        {
+
+            //MyPayRollListModel reportModel;
+            List<MyPayRollListModel> Reports = new List<MyPayRollListModel>();
+            //List<Task<decimal>> tasks = new List<Task<decimal>>();
+
+            string SQL = "SELECT ROW_NUMBER() OVER (ORDER BY PayrollJournals.Id DESC) As SrNo, PayrollJournals.Id, PayrollJournals.EmployeeCode, PayrollJournals.FirstName, " +
+                "PayrollJournals.LastName, PayrollJournals.Category, " +
+                "TotalEarnings, TotalDeductions, BankCode, AccountName, AccountNumber, " +
+                "NetPay, GradeLevel.GradeLevel, GradeLevel.BasicSalary, Departments.DepartmentName, Banks.BankName FROM PayrollJournals LEFT JOIN GradeLevel ON PayrollJournals.GradeLevelId = " +
+                "GradeLevel.Id LEFT JOIN Departments ON PayrollJournals.DepartmentId = Departments.Id LEFT JOIN JobTitles ON PayrollJournals.JobTitleId = " +
+                "JobTitles.Id LEFT JOIN Banks ON Banks.Code = PayrollJournals.BankCode WHERE PayrollJournalTitleId = @PayrollJournalTitleId ORDER BY PayrollJournals.Id DESC";
+
+            await (Task.Run(() => Reports = db.LoadData<MyPayRollListModel, dynamic>(SQL, new { PayrollJournalTitleId = payrollJournalTitleId }, connectionStringName, false).ToList()));
+           
+
+            return Reports;
+        }
+
+        public List<MyPayRollListModel> GetPayrollListReportById(int payrollJournalTitleId)
+        {
+
+            //MyPayRollListModel reportModel;
+            List<MyPayRollListModel> Reports = new List<MyPayRollListModel>();
+            //List<Task<decimal>> tasks = new List<Task<decimal>>();
+
+            string SQL = "SELECT ROW_NUMBER() OVER (ORDER BY PayrollJournals.Id DESC) As SrNo, PayrollJournals.Id, PayrollJournals.EmployeeCode, PayrollJournals.FirstName, " +
+                "PayrollJournals.LastName, PayrollJournals.Email, PayrollJournals.Category, (TransportAllow) As TransportAllowance, (HousingAllow) As HousingAllowance, (FurnitureAllow) As FurnitureAllowance, (MealAllow) As MealAllowance, (UtilityAllow) As UtilityAllowance, " +
+                "(EducationAllow) As EducationAllowance, (DomesticServantAllow) As DomesticServantAllowance, (DriverAllow) As DriversAllowance, (VehicleAllow) As VehicleMaintenanceAllowance, (HazardAllow) As HazardAllowance, (Tax) As TaxDeduction, (NHF) As NHFDeduction, (JSA) As JSADeduction, (SSA) As SSADeduction, TotalEarnings, TotalDeductions, " +
+                "NetPay, (Pension) As PensionDeduction, (MedicalAllow) As MedicalAllowance, (SecurityAllow) As SecurityAllowance, GradeLevel.GradeLevel, GradeLevel.BasicSalary, Departments.DepartmentName FROM PayrollJournals LEFT JOIN GradeLevel ON PayrollJournals.GradeLevelId = " +
+                "GradeLevel.Id LEFT JOIN Departments ON PayrollJournals.DepartmentId = Departments.Id LEFT JOIN JobTitles ON PayrollJournals.JobTitleId = " +
+                "JobTitles.Id Where PayrollJournals.PayrollJournalTitleId = @PayrollJournalTitleId ORDER BY PayrollJournals.Id DESC";
+
+            Reports = db.LoadData<MyPayRollListModel, dynamic>(SQL, new { PayrollJournalTitleId = payrollJournalTitleId }, connectionStringName, false).ToList();
+           
             return Reports;
         }
 
@@ -320,6 +359,8 @@ namespace NddcPayrollLibrary.Data.Reports
                 tasks.Add(Task.Run(() => employee.VehicleAllow = allowDb.GetVehicleMaintenanceAllowance(item.Id)));
                 tasks.Add(Task.Run(() => employee.HazardAllow = allowDb.GetHazardAllowance(item.Id)));
                 tasks.Add(Task.Run(() => employee.DriverAllow = allowDb.GetDriverAllowance(item.Id)));
+                tasks.Add(Task.Run(() => employee.EntertainmentAllow = allowDb.GetEntertainmentAllow(item.Id)));
+                tasks.Add(Task.Run(() => employee.NewspaperAllow = allowDb.GetNewspaperAllow(item.Id)));
                 tasks.Add(Task.Run(() => employee.Tax = dedDb.GetPAYEAmount(item.Id)));
                 tasks.Add(Task.Run(() => employee.NHF = dedDb.GetNHFAmount(item.Id)));
                 tasks.Add(Task.Run(() => employee.Pension = dedDb.GetPensionAmount(item.Id)));
@@ -373,6 +414,8 @@ namespace NddcPayrollLibrary.Data.Reports
                 tasks.Add(Task.Run(() => employee.VehicleAllow = allowDb.GetVehicleMaintenanceAllowance(item.Id)));
                 tasks.Add(Task.Run(() => employee.HazardAllow = allowDb.GetHazardAllowance(item.Id)));
                 tasks.Add(Task.Run(() => employee.DriverAllow = allowDb.GetDriverAllowance(item.Id)));
+                tasks.Add(Task.Run(() => employee.EntertainmentAllow = allowDb.GetEntertainmentAllow(item.Id)));
+                tasks.Add(Task.Run(() => employee.NewspaperAllow = allowDb.GetNewspaperAllow(item.Id)));
                 tasks.Add(Task.Run(() => employee.Tax = dedDb.GetPAYEAmount(item.Id)));
                 tasks.Add(Task.Run(() => employee.NHF = dedDb.GetNHFAmount(item.Id)));
                 tasks.Add(Task.Run(() => employee.Pension = dedDb.GetPensionAmount(item.Id)));
@@ -453,6 +496,8 @@ namespace NddcPayrollLibrary.Data.Reports
                 tasks.Add(Task.Run(() => employee.VehicleAllow = allowDb.GetVehicleMaintenanceAllowance(item.Id)));
                 tasks.Add(Task.Run(() => employee.HazardAllow = allowDb.GetHazardAllowance(item.Id)));
                 tasks.Add(Task.Run(() => employee.DriverAllow = allowDb.GetDriverAllowance(item.Id)));
+                tasks.Add(Task.Run(() => employee.EntertainmentAllow = allowDb.GetEntertainmentAllow(item.Id)));
+                tasks.Add(Task.Run(() => employee.NewspaperAllow = allowDb.GetNewspaperAllow(item.Id)));
                 tasks.Add(Task.Run(() => employee.Tax = dedDb.GetPAYEAmount(item.Id)));
                 tasks.Add(Task.Run(() => employee.NHF = dedDb.GetNHFAmount(item.Id)));
                 tasks.Add(Task.Run(() => employee.Pension = dedDb.GetPensionAmount(item.Id)));
@@ -522,5 +567,6 @@ namespace NddcPayrollLibrary.Data.Reports
 
             return Reports;
         }
+        
     }
 }

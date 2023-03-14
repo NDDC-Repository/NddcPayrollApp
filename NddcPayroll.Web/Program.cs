@@ -9,6 +9,7 @@ using NddcPayrollLibrary.Data.DataManagement;
 using NddcPayrollLibrary.Data.EmployeeData;
 using NddcPayrollLibrary.Data.Helper;
 using NddcPayrollLibrary.Data.Payroll;
+using NddcPayrollLibrary.Data.PayrollJournal;
 using NddcPayrollLibrary.Data.Reports;
 using NddcPayrollLibrary.Databases;
 using Syncfusion.Blazor;
@@ -29,6 +30,7 @@ builder.Services.AddTransient<IDeductionData, SQLDeduction>();
 builder.Services.AddTransient<IDataMigration, SQLMigration>();
 builder.Services.AddTransient<IReportsData, SQLReports>();
 builder.Services.AddSyncfusionBlazor();
+builder.Services.AddTransient<IPayrollJournalData, SQLPayrollJournal>();
 
 builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
         .AddMicrosoftIdentityWebApp(builder.Configuration.GetSection("AzureADB2C"));

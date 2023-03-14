@@ -1,16 +1,30 @@
 ﻿@page "/listingreport"
+@using NddcPayrollLibrary.Data.Payroll;
+@using NddcPayrollLibrary.Data.PayrollJournal;
 @using Syncfusion.Blazor.Grids
 @using NddcPayrollLibrary.Data.Reports;
 @using NddcPayrollLibrary.Model.Report;
+@using NddcPayrollLibrary.Model.Payroll;
 @inject IReportsData db;
+@inject IPayrollData payDb;
+@inject IPayrollJournalData payjoDb;
 
-@*<div class="row">
-    <div class="col-xl-6">
+<div class="row">
+    <div class="col-xl-12">
         <div class="card overflow-hidden">
             <div class="card-body bg-marketplace d-flex">
                 <div class="flex-grow-1">
-                    <h4 class="fs-18 lh-base mb-0">Payroll Listings Report <br></h4>
-                    <p class="mb-0 mt-2 pt-1 text-muted">View Report of Benefits and Deductions for Entire Workforce</p>
+                    <h4 class="fs-18 lh-base mb-0">Payroll Listings Summary Report <br></h4>
+                    <p class="mb-0 mt-2 pt-1 text-muted">View Summary Report of Benefits and Deductions for Entire Workforce</p>
+                    <div class="d-flex gap-3 mt-4 col-md-4">
+                        <select class="form-select" @bind="payrollJournalTitleId">
+                            <option selected-disabled="false" value="0">Select Payroll List</option>
+                            @foreach (var item in JournalTitles)
+                            {
+                                <option value="@item.Id">@item.JournalName - @item.MonthYear</option>
+                            }
+                        </select>
+                    </div>
                     <div class="d-flex gap-3 mt-4">
                         <a @onclick="GenerateReport" class="btn btn-primary">Generate Report </a>
                     </div>
@@ -20,17 +34,14 @@
             </div>
         </div>
     </div><!--end col-->
-    
-</div>*@
+</div>
 
-<div class="card">
+@*<div class="card">
     <div class="card-body">
         <div class="row g-2">
             <div class="col-sm-4">
                 <div class="search-box">
-                    @*<input type="text" class="form-control" id="searchMemberList" placeholder="Search for name or designation...">
-                    <i class="ri-search-line search-icon"></i>*@
-                    <h4 class="fs-18 lh-base mb-0">Payroll Listings Report</h4>
+                    <h4 class="fs-18 lh-base mb-0">Payroll Listings Report Summary</h4>
                 </div>
             </div>
                         <!--end col-->
@@ -50,7 +61,7 @@
         </div>
         <!--end row-->
     </div>
-</div>
+</div>*@
 
 @if (ShowAnim == true)
 {
@@ -66,183 +77,13 @@ else if (ShowGrid == true)
 {
   
     <p>Time Elasped: @OpsTime Seconds</p>
-    <SfGrid @ref="SfEmployeeGrid" DataSource="PayrollList" AllowResizing="true"  EnableVirtualization="true" ShowColumnChooser="true" EnableHeaderFocus="true" Height="600" AllowExcelExport="true" AllowPaging="true" AllowFiltering="true" AllowSorting="true" AllowGrouping="true" Toolbar="@toolbar">
-        <GridPageSettings PageSize="50" PageSizes="@(new string[] { "20", "50", "100", "200", "500", "All" })"></GridPageSettings>
+    <SfGrid @ref="SfEmployeeGrid" DataSource="PayrollList" AllowResizing="true"  EnableVirtualization="true" ShowColumnChooser="true" EnableHeaderFocus="true" Height="600" AllowExcelExport="true" AllowPaging="false" AllowFiltering="true" AllowSorting="true" AllowGrouping="true" Toolbar="@toolbar">
+        @*<GridPageSettings PageSize="50" PageSizes="@(new string[] { "20", "50", "100", "200", "500", "All" })"></GridPageSettings>*@
         <GridAggregates>
             <GridAggregate>
                 <GridAggregateColumns>
                    
                     <GridAggregateColumn Field=@nameof(MyPayRollListModel.BasicSalary) Type="AggregateType.Sum" Format="N">
-                        <FooterTemplate>
-                            @{
-                                var aggregate = (context as AggregateTemplateContext);
-                                <div>
-                                    <p>@aggregate.Sum</p>
-                                </div>
-                            }
-                        </FooterTemplate>
-                    </GridAggregateColumn>
-                    <GridAggregateColumn Field=@nameof(MyPayRollListModel.TransportAllowance) Type="AggregateType.Sum" Format="N">
-                        <FooterTemplate>
-                            @{
-                                var aggregate = (context as AggregateTemplateContext);
-                                <div>
-                                    <p>@aggregate.Sum</p>
-                                </div>
-                            }
-                        </FooterTemplate>
-                    </GridAggregateColumn>
-                    <GridAggregateColumn Field=@nameof(MyPayRollListModel.HousingAllowance) Type="AggregateType.Sum" Format="N">
-                        <FooterTemplate>
-                            @{
-                                var aggregate = (context as AggregateTemplateContext);
-                                <div>
-                                    <p>@aggregate.Sum</p>
-                                </div>
-                            }
-                        </FooterTemplate>
-                    </GridAggregateColumn>
-                     <GridAggregateColumn Field=@nameof(MyPayRollListModel.FurnitureAllowance) Type="AggregateType.Sum" Format="N">
-                        <FooterTemplate>
-                            @{
-                                var aggregate = (context as AggregateTemplateContext);
-                                <div>
-                                    <p>@aggregate.Sum</p>
-                                </div>
-                            }
-                        </FooterTemplate>
-                    </GridAggregateColumn>
-                    <GridAggregateColumn Field=@nameof(MyPayRollListModel.MealAllowance) Type="AggregateType.Sum" Format="N">
-                        <FooterTemplate>
-                            @{
-                                var aggregate = (context as AggregateTemplateContext);
-                                <div>
-                                    <p>@aggregate.Sum</p>
-                                </div>
-                            }
-                        </FooterTemplate>
-                    </GridAggregateColumn>
-                    <GridAggregateColumn Field=@nameof(MyPayRollListModel.UtilityAllowance) Type="AggregateType.Sum" Format="N">
-                        <FooterTemplate>
-                            @{
-                                var aggregate = (context as AggregateTemplateContext);
-                                <div>
-                                    <p>@aggregate.Sum</p>
-                                </div>
-                            }
-                        </FooterTemplate>
-                    </GridAggregateColumn>
-                     <GridAggregateColumn Field=@nameof(MyPayRollListModel.EducationAllowance) Type="AggregateType.Sum" Format="N">
-                        <FooterTemplate>
-                            @{
-                                var aggregate = (context as AggregateTemplateContext);
-                                <div>
-                                    <p>@aggregate.Sum</p>
-                                </div>
-                            }
-                        </FooterTemplate>
-                    </GridAggregateColumn>
-                     <GridAggregateColumn Field=@nameof(MyPayRollListModel.SecurityAllowance) Type="AggregateType.Sum" Format="N">
-                        <FooterTemplate>
-                            @{
-                                var aggregate = (context as AggregateTemplateContext);
-                                <div>
-                                    <p>@aggregate.Sum</p>
-                                </div>
-                            }
-                        </FooterTemplate>
-                    </GridAggregateColumn>
-                     <GridAggregateColumn Field=@nameof(MyPayRollListModel.DomesticServantAllowance) Type="AggregateType.Sum" Format="N">
-                        <FooterTemplate>
-                            @{
-                                var aggregate = (context as AggregateTemplateContext);
-                                <div>
-                                    <p>@aggregate.Sum</p>
-                                </div>
-                            }
-                        </FooterTemplate>
-                    </GridAggregateColumn>
-                    <GridAggregateColumn Field=@nameof(MyPayRollListModel.MedicalAllowance) Type="AggregateType.Sum" Format="N">
-                        <FooterTemplate>
-                            @{
-                                var aggregate = (context as AggregateTemplateContext);
-                                <div>
-                                    <p>@aggregate.Sum</p>
-                                </div>
-                            }
-                        </FooterTemplate>
-                    </GridAggregateColumn>
-                     <GridAggregateColumn Field=@nameof(MyPayRollListModel.DriversAllowance) Type="AggregateType.Sum" Format="N">
-                        <FooterTemplate>
-                            @{
-                                var aggregate = (context as AggregateTemplateContext);
-                                <div>
-                                    <p>@aggregate.Sum</p>
-                                </div>
-                            }
-                        </FooterTemplate>
-                    </GridAggregateColumn>
-                     <GridAggregateColumn Field=@nameof(MyPayRollListModel.VehicleMaintenanceAllowance) Type="AggregateType.Sum" Format="N">
-                        <FooterTemplate>
-                            @{
-                                var aggregate = (context as AggregateTemplateContext);
-                                <div>
-                                    <p>@aggregate.Sum</p>
-                                </div>
-                            }
-                        </FooterTemplate>
-                    </GridAggregateColumn>
-                     <GridAggregateColumn Field=@nameof(MyPayRollListModel.HazardAllowance) Type="AggregateType.Sum" Format="N">
-                        <FooterTemplate>
-                            @{
-                                var aggregate = (context as AggregateTemplateContext);
-                                <div>
-                                    <p>@aggregate.Sum</p>
-                                </div>
-                            }
-                        </FooterTemplate>
-                    </GridAggregateColumn>
-                     <GridAggregateColumn Field=@nameof(MyPayRollListModel.TaxDeduction) Type="AggregateType.Sum" Format="N">
-                        <FooterTemplate>
-                            @{
-                                var aggregate = (context as AggregateTemplateContext);
-                                <div>
-                                    <p>@aggregate.Sum</p>
-                                </div>
-                            }
-                        </FooterTemplate>
-                    </GridAggregateColumn>
-                     <GridAggregateColumn Field=@nameof(MyPayRollListModel.NHFDeduction) Type="AggregateType.Sum" Format="N">
-                        <FooterTemplate>
-                            @{
-                                var aggregate = (context as AggregateTemplateContext);
-                                <div>
-                                    <p>@aggregate.Sum</p>
-                                </div>
-                            }
-                        </FooterTemplate>
-                    </GridAggregateColumn>
-                    <GridAggregateColumn Field=@nameof(MyPayRollListModel.PensionDeduction) Type="AggregateType.Sum" Format="N">
-                        <FooterTemplate>
-                            @{
-                                var aggregate = (context as AggregateTemplateContext);
-                                <div>
-                                    <p>@aggregate.Sum</p>
-                                </div>
-                            }
-                        </FooterTemplate>
-                    </GridAggregateColumn>
-                     <GridAggregateColumn Field=@nameof(MyPayRollListModel.JSADeduction) Type="AggregateType.Sum" Format="N">
-                        <FooterTemplate>
-                            @{
-                                var aggregate = (context as AggregateTemplateContext);
-                                <div>
-                                    <p>@aggregate.Sum</p>
-                                </div>
-                            }
-                        </FooterTemplate>
-                    </GridAggregateColumn>
-                     <GridAggregateColumn Field=@nameof(MyPayRollListModel.SSADeduction) Type="AggregateType.Sum" Format="N">
                         <FooterTemplate>
                             @{
                                 var aggregate = (context as AggregateTemplateContext);
@@ -299,26 +140,13 @@ else if (ShowGrid == true)
             <GridColumn HeaderText="Department" Field="@nameof(MyPayRollListModel.DepartmentName)"></GridColumn>
             <GridColumn HeaderText="Category" Width="120" Field="@nameof(MyPayRollListModel.Category)"></GridColumn>
             <GridColumn HeaderText="Basic Salary" Width="120" Format="N" Field="@nameof(MyPayRollListModel.BasicSalary)"></GridColumn>
-            <GridColumn HeaderText="Transport Allowance" Format="N" Width="120" Field="@nameof(MyPayRollListModel.TransportAllowance)"></GridColumn>
-            <GridColumn HeaderText="Housing Allowance" Format="N" Width="120" Field="@nameof(MyPayRollListModel.HousingAllowance)"></GridColumn>
-            <GridColumn HeaderText="Furniture Allowance" Format="N" Width="120" Field="@nameof(MyPayRollListModel.FurnitureAllowance)"></GridColumn>
-            <GridColumn HeaderText="Meal Allowance" Width="120" Format="N" Field="@nameof(MyPayRollListModel.MealAllowance)"></GridColumn>
-            <GridColumn HeaderText="Utility Allowance" Format="N" Width="120" Field="@nameof(MyPayRollListModel.UtilityAllowance)"></GridColumn>
-            <GridColumn HeaderText="Education Allowance" Format="N" Width="120" Field="@nameof(MyPayRollListModel.EducationAllowance)"></GridColumn>
-            <GridColumn HeaderText="Security Allowance" Format="N" Width="120" Field="@nameof(MyPayRollListModel.SecurityAllowance)"></GridColumn>
-            <GridColumn HeaderText="Domestic Servant Allowance" Format="N" Width="120" Field="@nameof(MyPayRollListModel.DomesticServantAllowance)"></GridColumn>
-            <GridColumn HeaderText="Medical Allowance" Width="120" Format="N" Field="@nameof(MyPayRollListModel.MedicalAllowance)"></GridColumn>
-            <GridColumn HeaderText="Driver Allowance" Width="120" Format="N" Field="@nameof(MyPayRollListModel.DriversAllowance)"></GridColumn>
-            <GridColumn HeaderText="Vehicle Allowance" Width="120" Format="N" Field="@nameof(MyPayRollListModel.VehicleMaintenanceAllowance)"></GridColumn>
-            <GridColumn HeaderText="Hazard Allowance" Width="120" Format="N" Field="@nameof(MyPayRollListModel.HazardAllowance)"></GridColumn>
-            <GridColumn HeaderText="Tax" Width="120" Format="N" Field="@nameof(MyPayRollListModel.TaxDeduction)"></GridColumn>
-            <GridColumn HeaderText="NHF" Width="120" Field="@nameof(MyPayRollListModel.NHFDeduction)"></GridColumn>
-            <GridColumn HeaderText="Pension" Width="120" Format="N" Field="@nameof(MyPayRollListModel.PensionDeduction)"></GridColumn>
-            <GridColumn HeaderText="JSA" Width="120" Format="N" Field="@nameof(MyPayRollListModel.JSADeduction)"></GridColumn>
-            <GridColumn HeaderText="SSA" Width="120" Format="N" Field="@nameof(MyPayRollListModel.SSADeduction)"></GridColumn>
+            
             <GridColumn HeaderText="Total Earnings" Format="N" Width="120" Field="@nameof(MyPayRollListModel.TotalEarnings)"></GridColumn>
             <GridColumn HeaderText="Total Deductions" Format="N" Width="120" Field="@nameof(MyPayRollListModel.TotalDeductions)"></GridColumn>
             <GridColumn HeaderText="Net Pay" Width="120" Format="N" Field="@nameof(MyPayRollListModel.NetPay)"></GridColumn>
+            <GridColumn HeaderText="Code" Width="120" Field="@nameof(MyPayRollListModel.BankCode)"></GridColumn>
+            <GridColumn HeaderText="Account NO" Width="120" Field="@nameof(MyPayRollListModel.AccountNumber)"></GridColumn>
+            <GridColumn HeaderText="Bank" Width="120" Field="@nameof(MyPayRollListModel.BankName)"></GridColumn>
         </GridColumns>
     </SfGrid>
 }
@@ -327,18 +155,23 @@ else if (ShowGrid == true)
 @code {
     public string Message { get; set; }
     public List<MyPayRollListModel> PayrollList { get; set; }
+    //[Parameter]
+    public int payrollJournalTitleId { get; set; }
+    List<MyPayrollJournalTitleModel> JournalTitles = new();
 
     private List<object> toolbar = new List<object> { "Search", "ExcelExport", "ColumnChooser" };
     private SfGrid<MyPayRollListModel>? SfEmployeeGrid { get; set; }
 
-    //protected override async Task OnInitializedAsync()
-    //{
-    //    //PayrollList = db.GetPayrollListReport();
-    //    //Message = "";
-    //    //Message = "Loading Report Please Wait ........";
-    //    PayrollList = await Task.Run(() => db.GetPayrollListReport());
+    protected override void OnInitialized()
+    {
+        //PayrollList = db.GetPayrollListReport();
+        //Message = "";
+        //Message = "Loading Report Please Wait ........";
+        //PayrollList = await Task.Run(() => db.GetPayrollListReport());
 
-    //}
+        JournalTitles = payjoDb.GetPayrollJournalTitles();
+
+    }
     public async void ToolbarBtnClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
     {
         if (args.Item.Id.Contains("_excelexport"))
@@ -363,7 +196,8 @@ else if (ShowGrid == true)
         ShowAnim = true;
         var watch = System.Diagnostics.Stopwatch.StartNew();
         Message = "Loading Report Please Wait ........";
-        PayrollList = await Task.Run(() => db.GetPayrollListReport2Async());
+        //PayrollList = await Task.Run(() => db.GetPayrollListReport2Async());
+        PayrollList = await Task.Run(() => db.GetPayrollListSummaryReportAsync(payrollJournalTitleId));
         //Message = "";
         watch.Stop();
         OpsTime = watch.ElapsedMilliseconds/1000;

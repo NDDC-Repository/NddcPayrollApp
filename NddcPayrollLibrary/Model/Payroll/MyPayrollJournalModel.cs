@@ -10,6 +10,7 @@ namespace NddcPayrollLibrary.Model.Payroll
     public class MyPayrollJournalModel
     {
         public int Id { get; set; }
+        public int EmployeeId { get; set; }
         public string EmployeeCode { get; set; }
         public string Gender { get; set; }
         public string MaritalStatus { get; set; }
@@ -29,7 +30,7 @@ namespace NddcPayrollLibrary.Model.Payroll
         public DateTime DateEngaged { get; set; }
         public string JobTitle { get; set; }
         public string TaxStateProvince { get; set; }
-        public bool TaxStatus { get; set; }
+        public string TaxStatus { get; set; }
         public string TaxOffice { get; set; }
         public string TaxNumber { get; set; }
         public DateTime TaxStartDate { get; set; }
@@ -45,6 +46,7 @@ namespace NddcPayrollLibrary.Model.Payroll
         public string PaymentMethod { get; set; }
         public string BankCode { get; set; }
         public string AccountNumber { get; set; }
+        public string AccountName { get; set; }
         public string PayInfo1 { get; set; }
         public string PayInfo2 { get; set; }
         public string SortCode { get; set; }

@@ -17,5 +17,7 @@
         decimal GetVehicleMaintenanceAllowance(int empId);
         decimal GetHazardAllowance(int empId);
         decimal GetSecretarialAllowance(int EmpId);
+        decimal GetEntertainmentAllow(int empId);
+        decimal GetNewspaperAllow(int empId);
     }
 }

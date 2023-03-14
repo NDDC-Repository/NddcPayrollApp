@@ -81,11 +81,11 @@
     </div>
 </EditForm>
 
-@*<button class="btn btn-success" @onclick="UpdateAccountName">Update Account Name</button>*@
+<button class="btn btn-success" @onclick="UpdateAccountName">Update Account Name</button>
 
 @code {
 
-    
+
     public string LoadingText { get; set; }
     public string SelectedBankCode { get; set; }
     [Parameter]
@@ -177,12 +177,12 @@
         }
     }
 
-    
+
 
     public List<MyEmployeeMigrationModel> MigrationEmployees { get; set; }
     private const string connectionStringName = "SqlDb";
 
-    private void UpdateAccountName()
+    private async Task UpdateAccountName()
     {
         string empCode = string.Empty;
         string BankCode = string.Empty;
@@ -194,10 +194,11 @@
             empCode = employee.EmployeeCode;
             SelectedBankCode = employee.BankCode;
             BankDetails.account_number = employee.AccountNumber;
-            GetAccountDetails();
+            await GetAccountDetails();
             //id = db.LoadData<int, dynamic>("Select Id From JobTitles Where Abbreviation = @Abbrv", new { Abbrv = jobTitleAbrv }, connectionStringName, false).FirstOrDefault();
             db.SaveData("Update Employees Set AccountName = @AccountName Where EmployeeCode = @EmployeeCode ", new { AccountName = BankDetails.account_name, EmployeeCode = empCode }, connectionStringName, false);
         }
+        LoadingText = "Update of Account Names Complete";
     }
 
 

@@ -24,6 +24,9 @@ else
             <label>Category</label>
             <select class="form-select" @bind="Employee.Category">
                 <option selected="">Choose...</option>
+                <option value="MD">MD/CEO</option>
+                <option value="EDFA">EDFA</option>
+                <option value="EDP">EDP</option>
                 <option value="CONT">Contract Staff</option>
                 <option value="PERM">Permanent Staff</option>
                 <option value="POLI">Political</option>
@@ -148,6 +151,22 @@ else
             <div class="mb-3">
                 <label>Vehicle Maintenance Allowance</label>
                 <input type="text" disabled="true" class="form-control" @bind="@Employee.VehicleAllow" id="compnayNameinput">
+
+            </div>
+        </div>
+    </div>
+     <div class="row">
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label>Entertainment Allowance</label>
+                <input type="text" disabled="true" class="form-control" @bind="@Employee.EntertainmentAllow" id="compnayNameinput">
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label>Newspaper Allowance</label>
+                <input type="text" disabled="true" class="form-control" @bind="@Employee.NewspaperAllow" id="compnayNameinput">
 
             </div>
         </div>
@@ -405,6 +424,8 @@ else
         Employee.DriverAllow = allowDb.GetDriverAllowance(MyEmpId);
         Employee.VehicleAllow = allowDb.GetVehicleMaintenanceAllowance(MyEmpId);
         Employee.HazardAllow = allowDb.GetHazardAllowance(MyEmpId);
+        Employee.EntertainmentAllow = allowDb.GetEntertainmentAllow(MyEmpId);
+        Employee.NewspaperAllow = allowDb.GetNewspaperAllow(MyEmpId);
         Employee.Tax = dedDb.GetPAYEAmount(MyEmpId);
         Employee.Pension = dedDb.GetPensionAmount(MyEmpId);
         Employee.JSA = dedDb.GetJSA(MyEmpId);
@@ -434,7 +455,7 @@ else
 
     private decimal EarningsCompute()
     {
-        return Employee.BasicSalary + Employee.MedicalAllow + Employee.TransportAllow + Employee.HousingAllow + Employee.FurnitureAllow + Employee.MealAllow + Employee.UtilityAllow + Employee.EducationAllow + Employee.SecurityAllow + Employee.DomesticServantAllow + Employee.DriverAllow + Employee.VehicleAllow + Employee.HazardAllow + Employee.SecretarialAllow + Employee.LeaveAllow + Employee.ActingAllow + Employee.ActingAllow + Employee.ShiftAllow + Employee.UniformAllow;
+        return Employee.BasicSalary + Employee.MedicalAllow + Employee.TransportAllow + Employee.HousingAllow + Employee.FurnitureAllow + Employee.MealAllow + Employee.UtilityAllow + Employee.EducationAllow + Employee.SecurityAllow + Employee.DomesticServantAllow + Employee.DriverAllow + Employee.VehicleAllow + Employee.HazardAllow + Employee.SecretarialAllow + Employee.LeaveAllow + Employee.ActingAllow + Employee.ActingAllow + Employee.ShiftAllow + Employee.UniformAllow + Employee.EntertainmentAllow + Employee.NewspaperAllow;
     }
 
     private decimal ComputeDeductions()

@@ -1,4 +1,5 @@
-﻿using NddcPayrollLibrary.Databases;
+﻿
+using NddcPayrollLibrary.Databases;
 using NddcPayrollLibrary.Model.Employee;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace NddcPayrollLibrary.Data.Helper
     public class SQLHelper : IHelperData
     {
         private readonly ISqlDataAccess db;
+        
         private const string connectionStringName = "SqlDb";
 
         public SQLHelper(ISqlDataAccess db)
@@ -26,6 +28,8 @@ namespace NddcPayrollLibrary.Data.Helper
 
             //return (T)Convert.ChangeType(myValue, typeof(T));
         }
+
+        
 
     }
 }

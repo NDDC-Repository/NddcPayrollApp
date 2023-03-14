@@ -8,7 +8,10 @@ namespace NddcPayrollLibrary.Data.Reports
         Task<List<MyPayeReportSummaryModel>> GetPayeSummaryReportAsync();
         List<MyPayRollListModel> GetPayrollListReport();
         Task<List<MyPayRollListModel>> GetPayrollListReport2Async();
+        //Task<List<MyPayRollListModel>> GetPayrollListReport2Async(int payrollJournalTitleId);
         Task<List<MyPayRollListModel>> GetPayrollListReportAsync();
+        List<MyPayRollListModel> GetPayrollListReportById(int payrollJournalTitleId);
+        Task<List<MyPayRollListModel>> GetPayrollListSummaryReportAsync(int payrollJournalTitleId);
         Task<List<MyPayrollSummaryByDepartmentModel>> GetPayrollSummaryByDeptReportAsync();
         Task<List<MyPayrollSummaryByDepartmentModel>> GetPayrollTotalsReportAsync();
         Task<List<MyRemitaUploadModel>> GetRemitaReportAsync();

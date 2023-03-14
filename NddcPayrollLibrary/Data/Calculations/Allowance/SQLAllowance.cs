@@ -76,6 +76,66 @@ namespace NddcPayrollLibrary.Data.Calculations.Allowance
 
 
         }
+        public decimal GetEntertainmentAllow(int empId)
+        {
+            int gradeLevelId = GetGradeLevelId(empId);
+            int benefitTypeId = db.LoadData<int, dynamic>("Select Id From BenefitType Where BenefitType = @BenefitType", new { BenefitType = "Entertainment" }, connectionStringName, false).FirstOrDefault();
+            string check = db.LoadData<string, dynamic>("Select Percentage From Benefits Where GradeLevelId = @GradeLevelId And BenefitTypeId = @BenefitTypeId", new { BenefitTypeId = benefitTypeId, GradeLevelId = gradeLevelId }, connectionStringName, false).FirstOrDefault();
+
+            string empCat = GetEmpCategory(empId);
+
+            if (empCat == "MD" || empCat == "EDFA" || empCat == "EDP")
+            {
+
+                if (check is null)
+                {
+                    return 0.00M;
+                }
+
+                int entertainmentPerc = db.LoadData<int, dynamic>("Select Percentage From Benefits Where GradeLevelId = @GradeLevelId And BenefitTypeId = @BenefitTypeId", new { GradeLevelId = gradeLevelId, BenefitTypeId = benefitTypeId }, connectionStringName, false).FirstOrDefault();
+                decimal annualBasicSalary = GetPermStaffBasicSalary(empId) * 12;
+                decimal entertainmentAllowance = (entertainmentPerc / 100M) * annualBasicSalary;
+                return entertainmentAllowance / 12;
+            }
+            else
+            {
+                return 0.00M;
+            }
+
+
+
+
+        }
+        public decimal GetNewspaperAllow(int empId)
+        {
+            int gradeLevelId = GetGradeLevelId(empId);
+            int benefitTypeId = db.LoadData<int, dynamic>("Select Id From BenefitType Where BenefitType = @BenefitType", new { BenefitType = "Newspaper" }, connectionStringName, false).FirstOrDefault();
+            string check = db.LoadData<string, dynamic>("Select Percentage From Benefits Where GradeLevelId = @GradeLevelId And BenefitTypeId = @BenefitTypeId", new { BenefitTypeId = benefitTypeId, GradeLevelId = gradeLevelId }, connectionStringName, false).FirstOrDefault();
+
+            string empCat = GetEmpCategory(empId);
+
+            if (empCat == "MD" || empCat == "EDFA" || empCat == "EDP")
+            {
+
+                if (check is null)
+                {
+                    return 0.00M;
+                }
+
+                int newspaperPerc = db.LoadData<int, dynamic>("Select Percentage From Benefits Where GradeLevelId = @GradeLevelId And BenefitTypeId = @BenefitTypeId", new { GradeLevelId = gradeLevelId, BenefitTypeId = benefitTypeId }, connectionStringName, false).FirstOrDefault();
+                decimal annualBasicSalary = GetPermStaffBasicSalary(empId) * 12;
+                decimal newspaperAllowance = (newspaperPerc / 100M) * annualBasicSalary;
+                return newspaperAllowance / 12;
+            }
+            else
+            {
+                return 0.00M;
+            }
+
+
+
+
+        }
         public decimal GetFurnitureAllowance(int empId)
         {
             int gradeLevelId = GetGradeLevelId(empId);
@@ -103,6 +163,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Allowance
         public decimal GetTransportAllowance(int empId)
         {
             int gradeLevelId = GetGradeLevelId(empId);
+            string rank = db.LoadData<string, dynamic>("Select Rank From GradeLevel Where Id = @GradeLevelId", new { GradeLevelId = gradeLevelId }, connectionStringName, false).First();
             int benefitTypeId = db.LoadData<int, dynamic>("Select Id From BenefitType Where BenefitType = @BenefitType", new { BenefitType = "Transportation" }, connectionStringName, false).FirstOrDefault();
             string check = db.LoadData<string, dynamic>("Select Percentage From Benefits Where GradeLevelId = @GradeLevelId And BenefitTypeId = @BenefitTypeId", new { BenefitTypeId = benefitTypeId, GradeLevelId = gradeLevelId }, connectionStringName, false).FirstOrDefault();
             string empCategory = GetEmpCategory(empId);
@@ -119,7 +180,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Allowance
                 decimal transportAllowanceAmount = (transportPerc / (decimal)100) * annualBasicSalary;
                 return transportAllowanceAmount / 12;
             }
-            else if (empCategory == "PERM" || empCategory == "POLI")
+            else if (empCategory == "PERM" || empCategory == "POLI" || rank == "EXEC")
             {
 
                 if (check is null)
@@ -144,7 +205,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Allowance
         public decimal GetMealAllowance(int empId)
         {
             int gradeLevelId = GetGradeLevelId(empId);
-           
+            
             string check = db.LoadData<string, dynamic>("SELECT (Amount * 30) As Amount From Subsidies Where GradeLevelId = @GradeLevelId And SubsidyType = @SubsidyType", new { GradeLevelId = gradeLevelId, SubsidyType = "Meal" }, connectionStringName, false).FirstOrDefault();
             string empCategory = GetEmpCategory(empId);
             
@@ -179,6 +240,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Allowance
         public decimal GetUtilityAllowance(int empId)
         {
             int gradeLevelId = GetGradeLevelId(empId);
+            string rank = db.LoadData<string, dynamic>("Select Rank From GradeLevel Where Id = @GradeLevelId", new { GradeLevelId = gradeLevelId }, connectionStringName, false).First();
             int benefitTypeId = db.LoadData<int, dynamic>("Select Id From BenefitType Where BenefitType = @BenefitType", new { BenefitType = "Utility" }, connectionStringName, false).FirstOrDefault();
             string check = db.LoadData<string, dynamic>("Select Percentage From Benefits Where GradeLevelId = @GradeLevelId And BenefitTypeId = @BenefitTypeId", new { BenefitTypeId = benefitTypeId, GradeLevelId = gradeLevelId }, connectionStringName, false).FirstOrDefault();
             string empCategory = GetEmpCategory(empId);
@@ -195,7 +257,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Allowance
                 decimal utilityAllowanceAmount = (utilityPerc / (decimal)100) * annualBasicSalary;
                 return utilityAllowanceAmount / 12;
             }
-            else if (empCategory == "PERM" || empCategory == "POLI")
+            else if (empCategory == "PERM" || empCategory == "POLI" || rank == "EXEC")
             {
 
                 if (check is null)
@@ -263,6 +325,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Allowance
         public decimal GetSecurityAllowance(int empId)
         {
             int gradeLevelId = GetGradeLevelId(empId);
+            string rank = db.LoadData<string, dynamic>("Select Rank From GradeLevel Where Id = @GradeLevelId", new { GradeLevelId = gradeLevelId }, connectionStringName, false).First();
             int benefitTypeId = db.LoadData<int, dynamic>("Select Id From BenefitType Where BenefitType = @BenefitType", new { BenefitType = "Security" }, connectionStringName, false).FirstOrDefault();
             string check = db.LoadData<string, dynamic>("Select Percentage From Benefits Where GradeLevelId = @GradeLevelId And BenefitTypeId = @BenefitTypeId", new { BenefitTypeId = benefitTypeId, GradeLevelId = gradeLevelId }, connectionStringName, false).FirstOrDefault();
             string empCategory = GetEmpCategory(empId);
@@ -279,7 +342,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Allowance
                 decimal securityAllowanceAmount = (securityPerc / (decimal)100) * annualBasicSalary;
                 return securityAllowanceAmount / 12;
             }
-            else if (empCategory == "PERM" || empCategory == "POLI")
+            else if (empCategory == "PERM" || empCategory == "POLI" || rank == "EXEC")
             {
 
                 if (check is null)
@@ -305,6 +368,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Allowance
         public decimal GetDomesticServantAllowance(int empId)
         {
             int gradeLevelId = GetGradeLevelId(empId);
+            string rank = db.LoadData<string, dynamic>("Select Rank From GradeLevel Where Id = @GradeLevelId", new { GradeLevelId = gradeLevelId }, connectionStringName, false).First();
             int benefitTypeId = db.LoadData<int, dynamic>("Select Id From BenefitType Where BenefitType = @BenefitType", new { BenefitType = "Domestic Servant" }, connectionStringName, false).FirstOrDefault();
             string check = db.LoadData<string, dynamic>("SELECT (GradeLevel.MonthlyGross * LinkedBenefits.MultiplyBy) FROM  LinkedBenefits LEFT JOIN GradeLevel ON LinkedBenefits.LinkedGradeLevelId = GradeLevel.Id WHERE LinkedBenefits.GradeLevelId = @GradeLevelId And BenefitTypeId = @BenefitTypeId", new { GradeLevelId = gradeLevelId, BenefitTypeId = benefitTypeId }, connectionStringName, false).FirstOrDefault();
             string empCategory = GetEmpCategory(empId);
@@ -319,7 +383,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Allowance
                 decimal domeasticServantAllowance = db.LoadData<decimal, dynamic>("SELECT (GradeLevel.MonthlyGross * LinkedBenefits.MultiplyBy) FROM  LinkedBenefits INNER JOIN GradeLevel ON LinkedBenefits.LinkedGradeLevelId = GradeLevel.Id WHERE LinkedBenefits.GradeLevelId = @GradeLevelId And BenefitTypeId = @BenefitTypeId", new { GradeLevelId = gradeLevelId, BenefitTypeId = benefitTypeId }, connectionStringName, false).FirstOrDefault();
                 return (80M / 100M) * domeasticServantAllowance;
             }
-            else if (empCategory == "PERM" || empCategory == "POLI" )
+            else if (empCategory == "PERM" || empCategory == "POLI" || rank == "EXEC")
             {
                 if (check is null)
                 {
@@ -340,6 +404,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Allowance
         public decimal GetMedicalAllowance(int empId)
         {
             int gradeLevelId = GetGradeLevelId(empId);
+            string rank = db.LoadData<string, dynamic>("Select Rank From GradeLevel Where Id = @GradeLevelId", new { GradeLevelId = gradeLevelId }, connectionStringName, false).First();
             int benefitTypeId = db.LoadData<int, dynamic>("Select Id From BenefitType Where BenefitType = @BenefitType", new { BenefitType = "Medical" }, connectionStringName, false).FirstOrDefault();
             string check = db.LoadData<string, dynamic>("Select Percentage From Benefits Where GradeLevelId = @GradeLevelId And BenefitTypeId = @BenefitTypeId", new { BenefitTypeId = benefitTypeId, GradeLevelId = gradeLevelId }, connectionStringName, false).FirstOrDefault();
             string empCategory = GetEmpCategory(empId);
@@ -358,7 +423,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Allowance
 
                 //return 0.00M;
             }
-            else if (empCategory == "PERM" || empCategory == "POLI")
+            else if (empCategory == "PERM" || empCategory == "POLI" || rank == "EXEC")
             {
 
                 if (check is null)
@@ -383,6 +448,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Allowance
         public decimal GetDriverAllowance(int empId)
         {
             int gradeLevelId = GetGradeLevelId(empId);
+            string rank = db.LoadData<string, dynamic>("Select Rank From GradeLevel Where Id = @GradeLevelId", new { GradeLevelId = gradeLevelId }, connectionStringName, false).First();
             int benefitTypeId = db.LoadData<int, dynamic>("Select Id From BenefitType Where BenefitType = @BenefitType", new { BenefitType = "Driver" }, connectionStringName, false).FirstOrDefault();
             string check = db.LoadData<string, dynamic>("SELECT (GradeLevel.MonthlyGross * LinkedBenefits.MultiplyBy) FROM  LinkedBenefits INNER JOIN GradeLevel ON LinkedBenefits.LinkedGradeLevelId = GradeLevel.Id WHERE LinkedBenefits.GradeLevelId = @GradeLevelId And BenefitTypeId = @BenefitTypeId", new { GradeLevelId = gradeLevelId, BenefitTypeId = benefitTypeId }, connectionStringName, false).FirstOrDefault();
             string empCategory = GetEmpCategory(empId);
@@ -397,7 +463,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Allowance
                 decimal driverAllowance = db.LoadData<decimal, dynamic>("SELECT (GradeLevel.MonthlyGross * LinkedBenefits.MultiplyBy) FROM  LinkedBenefits INNER JOIN GradeLevel ON LinkedBenefits.LinkedGradeLevelId = GradeLevel.Id WHERE LinkedBenefits.GradeLevelId = @GradeLevelId And BenefitTypeId = @BenefitTypeId", new { GradeLevelId = gradeLevelId, BenefitTypeId = benefitTypeId }, connectionStringName, false).FirstOrDefault();
                 return (80M / 100M) * driverAllowance;
             }
-            else if (empCategory == "PERM" || empCategory == "POLI")
+            else if (empCategory == "PERM" || empCategory == "POLI" || rank == "EXEC")
             {
                 if (check is null)
                 {
@@ -418,6 +484,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Allowance
         public decimal GetVehicleMaintenanceAllowance(int empId)
         {
             int gradeLevelId = GetGradeLevelId(empId);
+            string rank = db.LoadData<string, dynamic>("Select Rank From GradeLevel Where Id = @GradeLevelId", new { GradeLevelId = gradeLevelId }, connectionStringName, false).First();
             int benefitTypeId = db.LoadData<int, dynamic>("Select Id From BenefitType Where BenefitType = @BenefitType", new { BenefitType = "Vehicle Maintenance" }, connectionStringName, false).FirstOrDefault();
             string check = db.LoadData<string, dynamic>("Select Percentage From Benefits Where GradeLevelId = @GradeLevelId And BenefitTypeId = @BenefitTypeId", new { BenefitTypeId = benefitTypeId, GradeLevelId = gradeLevelId }, connectionStringName, false).FirstOrDefault();
             string empCategory = GetEmpCategory(empId);
@@ -434,7 +501,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Allowance
                 decimal vehicleAllowanceAmount = (vehicleMaintenancePerc / (decimal)100) * annualBasicSalary;
                 return vehicleAllowanceAmount / 12;
             }
-            else if (empCategory == "PERM" || empCategory == "POLI")
+            else if (empCategory == "PERM" || empCategory == "POLI" || rank == "EXEC")
             {
 
                 if (check is null)
@@ -465,6 +532,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Allowance
         public decimal GetHazardAllowance(int empId)
         {
             int gradeLevelId = GetGradeLevelId(empId);
+            string rank = db.LoadData<string, dynamic>("Select Rank From GradeLevel Where Id = @GradeLevelId", new { GradeLevelId = gradeLevelId }, connectionStringName, false).First();
             int benefitTypeId = db.LoadData<int, dynamic>("Select Id From BenefitType Where BenefitType = @BenefitType", new { BenefitType = "Hazard" }, connectionStringName, false).FirstOrDefault();
             string check = db.LoadData<string, dynamic>("Select Percentage From Benefits Where GradeLevelId = @GradeLevelId And BenefitTypeId = @BenefitTypeId", new { BenefitTypeId = benefitTypeId, GradeLevelId = gradeLevelId }, connectionStringName, false).FirstOrDefault();
             string empCategory = GetEmpCategory(empId);
@@ -481,7 +549,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Allowance
                 decimal hazardAllowanceAmount = (hazardAllowancePerc / (decimal)100) * annualBasicSalary;
                 return hazardAllowanceAmount / 12;
             }
-            else if (empCategory == "PERM" || empCategory == "POLI")
+            else if (empCategory == "PERM" || empCategory == "POLI" || rank == "EXEC")
             {
 
                 if (check is null)
@@ -503,5 +571,6 @@ namespace NddcPayrollLibrary.Data.Calculations.Allowance
             }
 
         }
+
     }
 }

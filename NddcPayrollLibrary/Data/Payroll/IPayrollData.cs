@@ -25,5 +25,8 @@ namespace NddcPayrollLibrary.Data.Payroll
         MyLinkedBenefitsModel GetLinkedBenefitByLinkBenefitId(int linkedBenefitId);
         void UpdateLinkedBenefit(MyLinkedBenefitsModel LinkedBenefit);
         void DeleteLinkedBenefit(int Id);
+        void AddPayrollJournal(MyPayrollJournalTitleModel JournalTitle);
+        List<MyPayrollJournalTitleModel> GetPayrollJournalTitles();
+        void DeleteExecutedPayroll(int Id);
     }
 }

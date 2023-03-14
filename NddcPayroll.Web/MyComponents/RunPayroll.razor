@@ -1,4 +1,11 @@
-﻿
+﻿@page "/runpayroll"
+
+@using NddcPayrollLibrary.Data.Payroll;
+@using NddcPayrollLibrary.Data.PayrollJournal;
+@using NddcPayrollLibrary.Model.Payroll;
+@inject IPayrollData payDb;
+@inject IPayrollJournalData payjoDb;
+@inject NavigationManager NavigationManager;
 
 
 <div class="row">
@@ -17,21 +24,34 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-lg-8">
-        <div class="card">
-            @*<div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">New Bank</h4>
+@if (ShowAnim == true)
+{
+    @*<div class="spinner-grow text-primary" role="status">
+        <span>Loading Report Please Wait...</span>
+    </div>*@
+    <div class="text-center mb-3">
+        <a href="javascript:void(0);" class="text-success"><i class="mdi mdi-loading mdi-spin fs-40 align-middle me-2"></i> Executing Payroll Please Wait </a>
+    </div>
+    @*<h4>@Message</h4>*@
+}
+
+@if (HideControl == false)
+{
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card">
+                @*<div class="card-header align-items-center d-flex">
+            <h4 class="card-title mb-0 flex-grow-1">New Bank</h4>
             </div>*@<!-- end card header -->
-            <div class="card-body">
-                <form method="post">
+                <div class="card-body">
+                    @* <form>*@
                     <div class="row mb-3">
                         <div class="col-3">
                             <label class="form-label">Batch Name</label>
                         </div>
 
                         <div class="col-9">
-                            <input class="form-control" placeholder="Enter Batch Name">
+                            <input class="form-control" @bind="@JournalTitle.JournalName" placeholder="Enter Batch Name">
                         </div>
                     </div>
 
@@ -41,20 +61,41 @@
                             <label class="form-label">Current Period</label>
                         </div>
                         <div class="col-9">
-                            <input type="date" class="form-control" id="exampleInputdate">
+                            <input type="date" @bind="@JournalTitle.CurrentPeriod" class="form-control" id="exampleInputdate">
                         </div>
                     </div>
-                   
+
                     <div class="text-end">
-                        <button type="submit" class="btn btn-primary">Process Payroll</button>
+                        <button type="submit" @onclick="ExecutePayroll" class="btn btn-primary">Process Payroll</button>
                     </div>
-                </form>
+                    @* </form>*@
+                </div>
             </div>
         </div>
+        <!--end col-->
     </div>
-    <!--end col-->
-</div>
+}
+
 
 @code {
+
+    public MyPayrollJournalTitleModel JournalTitle = new();
+    public bool ShowAnim { get; set; }
+    public bool HideControl { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        JournalTitle.CurrentPeriod = DateTime.Now;
+    }
+
+    private async Task ExecutePayroll()
+    {
+        ShowAnim = true;
+        HideControl = true;
+
+        await Task.Run(() => payjoDb.AddPayrollJournal(JournalTitle));
+        ShowAnim = false;
+        NavigationManager.NavigateTo("Payroll/RunPayroll", true);
+    }
 
 }

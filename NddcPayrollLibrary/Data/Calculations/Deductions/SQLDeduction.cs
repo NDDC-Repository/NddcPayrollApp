@@ -49,7 +49,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
             int gradeLevelId = GetGradeLevelId(empId);
             string rank = db.LoadData<string, dynamic>("Select Rank From GradeLevel Where Id = @GradeLevelId", new { GradeLevelId = gradeLevelId }, connectionStringName, false).First();
 
-            if ((rank == "JS") && (category == "PERM" || category == "POLI"))
+            if (rank == "JS" && category == "PERM")
             {
                 decimal basicSalary = GetBasicSalary(empId);
                 return 2M/100M * basicSalary;
@@ -65,7 +65,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
             int gradeLevelId = GetGradeLevelId(empId);
             string rank = db.LoadData<string, dynamic>("Select Rank From GradeLevel Where Id = @GradeLevelId", new { GradeLevelId = gradeLevelId }, connectionStringName, false).First();
 
-            if ((rank == "SS") && (category == "PERM" || category == "POLI"))
+            if (rank == "SS" && category == "PERM")
             {
                 decimal basicSalary = GetBasicSalary(empId);
                 return 2M / 100M * basicSalary;
@@ -97,7 +97,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
         {
             string category = GetEmpCategory(empId);
 
-            if (GetEmpCategory(empId) == "PERM" || GetEmpCategory(empId) == "POLI")
+            if (GetEmpCategory(empId) == "PERM")
             {
                 if (empDb.GetPensionStatus(empId))
                 {
@@ -117,7 +117,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
         {
             string category = GetEmpCategory(empId);
 
-            if (GetEmpCategory(empId) == "PERM" || GetEmpCategory(empId) == "POLI")
+            if (GetEmpCategory(empId) == "PERM")
             {
                 if (empDb.GetPensionStatus(empId))
                 {
@@ -135,7 +135,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
         }
         public decimal GetNHFAmount(int empId)
         {
-            if (GetEmpCategory(empId) == "PERM" || GetEmpCategory(empId) == "POLI")
+            if (GetEmpCategory(empId) == "PERM")
             {
                 decimal annualBasic = GetBasicSalary(empId) * 12;
                 decimal NHFAmount = ((decimal)2.5 / (decimal)100) * annualBasic;
@@ -201,7 +201,10 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
         }
         public decimal GetPAYEAmount(int empId)
         {
-            if (GetEmpCategory(empId) == "PERM" || GetEmpCategory(empId) == "POLI")
+            int gradeLevelId = GetGradeLevelId(empId);
+            string rank = db.LoadData<string, dynamic>("Select Rank From GradeLevel Where Id = @GradeLevelId", new { GradeLevelId = gradeLevelId }, connectionStringName, false).First();
+            
+            if (GetEmpCategory(empId) == "PERM" || GetEmpCategory(empId) == "POLI" || rank == "EXEC")
             {
                 decimal OriginalTotalEarnings = payDb.GetMonthlyGross(empId) * (decimal)12;
                 decimal craTotalEarnings = GetCRATotal(empId);

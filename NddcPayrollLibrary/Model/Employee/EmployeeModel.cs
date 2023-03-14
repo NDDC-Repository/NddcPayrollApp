@@ -89,5 +89,7 @@ namespace NddcPayrollLibrary.Model.Employee
         public string ExitCondition { get; set; }
         public decimal EmployerPension { get; set; }
         public DateTime ExitDate { get; set; }
+        public decimal EntertainmentAllow { get; set; }
+        public decimal NewspaperAllow { get; set; }
     }
 }
