@@ -96,12 +96,13 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
         public decimal GetPensionAmount(int empId)
         {
             string category = GetEmpCategory(empId);
+            
 
             if (GetEmpCategory(empId) == "PERM")
             {
                 if (empDb.GetPensionStatus(empId))
                 {
-                    decimal totalEarnings = GetMonthlyGross(empId) * 12;
+                    decimal totalEarnings = GetMonthlyGross(empId) * 12M;
                     decimal pensionAmount = ((decimal)8 / (decimal)100) * totalEarnings;
                     return pensionAmount / 12M;
                 }
@@ -150,9 +151,11 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
         
         public decimal GetAnnualPensionAmount(int empId)
         {
-            decimal totalEarnings = GetPensionAmount(empId) * 12;
+            decimal totalEarnings = GetPensionAmount(empId) * 12M;
+            decimal voluntaryPension = GetVoluntaryPension(empId) * 12M;
+            decimal totalPension = totalEarnings + voluntaryPension;
             //decimal pensionAmount = ((decimal)8 / (decimal)100) * totalEarnings;
-            return totalEarnings;
+            return totalPension;
         }
         public decimal GetAnnualNHFAmount(int empId)
         {
