@@ -334,7 +334,7 @@ namespace NddcPayrollLibrary.Data.Reports
             List<EmployeeModel> Employees = new List<EmployeeModel>();
             List<Task<decimal>> tasks = new List<Task<decimal>>();
 
-            string SQL = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, Employees.Id, Employees.EmployeeCode, Employees.FirstName, Employees.LastName, Employees.Email, Employees.Category, GradeLevel.GradeLevel, Departments.DepartmentName FROM Employees LEFT JOIN GradeLevel ON Employees.GradeLevelId = GradeLevel.Id LEFT JOIN Departments ON Employees.DepartmentId = Departments.Id LEFT JOIN JobTitles ON Employees.JobTitleId = JobTitles.Id Where Archived = 0 ORDER BY Employees.Id ASC";
+            string SQL = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, Employees.Id, Employees.EmployeeCode, Employees.FirstName, Employees.LastName, Employees.Email, Employees.Category, GradeLevel.GradeLevel, Departments.DepartmentName FROM Employees LEFT JOIN GradeLevel ON Employees.GradeLevelId = GradeLevel.Id LEFT JOIN Departments ON Employees.DepartmentId = Departments.Id LEFT JOIN JobTitles ON Employees.JobTitleId = JobTitles.Id Where TaxCalc = 'Automatic' ORDER BY Employees.Id ASC";
 
             Employees = db.LoadData<EmployeeModel, dynamic>(SQL, new { }, connectionStringName, false).ToList();
             foreach (var item in Employees)
@@ -389,7 +389,7 @@ namespace NddcPayrollLibrary.Data.Reports
             List<EmployeeModel> Employees = new List<EmployeeModel>();
             List<Task<decimal>> tasks = new List<Task<decimal>>();
 
-            string SQL = "SELECT Id, EmployeeCode From Employees Where GradeLevelId = @GradeLevelId And TaxCalc = 'Automatic' And Archived = 0";
+            string SQL = "SELECT Id, EmployeeCode From Employees Where GradeLevelId = @GradeLevelId And TaxCalc = 'Automatic'";
 
             Employees = db.LoadData<EmployeeModel, dynamic>(SQL, new { gradeLevelId }, connectionStringName, false).ToList();
             foreach (var item in Employees)
@@ -471,7 +471,7 @@ namespace NddcPayrollLibrary.Data.Reports
             List<EmployeeModel> Employees = new List<EmployeeModel>();
             List<Task<decimal>> tasks = new List<Task<decimal>>();
 
-            string SQL = "SELECT Id, EmployeeCode From Employees Where Id = @Id And Archived = 0";
+            string SQL = "SELECT Id, EmployeeCode From Employees Where Id = @Id And TaxCalc = 'Automatic'";
 
             Employees = db.LoadData<EmployeeModel, dynamic>(SQL, new { @Id = empId }, connectionStringName, false).ToList();
             foreach (var item in Employees)

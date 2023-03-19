@@ -9,6 +9,10 @@ using NddcPayrollLibrary.Model.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Numerics;
+using System.Reflection;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -40,7 +44,7 @@ namespace NddcPayrollLibrary.Data.EmployeeData
                " HazardAllow = 0.00, Tax = 0.00, NHF = 0.00, JSA = 0.00, SSA = 0.00, TotalEarnings = 0.00, " +
                "TotalDeductions = 0.00, NetPay = 0.00, Pension = 0.00, TaxCalc = 'Automatic', Archived = 0, Arreas = 0.00, ExitCondition = '', EmployerPension = 0.00, EntertainmentAllow = 0.00, NewspaperAllow = 0.00, TaxAdjustment = 0.00 Where Id = @Id";
 
-            db.SaveData("Insert Into Employees (EmployeeCode, Gender, MaritalStatus, firstName, LastName, OtherNames, MaidenName," +
+            db.SaveData("Insert Into Employees (EmployeeCode, Gender, MaritalStatus, FirstName, LastName, OtherNames, MaidenName," +
                 " SpouseName, Email, Phone, DateOfBirth, Address, City, SID, Passport, EmploymentStatus, DateEngaged, ContactName, ContactPhone, CreatedBy, DateCreated) " +
                 "values(@EmployeeCode, @Gender, @MaritalStatus, @FirstName, @LastName, @OtherNames, @MaidenName, @SpouseName, @Email, @Phone, " +
                 "@DateOfBirth, @Address, @City, @SID, @Passport, @EmploymentStatus, @DateEngaged, @ContactName, @ContactPhone, @CreatedBy, @DateCreated)", 
@@ -64,7 +68,16 @@ namespace NddcPayrollLibrary.Data.EmployeeData
 
             return Id;
         }
+        public void UpdateEmployee(EmployeeModel employee)
+        {
+            employee.UpdatedBy = "Admin";
+            employee.DateUpdated = DateTime.Now;
+            //employee.DateOfBirth = (DateTime)System.Data.SqlTypes.SqlDateTime.MaxValue;
+            //employee.DateEngaged = (DateTime)System.Data.SqlTypes.SqlDateTime.MaxValue;
 
+            string SQL = "Update Employees Set EmployeeCode = @EmployeeCode, Gender = @Gender, MaritalStatus = @MaritalStatus, FirstName = @FirstName, LastName = @LastName, OtherNames = @OtherNames, MaidenName = @MaidenName, SpouseName = @SpouseName, Email = @Email, Phone = @Phone, DateOfBirth = @DateOfBirth, Address = @Address, City = @City, SID = @SID, Passport = @Passport, EmploymentStatus = @EmploymentStatus, DateEngaged = @DateEngaged, ContactName = @ContactName, ContactPhone = @ContactPhone, UpdatedBy = @UpdatedBy Where Id = @Id";
+            db.SaveData(SQL, new { employee.EmployeeCode, employee.Gender, employee.MaritalStatus, employee.FirstName, employee.LastName, employee.OtherNames, employee.MaidenName, employee.SpouseName, employee.Email, employee.Phone, employee.DateOfBirth, employee.Address, employee.City, employee.SID, employee.Passport, employee.EmploymentStatus, employee.DateEngaged, employee.ContactName, employee.ContactPhone, employee.UpdatedBy }, connectionStringName, false);
+        }
         public void DeleteEmployee(int Id)
         {
             db.SaveData("Delete Employees Where Id = @Id", new { Id }, connectionStringName, false);
@@ -92,7 +105,7 @@ namespace NddcPayrollLibrary.Data.EmployeeData
         public EmployeeModel GetEmployeeDetails(int EmpId)
         {
             //string SQL2 = "SELECT Employees.EmployeeCode, Employees.Gender, Employees.MaritalStatus, Employees.FirstName, Employees.LastName, Employees.OtherNames, Employees.SpouseName, Employees.Email, Employees.Phone, Employees.DateOfBirth, Employees.Address, Employees.City, Employees.SID, Employees.Passport, Employees.EmploymentStatus, Employees.DateEngaged, Employees.ContactName, Employees.ContactPhone, Employees.Category, GradeLevel.GradeLevel, Departments.DepartmentName, JobTitles.Description FROM Employees LEFT JOIN GradeLevel ON Employees.GradeLevelId = GradeLevel.Id LEFT JOIN Departments ON Employees.DepartmentId = Departments.Id LEFT JOIN JobTitles ON Employees.JobTitleId = JobTitles.Id Where Id = @Id";
-            string SQL = "SELECT EmployeeCode, Gender, MaritalStatus, FirstName, LastName, OtherNames, SpouseName, Email, Phone, DateOfBirth, Address, City, SID, Passport, EmploymentStatus, DateEngaged, ContactName, ContactPhone from Employees Where Id = @Id";
+            string SQL = "SELECT Id, EmployeeCode, Gender, MaritalStatus, FirstName, LastName, OtherNames, SpouseName, Email, Phone, DateOfBirth, Address, City, SID, Passport, EmploymentStatus, DateEngaged, ContactName, ContactPhone from Employees Where Id = @Id";
             return db.LoadData<EmployeeModel, dynamic>(SQL, new { Id = EmpId }, connectionStringName, false).First();
         }
         public EmployeeModel GetAnalysisDetails(int EmpId)

@@ -91,5 +91,7 @@ namespace NddcPayrollLibrary.Model.Employee
         public DateTime ExitDate { get; set; }
         public decimal EntertainmentAllow { get; set; }
         public decimal NewspaperAllow { get; set; }
+        public DateTime DateUpdated { get; set; }
+        public string UpdatedBy { get; set; }
     }
 }

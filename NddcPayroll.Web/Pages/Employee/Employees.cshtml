@@ -117,23 +117,30 @@
                                                             <td>@item.Description</td>
                                                             <td>@item.Category</td>
                                                             <td>
-                                                                <a asp-page="EmployeeDetails" asp-route-EmpID="@item.Id" class="btn btn-sm btn-light">Details</a>
-                                                            </td>
-                                                            <td>
-                                                                Archived
-                                                            </td>
-                                                            @if (item.ExitCondition == "End of Contract" || item.ExitCondition == "End of Appointment" || item.ExitCondition == "Retirement" || item.ExitCondition == "Deceased")
-                                                            {
-                                                                <td>@item.ExitCondition</td>
-                                                            }
-                                                            else
-                                                            {
-                                                                <td>
-                                                                    <a asp-page="UnArchiveEmployee" asp-route-EmpID="@item.Id" class="btn btn-sm btn-success">Un-Archive</a>
-                                                                </td>
-                                                            }
+                                                                <div class="dropdown">
+                                                                    <a href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                        <i class="ri-more-2-fill"></i>
+                                                                    </a>
 
+                                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                                        <li><a asp-page="EmployeeDetails" asp-route-EmpID="@item.Id" class="dropdown-item">Details</a></li>
+                                                                        <li>
+                                                                            @if (item.ExitCondition == "End of Contract" || item.ExitCondition == "End of Appointment" || item.ExitCondition == "Retirement" || item.ExitCondition == "Deceased")
+                                                                            {
+                                                                                @item.ExitCondition
+                                                                            }
+                                                                            else
+                                                                            {
 
+                                                                                <a asp-page="UnArchiveEmployee" asp-route-EmpID="@item.Id" class="dropdown-item">Un-Archive</a>
+                                                               
+                                                                            }
+                                                                        </li>
+                                                                        <li><a class="dropdown-item" href="#"> Archived</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                                
+                                                            </td>
                                                         </tr>
                                                     }
                                                     else
@@ -149,14 +156,21 @@
                                                             <td>@item.Description</td>
                                                             <td>@item.Category</td>
                                                             <td>
-                                                                <a asp-page="EmployeeDetails" asp-route-EmpID="@item.Id" class="btn btn-sm btn-light">Details</a>
+                                                                <div class="dropdown">
+                                                                    <a href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                        <i class="ri-more-2-fill"></i>
+                                                                    </a>
+
+                                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                                        <li><a asp-page="EmployeeDetails" asp-route-EmpID="@item.Id" class="dropdown-item">View Details</a></li>
+                                                                        <li><a asp-page="ArchiveEmployee" asp-route-EmpID="@item.Id" class="dropdown-item">Archive</a></li>
+                                                                        <li><a asp-page="DeleteEmployee" asp-route-EmpID="@item.Id" class="dropdown-item">Delete</a></li>
+                                                                        <li><a class="dropdown-item" asp-page="ManualEntry" asp-route-EmpID="@item.Id">Manual Entry</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                                
                                                             </td>
-                                                            <td>
-                                                                <a asp-page="ArchiveEmployee" asp-route-EmpID="@item.Id" class="btn btn-sm btn-warning">Archive</a>
-                                                            </td>
-                                                            <td>
-                                                                <a asp-page="DeleteEmployee" asp-route-EmpID="@item.Id" class="btn btn-sm btn-danger">Delete</a>
-                                                            </td>
+                                                           
                                                         </tr>
                                                     }
 

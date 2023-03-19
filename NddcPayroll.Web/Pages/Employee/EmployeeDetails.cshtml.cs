@@ -25,7 +25,8 @@ namespace NddcPayroll.Web.Pages.Employee
         public decimal BasicSalary { get; set; }
         public int MyEmpId { get; set; }
         public decimal MonthlyGross { get; set; }
-
+        
+        [BindProperty]
         public EmployeeModel Employee { get; set; }
         public MyStatutoryDetailsModel StatutoryDetails { get; set; }
         public List<MyStatesModel> States { get; set; }
@@ -81,6 +82,7 @@ namespace NddcPayroll.Web.Pages.Employee
             MyEmpId = EmpId.Value;
             States = db.GetAllStates();
             Employee = empDb.GetEmployeeDetails(EmpId.Value);
+
             BasicSalary = payDb.GetBasicSalary(EmpId.Value);
             MySalaryBenefits = payDb.GetBenefits(EmpId.Value);
             MonthlyGross = payDb.GetMonthlyGross(EmpId.Value);
@@ -123,6 +125,11 @@ namespace NddcPayroll.Web.Pages.Employee
             JobTitles = db.GetAllJobTitles();
             Departments = db.GetAllDepartments();
             //PayPoints = db.GetAllPayPoints();
+        }
+        public void OnPostUpdateEmployerDetails()
+        {
+            //empDb.UpdateEmployee(Employee);
+            //string code = Employee.EmployeeCode;
         }
     }
 }

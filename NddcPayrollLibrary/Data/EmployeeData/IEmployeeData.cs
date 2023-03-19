@@ -26,5 +26,6 @@ namespace NddcPayrollLibrary.Data.EmployeeData
         void ArchiveEmployee(int Id, string ExitCondition, DateTime ExitDate);
         void UnArchiveEmployee(int Id);
         List<EmployeeGridModel> GetArchivedEmployees(string name);
+        void UpdateEmployee(EmployeeModel employee);
     }
 }

@@ -1,0 +1,6 @@
+﻿@page "{EmpId:int?}"
+@model NddcPayroll.Web.Pages.Employee.ManualEntryModel
+@{
+}
+
+<component type="typeof(NddcPayroll.Web.MyComponents.ManualEntryComp)" param-MyEmpId="@Model.MyEmpId" render-mode="ServerPrerendered" />
