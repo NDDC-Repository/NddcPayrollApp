@@ -13,13 +13,17 @@ namespace NddcPayrollLibrary.Model.DataManagement.DataMigration
         public string EmployeeCode { get; set; }
         public string Surname { get; set; }
         public string OtherNames { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; } 
         public string JobTitle { get; set; }
         public string JobGrade { get; set; }
-        public DateOnly DateOfBirth { get; set; }
-        public DateOnly DateEngaged { get; set; }
+        public DateTime DateOfBirth { get; set; }
+        public DateTime DateEngaged { get; set; }
         public string Category { get; set; }
         public string Department { get; set; }
+        public string DepartmentId { get; set; }
         public string JobTitleCode { get; set; }
+        public string JobTitleId { get; set; }
         public string TaxOffice { get; set; }
         public string Gender { get; set; }
         public string MaritalStatus { get; set; }
@@ -28,8 +32,14 @@ namespace NddcPayrollLibrary.Model.DataManagement.DataMigration
         public string BankCode { get; set; }
         public string BankAccountNo { get; set; }
         public string AccountNumber { get; set; }
+        public string AccountName { get; set; }
         public string PensionCode { get; set; }
-        public string PensionNumber { get; set; }
-        public DateOnly TaxYearStart { get; set; }
+        public string PensionFundNumber { get; set; }
+        public int PensionFundId { get; set; }
+        public DateTime TaxYearStart { get; set; }
+        public DateTime DateCreated { get; set; }
+        public string CreatedBy { get; set; }
+        public string TaxStateProvince { get; set; }
+        public int GradeLevelId { get; set; }
     }
 }

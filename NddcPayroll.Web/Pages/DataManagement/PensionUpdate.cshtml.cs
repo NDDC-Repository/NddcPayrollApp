@@ -31,5 +31,10 @@ namespace NddcPayroll.Web.Pages.DataManagement
             db.UpdateEmployerPension();
         }
 
+        public void OnPostMigrateEmployees()
+        {
+            db.MigrateEmployees();
+        }
+
     }
 }
