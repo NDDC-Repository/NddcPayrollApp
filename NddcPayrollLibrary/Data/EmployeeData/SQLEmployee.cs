@@ -345,7 +345,7 @@ namespace NddcPayrollLibrary.Data.EmployeeData
                 " MealAllow = @MealAllow, UtilityAllow = @UtilityAllow, EducationAllow = @EducationAllow, SecurityAllow = @SecurityAllow," +
                 " MedicalAllow = @MedicalAllow, DomesticServantAllow = @DomesticServantAllow, DriverAllow = @DriverAllow, VehicleAllow =@VehicleAllow," +
                 " HazardAllow = @HazardAllow, Tax = @Tax, NHF = @NHF, JSA = @JSA, SSA = @SSA, TotalEarnings = @TotalEarnings, " +
-                "TotalDeductions = @TotalDeductions, NetPay = @NetPay, Pension = @Pension, TaxCalc = @TaxCalc, Arreas = @Arreas, EmployerPension = @EmployerPension, TaxAdjustment = @TaxAdjustment Where Id = @Id";
+                "TotalDeductions = @TotalDeductions, NetPay = @NetPay, Pension = @Pension, TaxCalc = @TaxCalc, Arreas = @Arreas, EmployerPension = @EmployerPension, TaxAdjustment = @TaxAdjustment, NewspaperAllow = @NewspaperAllow, EntertainmentAllow = @EntertainmentAllow Where Id = @Id";
             db.SaveData(SQL,
                 new
                 {
@@ -382,7 +382,9 @@ namespace NddcPayrollLibrary.Data.EmployeeData
                     employee.TaxCalc,
                     employee.Arreas,
                     employee.EmployerPension,
-                    employee.TaxAdjustment
+                    employee.TaxAdjustment,
+                    employee.NewspaperAllow,
+                    employee.EntertainmentAllow
                 },
                  connectionStringName, false);
         }

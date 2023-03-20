@@ -479,7 +479,7 @@ else
 
     private decimal EarningsCompute()
     {
-        return Employee.BasicSalary + Employee.MedicalAllow + Employee.TransportAllow + Employee.HousingAllow + Employee.FurnitureAllow + Employee.MealAllow + Employee.UtilityAllow + Employee.EducationAllow + Employee.SecurityAllow + Employee.DomesticServantAllow + Employee.DriverAllow + Employee.VehicleAllow + Employee.HazardAllow + Employee.SecretarialAllow + Employee.LeaveAllow + Employee.ActingAllow + Employee.ActingAllow + Employee.ShiftAllow + Employee.UniformAllow + Employee.EntertainmentAllow + Employee.NewspaperAllow;
+        return Employee.BasicSalary + Employee.MedicalAllow + Employee.TransportAllow + Employee.HousingAllow + Employee.FurnitureAllow + Employee.MealAllow + Employee.UtilityAllow + Employee.EducationAllow + Employee.SecurityAllow + Employee.DomesticServantAllow + Employee.DriverAllow + Employee.VehicleAllow + Employee.HazardAllow + Employee.SecretarialAllow + Employee.LeaveAllow + Employee.ActingAllow + Employee.ActingAllow + Employee.ShiftAllow + Employee.UniformAllow + Employee.EntertainmentAllow + Employee.NewspaperAllow + Employee.Arreas;
     }
 
     private decimal ComputeDeductions()
@@ -502,13 +502,13 @@ else
 
     private void SetNetPay()
     {
-        Employee.NetPay = Employee.Arreas + (Employee.TotalEarnings - Employee.TotalDeductions);
+        Employee.NetPay = Employee.TotalEarnings - Employee.TotalDeductions;
     }
 
     private void SaveEmployeeLink()
     {
         //empDb.SaveEmployeeLink(Employee);
-        //RecalculateAndSave();
+        RecalculateAndSave();
         empDb.SaveEmployeeLink(Employee);
         Message = "Employee Data Has Been Successfully Updated!";
     }
