@@ -93,6 +93,12 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
             return db.LoadData<decimal, dynamic>("Select TaxAdjustment From Employees Where Id = @Id", new { Id = empId }, connectionStringName, false).First();
 
         }
+        public decimal GetLeaveAllowance(int empId)
+        {
+
+            return db.LoadData<decimal, dynamic>("Select LeaveAllow From Employees Where Id = @Id", new { Id = empId }, connectionStringName, false).First();
+
+        }
         public decimal GetPensionAmount(int empId)
         {
             string category = GetEmpCategory(empId);

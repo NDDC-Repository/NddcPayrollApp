@@ -113,9 +113,18 @@ namespace NddcPayrollLibrary.Data.Payroll
             string check = db.LoadData<string, dynamic>("Select Arreas From Employees Where Id = @Id", new { Id = EmpId }, connectionStringName, false).First();
             if (check == null)
             {
-                return 0;
+                return 0.00M;
             }
             return db.LoadData<int, dynamic>("Select Arreas From Employees Where Id = @Id", new { Id = EmpId }, connectionStringName, false).First();
+        }
+        private decimal GetLeaveAllowance(int EmpId)
+        {
+            string check = db.LoadData<string, dynamic>("Select LeaveAllow From Employees Where Id = @Id", new { Id = EmpId }, connectionStringName, false).First();
+            if (check == null)
+            {
+                return 0.00M;
+            }
+            return db.LoadData<int, dynamic>("Select LeaveAllow From Employees Where Id = @Id", new { Id = EmpId }, connectionStringName, false).First();
         }
         public decimal GetBasicSalary(int EmpId)
         {
@@ -261,9 +270,10 @@ namespace NddcPayrollLibrary.Data.Payroll
         public decimal GetMonthlyGross(int empId)
         {
             decimal arreas = GetArreas(empId);
+            decimal leaveAllow = GetLeaveAllowance(empId);
             decimal basicSalary = GetBasicSalary(empId);
             decimal benefitsAmount = GetBenefits(empId);
-            decimal monthlyGross = (basicSalary + benefitsAmount + arreas);
+            decimal monthlyGross = (basicSalary + benefitsAmount + arreas + leaveAllow);
             return monthlyGross;
         }
 
