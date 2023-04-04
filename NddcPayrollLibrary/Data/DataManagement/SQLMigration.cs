@@ -133,6 +133,26 @@ namespace NddcPayrollLibrary.Data.DataManagement
             }
         }
 
+        public void UpdateCooporative()
+        {
+            string empCode = string.Empty;
+            decimal coopDed = 0.00M;
+            //int id = 0;
+            MigrationEmployees = db.LoadData<MyEmployeeMigrationModel, dynamic>("Select EmpCode, CoopAmt From CooporativeMigrate", new { }, connectionStringName, false).ToList();
+            foreach (var employee in MigrationEmployees)
+            {
+                empCode = employee.EmpCode;
+                coopDed = employee.CoopAmt;
+                //id = db.LoadData<int, dynamic>("Select Id From PensionAdministrators Where Code = @Code", new { Code = pensionCode }, connectionStringName, false).FirstOrDefault();
+                db.SaveData("Update Employees Set CooperativeDed = @CooporativeDed Where EmployeeCode = @EmployeeCode ", new { CooporativeDed = coopDed, EmployeeCode = empCode }, connectionStringName, false);
+
+                int Id = db.LoadData<int, dynamic>("select Id from Employees where EmployeeCode = @EmployeeCode",
+                  new { EmployeeCode = empCode }, connectionStringName, false).First();
+
+                repDb.UpdateEmployeesPayrollByEmpIdAsync(Id);
+            }
+        }
+
         public List<EmployeeModel> Employees { get; set; }
         public void MigrateEmployees()
         {

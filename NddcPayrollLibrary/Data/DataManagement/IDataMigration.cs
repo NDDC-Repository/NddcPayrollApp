@@ -14,5 +14,6 @@ namespace NddcPayrollLibrary.Data.DataManagement
         void UpdatePaypoint();
         void UpdateEmployerPension();
         void MigrateEmployees();
+        void UpdateCooporative();
     }
 }

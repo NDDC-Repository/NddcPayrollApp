@@ -36,5 +36,10 @@ namespace NddcPayroll.Web.Pages.DataManagement
             db.MigrateEmployees();
         }
 
+        public void OnPostUpdateCooporative()
+        {
+            db.UpdateCooporative();
+        }
+
     }
 }

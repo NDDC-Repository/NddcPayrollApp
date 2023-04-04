@@ -41,5 +41,6 @@ namespace NddcPayrollLibrary.Model.DataManagement.DataMigration
         public string CreatedBy { get; set; }
         public string TaxStateProvince { get; set; }
         public int GradeLevelId { get; set; }
+        public decimal CoopAmt { get; set; }
     }
 }
