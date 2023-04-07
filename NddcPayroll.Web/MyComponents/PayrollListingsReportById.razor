@@ -92,6 +92,26 @@ else if (ShowGrid == true)
                             }
                         </FooterTemplate>
                     </GridAggregateColumn>
+                    <GridAggregateColumn Field=@nameof(MyPayRollListModel.Arreas) Type="AggregateType.Sum" Format="N">
+                        <FooterTemplate>
+                            @{
+                                var aggregate = (context as AggregateTemplateContext);
+                                <div>
+                                    <p>@aggregate.Sum</p>
+                                </div>
+                            }
+                        </FooterTemplate>
+                    </GridAggregateColumn>
+                    <GridAggregateColumn Field=@nameof(MyPayRollListModel.LeaveAllow) Type="AggregateType.Sum" Format="N">
+                        <FooterTemplate>
+                            @{
+                                var aggregate = (context as AggregateTemplateContext);
+                                <div>
+                                    <p>@aggregate.Sum</p>
+                                </div>
+                            }
+                        </FooterTemplate>
+                    </GridAggregateColumn>
                     <GridAggregateColumn Field=@nameof(MyPayRollListModel.TransportAllowance) Type="AggregateType.Sum" Format="N">
                         <FooterTemplate>
                             @{
@@ -212,6 +232,36 @@ else if (ShowGrid == true)
                             }
                         </FooterTemplate>
                     </GridAggregateColumn>
+                    <GridAggregateColumn Field=@nameof(MyPayRollListModel.EntertainmentAllow) Type="AggregateType.Sum" Format="N">
+                        <FooterTemplate>
+                            @{
+                                var aggregate = (context as AggregateTemplateContext);
+                                <div>
+                                    <p>@aggregate.Sum</p>
+                                </div>
+                            }
+                        </FooterTemplate>
+                    </GridAggregateColumn>
+                    <GridAggregateColumn Field=@nameof(MyPayRollListModel.NewspaperAllow) Type="AggregateType.Sum" Format="N">
+                        <FooterTemplate>
+                            @{
+                                var aggregate = (context as AggregateTemplateContext);
+                                <div>
+                                    <p>@aggregate.Sum</p>
+                                </div>
+                            }
+                        </FooterTemplate>
+                    </GridAggregateColumn>
+                    <GridAggregateColumn Field=@nameof(MyPayRollListModel.SecretarialAllow) Type="AggregateType.Sum" Format="N">
+                        <FooterTemplate>
+                            @{
+                                var aggregate = (context as AggregateTemplateContext);
+                                <div>
+                                    <p>@aggregate.Sum</p>
+                                </div>
+                            }
+                        </FooterTemplate>
+                    </GridAggregateColumn>
                     <GridAggregateColumn Field=@nameof(MyPayRollListModel.TaxDeduction) Type="AggregateType.Sum" Format="N">
                         <FooterTemplate>
                             @{
@@ -242,7 +292,27 @@ else if (ShowGrid == true)
                             }
                         </FooterTemplate>
                     </GridAggregateColumn>
+                    <GridAggregateColumn Field=@nameof(MyPayRollListModel.VoluntaryPension) Type="AggregateType.Sum" Format="N">
+                        <FooterTemplate>
+                            @{
+                                var aggregate = (context as AggregateTemplateContext);
+                                <div>
+                                    <p>@aggregate.Sum</p>
+                                </div>
+                            }
+                        </FooterTemplate>
+                    </GridAggregateColumn>
                     <GridAggregateColumn Field=@nameof(MyPayRollListModel.JSADeduction) Type="AggregateType.Sum" Format="N">
+                        <FooterTemplate>
+                            @{
+                                var aggregate = (context as AggregateTemplateContext);
+                                <div>
+                                    <p>@aggregate.Sum</p>
+                                </div>
+                            }
+                        </FooterTemplate>
+                    </GridAggregateColumn>
+                    <GridAggregateColumn Field=@nameof(MyPayRollListModel.CooperativeDed) Type="AggregateType.Sum" Format="N">
                         <FooterTemplate>
                             @{
                                 var aggregate = (context as AggregateTemplateContext);
@@ -309,6 +379,8 @@ else if (ShowGrid == true)
             <GridColumn HeaderText="Department" Field="@nameof(MyPayRollListModel.DepartmentName)"></GridColumn>
             <GridColumn HeaderText="Category" Width="120" Field="@nameof(MyPayRollListModel.Category)"></GridColumn>
             <GridColumn HeaderText="Basic Salary" Width="120" Format="N" Field="@nameof(MyPayRollListModel.BasicSalary)"></GridColumn>
+            <GridColumn HeaderText="SalaryArreas" Width="120" Format="N" Field="@nameof(MyPayRollListModel.Arreas)"></GridColumn>
+            <GridColumn HeaderText="LeaveAllowance" Width="120" Format="N" Field="@nameof(MyPayRollListModel.LeaveAllow)"></GridColumn>
             <GridColumn HeaderText="Transport Allowance" Format="N" Width="120" Field="@nameof(MyPayRollListModel.TransportAllowance)"></GridColumn>
             <GridColumn HeaderText="Housing Allowance" Format="N" Width="120" Field="@nameof(MyPayRollListModel.HousingAllowance)"></GridColumn>
             <GridColumn HeaderText="Furniture Allowance" Format="N" Width="120" Field="@nameof(MyPayRollListModel.FurnitureAllowance)"></GridColumn>
@@ -321,10 +393,15 @@ else if (ShowGrid == true)
             <GridColumn HeaderText="Driver Allowance" Width="120" Format="N" Field="@nameof(MyPayRollListModel.DriversAllowance)"></GridColumn>
             <GridColumn HeaderText="Vehicle Allowance" Width="120" Format="N" Field="@nameof(MyPayRollListModel.VehicleMaintenanceAllowance)"></GridColumn>
             <GridColumn HeaderText="Hazard Allowance" Width="120" Format="N" Field="@nameof(MyPayRollListModel.HazardAllowance)"></GridColumn>
+            <GridColumn HeaderText="Entertainment Allowance" Width="120" Format="N" Field="@nameof(MyPayRollListModel.EntertainmentAllow)"></GridColumn>
+            <GridColumn HeaderText="Secretarial Allowance" Width="120" Format="N" Field="@nameof(MyPayRollListModel.SecretarialAllow)"></GridColumn>
+            <GridColumn HeaderText="Newspaper Allowance" Width="120" Format="N" Field="@nameof(MyPayRollListModel.NewspaperAllow)"></GridColumn>
             <GridColumn HeaderText="Tax" Width="120" Format="N" Field="@nameof(MyPayRollListModel.TaxDeduction)"></GridColumn>
             <GridColumn HeaderText="NHF" Width="120" Field="@nameof(MyPayRollListModel.NHFDeduction)"></GridColumn>
             <GridColumn HeaderText="Pension" Width="120" Format="N" Field="@nameof(MyPayRollListModel.PensionDeduction)"></GridColumn>
+            <GridColumn HeaderText="Voluntary Pension" Width="120" Format="N" Field="@nameof(MyPayRollListModel.VoluntaryPension)"></GridColumn>
             <GridColumn HeaderText="JSA" Width="120" Format="N" Field="@nameof(MyPayRollListModel.JSADeduction)"></GridColumn>
+            <GridColumn HeaderText="Cooperative" Width="120" Format="N" Field="@nameof(MyPayRollListModel.CooperativeDed)"></GridColumn>
             <GridColumn HeaderText="SSA" Width="120" Format="N" Field="@nameof(MyPayRollListModel.SSADeduction)"></GridColumn>
             <GridColumn HeaderText="Total Earnings" Format="N" Width="120" Field="@nameof(MyPayRollListModel.TotalEarnings)"></GridColumn>
             <GridColumn HeaderText="Total Deductions" Format="N" Width="120" Field="@nameof(MyPayRollListModel.TotalDeductions)"></GridColumn>

@@ -47,6 +47,7 @@ namespace NddcPayrollLibrary.Model.Report
         public decimal EntertainmentAllow { get; set; }
         public decimal NewspaperAllow { get; set; }
         public decimal Arreas { get; set; }
+        public decimal LeaveAllow { get; set; } 
 
     }
 }

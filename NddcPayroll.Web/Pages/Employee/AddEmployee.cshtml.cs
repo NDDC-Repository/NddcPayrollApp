@@ -37,9 +37,17 @@ namespace NddcPayroll.Web.Pages.Employee
 
         public IActionResult OnPost()
         {
-            int Id = dbEmp.AddEmployee(Employee);
+            if (dbEmp.EmployeeExists(Employee.EmployeeCode))
+            {
+                return RedirectToPage("EmpExists");
+            }
+            else
+            {
+                int Id = dbEmp.AddEmployee(Employee);
 
-            return RedirectToPage("StatutoryDetails", new { EmpId = Id});
+                return RedirectToPage("StatutoryDetails", new { EmpId = Id });
+            }
+            
         }
     }
 }

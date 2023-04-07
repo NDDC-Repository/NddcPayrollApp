@@ -30,6 +30,21 @@ namespace NddcPayrollLibrary.Data.EmployeeData
           
         }
 
+        public bool EmployeeExists(string EmployeeCode)
+        {
+            string empCode = db.LoadData<string, dynamic>("select EmployeeCode from Employees where EmployeeCode = @EmployeeCode",
+                new { EmployeeCode }, connectionStringName, false).FirstOrDefault();
+            if (empCode == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
+        }
+
         public int AddEmployee(EmployeeModel Employee)
         {
             Employee.CreatedBy = "Admin";

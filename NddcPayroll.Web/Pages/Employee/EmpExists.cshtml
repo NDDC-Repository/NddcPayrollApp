@@ -1,0 +1,25 @@
+﻿@page
+@model NddcPayroll.Web.Pages.Employee.EmpExistsModel
+@{
+}
+<div class="row">
+    <div class="col-xl-6">
+        <div class="card overflow-hidden">
+            <div class="card-body bg-marketplace d-flex">
+                <div class="flex-grow-1">
+                    <h4 class="fs-18 lh-base mb-0">Employee Already Exists <br></h4>
+                    <p class="mb-0 mt-2 pt-1 text-muted">
+                       The Employee You are about to add Exists with the Employee Code you supplied. Kindly check to avoid duplicate.
+                    </p>
+                    <div class="d-flex gap-3 mt-4">
+                        <form method="post">
+                            <a asp-page="Employees" class="btn btn-primary">Back To Employees</a>
+                        </form>
+                    </div>
+                </div>
+                <img src="assets/images/bg-d.png" alt="" class="img-fluid">
+            </div>
+        </div>
+    </div><!--end col-->
+
+</div>

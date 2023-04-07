@@ -45,6 +45,7 @@ namespace NddcPayrollLibrary.Model.Payroll
         public bool ITFStatus { get; set; }
         public string PaymentMethod { get; set; }
         public string BankCode { get; set; }
+        public string BankName { get; set; }
         public string AccountNumber { get; set; }
         public string AccountName { get; set; }
         public string PayInfo1 { get; set; }
@@ -96,5 +97,10 @@ namespace NddcPayrollLibrary.Model.Payroll
         public DateTime CurrentPeriod { get; set; }
         public DateTime DateCreated { get; set; }
         public string CreatedBy { get; set; }
+        public decimal EntertainmentAllow { get; set; }
+        public decimal NewspaperAllow { get; set; }
+        public string GradeLevel { get; set; }
+        public string DepartmentName { get; set; }
+        public string CategoryName { get; set; }
     }
 }

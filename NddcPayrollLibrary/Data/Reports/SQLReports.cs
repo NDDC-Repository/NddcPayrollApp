@@ -155,7 +155,7 @@ namespace NddcPayrollLibrary.Data.Reports
             string SQL = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id DESC) As SrNo, Employees.Id, Employees.EmployeeCode, Employees.FirstName, Employees.SecretarialAllow, Employees.CooperativeDed, Employees.VoluntaryPension, Employees.EntertainmentAllow, Employees.NewspaperAllow, Employees.Arreas, " +
                 "Employees.LastName, Employees.Email, Employees.Category, (TransportAllow) As TransportAllowance, (HousingAllow) As HousingAllowance, (FurnitureAllow) As FurnitureAllowance, (MealAllow) As MealAllowance, (UtilityAllow) As UtilityAllowance, " +
                 "(EducationAllow) As EducationAllowance, (DomesticServantAllow) As DomesticServantAllowance, (DriverAllow) As DriversAllowance, (VehicleAllow) As VehicleMaintenanceAllowance, (HazardAllow) As HazardAllowance, (Tax) As TaxDeduction, (NHF) As NHFDeduction, (JSA) As JSADeduction, (SSA) As SSADeduction, TotalEarnings, TotalDeductions, " +
-                "NetPay, (Pension) As PensionDeduction, (MedicalAllow) As MedicalAllowance, (SecurityAllow) As SecurityAllowance, GradeLevel.GradeLevel, GradeLevel.BasicSalary, Departments.DepartmentName FROM Employees LEFT JOIN GradeLevel ON Employees.GradeLevelId = " +
+                "NetPay, (Pension) As PensionDeduction, (MedicalAllow) As MedicalAllowance, (SecurityAllow) As SecurityAllowance, GradeLevel.GradeLevel, GradeLevel.BasicSalary, Departments.DepartmentName, Employees.EntertainmentAllow, Employees.NewspaperAllow, Employees.LeaveAllow FROM Employees LEFT JOIN GradeLevel ON Employees.GradeLevelId = " +
                 "GradeLevel.Id LEFT JOIN Departments ON Employees.DepartmentId = Departments.Id LEFT JOIN JobTitles ON Employees.JobTitleId = " +
                 "JobTitles.Id WHERE Employees.Archived = 0 ORDER BY Employees.Id DESC";
 
@@ -200,12 +200,17 @@ namespace NddcPayrollLibrary.Data.Reports
             List<MyPayRollListModel> Reports = new List<MyPayRollListModel>();
             //List<Task<decimal>> tasks = new List<Task<decimal>>();
 
-            string SQL = "SELECT ROW_NUMBER() OVER (ORDER BY PayrollJournals.Id DESC) As SrNo, PayrollJournals.Id, PayrollJournals.EmployeeCode, PayrollJournals.FirstName, " +
-                "PayrollJournals.LastName, PayrollJournals.Category, " +
+            //string SQL = "SELECT ROW_NUMBER() OVER (ORDER BY PayrollJournals.Id DESC) As SrNo, PayrollJournals.Id, PayrollJournals.EmployeeCode, PayrollJournals.FirstName, " +
+            //    "PayrollJournals.LastName, PayrollJournals.Category, " +
+            //    "TotalEarnings, TotalDeductions, BankCode, AccountName, AccountNumber, " +
+            //    "NetPay, GradeLevel.GradeLevel, GradeLevel.BasicSalary, Departments.DepartmentName, Banks.BankName FROM PayrollJournals LEFT JOIN GradeLevel ON PayrollJournals.GradeLevelId = " +
+            //    "GradeLevel.Id LEFT JOIN Departments ON PayrollJournals.DepartmentId = Departments.Id LEFT JOIN JobTitles ON PayrollJournals.JobTitleId = " +
+            //    "JobTitles.Id LEFT JOIN Banks ON Banks.Code = PayrollJournals.BankCode WHERE PayrollJournalTitleId = @PayrollJournalTitleId ORDER BY PayrollJournals.Id DESC";
+
+            string SQL = "SELECT ROW_NUMBER() OVER (ORDER BY Id DESC) As SrNo, Id, EmployeeCode, FirstName, " +
+                "LastName, Category, " +
                 "TotalEarnings, TotalDeductions, BankCode, AccountName, AccountNumber, " +
-                "NetPay, GradeLevel.GradeLevel, GradeLevel.BasicSalary, Departments.DepartmentName, Banks.BankName FROM PayrollJournals LEFT JOIN GradeLevel ON PayrollJournals.GradeLevelId = " +
-                "GradeLevel.Id LEFT JOIN Departments ON PayrollJournals.DepartmentId = Departments.Id LEFT JOIN JobTitles ON PayrollJournals.JobTitleId = " +
-                "JobTitles.Id LEFT JOIN Banks ON Banks.Code = PayrollJournals.BankCode WHERE PayrollJournalTitleId = @PayrollJournalTitleId ORDER BY PayrollJournals.Id DESC";
+                "NetPay, GradeLevel, BasicSalary, DepartmentName, BankName FROM PayrollJournals WHERE PayrollJournalTitleId = @PayrollJournalTitleId ORDER BY PayrollJournals.Id DESC";
 
             await (Task.Run(() => Reports = db.LoadData<MyPayRollListModel, dynamic>(SQL, new { PayrollJournalTitleId = payrollJournalTitleId }, connectionStringName, false).ToList()));
            
@@ -223,7 +228,7 @@ namespace NddcPayrollLibrary.Data.Reports
             string SQL = "SELECT ROW_NUMBER() OVER (ORDER BY PayrollJournals.Id DESC) As SrNo, PayrollJournals.Id, PayrollJournals.EmployeeCode, PayrollJournals.FirstName, " +
                 "PayrollJournals.LastName, PayrollJournals.Email, PayrollJournals.Category, (TransportAllow) As TransportAllowance, (HousingAllow) As HousingAllowance, (FurnitureAllow) As FurnitureAllowance, (MealAllow) As MealAllowance, (UtilityAllow) As UtilityAllowance, " +
                 "(EducationAllow) As EducationAllowance, (DomesticServantAllow) As DomesticServantAllowance, (DriverAllow) As DriversAllowance, (VehicleAllow) As VehicleMaintenanceAllowance, (HazardAllow) As HazardAllowance, (Tax) As TaxDeduction, (NHF) As NHFDeduction, (JSA) As JSADeduction, (SSA) As SSADeduction, TotalEarnings, TotalDeductions, " +
-                "NetPay, (Pension) As PensionDeduction, (MedicalAllow) As MedicalAllowance, (SecurityAllow) As SecurityAllowance, GradeLevel.GradeLevel, GradeLevel.BasicSalary, Departments.DepartmentName FROM PayrollJournals LEFT JOIN GradeLevel ON PayrollJournals.GradeLevelId = " +
+                "NetPay, (Pension) As PensionDeduction, (MedicalAllow) As MedicalAllowance, (SecurityAllow) As SecurityAllowance, GradeLevel.GradeLevel, GradeLevel.BasicSalary, Departments.DepartmentName, Arreas, LeaveAllow, EntertainmentAllow, NewspaperAllow, SecretarialAllow, CooperativeDed, VoluntaryPension FROM PayrollJournals LEFT JOIN GradeLevel ON PayrollJournals.GradeLevelId = " +
                 "GradeLevel.Id LEFT JOIN Departments ON PayrollJournals.DepartmentId = Departments.Id LEFT JOIN JobTitles ON PayrollJournals.JobTitleId = " +
                 "JobTitles.Id Where PayrollJournals.PayrollJournalTitleId = @PayrollJournalTitleId ORDER BY PayrollJournals.Id DESC";
 
