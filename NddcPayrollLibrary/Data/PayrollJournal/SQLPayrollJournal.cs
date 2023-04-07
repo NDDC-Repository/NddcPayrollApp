@@ -54,17 +54,17 @@ namespace NddcPayrollLibrary.Data.PayrollJournal
 
                 db.SaveData(SQL2, new { EmployeeId = item.Id, Gender = item.Gender, MaritalStatus = item.MaritalStatus, FirstName = item.FirstName, LastName = item.LastName, DateOfBirth = item.DateOfBirth, DateEngaged = item.DateEngaged, TaxStateProvince = item.TaxStateProvince, TaxOffice = item.TaxOffice, TaxStartDate = item.TaxStartDate, PensionFundId = item.PensionFundId, PensionFundNumber = item.PensionFundNumber, EmployeeCode = item.EmployeeCode, BankCode = item.BankCode, BankName = bankName, AccountNumber = item.AccountNumber, GradeLevelId = item.GradeLevelId, JobTitleId = item.JobTitleId, Category = item.Category, DepartmentId = item.DepartmentId, PayPoint = item.PayPoint, CreatedBy = item.CreatedBy, DateCreated = DateCreated, Insurance = item.Insurance, SecretarialAllow = item.SecretarialAllow, CooperativeDed = item.CooperativeDed, VoluntaryPension = item.VoluntaryPension, TransportAllow = item.TransportAllow, HousingAllow = item.HousingAllow, FurnitureAllow = item.FurnitureAllow, MealAllow = item.MealAllow, UtilityAllow = item.UtilityAllow, EducationAllow = item.EducationAllow, SecurityAllow = item.SecurityAllow, MedicalAllow = item.MedicalAllow, DomesticServantAllow = item.DomesticServantAllow, DriverAllow = item.DriverAllow, VehicleAllow = item.VehicleAllow, HazardAllow = item.HazardAllow, Tax = item.Tax, NHF = item.NHF, JSA = item.JSA, SSA = item.SSA, TotalEarnings = item.TotalEarnings, TotalDeductions = item.TotalDeductions, NetPay = item.NetPay, BasicSalary = item.BasicSalary, MonthlyGross = item.MonthlyGross, Pension = item.Pension, LeaveAllow = item.LeaveAllow, ActingAllow = item.ActingAllow, ShiftAllow = item.ShiftAllow, UniformAllow = item.UniformAllow, TaxCalc = item.TaxCalc, Arreas = item.Arreas, EmployerPension = item.EmployerPension, TaxAdjustment = item.TaxAdjustment, PayrollJournalTitleId = Id, JournalName = JournalTitle.JournalName, Month = Month, MonthYear = MonthYear, CurrentPeriod = JournalTitle.CurrentPeriod, EntertainmentAllow = item.EntertainmentAllow, NewspaperAllow = item.NewspaperAllow, CategoryName = categoryName, GradeLevel = gradeLevel, DepartmentName = departmentName }, connectionStringName, false);
                 //db.SaveData(SQL2, new { EmployeeCode = item.EmployeeCode,nkCode = item.BankCode, AccountNumber = item.AccountNumber, AccountName = item.AccountName, PayInfo1 = item.PayInfo1, PayInfo2 = item.PayInfo2, SortCode = item.SortCode, GradeLevelId = item.GradeLevelId, JobTitleId = item.JobTitleId, Category = item.Category, DepartmentId = item.DepartmentId, PayPoint = item.PayPoint, CreatedBy = item.CreatedBy, DateCreated = item.DateCreated, Insurance = item.Insurance, SecretarialAllow = item.SecretarialAllow, CooperativeDed = item.CooperativeDed, VoluntaryPension = item.VoluntaryPension, TransportAllow = item.TransportAllow, HousingAllow = item.HousingAllow, FurnintureAllow = item.FurnitureAllow, MealAllow = item.MealAllow, UtilityAllow = item.UtilityAllow, EducationAllow = item.EducationAllow, SecurityAllow = item.SecurityAllow, MedicalAllow = item.MedicalAllow, DomesticServantAllow = item.DomesticServantAllow, DriverAllow = item.DriverAllow, VehicleAllow = item.VehicleAllow, HazardAllow = item.HazardAllow, Tax = item.Tax, NHF = item.NHF, JSA = item.JSA, SSA = item.SSA, TotalEarnings = item.TotalEarnings, TotalDeductions = item.TotalDeductions, NetPay = item.NetPay, BasicSalary = item.BasicSalary, MonthlyGross = item.MonthlyGross, Pension = item.Pension, LeaveAllow = item.LeaveAllow, ActingAllow = item.ActingAllow, ShiftAllow = item.ShiftAllow, UniformAllow = item.UniformAllow, TaxCalc = item.TaxCalc, Arreas = item.Arreas, EmployerPension = item.EmployerPension, TaxAdjustment = item.TaxAdjustment, PayrollJournalTitleId = Id, JournalName = JournalTitle.JournalName, Month = Month, MonthYear = MonthYear, CurrentPeriod = JournalTitle.CurrentPeriod, JournalDate = JournalTitle.DateCreated }, connectionStringName, false);
-                
-                //if (item.Arreas > 0.00M)
-                //{
-                //    db.SaveData("Update Employees Set Arreas = 0.00 Where EmployeeCode = @EmployeeCode", new { item.EmployeeCode }, connectionStringName, false);
-                //    repDb.UpdateEmployeesPayrollByEmpIdAsync(item.Id);
-                //}
-                //if (item.LeaveAllow > 0.00M)
-                //{
-                //    db.SaveData("Update Employees Set LeaveAllow = 0.00 Where EmployeeCode = @EmployeeCode", new { item.EmployeeCode }, connectionStringName, false);
-                //    repDb.UpdateEmployeesPayrollByEmpIdAsync(item.Id);
-                //}
+
+                if (item.Arreas > 0.00M)
+                {
+                    db.SaveData("Update Employees Set Arreas = 0.00 Where EmployeeCode = @EmployeeCode", new { item.EmployeeCode }, connectionStringName, false);
+                    repDb.UpdateEmployeesPayrollByEmpIdAsync(item.Id);
+                }
+                if (item.LeaveAllow > 0.00M)
+                {
+                    db.SaveData("Update Employees Set LeaveAllow = 0.00 Where EmployeeCode = @EmployeeCode", new { item.EmployeeCode }, connectionStringName, false);
+                    repDb.UpdateEmployeesPayrollByEmpIdAsync(item.Id);
+                }
             }
         }
 
