@@ -130,7 +130,7 @@
                                     <i class="ri-exchange-dollar-line display-6 text-muted"></i>
                                 </div>*@
                                 <div class="flex-grow-1 ms-3">
-                                    <h2 class="mb-0">$<span data-target=@string.Format("{0:N}", Model.NetPay)>@string.Format("{0:N}", Model.NetPay)</span>k</h2>
+                                    <h2 class="mb-0"><span data-target=@string.Format("{0:N}", Model.NetPay)>@string.Format("{0:N}", Model.NetPay)</span></h2>
                                 </div>
                             </div>
                         </div>
@@ -265,10 +265,11 @@
     <div class="col-xl-6">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title mb-0">Line Chart</h4>
+                <h4 class="card-title mb-0">Total Earnings Per Paypoint Location</h4>
             </div>
             <div class="card-body">
-                <canvas id="lineChart" class="chartjs-chart" data-colors="[&quot;--vz-primary-rgb, 0.2&quot;, &quot;--vz-primary&quot;, &quot;--vz-info-rgb, 0.2&quot;, &quot;--vz-info&quot;]" width="455" height="227" style="display: block; box-sizing: border-box; height: 227px; width: 455px;"></canvas>
+                @*<canvas id="lineChart" class="chartjs-chart" data-colors="[&quot;--vz-primary-rgb, 0.2&quot;, &quot;--vz-primary&quot;, &quot;--vz-info-rgb, 0.2&quot;, &quot;--vz-info&quot;]" width="455" height="227" style="display: block; box-sizing: border-box; height: 227px; width: 455px;"></canvas>*@
+                <component type="typeof(NddcPayroll.Web.MyComponents.PayPoinChartComp)" render-mode="ServerPrerendered" />
             </div>
         </div>
     </div> <!-- end col -->
@@ -276,11 +277,11 @@
     <div class="col-xl-6">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title mb-0">Bar Chart</h4>
+                <h4 class="card-title mb-0">Total Earning Per Department</h4>
             </div>
             <div class="card-body">
-                <canvas id="bar" class="chartjs-chart" data-colors="[&quot;--vz-primary&quot;]" width="455" height="227" style="display: block; box-sizing: border-box; height: 227px; width: 455px;"></canvas>
-
+                @*<canvas id="bar" class="chartjs-chart" data-colors="[&quot;--vz-primary&quot;]" width="455" height="227" style="display: block; box-sizing: border-box; height: 227px; width: 455px;"></canvas>*@
+                <component type="typeof(NddcPayroll.Web.MyComponents.EarningsByDeptChartComp)" render-mode="ServerPrerendered" />
             </div>
         </div>
     </div> <!-- end col -->

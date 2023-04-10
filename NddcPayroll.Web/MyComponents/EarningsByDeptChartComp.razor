@@ -1,0 +1,25 @@
+﻿@page "/earningsbydept"
+
+@using NddcPayrollLibrary.Data.Reports;
+@using NddcPayrollLibrary.Model.Report;
+@using Syncfusion.Blazor.Charts;
+@inject IReportsData repDb
+
+<SfChart Title="Total Earnings Per Dept">
+    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category"></ChartPrimaryXAxis>
+    <ChartSeriesCollection>
+        <ChartSeries DataSource="@EarningsData" XName="DepartmentName" YName="Amount" Type="ChartSeriesType.Bar">
+
+        </ChartSeries>
+    </ChartSeriesCollection>
+</SfChart>
+
+@code {
+
+    List<MyEarningsByDeptChartModel> EarningsData { get; set; }
+
+    protected override void OnInitialized()
+    {
+        EarningsData = repDb.GetEarningsByDeptData();
+    }
+}

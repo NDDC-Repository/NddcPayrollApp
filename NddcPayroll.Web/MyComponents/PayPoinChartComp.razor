@@ -1,0 +1,25 @@
+﻿@page "/paypointchart"
+
+@using NddcPayrollLibrary.Data.Reports;
+@using NddcPayrollLibrary.Model.Report;
+@using Syncfusion.Blazor.Charts;
+@inject IReportsData repDb
+
+<SfChart Title="Paypoint Total Earnings" >
+    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category"></ChartPrimaryXAxis>
+    <ChartSeriesCollection>
+        <ChartSeries DataSource="@PaypointData" XName="TaxStateProvince" YName="TotalEarnings" Type="ChartSeriesType.Column">
+
+        </ChartSeries>
+    </ChartSeriesCollection>
+</SfChart>
+
+@code {
+
+    List<MyPayPointChartModel> PaypointData { get; set; }
+
+    protected override void OnInitialized()
+    {
+        PaypointData = repDb.GetPayPointData();
+    }
+}

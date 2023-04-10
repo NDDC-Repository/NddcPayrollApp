@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Identity.Web" Version="1.25.10" />
     <PackageReference Include="Microsoft.Identity.Web.UI" Version="1.25.10" />
+    <PackageReference Include="Syncfusion.Blazor.Charts" Version="20.4.0.50" />
     <PackageReference Include="Syncfusion.Blazor.Core" Version="20.4.0.50" />
     <PackageReference Include="Syncfusion.Blazor.Grid" Version="20.4.0.50" />
     <PackageReference Include="Syncfusion.Blazor.Themes" Version="20.4.0.50" />

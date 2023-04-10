@@ -4,8 +4,10 @@ namespace NddcPayrollLibrary.Data.Reports
 {
     public interface IReportsData
     {
+        List<MyEarningsByDeptChartModel> GetEarningsByDeptData();
         Task<List<MyNHFReportModel>> GetNHFReportAsync();
         Task<List<MyPayeReportSummaryModel>> GetPayeSummaryReportAsync();
+        List<MyPayPointChartModel> GetPayPointData();
         List<MyPayRollListModel> GetPayrollListReport();
         Task<List<MyPayRollListModel>> GetPayrollListReport2Async();
         //Task<List<MyPayRollListModel>> GetPayrollListReport2Async(int payrollJournalTitleId);

@@ -572,6 +572,17 @@ namespace NddcPayrollLibrary.Data.Reports
 
             return Reports;
         }
-        
+
+        public List<MyPayPointChartModel> GetPayPointData()
+        {
+            string sql = "select sum(TotalEarnings) As TotalEarnings, TaxStateProvince From Employees Group By TaxStateProvince";
+            return db.LoadData<MyPayPointChartModel, dynamic>(sql, new { }, connectionStringName, false).ToList();
+        }
+        public List<MyEarningsByDeptChartModel> GetEarningsByDeptData()
+        {
+            string sql = "select sum(Employees.TotalEarnings) As Amount, Departments.DepartmentName From Employees INNER JOIN Departments ON Employees.DepartmentId = Departments.Id Group By Departments.DepartmentName";
+            return db.LoadData<MyEarningsByDeptChartModel, dynamic>(sql, new { }, connectionStringName, false).ToList();
+        }
+
     }
 }
