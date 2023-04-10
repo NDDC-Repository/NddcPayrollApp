@@ -200,8 +200,8 @@
 
                             <div class="card-body">
 
-                                <div class="live-preview">
-                                    <div class="table-responsive table-card">
+                                @*<div class="live-preview">
+                                    <div class="table-responsive table-card">*@
                                         <table class="table  table-hover align-middle table-nowrap table-striped-columns mb-0">
                                             <thead class="table-light">
                                                 <tr>
@@ -214,14 +214,14 @@
                                                     <th scope="col">Department</th>
                                                     <th scope="col">JobTitle</th>
                                                     <th scope="col">Category</th>
-
+                                                    <th scope="col">Exit Condition</th>
 
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @foreach (var item in Model.ArchivedEmployees)
                                                 {
-                                                    <tr class="table-warning">
+                                                    <tr>
                                                         <td>@item.SrNo</td>
                                                         <td><a asp-page="EmployeeDetails" asp-route-EmpID="@item.Id" class="fw-medium">@item.EmployeeCode</a></td>
                                                         <td>@item.FullName</td>
@@ -232,14 +232,15 @@
                                                         <td>@item.Description</td>
                                                         <td>@item.Category</td>
                                                         <td>
-                                                            <a asp-page="EmployeeDetails" asp-route-EmpID="@item.Id" class="btn btn-sm btn-light">Details</a>
+                                                            @item.ExitCondition
                                                         </td>
                                                         <td>
-                                                            Archived
+                                                            <a asp-page="EmployeeDetails" asp-route-EmpID="@item.Id" class="btn btn-sm btn-light">Details</a>
                                                         </td>
-                                                        @if (item.ExitCondition == "End of Contract" || item.ExitCondition == "End of Appointment" || item.ExitCondition == "Retirement" || item.ExitCondition == "Deceased")
+                                                       
+                                                        @if (item.ExitCondition == "End of Appointment" || item.ExitCondition == "Retirement" || item.ExitCondition == "Deceased")
                                                         {
-                                                            <td>@item.ExitCondition</td>
+                                                            @*<td>@item.ExitCondition</td>*@
                                                         }
                                                         else
                                                         {
@@ -256,8 +257,8 @@
 
                                             </tbody>
                                         </table>
-                                    </div>
-                                </div>
+                                    @*</div>
+                                </div>*@
 
                             </div><!-- end card-body -->
                         </div><!-- end card -->
