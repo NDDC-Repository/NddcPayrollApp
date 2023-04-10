@@ -13,7 +13,7 @@ namespace NddcPayrollLibrary.Data.EmployeeData
         void UpdateInsurance(string EmployeeCode, string Amount);
         decimal GetEmployeeInsurance(int EmpId);
         bool GetPensionStatus(int EmpId);
-        void UpdateCooporative(string EmployeeCode, string cooporativeDed);
+        void UpdateCooporative(string EmployeeCode, double cooporativeDed);
         void UpdateSecretarialAllow(string EmployeeCode, string secretarialAllow);
         void UpdateVoluntaryPension(string EmployeeCode, string voluntaryPension);
         int GetEmployeeCount();

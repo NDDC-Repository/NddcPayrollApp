@@ -13,5 +13,8 @@
         decimal GetJSA(int empId);
         decimal GetTotalDeductions(int empId);
         decimal GetEmployerPensionAmount(int empId);
+        decimal GetPAYEAmountManual(decimal totalEarnings, decimal insurance, decimal pension, decimal nhf, int empId);
+        void ClearCoopValues();
+        void RecalculateManualForDeductions(string empCode);
     }
 }

@@ -1,5 +1,6 @@
 ﻿@page "/updatecooporative"
 
+@using NddcPayrollLibrary.Data.Calculations.Deductions;
 @using NddcPayrollLibrary.Data.EmployeeData;
 @using Syncfusion.XlsIO;
 @using System.IO;
@@ -10,11 +11,23 @@
 @using System.Data.SqlClient;
 @inject IConfiguration ConfigurationManager
 @inject IEmployeeData empDb
+@inject IDeductionData dedDb
 
 
 <SfUploader AutoUpload="false">
     <UploaderEvents ValueChange="OnChange"></UploaderEvents>
 </SfUploader>
+
+@if (ShowAnim == true)
+{
+    @*<div class="spinner-grow text-primary" role="status">
+        <span>Loading Report Please Wait...</span>
+    </div>*@
+    <div class="text-center mb-3">
+        <a href="javascript:void(0);" class="text-success"><i class="mdi mdi-loading mdi-spin fs-40 align-middle me-2"></i> Uploading Cooperative Data and Recalculating Net Pay .... </a>
+    </div>
+    @*<h4>@Message</h4>*@
+}
 
 @if (Columns != null)
 {
@@ -29,15 +42,23 @@
         </GridColumns>
     </SfGrid>
 }
-else
+@*else
 {
     <div>Upload Formated Excel File Containing Insurance Premiums for Employees</div>
-}
+}*@
+
+
+
 @code {
+
+    public bool ShowAnim { get; set; }
     SfGrid<ExpandoObject> Grid;
     public DataTable table = new DataTable();
+
     private void OnChange(UploadChangeEventArgs args)
     {
+        ShowAnim = true;
+
         foreach (var file in args.Files)
         {
             var path = @"wwwroot\" + file.FileInfo.Name;
@@ -63,19 +84,23 @@ else
             GenerateListFromTable(table);
             UpdateDb(worksheet, table);
         }
+
+        ShowAnim = false;
     }
     private void UpdateDb(IWorksheet ws, DataTable input)
     {
+        dedDb.ClearCoopValues();
         string empCode;
-        string amount;
-        int r = 1;
+        double amount;
+        int r = 2;
         foreach (DataRow row in input.Rows)
         {
 
             //Product p = new Product();
-            empCode = ws[$"A{r}"].Text;
-            amount = ws[$"B{r}"].Text;
+            empCode = ws[$"A{r}"].Value;
+            amount = ws[$"B{r}"].Number;
             empDb.UpdateCooporative(empCode, amount);
+            dedDb.RecalculateManualForDeductions(empCode);
             //listProducts.Add(p);
             r = r + 1;
         }

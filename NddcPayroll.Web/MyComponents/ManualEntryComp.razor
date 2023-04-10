@@ -484,6 +484,8 @@ else
 
     private decimal ComputeDeductions()
     {
+        decimal totalEarnings = EarningsCompute();
+        Employee.Tax = dedDb.GetPAYEAmountManual(totalEarnings, Employee.Insurance, Employee.Pension, Employee.NHF, MyEmpId);
         return Employee.Tax + Employee.VoluntaryPension + Employee.CooperativeDed + Employee.Pension + Employee.JSA + Employee.SSA + Employee.NHF;
     }
 

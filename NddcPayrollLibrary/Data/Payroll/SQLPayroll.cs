@@ -324,6 +324,6 @@ namespace NddcPayrollLibrary.Data.Payroll
             db.SaveData("Delete PayrollJournalTitles Where Id = @Id", new { Id }, connectionStringName, false);
         }
 
-
+       
     }
 }

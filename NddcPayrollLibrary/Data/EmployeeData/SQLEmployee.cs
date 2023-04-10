@@ -243,7 +243,7 @@ namespace NddcPayrollLibrary.Data.EmployeeData
 
 
         }
-        public void UpdateCooporative(string EmployeeCode, string cooporativeDed)
+        public void UpdateCooporative(string EmployeeCode, double cooporativeDed)
         {
 
             string SQL = "update Employees Set CooperativeDed = @CooperativeDed where EmployeeCode = @EmployeeCode";

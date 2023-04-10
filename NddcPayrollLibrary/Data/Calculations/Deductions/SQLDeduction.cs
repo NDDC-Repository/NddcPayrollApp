@@ -5,6 +5,7 @@ using NddcPayrollLibrary.Model.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -202,10 +203,28 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
 
             return pensionAmount + NHFAmount + insurance;
         }
+        public decimal ApplyCompanyReliefManual(decimal myInsurance, decimal pension, decimal nhf)
+        {
+            //decimal totalEarnings = payDb.GetMonthlyGross(empId) * 12;
+            //decimal pensionAmount = ((decimal)8 / (decimal)100) * totalEarnings;
+            //decimal annualBasic = GetBasicSalary(empId) * 12;
+            //decimal NHFAmount = ((decimal)2.5 / (decimal)100) * annualBasic;
+            decimal insurance = myInsurance * 12M;
+            decimal pensionAmount = pension;
+            decimal NHFAmount = nhf;
+
+            return pensionAmount + NHFAmount + insurance;
+        }
         private decimal GetCRATotal(int empId)
         {
             decimal relief = ApplyCompanyRelief(empId);
             decimal originalEarnings = payDb.GetMonthlyGross(empId) * 12M;
+            return originalEarnings - relief;
+        }
+        private decimal GetCRATotalManual(decimal insurance, decimal pension, decimal nhf, decimal totalEarnings)
+        {
+            decimal relief = ApplyCompanyReliefManual(insurance, pension, nhf);
+            decimal originalEarnings = totalEarnings * 12M;
             return originalEarnings - relief;
         }
         public decimal GetPAYEAmount(int empId)
@@ -390,10 +409,211 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
             
         }
 
+        public decimal GetPAYEAmountManual(decimal totalEarnings, decimal insurance, decimal pension, decimal nhf, int empId)
+        {
+            int gradeLevelId = GetGradeLevelId(empId);
+            string rank = db.LoadData<string, dynamic>("Select Rank From GradeLevel Where Id = @GradeLevelId", new { GradeLevelId = gradeLevelId }, connectionStringName, false).First();
+
+            if (GetEmpCategory(empId) == "PERM" || GetEmpCategory(empId) == "POLI" || rank == "EXEC")
+            {
+                decimal OriginalTotalEarnings = totalEarnings * 12M;
+                decimal craTotalEarnings = GetCRATotalManual(insurance, pension, nhf, totalEarnings);
+                decimal stateReliefAmount = ApplyStateRelief(craTotalEarnings);
+                decimal companyReliefAmount = ApplyCompanyReliefManual(insurance, pension, nhf);
+                decimal totalRelief = stateReliefAmount + companyReliefAmount;
+                decimal taxabaleIncome = OriginalTotalEarnings - totalRelief;
+
+                decimal levelTax = taxabaleIncome;
+                decimal taxValue = 0.00M;
+                //decimal finalLevel = 0.00M;
+
+                decimal finalAmount = 0.00M;
+
+                if (levelTax >= 300000.00M)
+                {
+                    taxValue = 21000.00M;
+                    levelTax = levelTax - 300000.00M;
+                    if (levelTax < 300000M)
+                    {
+                        levelTax = levelTax + 300000M;
+                        taxValue = 7M / 100M * levelTax;
+                    }
+                }
+                if (levelTax >= 300000.00M)
+                {
+                    taxValue = taxValue + 33000.00M;
+                    levelTax = levelTax - 300000.00M;
+                    if (levelTax < 500000M)
+                    {
+                        //levelTax = levelTax + 300000M;
+                        //taxValue = (taxValue - 33000M) + (11M / 100M * levelTax);
+
+                        //levelTax = levelTax + 300000M;
+                        taxValue = (taxValue) + (15M / 100M * levelTax);
+                    }
+
+                }
+                if (levelTax >= 500000.00M)
+                {
+                    taxValue = taxValue + 75000.00M;
+                    levelTax = levelTax - 500000.00M;
+                    if (levelTax < 500000M)
+                    {
+                        //levelTax = levelTax + 500000M;
+                        //taxValue = (taxValue - 75000M) + (15M / 100M * levelTax);
+
+                        taxValue = (taxValue) + (19M / 100M * levelTax);
+                    }
+                }
+                if (levelTax >= 500000.00M)
+                {
+                    taxValue = taxValue + 95000.00M;
+                    levelTax = levelTax - 500000.00M;
+                    if (levelTax < 1600000M)
+                    {
+                        //levelTax = levelTax + 500000M;
+                        //taxValue = (taxValue - 95000M) + (19M / 100M * levelTax);
+
+                        taxValue = (taxValue) + (21M / 100M * levelTax);
+                    }
+                }
+                if (levelTax >= 1600000.00M)
+                {
+                    taxValue = taxValue + 336000.00M;
+                    levelTax = levelTax - 1600000.00M;
+                    if (levelTax < 3200000M)
+                    {
+                        //levelTax = levelTax + 1600000M;
+                        //taxValue = (taxValue - 336000M) + (21M / 100M * levelTax);
+
+                        taxValue = (taxValue) + (24M / 100M * levelTax);
+                    }
+                }
+                if (levelTax >= 3200000.00M)
+                {
+                    //taxValue = taxValue + 768000M;
+                    //levelTax = levelTax - 3200000M;
+                    finalAmount = ((decimal)24 / (decimal)100) * levelTax;
+                }
+
+                decimal taxAdjustment = GetTaxAdjustment(empId);
+                decimal totalTax = ((finalAmount + taxValue) / (decimal)12) - (taxAdjustment);
+
+                return totalTax;
+            }
+            else if (GetEmpCategory(empId) == "CONT")
+            {
+                decimal OriginalTotalEarnings = totalEarnings * (decimal)12;
+                //decimal craTotalEarnings = GetCRATotal(empId);
+                decimal stateReliefAmount = ApplyStateRelief(OriginalTotalEarnings);
+                //decimal companyReliefAmount = ApplyCompanyRelief(empId);
+                //decimal totalRelief = stateReliefAmount + companyReliefAmount;
+                decimal taxabaleIncome = OriginalTotalEarnings - stateReliefAmount;
+
+                decimal levelTax = taxabaleIncome;
+                decimal taxValue = 0.00M;
+                //decimal finalLevel = 0.00M;
+
+                decimal finalAmount = 0.00M;
+
+                if (levelTax >= 300000.00M)
+                {
+                    taxValue = 21000.00M;
+                    levelTax = levelTax - 300000.00M;
+                    if (levelTax < 300000M)
+                    {
+                        levelTax = levelTax + 300000M;
+                        taxValue = 7M / 100M * levelTax;
+                    }
+                }
+                if (levelTax >= 300000.00M)
+                {
+                    taxValue = taxValue + 33000.00M;
+                    levelTax = levelTax - 300000.00M;
+                    if (levelTax < 500000M)
+                    {
+                        //levelTax = levelTax + 300000M;
+                        //taxValue = (taxValue - 33000M) + (11M / 100M * levelTax);
+
+                        taxValue = (taxValue) + (15M / 100M * levelTax);
+                    }
+
+                }
+                if (levelTax >= 500000.00M)
+                {
+                    taxValue = taxValue + 75000.00M;
+                    levelTax = levelTax - 500000.00M;
+                    if (levelTax < 500000M)
+                    {
+                        //levelTax = levelTax + 500000M;
+                        //taxValue = (taxValue - 75000M) + (15M / 100M * levelTax);
+
+                        taxValue = (taxValue) + (19M / 100M * levelTax);
+                    }
+                }
+                if (levelTax >= 500000.00M)
+                {
+                    taxValue = taxValue + 95000.00M;
+                    levelTax = levelTax - 500000.00M;
+                    if (levelTax < 1600000M)
+                    {
+                        //levelTax = levelTax + 500000M;
+                        //taxValue = (taxValue - 95000M) + (19M / 100M * levelTax);
+
+                        taxValue = (taxValue) + (21M / 100M * levelTax);
+                    }
+                }
+                if (levelTax >= 1600000.00M)
+                {
+                    taxValue = taxValue + 336000.00M;
+                    levelTax = levelTax - 1600000.00M;
+                    if (levelTax < 3200000M)
+                    {
+                        //levelTax = levelTax + 1600000M;
+                        //taxValue = (taxValue - 336000M) + (21M / 100M * levelTax);
+
+                        taxValue = (taxValue) + (24M / 100M * levelTax);
+                    }
+                }
+                if (levelTax >= 3200000.00M)
+                {
+                    finalAmount = ((decimal)24 / (decimal)100) * levelTax;
+                }
+
+                decimal totalTax = (finalAmount + taxValue) / (decimal)12;
+
+                return totalTax;
+            }
+            else
+            {
+                return 0.00M;
+            }
+
+        }
+
         public decimal GetTotalDeductions(int empId)
         {
             decimal totalDeductions = GetPAYEAmount(empId) + GetNHFAmount(empId) + GetPensionAmount(empId) + GetJSA(empId) + GetSSA(empId) + GetCooperative(empId) + GetVoluntaryPension(empId);
             return totalDeductions;
+        }
+
+        public void ClearCoopValues()
+        {
+            db.SaveData("Update Employees Set CooperativeDed = 0.00", new { }, connectionStringName, false);
+        }
+
+        public void RecalculateManualForDeductions(string empCode)
+        {
+            decimal totalEarnings = db.LoadData<decimal, dynamic>("select sum(BasicSalary + MedicalAllow + TransportAllow + HousingAllow + FurnitureAllow + MealAllow + UtilityAllow + EducationAllow + SecurityAllow + DomesticServantAllow + DriverAllow + VehicleAllow + EntertainmentAllow + NewspaperAllow + HazardAllow + SecretarialAllow + LeaveAllow + ActingAllow + ShiftAllow + UniformAllow) from employees where EmployeeCode = @EmployeeCode",
+                new { EmployeeCode = empCode }, connectionStringName, false).FirstOrDefault();
+
+            decimal totalDeductions = db.LoadData<decimal, dynamic>("select sum(Tax + VoluntaryPension + Insurance + CooperativeDed + Pension + JSA + SSA + NHF) from Employees where EmployeeCode = @EmployeeCode",
+                new { EmployeeCode = empCode }, connectionStringName, false).FirstOrDefault();
+
+            decimal netPay = totalEarnings - totalDeductions;
+
+            db.SaveData("Update Employees Set TotalDeductions = @TotalDeductions, NetPay = @NetPay Where EmployeeCode = @EmployeeCode", new { TotalDeductions = totalDeductions, NetPay = netPay, EmployeeCode = empCode }, connectionStringName, false);
+
         }
     }
 }
