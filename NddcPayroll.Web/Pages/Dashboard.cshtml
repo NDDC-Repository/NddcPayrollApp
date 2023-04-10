@@ -61,9 +61,166 @@
                     </div>
                     <div class="flex-grow-1 ms-3">
                         <p class="text-uppercase fw-semibold fs-12 text-muted mb-1">
-                            Current Total Earnings
+                            Employees Added This Month
                         </p>
-                        <h4 class=" mb-0">=N=<span class="counter-value" data-target=@Model.TotalEarnings>@Model.TotalEarnings</span></h4>
+                        <h4 class=" mb-0"><span data-target=@Model.TotalEarnings>@Model.EmpAddedThisMonth</span></h4>
+                    </div>
+                    <div class="flex-shrink-0 align-self-end">
+                       @* <span class="badge badge-soft-success">
+                            <i class="ri-arrow-up-s-fill align-middle me-1"></i>3.67
+                            %<span>
+                            </span>
+                        </span>*@
+                    </div>
+                </div>
+            </div><!-- end card body -->
+        </div><!-- end card -->
+    </div><!-- end col -->
+    <div class="col-lg-4 col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="avatar-sm flex-shrink-0">
+                        <span class="avatar-title bg-light text-primary rounded-circle fs-3">
+                            <i class="ri-arrow-down-circle-fill align-middle"></i>
+                        </span>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <p class="text-uppercase fw-semibold fs-12 text-muted mb-1">
+                           Employees Exited This Month
+                        </p>
+                        <h4 class=" mb-0"><span data-target=@Model.NetPay>@Model.EmpExitedThisMonth</span></h4>
+                    </div>
+                    <div class="flex-shrink-0 align-self-end">
+                       @* <span class="badge badge-soft-danger">
+                            <i class="ri-arrow-down-s-fill align-middle me-1"></i>4.80
+                            %<span>
+                            </span>
+                        </span>*@
+                    </div>
+                </div>
+            </div><!-- end card body -->
+        </div><!-- end card -->
+    </div><!-- end col -->
+</div>
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card crm-widget">
+            <div class="card-body p-0">
+                <div class="row row-cols-xxl-5 row-cols-md-3 row-cols-1 g-0">
+                    <div class="col">
+                        <div class="py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Current Total Earnings <i class="ri-arrow-up-circle-line text-success fs-18 float-end align-middle"></i></h5>
+                            <div class="d-flex align-items-center">
+                                @*<div class="flex-shrink-0">
+                                    <i class="ri-space-ship-line display-6 text-muted"></i>
+                                </div>*@
+                                <div class="flex-grow-1 ms-3">
+                                    <h2 class="mb-0"><span data-target=@string.Format("{0:N}", Model.TotalEarnings)>@string.Format("{0:N}", Model.TotalEarnings)</span></h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- end col -->
+                    <div class="col">
+                        <div class="mt-3 mt-md-0 py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Current Net Pay <i class="ri-arrow-up-circle-line text-success fs-18 float-end align-middle"></i></h5>
+                            <div class="d-flex align-items-center">
+                               @* <div class="flex-shrink-0">
+                                    <i class="ri-exchange-dollar-line display-6 text-muted"></i>
+                                </div>*@
+                                <div class="flex-grow-1 ms-3">
+                                    <h2 class="mb-0">$<span data-target=@string.Format("{0:N}", Model.NetPay)>@string.Format("{0:N}", Model.NetPay)</span>k</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- end col -->
+                    <div class="col">
+                        <div class="mt-3 mt-md-0 py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Current Tax Totals <i class="ri-arrow-down-circle-line text-danger fs-18 float-end align-middle"></i></h5>
+                            <div class="d-flex align-items-center">
+                               @* <div class="flex-shrink-0">
+                                    <i class="ri-pulse-line display-6 text-muted"></i>
+                                </div>*@
+                                <div class="flex-grow-1 ms-3">
+                                    <h2 class="mb-0"><span data-target=@string.Format("{0:N}", Model.Tax)>@string.Format("{0:N}", Model.Tax)</span></h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- end col -->
+                    <div class="col">
+                        <div class="mt-3 mt-lg-0 py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Current Cooperative Totals <i class="ri-arrow-up-circle-line text-success fs-18 float-end align-middle"></i></h5>
+                            <div class="d-flex align-items-center">
+                                @*<div class="flex-shrink-0">
+                                    <i class="ri-trophy-line display-6 text-muted"></i>
+                                </div>*@
+                                <div class="flex-grow-1 ms-3">
+                                    <h2 class="mb-0"><span data-target=@string.Format("{0:N}", Model.Cooperative)>@string.Format("{0:N}", Model.Cooperative)</span></h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- end col -->
+                    <div class="col">
+                        <div class="mt-3 mt-lg-0 py-4 px-3">
+                            <h5 class="text-muted text-uppercase fs-13">Current Basic Salary <i class="ri-arrow-down-circle-line text-danger fs-18 float-end align-middle"></i></h5>
+                            <div class="d-flex align-items-center">
+                                @*<div class="flex-shrink-0">
+                                    <i class="ri-service-line display-6 text-muted"></i>
+                                </div>*@
+                                <div class="flex-grow-1 ms-3">
+                                    <h2 class="mb-0"><span data-target=@string.Format("{0:N}", Model.BasicSalary)>@string.Format("{0:N}", Model.BasicSalary)</span></h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- end col -->
+                </div><!-- end row -->
+            </div><!-- end card body -->
+        </div><!-- end card -->
+    </div><!-- end col -->
+</div>
+
+@*<div class="row h-100">
+    <div class="col-lg-4 col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="avatar-sm flex-shrink-0">
+                        <span class="avatar-title bg-light text-primary rounded-circle fs-3">
+                            <i class="ri-money-dollar-circle-fill align-middle"></i>
+                        </span>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <p class="text-uppercase fw-semibold fs-12 text-muted mb-1">
+                            Current Tax Totals
+                        </p>
+                        <h4 class=" mb-0"><span data-target="@Model.Tax">@string.Format("{0:N}", Model.Tax)</span></h4>
+                    </div>
+                    <div class="flex-shrink-0 align-self-end">
+                        <span class="badge badge-soft-success">
+                            <i class="ri-arrow-up-s-fill align-middle me-1"></i>6.24
+                            %<span>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div><!-- end card body -->
+        </div><!-- end card -->
+    </div><!-- end col -->
+    <div class="col-lg-4 col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="avatar-sm flex-shrink-0">
+                        <span class="avatar-title bg-light text-primary rounded-circle fs-3">
+                            <i class="ri-arrow-up-circle-fill align-middle"></i>
+                        </span>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <p class="text-uppercase fw-semibold fs-12 text-muted mb-1">
+                            Current Cooperative Totals
+                        </p>
+                        <h4 class=" mb-0">=N=<span data-target=@Model.Cooperative>@string.Format("{0:N}", Model.Cooperative)</span></h4>
                     </div>
                     <div class="flex-shrink-0 align-self-end">
                         <span class="badge badge-soft-success">
@@ -87,9 +244,9 @@
                     </div>
                     <div class="flex-grow-1 ms-3">
                         <p class="text-uppercase fw-semibold fs-12 text-muted mb-1">
-                            Current Net Pay
+                            Current Basic Salary Totals
                         </p>
-                        <h4 class=" mb-0">=N=<span class="counter-value" data-target=@Model.NetPay>@Model.NetPay</span></h4>
+                        <h4 class=" mb-0">=N=<span data-target=@Model.NetPay>@string.Format("{0:N}", Model.BasicSalary)</span></h4>
                     </div>
                     <div class="flex-shrink-0 align-self-end">
                         <span class="badge badge-soft-danger">
@@ -102,7 +259,7 @@
             </div><!-- end card body -->
         </div><!-- end card -->
     </div><!-- end col -->
-</div>
+</div>*@
 
 <div class="row">
     <div class="col-xl-6">
@@ -133,7 +290,7 @@
     <div class="col-xl-12">
         <div class="card">
             <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Recently Created Employees</h4>
+                <h4 class="card-title mb-0 flex-grow-1">Employees Added This Month</h4>
 
                 
             </div><!-- end card header -->
@@ -149,8 +306,8 @@
                                     <th scope="col">Code</th>
                                     <th scope="col">Full Name</th>
                                     <th scope="col">Gender</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Phone</th>
+                                    <th scope="col">Grade Level</th>
+                                    <th scope="col">Department</th>
                                     <th scope="col" style="width: 150px;">Action</th>
                                 </tr>
                             </thead>
@@ -162,10 +319,10 @@
                                         <td><a href="#" class="fw-medium">@item.EmployeeCode</a></td>
                                         <td>@item.FullName</td>
                                         <td>@item.Gender</td>
-                                        <td>@item.Email</td>
-                                        <td>@item.Phone</td>
+                                        <td>@item.GradeLevel</td>
+                                        <td>@item.DepartmentName</td>
                                         <td>
-                                            <button type="button" class="btn btn-sm btn-light">Details</button>
+                                            <a asp-page="EmployeeDetails" asp-route-EmpID="@item.Id" class="btn btn-sm btn-light">Details</a>
                                         </td>
                                     </tr>
                                 }

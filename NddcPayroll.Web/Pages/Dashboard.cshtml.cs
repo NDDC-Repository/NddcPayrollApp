@@ -15,7 +15,12 @@ namespace NddcPayroll.Web.Pages
         public int EmpCount { get; set; }
         public string HeaderDate { get; set; }
         public decimal TotalEarnings { get; set; }
-        public decimal NetPay { get; set; } 
+        public decimal NetPay { get; set; }
+        public decimal Tax { get; set; }
+        public decimal Cooperative { get; set; }
+        public decimal BasicSalary { get; set; }
+        public int EmpAddedThisMonth { get; set; }
+        public int EmpExitedThisMonth { get; set; }
 
         public DashboardModel(IEmployeeData db, IPayrollData payDb)
         {
@@ -26,11 +31,16 @@ namespace NddcPayroll.Web.Pages
         DateTime currDate = DateTime.Now;
         public void OnGet(string searchItem)
         {
-            Employees = db.GetAllEmployees(searchItem);
+            Employees = db.GetAllEmployeesAddedThisMonth();
             EmpCount = db.GetEmployeeCount();
             HeaderDate = currDate.ToString("Y");
             TotalEarnings = payDb.GetSumOfTotalEarnings();
             NetPay = payDb.GetSumOfNetPay();
+            Tax = payDb.GetSumOfTax();
+            Cooperative = payDb.GetSumOfCooperative();
+            BasicSalary = payDb.GetSumOfBasicSalary();
+            EmpAddedThisMonth = db.CountEmployeesAddedThisMonth();
+            EmpExitedThisMonth = db.CountEmployeesExitedThisMonth();
         }
     }
 }

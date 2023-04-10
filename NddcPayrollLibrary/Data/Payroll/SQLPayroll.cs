@@ -334,5 +334,20 @@ namespace NddcPayrollLibrary.Data.Payroll
             return db.LoadData<decimal, dynamic>("select sum(NetPay) from Employees where Archived = 0",
                new { }, connectionStringName, false).FirstOrDefault();
         }
+        public decimal GetSumOfTax()
+        {
+            return db.LoadData<decimal, dynamic>("select sum(Tax) from Employees where Archived = 0",
+               new { }, connectionStringName, false).FirstOrDefault();
+        }
+        public decimal GetSumOfCooperative()
+        {
+            return db.LoadData<decimal, dynamic>("select sum(CooperativeDed) from Employees where Archived = 0",
+               new { }, connectionStringName, false).FirstOrDefault();
+        }
+        public decimal GetSumOfBasicSalary()
+        {
+            return db.LoadData<decimal, dynamic>("select sum(BasicSalary) from Employees where Archived = 0",
+               new { }, connectionStringName, false).FirstOrDefault();
+        }
     }
 }

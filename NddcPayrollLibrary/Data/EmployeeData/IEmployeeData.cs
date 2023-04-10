@@ -28,5 +28,8 @@ namespace NddcPayrollLibrary.Data.EmployeeData
         List<EmployeeGridModel> GetArchivedEmployees(string name);
         void UpdateEmployee(EmployeeModel employee);
         bool EmployeeExists(string EmployeeCode);
+        List<EmployeeGridModel> GetAllEmployeesAddedThisMonth();
+        int CountEmployeesAddedThisMonth();
+        int CountEmployeesExitedThisMonth();
     }
 }

@@ -30,5 +30,8 @@ namespace NddcPayrollLibrary.Data.Payroll
         void DeleteExecutedPayroll(int Id);
         decimal GetSumOfTotalEarnings();
         decimal GetSumOfNetPay();
+        decimal GetSumOfTax();
+        decimal GetSumOfCooperative();
+        decimal GetSumOfBasicSalary();
     }
 }
