@@ -324,6 +324,15 @@ namespace NddcPayrollLibrary.Data.Payroll
             db.SaveData("Delete PayrollJournalTitles Where Id = @Id", new { Id }, connectionStringName, false);
         }
 
-       
+       public decimal GetSumOfTotalEarnings()
+        {
+            return db.LoadData<decimal, dynamic>("select sum(TotalEarnings) from Employees where Archived = 0",
+               new { }, connectionStringName, false).FirstOrDefault();
+        }
+        public decimal GetSumOfNetPay()
+        {
+            return db.LoadData<decimal, dynamic>("select sum(NetPay) from Employees where Archived = 0",
+               new { }, connectionStringName, false).FirstOrDefault();
+        }
     }
 }

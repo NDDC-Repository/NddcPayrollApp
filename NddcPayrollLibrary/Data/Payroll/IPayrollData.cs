@@ -28,5 +28,7 @@ namespace NddcPayrollLibrary.Data.Payroll
         void AddPayrollJournal(MyPayrollJournalTitleModel JournalTitle);
         List<MyPayrollJournalTitleModel> GetPayrollJournalTitles();
         void DeleteExecutedPayroll(int Id);
+        decimal GetSumOfTotalEarnings();
+        decimal GetSumOfNetPay();
     }
 }
