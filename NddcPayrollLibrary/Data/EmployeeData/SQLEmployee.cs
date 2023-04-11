@@ -160,13 +160,13 @@ namespace NddcPayrollLibrary.Data.EmployeeData
 
         public int GetEmployeeCount()
         {
-            string check = db.LoadData<string, dynamic>("SELECT Count(Id) As EmpCount from Employees Where Archived = 0", new {  }, connectionStringName, false).FirstOrDefault();
-            if (check is null)
-            {
-                return 0;
-            }
-            string SQL = "SELECT Count(Id) As EmpCount from Employees";
-            return db.LoadData<int, dynamic>(SQL, new {  }, connectionStringName, false).First();
+            //string check = db.LoadData<string, dynamic>("Select Count(Id) As EmpCount from Employees Where Archived = 0", new {  }, connectionStringName, false).FirstOrDefault();
+            //if (check is null)
+            //{
+            //    return 0;
+            //}
+            string SQL = "Select Count(Id) As EmpCount from Employees Where Archived = 0";
+            return db.LoadData<int, dynamic>(SQL, new {  }, connectionStringName, false).FirstOrDefault();
         }
         public bool GetPensionStatus(int EmpId)
         {

@@ -152,10 +152,10 @@ namespace NddcPayrollLibrary.Data.Reports
             List<MyPayRollListModel> Reports = new List<MyPayRollListModel>();
             //List<Task<decimal>> tasks = new List<Task<decimal>>();
 
-            string SQL = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id DESC) As SrNo, Employees.Id, Employees.EmployeeCode, Employees.FirstName, Employees.SecretarialAllow, Employees.CooperativeDed, Employees.VoluntaryPension, Employees.EntertainmentAllow, Employees.NewspaperAllow, Employees.Arreas, " +
+            string SQL = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id DESC) As SrNo, Employees.Id, Employees.BasicSalary, Employees.EmployeeCode, Employees.FirstName, Employees.SecretarialAllow, Employees.CooperativeDed, Employees.VoluntaryPension, Employees.EntertainmentAllow, Employees.NewspaperAllow, Employees.Arreas, " +
                 "Employees.LastName, Employees.Email, Employees.Category, (TransportAllow) As TransportAllowance, (HousingAllow) As HousingAllowance, (FurnitureAllow) As FurnitureAllowance, (MealAllow) As MealAllowance, (UtilityAllow) As UtilityAllowance, " +
                 "(EducationAllow) As EducationAllowance, (DomesticServantAllow) As DomesticServantAllowance, (DriverAllow) As DriversAllowance, (VehicleAllow) As VehicleMaintenanceAllowance, (HazardAllow) As HazardAllowance, (Tax) As TaxDeduction, (NHF) As NHFDeduction, (JSA) As JSADeduction, (SSA) As SSADeduction, TotalEarnings, TotalDeductions, " +
-                "NetPay, (Pension) As PensionDeduction, (MedicalAllow) As MedicalAllowance, (SecurityAllow) As SecurityAllowance, GradeLevel.GradeLevel, GradeLevel.BasicSalary, Departments.DepartmentName, Employees.EntertainmentAllow, Employees.NewspaperAllow, Employees.LeaveAllow FROM Employees LEFT JOIN GradeLevel ON Employees.GradeLevelId = " +
+                "NetPay, (Pension) As PensionDeduction, (MedicalAllow) As MedicalAllowance, (SecurityAllow) As SecurityAllowance, GradeLevel.GradeLevel, Departments.DepartmentName, Employees.EntertainmentAllow, Employees.NewspaperAllow, Employees.LeaveAllow FROM Employees LEFT JOIN GradeLevel ON Employees.GradeLevelId = " +
                 "GradeLevel.Id LEFT JOIN Departments ON Employees.DepartmentId = Departments.Id LEFT JOIN JobTitles ON Employees.JobTitleId = " +
                 "JobTitles.Id WHERE Employees.Archived = 0 ORDER BY Employees.Id DESC";
 
@@ -527,7 +527,7 @@ namespace NddcPayrollLibrary.Data.Reports
             List<MyRemitaUploadModel> Reports = new List<MyRemitaUploadModel>();
             List<Task<decimal>> tasks = new List<Task<decimal>>();
 
-            string SQL = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, Employees.Id, Employees.EmployeeCode, (Employees.FirstName + ' ' + Employees.LastName) As EmployeeName, Employees.BankCode, Employees.AccountNumber FROM Employees ORDER BY Employees.Id ASC";
+            //string SQL = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, Employees.Id, Employees.EmployeeCode, (Employees.FirstName + ' ' + Employees.LastName) As EmployeeName, Employees.BankCode, Employees.AccountNumber FROM Employees ORDER BY Employees.Id ASC";
             string SQL2 = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, Employees.Id, Employees.EmployeeCode, (Employees.FirstName + ' ' + Employees.LastName) As EmployeeName, Employees.BankCode, Employees.AccountNumber, (Employees.NetPay) As PayableAmount FROM Employees Where Archived = 0 ORDER BY Employees.Id ASC";
 
             Reports = db.LoadData<MyRemitaUploadModel, dynamic>(SQL2, new { }, connectionStringName, false).ToList();
@@ -553,8 +553,8 @@ namespace NddcPayrollLibrary.Data.Reports
             List<MyNHFReportModel> Reports = new List<MyNHFReportModel>();
             List<Task<decimal>> tasks = new List<Task<decimal>>();
 
-            string SQL2 = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, Employees.Id, Employees.EmployeeCode, Employees.FirstName, Employees.LastName, Employees.NHFNumber, Employees.PayPoint, GradeLevel.BasicSalary FROM Employees LEFT JOIN GradeLevel ON Employees.GradeLevelId = GradeLevel.Id ORDER BY Employees.Id ASC";
-            string SQL = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, Employees.Id, Employees.EmployeeCode, Employees.FirstName, Employees.LastName, Employees.NHFNumber, Employees.AccountNumber FROM Employees ORDER BY Employees.Id ASC";
+            //string SQL2 = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, Employees.Id, Employees.EmployeeCode, Employees.FirstName, Employees.LastName, Employees.NHFNumber, Employees.PayPoint, GradeLevel.BasicSalary FROM Employees LEFT JOIN GradeLevel ON Employees.GradeLevelId = GradeLevel.Id ORDER BY Employees.Id ASC";
+            //string SQL = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, Employees.Id, Employees.EmployeeCode, Employees.FirstName, Employees.LastName, Employees.NHFNumber, Employees.AccountNumber FROM Employees ORDER BY Employees.Id ASC";
             string SQL3 = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, Employees.Id, Employees.EmployeeCode, Employees.FirstName, Employees.LastName, Employees.NHFNumber, Employees.PayPoint, (Employees.NHF) As NHFAmount FROM Employees WHERE Archived = 0 ORDER BY Employees.Id ASC";
 
             Reports = db.LoadData<MyNHFReportModel, dynamic>(SQL3, new { }, connectionStringName, false).ToList();

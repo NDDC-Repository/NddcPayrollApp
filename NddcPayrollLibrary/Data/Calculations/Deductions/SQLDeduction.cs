@@ -414,7 +414,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
             int gradeLevelId = GetGradeLevelId(empId);
             string rank = db.LoadData<string, dynamic>("Select Rank From GradeLevel Where Id = @GradeLevelId", new { GradeLevelId = gradeLevelId }, connectionStringName, false).First();
 
-            if (GetEmpCategory(empId) == "PERM" || GetEmpCategory(empId) == "POLI" || rank == "EXEC")
+            if (GetEmpCategory(empId) == "PERM" || GetEmpCategory(empId) == "POLI" || rank == "EXEC" || GetEmpCategory(empId) == "SABB")
             {
                 decimal OriginalTotalEarnings = totalEarnings * 12M;
                 decimal craTotalEarnings = GetCRATotalManual(insurance, pension, nhf, totalEarnings);
