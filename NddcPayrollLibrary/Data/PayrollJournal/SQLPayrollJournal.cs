@@ -82,7 +82,7 @@ namespace NddcPayrollLibrary.Data.PayrollJournal
                     }
                     if (employee.TaxCalc == "Manual")
                     {
-                        ManualRecalculation(employee.Id, employee.Pension, employee.Insurance, employee.NHF);
+                        ManualRecalculation(employee.Id, employee.Pension, employee.Insurance, employee.NHF, employee.TaxAdjustment);
                     }
 
                 }
@@ -96,18 +96,18 @@ namespace NddcPayrollLibrary.Data.PayrollJournal
                     }
                     if (employee.TaxCalc == "Manual")
                     {
-                        ManualRecalculation(employee.Id, employee.Pension, employee.Insurance, employee.NHF);
+                        ManualRecalculation(employee.Id, employee.Pension, employee.Insurance, employee.NHF, employee.TaxAdjustment);
                     }
                 }
             }
         }
 
-        public void ManualRecalculation(int empId, decimal pension, decimal insurance, decimal nhf)
+        public void ManualRecalculation(int empId, decimal pension, decimal insurance, decimal nhf, decimal taxAdjustment)
         {
             decimal totalEarnings = db.LoadData<decimal, dynamic>("select sum(BasicSalary + MedicalAllow + TransportAllow + HousingAllow + FurnitureAllow + MealAllow + UtilityAllow + EducationAllow + SecurityAllow + DomesticServantAllow + DriverAllow + VehicleAllow + EntertainmentAllow + NewspaperAllow + HazardAllow + SecretarialAllow + LeaveAllow + ActingAllow + ShiftAllow + UniformAllow) from employees where Id = @Id",
                 new { Id = empId }, connectionStringName, false).FirstOrDefault();
            
-            decimal tax = dedDb.GetPAYEAmountManual(totalEarnings, insurance, pension, nhf, empId);
+            decimal tax = dedDb.GetPAYEAmountManual(totalEarnings, insurance, pension, nhf, empId, taxAdjustment);
             db.SaveData("Update Employees Set Tax = @Tax Where Id = @ID", new { Tax = tax, Id = empId }, connectionStringName, false);
 
             decimal totalDeductions = db.LoadData<decimal, dynamic>("select sum(Tax + VoluntaryPension + Insurance + CooperativeDed + Pension + JSA + SSA + NHF) from Employees where Id = @Id",

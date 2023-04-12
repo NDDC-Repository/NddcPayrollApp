@@ -18,6 +18,7 @@ namespace NddcPayroll.Web.Pages.Employee
         private readonly ICompanyData db;
         private readonly IEmployeeData empDb;
         private readonly IReportsData repDb;
+        private readonly IPayrollData payDb;
 
         public List<MyGradeLevelGridModel> MyGradeLevels { get; set; }
         public List<JobTitleModel> JobTitles { get; set; }
@@ -25,12 +26,15 @@ namespace NddcPayroll.Web.Pages.Employee
         public List<MyPayPointModel> PayPoints { get; set; }
         [BindProperty]
         public MyAnalysisDetailsModel AnalysisDetail { get; set; }
+        [BindProperty]
+        public bool ApplyArrears { get; set; }
 
-        public AnalysisDetailsModel(ICompanyData db, IEmployeeData EmpDb, IReportsData repDb)
+        public AnalysisDetailsModel(ICompanyData db, IEmployeeData EmpDb, IReportsData repDb, IPayrollData payDb)
         {
             this.db = db;
             empDb = EmpDb;
             this.repDb = repDb;
+            this.payDb = payDb;
         }
         public void OnGet()
         {
@@ -44,6 +48,10 @@ namespace NddcPayroll.Web.Pages.Employee
         {
             AnalysisDetail.EmployeeId = EmpId.Value;
             empDb.AddAnalysisDetails(AnalysisDetail);
+            if (ApplyArrears)
+            {
+                payDb.AddArrears(EmpId.Value);
+            }
 
             await (Task.Run(() => repDb.UpdateEmployeesPayrollByEmpIdAsync(EmpId.Value)));
 

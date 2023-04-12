@@ -33,5 +33,6 @@ namespace NddcPayrollLibrary.Data.Payroll
         decimal GetSumOfTax();
         decimal GetSumOfCooperative();
         decimal GetSumOfBasicSalary();
+        void AddArrears(int EmpId);
     }
 }

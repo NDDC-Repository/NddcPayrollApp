@@ -349,5 +349,23 @@ namespace NddcPayrollLibrary.Data.Payroll
             return db.LoadData<decimal, dynamic>("select sum(BasicSalary) from Employees where Archived = 0",
                new { }, connectionStringName, false).FirstOrDefault();
         }
+
+        public void AddArrears(int EmpId)
+        {
+            int daysCount = db.LoadData<int, dynamic>("select DATEDIFF(day, DateEngaged, '2023-02-18') from Employees Where Id = @Id",
+               new { Id = EmpId }, connectionStringName, false).FirstOrDefault();
+            decimal basicSalary = GetMonthlyGross(EmpId);
+            decimal dailyPay = basicSalary / 30M;
+
+            int daysInMonth = DateTime.DaysInMonth(2023, 2);
+            int remainingDaysInMonth = daysInMonth - DateTime.Today.Day;
+            int totalDaysCount = daysCount + remainingDaysInMonth;
+            int arrearsDays = totalDaysCount - daysInMonth;
+
+            decimal arrearsAmount = dailyPay * arrearsDays;
+
+            db.SaveData("Update Employees Set Arreas = @Arreas Where Id = @Id", new { Arreas = arrearsAmount, Id = EmpId }, connectionStringName, false);
+
+        }
     }
 }

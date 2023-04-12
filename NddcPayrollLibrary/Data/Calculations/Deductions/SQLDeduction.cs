@@ -398,7 +398,8 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
                     finalAmount = ((decimal)24 / (decimal)100) * levelTax;
                 }
 
-                decimal totalTax = (finalAmount + taxValue) / (decimal)12;
+                decimal taxAdjustment = GetTaxAdjustment(empId);
+                decimal totalTax = ((finalAmount + taxValue) / (decimal)12) - (taxAdjustment);
 
                 return totalTax;
             }
@@ -409,7 +410,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
             
         }
 
-        public decimal GetPAYEAmountManual(decimal totalEarnings, decimal insurance, decimal pension, decimal nhf, int empId)
+        public decimal GetPAYEAmountManual(decimal totalEarnings, decimal insurance, decimal pension, decimal nhf, int empId, decimal taxAdjustment)
         {
             int gradeLevelId = GetGradeLevelId(empId);
             string rank = db.LoadData<string, dynamic>("Select Rank From GradeLevel Where Id = @GradeLevelId", new { GradeLevelId = gradeLevelId }, connectionStringName, false).First();
@@ -496,7 +497,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
                     finalAmount = ((decimal)24 / (decimal)100) * levelTax;
                 }
 
-                decimal taxAdjustment = GetTaxAdjustment(empId);
+                //decimal taxAdjustment = GetTaxAdjustment(empId);
                 decimal totalTax = ((finalAmount + taxValue) / (decimal)12) - (taxAdjustment);
 
                 return totalTax;
@@ -580,7 +581,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
                     finalAmount = ((decimal)24 / (decimal)100) * levelTax;
                 }
 
-                decimal totalTax = (finalAmount + taxValue) / (decimal)12;
+                decimal totalTax = ((finalAmount + taxValue) / (decimal)12) - (taxAdjustment);
 
                 return totalTax;
             }

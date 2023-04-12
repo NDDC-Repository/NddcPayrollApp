@@ -23,6 +23,7 @@ namespace NddcPayroll.Web.Pages
         public int EmpAddedThisMonth { get; set; }
         public int EmpExitedThisMonth { get; set; }
 
+
         public DashboardModel(IEmployeeData db, IPayrollData payDb)
         {
             this.db = db;
@@ -43,6 +44,8 @@ namespace NddcPayroll.Web.Pages
             BasicSalary = payDb.GetSumOfBasicSalary();
             EmpAddedThisMonth = db.CountEmployeesAddedThisMonth();
             EmpExitedThisMonth = db.CountEmployeesExitedThisMonth();
+
+            
         }
     }
 }
