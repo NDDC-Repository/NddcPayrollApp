@@ -234,7 +234,7 @@
                                                         <td>
                                                             @item.ExitCondition 
                                                             <br/>
-                                                            Exit Date: @item.ExitDate
+                                                            Exit Date: @item.ExitDate.ToShortDateString()
                                                         </td>
                                                         <td>
                                                             <a asp-page="EmployeeDetails" asp-route-EmpID="@item.Id" class="btn btn-sm btn-light">Details</a>

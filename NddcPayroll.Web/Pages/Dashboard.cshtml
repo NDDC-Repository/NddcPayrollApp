@@ -285,7 +285,7 @@
                                     <th scope="col">Category</th>
                                     <th scope="col">Department</th>
                                     <th scope="col">DateEngaged</th>
-                                    <th scope="col">Expiring Date</th>
+                                    <th scope="col" class="bg-warning">Expiring Date</th>
                                     <th scope="col" style="width: 150px;">Action</th>
                                 </tr>
                             </thead>
@@ -300,8 +300,8 @@
                                         <td>@item.GradeLevel</td>
                                         <td>@item.Category</td>
                                         <td>@item.DepartmentName</td>
-                                        <td>@item.DateEngaged</td>
-                                        <td>@item.ContExpiringDate</td>
+                                        <td>@item.DateEngaged.ToShortDateString()</td>
+                                        <td class="bg-warning">@item.ContExpiringDate.ToShortDateString()</td>
                                         <td>
                                             <a asp-page="EmployeeDetails" asp-route-EmpID="@item.Id" class="btn btn-sm btn-light">Details</a>
                                         </td>
