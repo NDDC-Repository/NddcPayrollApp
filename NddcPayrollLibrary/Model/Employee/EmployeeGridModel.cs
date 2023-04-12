@@ -34,5 +34,8 @@ namespace NddcPayrollLibrary.Model.Employee
         public string Category { get; set; }
         public bool Archived { get; set; }
         public string ExitCondition { get; set; }
+        public DateTime DateEngaged { get; set; }
+        public DateTime ContExpiringDate { get; set; }
+        public DateTime ExitDate { get; set; }
     }
 }

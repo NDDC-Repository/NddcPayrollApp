@@ -12,6 +12,7 @@ namespace NddcPayroll.Web.Pages
         private readonly IPayrollData payDb;
 
         public List<EmployeeGridModel> Employees { get; set; }
+        public List<EmployeeGridModel> ContractEmployees { get; set; }
         public int EmpCount { get; set; }
         public string HeaderDate { get; set; }
         public decimal TotalEarnings { get; set; }
@@ -32,6 +33,7 @@ namespace NddcPayroll.Web.Pages
         public void OnGet(string searchItem)
         {
             Employees = db.GetAllEmployeesAddedThisMonth();
+            ContractEmployees = db.GetExpiringContract();
             EmpCount = db.GetEmployeeCount();
             HeaderDate = currDate.ToString("Y");
             TotalEarnings = payDb.GetSumOfTotalEarnings();

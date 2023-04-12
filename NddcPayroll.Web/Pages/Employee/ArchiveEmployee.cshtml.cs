@@ -23,6 +23,7 @@ namespace NddcPayroll.Web.Pages.Employee
         public void OnGet(int? EmpId)
         {
             EmpName = helpDb.GetAnyRecord<string, int>("Employees", "(FirstName + ' ' + LastName) As Name", "ID", EmpId.Value);
+            ExitDate = DateTime.Now;
         }
 
         public IActionResult OnPost(int? EmpId)
