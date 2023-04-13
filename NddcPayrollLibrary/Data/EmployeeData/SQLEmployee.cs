@@ -281,6 +281,21 @@ namespace NddcPayrollLibrary.Data.EmployeeData
 
 
         }
+        public void UpdateNhf(string EmployeeCode, double nhfAmount)
+        {
+
+            string SQL = "update Employees Set NHF = @NHF where EmployeeCode = @EmployeeCode";
+
+            db.SaveData(SQL,
+               new
+               {
+                   NHF = nhfAmount,
+                   EmployeeCode = EmployeeCode
+               },
+                connectionStringName, false);
+
+
+        }
         public void UpdateSecretarialAllow(string EmployeeCode, string secretarialAllow)
         {
 
