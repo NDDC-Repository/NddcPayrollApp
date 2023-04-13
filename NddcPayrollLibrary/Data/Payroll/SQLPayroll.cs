@@ -356,11 +356,13 @@ namespace NddcPayrollLibrary.Data.Payroll
                new { Id = EmpId }, connectionStringName, false).FirstOrDefault();
             decimal basicSalary = GetMonthlyGross(EmpId);
             decimal dailyPay = basicSalary / 30M;
-
-            int daysInMonth = DateTime.DaysInMonth(2023, 2);
+            
+            int year = DateTime.Now.Year;
+            int month = DateTime.Now.Month;
+            int daysInMonth = DateTime.DaysInMonth(year, month);
             int remainingDaysInMonth = daysInMonth - DateTime.Today.Day;
             int totalDaysCount = daysCount + remainingDaysInMonth;
-            int arrearsDays = totalDaysCount - daysInMonth;
+            int arrearsDays = (totalDaysCount - daysInMonth) - 2;
 
             decimal arrearsAmount = dailyPay * arrearsDays;
 
