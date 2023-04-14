@@ -352,7 +352,7 @@ namespace NddcPayrollLibrary.Data.Payroll
 
         public void AddArrears(int EmpId)
         {
-            int daysCount = db.LoadData<int, dynamic>("select DATEDIFF(day, DateEngaged, '2023-02-18') from Employees Where Id = @Id",
+            int daysCount = db.LoadData<int, dynamic>("select DATEDIFF(day, DateEngaged, GETDATE()) from Employees Where Id = @Id",
                new { Id = EmpId }, connectionStringName, false).FirstOrDefault();
             decimal basicSalary = GetMonthlyGross(EmpId);
             decimal dailyPay = basicSalary / 30M;
