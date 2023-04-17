@@ -1,0 +1,129 @@
+﻿@page "/paymentdetails"
+
+@using NddcPayrollLibrary.Model.Company;
+
+@inject ICompanyData compDb;
+@inject IHttpClientFactory _clientFactory
+
+
+<EditForm Model="PaymentDetails">
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="mb-3">
+                <label>Payment Method</label>
+                <select class="form-select" @bind="@PaymentDetails.PaymentMethod">
+                    <option selected-disabled="true">Select Payment Method ...</option>
+                    <option value="Cheque">Cheque</option>
+                    <option value="Cash">Cash</option>
+                    <option value="ACB">ACB</option>
+                    <option value="Pay Wallet">Pay Wallet</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="mb-3">
+                <label>Bank Code</label>
+                <select class="form-select" @bind="@PaymentDetails.BankCode" >
+                    <option selected="">Choose...</option>
+                    @foreach (var item in Banks)
+                    {
+                        <option value="@item.Code">@item.BankName</option>
+                    }
+                </select>
+
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="mb-3">
+                <label>Account Number</label>
+                <input type="text" class="form-control" @bind="@PaymentDetails.AccountNumber" @onfocusout="GetAccountDetails">
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="mb-3">
+                <label>Account Name</label>
+                <input type="text" class="form-control" @bind="@PaymentDetails.AccountName">
+                <p>@LoadingText</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 mt-4"></div>
+    <hr />
+    <div class="col-md-12 mt-4"></div>
+    <div class="col-md-8">
+        <div class="mb-3">
+            <label for="compnayNameinput" class="form-label">Add Pay Info 1</label>
+            <input type="text" class="form-control" @bind="@PaymentDetails.PayInfo1">
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="mb-3">
+            <label for="compnayNameinput" class="form-label">Add Pay Info 2</label>
+            <input type="text" class="form-control" @bind="@PaymentDetails.PayInfo2">
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="mb-3">
+            <label for="compnayNameinput" class="form-label">Sort Code</label>
+            <input type="text" class="form-control" @bind="@PaymentDetails.SortCode">
+        </div>
+    </div>
+    <button type="submit" @onclick="UpdateDetails" class="btn btn-primary">Update</button>
+    <p>@Message</p>
+   
+    <!--end col-->
+</EditForm>
+
+@code {
+
+    public MyPaymentDetailsModel PaymentDetails { get; set; }
+
+    public List<BankModel> Banks { get; set; }
+
+    public string Message { get; set; }
+
+    [Parameter]
+    public int EmpId { get; set; }
+
+    NubanModel BankDetails = new();
+    public string LoadingText { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Banks = compDb.GetAllBanks();
+        PaymentDetails = compDb.GetPaymentDetails(EmpId);
+    }
+
+    private async Task GetAccountDetails()
+    {
+        PaymentDetails.AccountName = "";
+
+        LoadingText = "Retrieving Account Name ......";
+
+        var request = new HttpRequestMessage(HttpMethod.Get, $"https://maylancer.org/api/nuban/api.php?account_number={PaymentDetails.AccountNumber}&bank_code={PaymentDetails.BankCode}");
+
+        var client = _clientFactory.CreateClient();
+
+        HttpResponseMessage response = await client.SendAsync(request);
+
+        if (response.IsSuccessStatusCode)
+        {
+            BankDetails = await response.Content.ReadFromJsonAsync<NubanModel>();
+            PaymentDetails.AccountName = BankDetails.account_name;
+            LoadingText = null;
+        }
+        else
+        {
+            LoadingText = $"There was an error getting the bank details: {response.ReasonPhrase}";
+        }
+    }
+
+    private void UpdateDetails()
+    {
+        PaymentDetails.EmployeeId = EmpId;
+        compDb.AddPaymentDetails(PaymentDetails);
+        Message = "Payment Details Successfully Updated";
+    }
+
+}

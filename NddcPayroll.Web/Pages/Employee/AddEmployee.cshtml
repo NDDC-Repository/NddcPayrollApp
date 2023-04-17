@@ -74,6 +74,7 @@
                                 <div class="mb-3">
                                     <label asp-for="@Model.Employee.EmployeeCode" class="form-label">Employee Code</label>
                                     <input asp-for="@Model.Employee.EmployeeCode" class="form-control" placeholder="Enter Code">
+                                    <span class="text-danger" asp-validation-for="@Model.Employee.EmployeeCode"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -179,6 +180,7 @@
                                     <select class="form-select" asp-for="@Model.Employee.SID" asp-items="@(new SelectList(Model.States, "Id", "FullDescription"))">
                                         <option selected="">Choose...</option>
                                     </select>
+                                    <span asp-validation-for="@Model.Employee.SID" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-12">

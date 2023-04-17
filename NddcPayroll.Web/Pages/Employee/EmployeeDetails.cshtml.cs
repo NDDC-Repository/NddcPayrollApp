@@ -126,10 +126,11 @@ namespace NddcPayroll.Web.Pages.Employee
             Departments = db.GetAllDepartments();
             //PayPoints = db.GetAllPayPoints();
         }
-        public void OnPostUpdateEmployerDetails()
-        {
-            //empDb.UpdateEmployee(Employee);
-            //string code = Employee.EmployeeCode;
-        }
+        //public void OnPostUpdateEmployerDetails()
+        //{
+        //    empDb.UpdateEmployee(Employee);
+        //    string code = Employee.EmployeeCode;
+
+        //}
     }
 }

@@ -1,0 +1,106 @@
+﻿@page "/analysisdetails"
+@using NddcPayrollLibrary.Data.EmployeeData;
+@using NddcPayrollLibrary.Model.Company;
+@using NddcPayrollLibrary.Model.Employee;
+
+@inject ICompanyData compDb;
+@inject IEmployeeData empDb;
+
+
+
+<EditForm Model="AnalysisDetails">
+    <div class="row">
+        <div class="col-lg-10">
+            <div class="card">
+                <div class="card-header align-items-center d-flex">
+                    <h4 class="card-title mb-0 flex-grow-1">Analysis Codes</h4>
+                </div><!-- end card header -->
+                <div class="card-body">
+                    <div class="row">
+                       
+                        <div class="col-md-8">
+                            <div class="mb-3">
+                                <label for="firstNameinput" class="form-label">Job Title</label>
+                                <select class="form-select" @bind="@AnalysisDetails.JobTitleId" >
+                                    <option selected="">Choose...</option>
+                                    @foreach (var item in JobTitles)
+                                    {
+                                        <option value="@item.Id">@item.Description</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                       
+                        <div class="col-md-8">
+                            <div class="mb-3">
+                                <label for="firstNameinput" class="form-label">Department</label>
+                                <select class="form-select" @bind="@AnalysisDetails.DepartmentId" >
+                                    <option selected="">Choose...</option>
+                                    @foreach (var item in Departments)
+                                    {
+                                        <option value="@item.Id">@item.DepartmentName</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="mb-3">
+                                <label for="firstNameinput" class="form-label">Pay Point</label>
+                                <select class="form-select" @bind="@AnalysisDetails.PayPoint" >
+                                    <option selected="">Choose...</option>
+                                    @foreach (var item in PayPoints)
+                                    {
+                                        <option value="@item.Code">@item.PayPoint</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="d-flex align-items-start gap-3 mt-4 mb-4">
+                
+                <button type="submit" @onclick="UpdateDetails" class="btn btn-success btn-label right ms-auto nexttab nexttab">
+                    <i class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>
+                    Update
+                </button>
+                <p>@Message</p>
+            </div>
+            <!--end col-->
+        </div>
+    </div>
+</EditForm>
+
+@code {
+
+    [Parameter]
+    public int EmpId { get; set; }
+
+    public EmployeeModel AnalysisDetails { get; set; }
+
+    public List<JobTitleModel> JobTitles { get; set; }
+
+    public List<DepartmentModel> Departments { get; set; }
+
+    public List<MyPayPointModel> PayPoints { get; set; }
+
+    public string Message { get; set; }
+
+    protected override void OnInitialized()
+    {
+        AnalysisDetails = empDb.GetAnalysisDetails(EmpId);
+        JobTitles = compDb.GetAllJobTitles();
+        Departments = compDb.GetAllDepartments();
+        PayPoints = compDb.GetAllPayPoints();
+    }
+
+    private void UpdateDetails()
+    {
+        AnalysisDetails.Id = EmpId;
+        empDb.UpdateAnalysisDetails(AnalysisDetails.JobTitleId, AnalysisDetails.DepartmentId, AnalysisDetails.PayPoint, AnalysisDetails.Id);
+        Message = "Payment Details Successfully Updated";
+    }
+
+}

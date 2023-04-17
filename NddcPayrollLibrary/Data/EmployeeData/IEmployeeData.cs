@@ -33,5 +33,6 @@ namespace NddcPayrollLibrary.Data.EmployeeData
         int CountEmployeesExitedThisMonth();
         List<EmployeeGridModel> GetExpiringContract();
         void UpdateNhf(string EmployeeCode, double nhfAmount);
+        void UpdateAnalysisDetails(int JobTitleId, int DeptId, string Paypoint, int EmpId);
     }
 }

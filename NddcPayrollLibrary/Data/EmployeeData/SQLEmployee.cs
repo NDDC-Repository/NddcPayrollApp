@@ -91,7 +91,7 @@ namespace NddcPayrollLibrary.Data.EmployeeData
             //employee.DateEngaged = (DateTime)System.Data.SqlTypes.SqlDateTime.MaxValue;
 
             string SQL = "Update Employees Set EmployeeCode = @EmployeeCode, Gender = @Gender, MaritalStatus = @MaritalStatus, FirstName = @FirstName, LastName = @LastName, OtherNames = @OtherNames, MaidenName = @MaidenName, SpouseName = @SpouseName, Email = @Email, Phone = @Phone, DateOfBirth = @DateOfBirth, Address = @Address, City = @City, SID = @SID, Passport = @Passport, EmploymentStatus = @EmploymentStatus, DateEngaged = @DateEngaged, ContactName = @ContactName, ContactPhone = @ContactPhone, UpdatedBy = @UpdatedBy Where Id = @Id";
-            db.SaveData(SQL, new { employee.EmployeeCode, employee.Gender, employee.MaritalStatus, employee.FirstName, employee.LastName, employee.OtherNames, employee.MaidenName, employee.SpouseName, employee.Email, employee.Phone, employee.DateOfBirth, employee.Address, employee.City, employee.SID, employee.Passport, employee.EmploymentStatus, employee.DateEngaged, employee.ContactName, employee.ContactPhone, employee.UpdatedBy }, connectionStringName, false);
+            db.SaveData(SQL, new { employee.EmployeeCode, employee.Gender, employee.MaritalStatus, employee.FirstName, employee.LastName, employee.OtherNames, employee.MaidenName, employee.SpouseName, employee.Email, employee.Phone, employee.DateOfBirth, employee.Address, employee.City, employee.SID, employee.Passport, employee.EmploymentStatus, employee.DateEngaged, employee.ContactName, employee.ContactPhone, employee.UpdatedBy, employee.Id }, connectionStringName, false);
         }
         public void DeleteEmployee(int Id)
         {
@@ -245,6 +245,21 @@ namespace NddcPayrollLibrary.Data.EmployeeData
                    AnalysisDetails.DepartmentId,
                    AnalysisDetails.PayPoint,
                    AnalysisDetails.EmployeeId
+               },
+                connectionStringName, false);
+
+
+        }
+
+        public void UpdateAnalysisDetails(int JobTitleId, int DeptId, string Paypoint, int EmpId)
+        {
+
+            string SQL = "update Employees Set JobTitleId = @JobTitleId, DepartmentId = @DepartmentId, PayPoint = @PayPoint where Id = @EmployeeId";
+
+            db.SaveData(SQL,
+               new
+               {
+                   JobTitleId = JobTitleId, DepartmentId = DeptId, PayPoint = Paypoint, EmployeeId = EmpId
                },
                 connectionStringName, false);
 

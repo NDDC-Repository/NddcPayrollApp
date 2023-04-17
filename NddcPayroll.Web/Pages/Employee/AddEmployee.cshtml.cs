@@ -37,16 +37,26 @@ namespace NddcPayroll.Web.Pages.Employee
 
         public IActionResult OnPost()
         {
-            if (dbEmp.EmployeeExists(Employee.EmployeeCode))
+            if (ModelState.IsValid)
             {
-                return RedirectToPage("EmpExists");
+                if (dbEmp.EmployeeExists(Employee.EmployeeCode))
+                {
+                    return RedirectToPage("EmpExists");
+                }
+                else
+                {
+                    int Id = dbEmp.AddEmployee(Employee);
+
+                    return RedirectToPage("StatutoryDetails", new { EmpId = Id });
+                }
             }
             else
             {
-                int Id = dbEmp.AddEmployee(Employee);
-
-                return RedirectToPage("StatutoryDetails", new { EmpId = Id });
+                States = db.GetAllStates();
+                Categories = htmlHelper.GetEnumSelectList<Categories>();
+                return Page();
             }
+           
             
         }
     }

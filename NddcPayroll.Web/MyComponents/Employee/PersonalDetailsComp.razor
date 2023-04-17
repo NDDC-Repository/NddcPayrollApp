@@ -1,0 +1,212 @@
+﻿@page "/employeedetails"
+@using NddcPayrollLibrary.Data.EmployeeData;
+@using NddcPayrollLibrary.Model.Company;
+@using NddcPayrollLibrary.Model.Employee;
+
+@inject IEmployeeData empDb;
+@inject ICompanyData compDb;
+
+<EditForm Model="Employee">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label class="form-label">Employee Code</label>
+                <input @bind="@Employee.EmployeeCode" class="form-control" placeholder="Enter Code">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label class="form-label">Gender</label>
+                <select @bind="@Employee.Gender" class="form-select" data-choices="" data-choices-sorting="true">
+                    <option selected="">Choose...</option>
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label class="form-label">Marital Status</label>
+                <select @bind="@Employee.MaritalStatus" class="form-select" data-choices="" data-choices-sorting="true">
+                    <option selected="">Choose...</option>
+                    <option>Married</option>
+                    <option>Single</option>
+                    <option>Divorced</option>
+                    <option>Widower</option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label class="form-label">First Name</label>
+                <input @bind="@Employee.FirstName" class="form-control" placeholder="Enter First Name" id="firstNameinput">
+            </div>
+        </div>
+        <!--end col-->
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label class="form-label">Last Name</label>
+                <input @bind="@Employee.LastName" class="form-control" placeholder="Enter your lastname" id="lastNameinput">
+            </div>
+        </div>
+        <!--end col-->
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label class="form-label">Other Names</label>
+                <input @bind="@Employee.OtherNames" class="form-control" placeholder="Enter other name" id="compnayNameinput">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label class="form-label">Maiden Name</label>
+                <input @bind="@Employee.MaidenName" class="form-control" placeholder="Enter Maiden name" id="compnayNameinput">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label class="form-label">Spouse Name</label>
+                <input @bind="@Employee.SpouseName" class="form-control" placeholder="Enter Spouse Name" id="compnayNameinput">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label class="form-label">Email Address</label>
+                <input @bind="@Employee.Email" class="form-control" placeholder="example@gamil.com" id="emailidInput">
+            </div>
+        </div>
+        <!--end col-->
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label class="form-label">Phone Number</label>
+                <input @bind="@Employee.Phone" class="form-control" placeholder="+(245) 451 45123" id="phonenumberInput">
+            </div>
+        </div>
+        <!--end col-->
+
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label class="form-label">Date of Birth</label>
+                <!-- Input Date -->
+                <div>
+                    <input type="date" @bind="@Employee.DateOfBirth" class="form-control" id="exampleInputdate">
+                </div>
+            </div>
+        </div>
+        <!--end col-->
+        <div class="col-md-12">
+            <div class="mb-3">
+                <label class="form-label">Address</label>
+                <input @bind="@Employee.Address" class="form-control" placeholder="Address 1" id="address1ControlTextarea">
+            </div>
+        </div>
+        <!--end col-->
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label class="form-label">City</label>
+                <input @bind="@Employee.City" class="form-control" placeholder="Enter your city" id="citynameInput">
+            </div>
+        </div>
+        <!--end col-->
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label class="form-label">State</label>
+                <select class="form-select" @bind="@Employee.SID" >
+                    <option selected-disabled="true">Select State ...</option>
+                    @foreach (var item in States)
+                    {
+                        <option value="@item.Id">@item.FullDescription</option>
+                    }
+                </select>
+            </div>
+        </div>
+       
+    </div>
+    <br />
+    <h4 class="card-title mb-0 flex-grow-1">Emergency Contact Details</h4>
+    <div class="col-md-12 mt-4"></div>
+    <hr />
+    <div class="col-md-12 mt-4"></div>
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="mb-3">
+                <label class="form-label">Name and Surname</label>
+                <input @bind="@Employee.ContactName" class="form-control" placeholder="Enter Full Name" id="firstNameinput">
+            </div>
+        </div>
+        <!--end col-->
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label class="form-label">Phone Number</label>
+                <input @bind="@Employee.ContactPhone" class="form-control" placeholder="Enter Personal Cell Number" id="lastNameinput">
+            </div>
+        </div>
+       
+    </div>
+    <br />
+    <h4 class="card-title mb-0 flex-grow-1">Service Details</h4>
+    <div class="col-md-12 mt-4"></div>
+    <hr />
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label class="form-label">Employment Status</label>
+                <select id="ForminputState" asp-for="@Employee.EmploymentStatus" class="form-select" data-choices="" data-choices-sorting="true">
+                    <option selected="">Choose...</option>
+                    <option value="New">New</option>
+                    <option value="Old">Old</option>
+                </select>
+            </div>
+        </div>
+        <!--end col-->
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label class="form-label">Date Engaged</label>
+                <div>
+                    <input type="date" @bind="@Employee.DateEngaged" class="form-control" id="exampleInputdate">
+                </div>
+            </div>
+        </div>
+
+       
+    </div>
+    <div class="col-md-12 mt-4"></div>
+    <hr />
+    <div class="col-lg-12">
+        <div class="text-end">
+            <button type="submit" @onclick="UpdateDetails" class="btn btn-primary">Update Personal Details</button>
+            <p>@Message</p>
+        </div>
+    </div>
+    <!--end row-->
+</EditForm>
+
+@code {
+
+    public EmployeeModel Employee { get; set; }
+
+    public List<MyStatesModel> States { get; set; }
+
+    public string Message { get; set; }
+
+    [Parameter]
+    public int EmpId { get; set; }
+
+
+    protected override void OnInitialized()
+    {
+        Employee = empDb.GetEmployeeDetails(EmpId);
+        States = compDb.GetAllStates();
+    }
+    private void UpdateDetails()
+    {
+        empDb.UpdateEmployee(Employee);
+        Message = "Employee Details Successfully Updated";
+    }
+
+}
