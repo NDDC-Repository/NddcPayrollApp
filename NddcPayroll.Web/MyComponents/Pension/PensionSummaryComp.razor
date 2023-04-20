@@ -1,0 +1,121 @@
+﻿@using NddcPayrollLibrary.Data.Reports;
+@using NddcPayrollLibrary.Model.Report;
+@using Syncfusion.Blazor.Grids
+
+@inject IReportsData repDb;
+
+
+<div class="card">
+    <div class="card-body">
+        <div class="row g-2">
+            <div class="col-sm-4">
+                <div class="search-box">
+                    <h4 class="fs-18 lh-base mb-0">Pension Summary Report</h4>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<SfGrid @ref="SfEmployeeGrid" DataSource="PFASummaryList" AllowResizing="true" EnableVirtualization="true" ShowColumnChooser="false" Height="600" AllowExcelExport="true" AllowPaging="false" AllowFiltering="false" AllowSorting="false" AllowGrouping="false" Toolbar="@toolbar">
+        
+        <GridAggregates>
+            <GridAggregate>
+                <GridAggregateColumns>
+
+                    <GridAggregateColumn Field=@nameof(PensionSummaryModel.EmployerPension) Type="AggregateType.Sum" Format="N">
+                        <FooterTemplate>
+                            @{
+                                var aggregate = (context as AggregateTemplateContext);
+                                <div>
+                                    <p>@aggregate.Sum</p>
+                                </div>
+                            }
+                        </FooterTemplate>
+                    </GridAggregateColumn>
+                    <GridAggregateColumn Field=@nameof(PensionSummaryModel.EmployeePension) Type="AggregateType.Sum" Format="N">
+                        <FooterTemplate>
+                            @{
+                                var aggregate = (context as AggregateTemplateContext);
+                                <div>
+                                    <p>@aggregate.Sum</p>
+                                </div>
+                            }
+                        </FooterTemplate>
+                    </GridAggregateColumn>
+                    <GridAggregateColumn Field=@nameof(PensionSummaryModel.VoluntaryPension) Type="AggregateType.Sum" Format="N">
+                        <FooterTemplate>
+                            @{
+                                var aggregate = (context as AggregateTemplateContext);
+                                <div>
+                                    <p>@aggregate.Sum</p>
+                                </div>
+                            }
+                        </FooterTemplate>
+                    </GridAggregateColumn>
+                    <GridAggregateColumn Field=@nameof(PensionSummaryModel.Total) Type="AggregateType.Sum" Format="N">
+                        <FooterTemplate>
+                            @{
+                                var aggregate = (context as AggregateTemplateContext);
+                                <div>
+                                    <p>@aggregate.Sum</p>
+                                </div>
+                            }
+                        </FooterTemplate>
+                    </GridAggregateColumn>
+                    
+                </GridAggregateColumns>
+
+            </GridAggregate>
+        </GridAggregates>
+
+        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+        <GridEvents OnToolbarClick="ToolbarBtnClickHandler" TValue="PensionSummaryModel"></GridEvents>
+
+        <GridColumns>
+            
+            <GridColumn HeaderText="PFA Code" IsFrozen="false" Width="70" Field="@nameof(PensionSummaryModel.PFACode)"></GridColumn>
+            <GridColumn HeaderText="PFA Name" Width="100" IsFrozen="false" Field="@nameof(PensionSummaryModel.PFAName)"></GridColumn>
+            <GridColumn HeaderText="No. Of Employees" IsFrozen="false" Width="70" Field="@nameof(PensionSummaryModel.EmployeeCount)"></GridColumn>
+            @*<GridColumn HeaderText="Arrears-Employer" IsFrozen="false" Width="120" Field="0.00"></GridColumn>
+            <GridColumn HeaderText="Arrears-Employee" IsFrozen="false" Width="120" Field="0.00"></GridColumn>*@
+        <GridColumn HeaderText="Curr-Employer" Width="70" Field="@nameof(PensionSummaryModel.EmployerPension)"></GridColumn>
+            <GridColumn HeaderText="Curr-Employee" Width="70" Field="@nameof(PensionSummaryModel.EmployeePension)"></GridColumn>
+            @*<GridColumn HeaderText="Voluntary Employer" Width="120" Format="N" Field="0.00"></GridColumn>*@
+            <GridColumn HeaderText="Voluntary Employee" Width="70" Format="N" Field="@nameof(PensionSummaryModel.VoluntaryPension)"></GridColumn>
+            <GridColumn HeaderText="Total" Width="70" Format="N" Field="@nameof(PensionSummaryModel.Total)"></GridColumn>
+            
+        </GridColumns>
+    </SfGrid>
+
+@code {
+
+   
+
+    public List<PensionSummaryModel> PFASummaryList { get; set; }
+
+    private List<object> toolbar = new List<object> { "Search", "ExcelExport", "ColumnChooser" };
+    private SfGrid<PensionSummaryModel>? SfEmployeeGrid { get; set; }
+   
+    protected override void OnInitialized()
+    {
+        PFASummaryList = repDb.GetPFASummary();
+    }
+
+    public async void ToolbarBtnClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+    {
+        if (args.Item.Id.Contains("_excelexport"))
+        {
+            await SfEmployeeGrid.ExportToExcelAsync();
+
+        }
+        else if (args.Item.Id.Contains("_pdfexport"))
+        {
+            await SfEmployeeGrid.ExportToPdfAsync();
+        }
+        else if (args.Item.Id == "XmlExport")
+        {
+            Console.Write("Export to Xml functionality");
+        }
+    }
+}

@@ -7,70 +7,25 @@
 @inject IReportsData db;
 @inject IPayrollData payDb;
 
-@*<div class="row">
-    <div class="col-xl-6">
-        <div class="card overflow-hidden">
-            <div class="card-body bg-marketplace d-flex">
-                <div class="flex-grow-1">
-                    <h4 class="fs-18 lh-base mb-0">Payroll Listings Report <br></h4>
-                    <p class="mb-0 mt-2 pt-1 text-muted">View Report of Benefits and Deductions for Entire Workforce</p>
-                    <div class="d-flex gap-3 mt-4">
-                        <a @onclick="GenerateReport" class="btn btn-primary">Generate Report </a>
-                    </div>
-
-                </div>
-                <img src="assets/images/bg-d.png" alt="" class="img-fluid">
-            </div>
-        </div>
-    </div><!--end col-->
-
-</div>*@
 
 <div class="card">
     <div class="card-body">
         <div class="row g-2">
             <div class="col-sm-4">
                 <div class="search-box">
-                    @*<input type="text" class="form-control" id="searchMemberList" placeholder="Search for name or designation...">
-                    <i class="ri-search-line search-icon"></i>*@
                     <h4 class="fs-18 lh-base mb-0">Payroll Listings Report</h4>
                 </div>
             </div>
-            <!--end col-->
-            @*<div class="col-sm-auto ms-auto">
-                <div class="list-grid-nav hstack gap-1">
-                    <select class="form-select" @bind="payrollJournalTitleId">
-                    <option selected-disabled="true">Select Payroll List</option>
-                    @foreach (var item in JournalTitles)
-                    {
-                        <option value="@item.Id">@item.JournalName</option>
-                    }
-                </select>
-                    <button @onclick="GenerateReport" class="btn btn-success addMembers-modal"><i class="ri-profile-line me-1 align-bottom"></i> Generate Report</button>
-                    <button type="button" id="dropdownMenuLink1" data-bs-toggle="dropdown" aria-expanded="false" class="btn btn-soft-info btn-icon fs-14"><i class="ri-more-2-fill"></i></button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink1" style="">
-                        <li><a class="dropdown-item" href="#">Save Report</a></li>
-                        <li><a class="dropdown-item" href="#">Post Journal</a></li>
-                        <li><a class="dropdown-item" href="#">Retreive Saved Report</a></li>
-                    </ul>
-
-                </div>
-            </div>*@
-            <!--end col-->
+           
         </div>
-        <!--end row-->
     </div>
 </div>
 
 @if (ShowAnim == true)
 {
-    @*<div class="spinner-grow text-primary" role="status">
-        <span>Loading Report Please Wait...</span>
-    </div>*@
     <div class="text-center mb-3">
         <a href="javascript:void(0);" class="text-success"><i class="mdi mdi-loading mdi-spin fs-40 align-middle me-2"></i> Generating Report Please Wait </a>
     </div>
-    @*<h4>@Message</h4>*@
 }
 else if (ShowGrid == true)
 {
