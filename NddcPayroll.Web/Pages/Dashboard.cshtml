@@ -321,9 +321,9 @@
 <div class="row">
     <div class="col-xl-6">
         <div class="card">
-            <div class="card-header">
+           @* <div class="card-header">
                 <h4 class="card-title mb-0">Total Earnings Per Paypoint Location</h4>
-            </div>
+            </div>*@
             <div class="card-body">
                 @*<canvas id="lineChart" class="chartjs-chart" data-colors="[&quot;--vz-primary-rgb, 0.2&quot;, &quot;--vz-primary&quot;, &quot;--vz-info-rgb, 0.2&quot;, &quot;--vz-info&quot;]" width="455" height="227" style="display: block; box-sizing: border-box; height: 227px; width: 455px;"></canvas>*@
                 <component type="typeof(NddcPayroll.Web.MyComponents.PayPoinChartComp)" render-mode="ServerPrerendered" />
@@ -333,15 +333,30 @@
 
     <div class="col-xl-6">
         <div class="card">
-            <div class="card-header">
+           @* <div class="card-header">
                 <h4 class="card-title mb-0">Total Earning Per Department</h4>
-            </div>
+            </div>*@
             <div class="card-body">
                 @*<canvas id="bar" class="chartjs-chart" data-colors="[&quot;--vz-primary&quot;]" width="455" height="227" style="display: block; box-sizing: border-box; height: 227px; width: 455px;"></canvas>*@
+                @*<component type="typeof(NddcPayroll.Web.MyComponents.EarningsByDeptChartComp)" render-mode="ServerPrerendered" />*@
+                <component type="typeof(NddcPayroll.Web.MyComponents.Charts.EmployeePensionChartComp)" render-mode="ServerPrerendered" />
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div>
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+           @* <div class="card-header">
+                <h4 class="card-title mb-0">Total Earnings Per Paypoint Location</h4>
+            </div>*@
+            <div class="card-body">
+                @*<canvas id="lineChart" class="chartjs-chart" data-colors="[&quot;--vz-primary-rgb, 0.2&quot;, &quot;--vz-primary&quot;, &quot;--vz-info-rgb, 0.2&quot;, &quot;--vz-info&quot;]" width="455" height="227" style="display: block; box-sizing: border-box; height: 227px; width: 455px;"></canvas>*@
                 <component type="typeof(NddcPayroll.Web.MyComponents.EarningsByDeptChartComp)" render-mode="ServerPrerendered" />
             </div>
         </div>
     </div> <!-- end col -->
+
 </div>
 <div class="row">
     <div class="col-xl-12">

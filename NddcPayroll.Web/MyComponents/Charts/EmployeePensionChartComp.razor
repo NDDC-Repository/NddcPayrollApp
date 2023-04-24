@@ -5,16 +5,16 @@
 @using Syncfusion.Blazor.Charts;
 @inject IReportsData repDb
 
-<SfChart Title="Total Earnings Per Dept">
+@*<SfChart Title="Total Earnings Per Dept">
     <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category"></ChartPrimaryXAxis>
     <ChartSeriesCollection>
-        <ChartSeries DataSource="@EarningsData" XName="DepartmentName" YName="Amount" Type="ChartSeriesType.Column">
+        <ChartSeries DataSource="@EarningsData" XName="DepartmentName" YName="Amount" Type="ChartSeriesType.Bar">
 
         </ChartSeries>
     </ChartSeriesCollection>
-</SfChart>
+</SfChart>*@
 
-@*<SfAccumulationChart Title="Mobile Browser Statistics">
+<SfAccumulationChart Title="Mobile Browser Statistics">
     <AccumulationChartSeriesCollection>
         <AccumulationChartSeries DataSource="@EarningsData" XName="PFAName" YName="EmployeePension"
                                  Name="Browser">
@@ -22,21 +22,21 @@
     </AccumulationChartSeriesCollection>
 
     <AccumulationChartLegendSettings Visible="true"></AccumulationChartLegendSettings>
-</SfAccumulationChart>*@
+</SfAccumulationChart>
 
 @code {
 
-    List<MyEarningsByDeptChartModel> EarningsData { get; set; }
-
-    protected override void OnInitialized()
-    {
-        EarningsData = repDb.GetEarningsByDeptData();
-    }
-
-    //List<PensionSummaryModel> EarningsData { get; set; }
+    //List<MyEarningsByDeptChartModel> EarningsData { get; set; }
 
     //protected override void OnInitialized()
     //{
-    //    EarningsData = repDb.GetPFASummary();
+    //    EarningsData = repDb.GetEarningsByDeptData();
     //}
+
+    List<PensionSummaryModel> EarningsData { get; set; }
+
+    protected override void OnInitialized()
+    {
+        EarningsData = repDb.GetPFASummary();
+    }
 }
