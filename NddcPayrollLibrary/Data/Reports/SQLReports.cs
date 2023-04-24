@@ -15,6 +15,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
+
+
 namespace NddcPayrollLibrary.Data.Reports
 {
     public class SQLReports : IReportsData
@@ -591,7 +593,7 @@ namespace NddcPayrollLibrary.Data.Reports
             List<PensionSummaryModel> Reports = new List<PensionSummaryModel>();
             //List<Task<decimal>> tasks = new List<Task<decimal>>();
 
-            string SQL = "SELECT (PensionAdministrators.Code) As PFACode, (PensionAdministrators.Description) As PFAName, Count(Employees.Id) As EmployeeCount, Sum(Employees.VoluntaryPension) as VoluntaryPension, Sum(Employees.Pension) As EmployeePension, Sum(Employees.EmployerPension) As EmployerPension, Sum(Employees.Pension + Employees.EmployerPension) As Total FROM  Employees LEFT JOIN PensionAdministrators ON Employees.PensionFundId = PensionAdministrators.Id GROUP BY Code, Description";
+            string SQL = "SELECT (PensionAdministrators.Code) As PFACode, (PensionAdministrators.Description) As PFAName, Count(Employees.Id) As EmployeeCount, Sum(Employees.VoluntaryPension) as VoluntaryPension, Sum(Employees.Pension) As EmployeePension, Sum(Employees.EmployerPension) As EmployerPension, Sum(Employees.Pension + Employees.EmployerPension) As Total FROM  Employees LEFT JOIN PensionAdministrators ON Employees.PensionFundId = PensionAdministrators.Id WHERE PensionFundNumber != '' GROUP BY Code, Description";
 
             Reports = db.LoadData<PensionSummaryModel, dynamic>(SQL, new { }, connectionStringName, false).ToList();
 
