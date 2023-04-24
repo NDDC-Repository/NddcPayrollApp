@@ -13,8 +13,8 @@ namespace NddcPayrollLibrary.Model.Report
         public string AccountNumber { get; set; }
         public string AccountType { get; set; } = "20";
         public decimal PayableAmount { get; set; }
-        public string ShortDescription { get; set; } = "Fenruary 2023 Salary";
-        public string LongDescription { get; set; } = "Fenruary 2023 Salary";
+        public string ShortDescription { get; set; } = DateTime.Now.ToString("Y");
+        public string LongDescription { get; set; } = DateTime.Now.ToString("Y");
         public string EmployeeName { get; set; }
         public string Mobile { get; set; } = "0";
         public string Email { get; set; } = "0";
