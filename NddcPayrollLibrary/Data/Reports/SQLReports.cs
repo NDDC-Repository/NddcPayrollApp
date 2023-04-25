@@ -593,7 +593,7 @@ namespace NddcPayrollLibrary.Data.Reports
             List<PensionSummaryModel> Reports = new List<PensionSummaryModel>();
             //List<Task<decimal>> tasks = new List<Task<decimal>>();
 
-            string SQL = "SELECT (PensionAdministrators.Code) As PFACode, (PensionAdministrators.Description) As PFAName, Count(Employees.Id) As EmployeeCount, Sum(Employees.VoluntaryPension) as VoluntaryPension, Sum(Employees.Pension) As EmployeePension, Sum(Employees.EmployerPension) As EmployerPension, Sum(Employees.Pension + Employees.EmployerPension) As Total FROM  Employees LEFT JOIN PensionAdministrators ON Employees.PensionFundId = PensionAdministrators.Id WHERE PensionFundNumber != '' GROUP BY Code, Description";
+            string SQL = "SELECT (PensionAdministrators.Code) As PFACode, (PensionAdministrators.Description) As PFAName, Count(Employees.Id) As EmployeeCount, Sum(Employees.VoluntaryPension) as VoluntaryPension, Sum(Employees.Pension) As EmployeePension, Sum(Employees.EmployerPension) As EmployerPension, Sum(Employees.Pension + Employees.EmployerPension) As Total FROM  Employees LEFT JOIN PensionAdministrators ON Employees.PensionFundId = PensionAdministrators.Id WHERE Employees.PensionFundNumber != '' And Employees.Archived = 0 GROUP BY Code, Description";
 
             Reports = db.LoadData<PensionSummaryModel, dynamic>(SQL, new { }, connectionStringName, false).ToList();
 
@@ -606,7 +606,7 @@ namespace NddcPayrollLibrary.Data.Reports
             List<PensionSummaryModel> Reports = new List<PensionSummaryModel>();
             //List<Task<decimal>> tasks = new List<Task<decimal>>();
 
-            string SQL = "SELECT (Employees.EmployeeCode) As EmployeeCode, (Employees.FirstName + ' ' + Employees.LastName) As EmployeeName, (Employees.PensionFundNumber) As RSAPin, (PensionAdministrators.Code) As PFACode, (PensionAdministrators.Description) As PFAName, (Employees.VoluntaryPension) As VoluntaryPension, (Employees.Pension) As EmployeePension, (Employees.EmployerPension) As EmployerPension, (Employees.Pension + Employees.EmployerPension) As Total FROM  Employees LEFT JOIN PensionAdministrators ON Employees.PensionFundId = PensionAdministrators.Id WHERE PensionFundId = @PensionFundId";
+            string SQL = "SELECT (Employees.EmployeeCode) As EmployeeCode, (Employees.FirstName + ' ' + Employees.LastName) As EmployeeName, (Employees.PensionFundNumber) As RSAPin, (PensionAdministrators.Code) As PFACode, (PensionAdministrators.Description) As PFAName, (Employees.VoluntaryPension) As VoluntaryPension, (Employees.Pension) As EmployeePension, (Employees.EmployerPension) As EmployerPension, (Employees.Pension + Employees.EmployerPension) As Total FROM  Employees LEFT JOIN PensionAdministrators ON Employees.PensionFundId = PensionAdministrators.Id WHERE Employees.PensionFundId = @PensionFundId And Employees.Archived = 0";
 
             Reports = db.LoadData<PensionSummaryModel, dynamic>(SQL, new { PensionFundId = pensionFundId }, connectionStringName, false).ToList();
 
