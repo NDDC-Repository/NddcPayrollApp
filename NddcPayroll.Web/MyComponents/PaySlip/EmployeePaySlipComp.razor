@@ -1,0 +1,161 @@
+﻿
+@using NddcPayrollLibrary.Data.EmployeeData;
+@using NddcPayrollLibrary.Data.PayrollJournal;
+@using NddcPayrollLibrary.Model.Employee;
+@using NddcPayrollLibrary.Model.Payroll;
+@using Syncfusion.HtmlConverter;
+@using Syncfusion.Pdf;
+
+@inject IPayrollJournalData payJoDb;
+@inject IEmployeeData empDb;
+
+
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card overflow-hidden">
+            <div class="card-body bg-marketplace d-flex">
+                <div class="flex-grow-1">
+                    <h4 class="fs-18 lh-base mb-0">Payroll Listings Summary Report <br></h4>
+                    <p class="mb-0 mt-2 pt-1 text-muted">View Summary Report of Benefits and Deductions for Entire Workforce</p>
+                    <div class="d-flex gap-3 mt-4 col-md-4">
+                        <select class="form-select" @bind="payrollJournalTitleId">
+                            <option selected-disabled="false" value="0">Select Payroll List</option>
+                            @foreach (var item in JournalTitles)
+                            {
+                                <option value="@item.Id">@item.JournalName - @item.MonthYear</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="d-flex gap-3 mt-4">
+                        <a @onclick="GenerateReport" class="btn btn-primary">Generate Report </a>
+                    </div>
+
+                </div>
+                <img src="assets/images/bg-d.png" alt="" class="img-fluid">
+            </div>
+        </div>
+    </div><!--end col-->
+</div>
+
+@if (ShowAnim == true)
+{
+    @*<div class="spinner-grow text-primary" role="status">
+        <span>Loading Report Please Wait...</span>
+    </div>*@
+    <div class="text-center mb-3">
+        <a href="javascript:void(0);" class="text-success"><i class="mdi mdi-loading mdi-spin fs-40 align-middle me-2"></i> Generating Report Please Wait </a>
+    </div>
+    @*<h4>@Message</h4>*@
+}
+else if (ShowGrid == true)
+{
+    <div class="row" style="border:1px solid black;">
+        <div class="col-6">
+            <table>
+                <tr>
+                    <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top; font-size: 14px; font-weight: bold;">Co. Name</td>
+                    <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top; font-size: 14px;">@PaySlip.FirstName</td>
+                </tr>
+                <tr>
+                    <td style="text-align: left; padding-right: 10px; vertical-align: top; font-size: 14px; font-weight: bold;">Emp Address</td>
+                    <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top; font-size: 14px;">Niger Delta Development Commission</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-6">
+            <table>
+                <tr>
+                    <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top; font-size: 14px; font-weight: bold;">Co. Name</td>
+                    <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top; font-size: 14px;">Niger Delta Development Commission</td>
+                </tr>
+                <tr>
+                    <td style="text-align: left; padding-right: 20px; vertical-align: top; font-size: 14px; font-weight: bold;">Emp Address</td>
+                    <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top; font-size: 14px;">Niger Delta Development Commission</td>
+                </tr>
+            </table>
+        </div>
+        <!--end col-->
+    </div>
+    
+}
+
+@code {
+
+    [Parameter]
+    public int EmpId { get; set; }
+
+    public string Message { get; set; }
+    public int payrollJournalTitleId { get; set; }
+    List<MyPayrollJournalTitleModel> JournalTitles = new();
+
+    MyPaySlipModel PaySlip = new();
+
+    protected override void OnInitialized()
+    {
+        //PayrollList = db.GetPayrollListReport();
+        //Message = "";
+        //Message = "Loading Report Please Wait ........";
+        //PayrollList = await Task.Run(() => db.GetPayrollListReport());
+
+        JournalTitles = payJoDb.GetPayrollJournalTitles();
+
+    }
+
+
+    public double OpsTime { get; set; }
+    public bool ShowAnim { get; set; }
+    public bool ShowGrid { get; set; }
+    private void GenerateReport()
+    {
+        ShowAnim = true;
+        var watch = System.Diagnostics.Stopwatch.StartNew();
+        Message = "Loading Report Please Wait ........";
+        //PayrollList = await Task.Run(() => db.GetPayrollListReport2Async());
+        //PayrollList = await Task.Run(() => db.GetPayrollListSummaryReportAsync(payrollJournalTitleId));
+        //Message = "";
+        PaySlip = empDb.GetEmployeePaySlip(EmpId, payrollJournalTitleId);
+        watch.Stop();
+        OpsTime = watch.ElapsedMilliseconds / 1000;
+        ShowAnim = false;
+        ShowGrid = true;
+    }
+
+    //private async Task ExportPdf()
+    //{
+    //    //string cookieName = ".AspNetCore.Identity.Application";
+    //    ////Get cookie value from HttpRequest object for the requested page.
+    //    //string cookieValue = string.Empty;
+    //    //if (Request.Cookies[cookieName] != null)
+    //    //{
+    //    //    cookieValue = Request.Cookies[cookieName];
+    //    //}
+
+    //    //Initialize the HTML to PDF converter with the Blink rendering engine.
+    //    HtmlToPdfConverter htmlConverter = new HtmlToPdfConverter();
+
+    //    BlinkConverterSettings blinkConverterSettings = new BlinkConverterSettings();
+
+    //    blinkConverterSettings.ViewPortSize = new Syncfusion.Drawing.Size(1440, 0);
+
+    //    //Add cookies as name and value pair.
+    //    //blinkConverterSettings.Cookies.Add(cookieName, cookieValue);
+
+    //    //Assign Blink converter settings to HTML converter.
+    //    htmlConverter.ConverterSettings = blinkConverterSettings;
+
+    //    //string url = Microsoft.AspNetCore.Http.Extensions.UriHelper.GetEncodedUrl(HttpContext.Request);
+    //    //url = url.Substring(0, url.LastIndexOf('/'));
+
+    //    //Convert existing current page URL to PDF.
+    //    PdfDocument document = htmlConverter.Convert("https://localhost:7248/Reports/PayrollSummaryByDept");
+
+    //    //Saving the PDF to the MemoryStream.
+    //    MemoryStream stream = new MemoryStream();
+
+    //    document.Save(stream);
+
+    //    //Download the PDF document in the browser.
+    //    return File(stream.ToArray(), System.Net.Mime.MediaTypeNames.Application.Pdf, "Output5.pdf");
+    //}
+}

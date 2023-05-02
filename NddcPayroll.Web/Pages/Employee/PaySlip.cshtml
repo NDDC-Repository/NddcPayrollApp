@@ -1,0 +1,360 @@
+﻿@page "{EmpId:int?}"
+@model NddcPayroll.Web.Pages.Employee.PaySlipModel
+@{
+}
+
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <h4 class="mb-sm-0">Pay Slip</h4>
+
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Employees</a></li>
+                    <li class="breadcrumb-item active">Pay Slip</li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<form method="post">
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card overflow-hidden">
+            <div class="card-body bg-marketplace d-flex">
+                <div class="flex-grow-1">
+                    <h4 class="fs-18 lh-base mb-0">Payroll Listings Summary Report <br></h4>
+                    <p class="mb-0 mt-2 pt-1 text-muted">View Summary Report of Benefits and Deductions for Entire Workforce</p>
+                    <div class="d-flex gap-3 mt-4 col-md-4">
+                        <select class="form-select" asp-for="@Model.PayrollJournalTitleId" asp-items="@(new SelectList(Model.PayrollJournalTitles, "Id", "JournalName"))">
+                            <option selected="">Choose...</option>
+                        </select>
+                    </div>
+                    <div class="d-flex gap-3 mt-4">
+                       
+                            <button type="submit" class="btn btn-primary">View Pay Slip</button>
+                      
+                    </div>
+
+                </div>
+                <img src="assets/images/bg-d.png" alt="" class="img-fluid">
+            </div>
+        </div>
+    </div><!--end col-->
+</div>
+</form>
+
+@if (Model.Show == true)
+{
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                @*<div class="card-header align-items-center d-flex">
+                    <h4 class="card-title mb-0 flex-grow-1">Input Sizing</h4>
+                </div><!-- end card header -->*@
+                <div class="card-body">
+                    <div class="row" style="border:1px solid black;">
+                        <div class="col-4">
+                            <table>
+                                <tr>
+                                    <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top; font-size: 14px; font-weight: bold;">Co. Name</td>
+                                    <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top; font-size: 14px;">NIGER DELTA DEVELOPMENT <br /> COMMISSION</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top; font-size: 14px; font-weight: bold;">Emp Code</td>
+                                    <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top; font-size: 14px;">@Model.MyPayslip.EmployeeCode</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top; font-size: 14px; font-weight: bold;">Emp Name</td>
+                                    <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top; font-size: 14px;">@Model.MyPayslip.FirstName</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left; padding-right: 10px; vertical-align: top; font-size: 14px; font-weight: bold;">Emp Address</td>
+                                    <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top; font-size: 14px;">Eastern Byepass, Marine Base <br /> Port Harcourt <br />084</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-4">
+                            <table>
+                                <tr>
+                                    <td style="text-align: left; padding-right: 10px; vertical-align: top; font-size: 14px; font-weight: bold;">Co. Address</td>
+                                    <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top; font-size: 14px;">Eastern Byepass, Marine Base <br /> Port Harcourt <br />084</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left; padding-right: 20px; vertical-align: top; font-size: 14px; font-weight: bold;">Department</td>
+                                    <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top; font-size: 14px;">@Model.MyPayslip.DepartmentName</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left; padding-right: 20px; vertical-align: top; font-size: 14px; font-weight: bold;">Job Title</td>
+                                    <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top; font-size: 14px;">@Model.MyPayslip.JobTitle</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left; padding-right: 20px; vertical-align: top; font-size: 14px; font-weight: bold;">Job Grade</td>
+                                    <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top; font-size: 14px;">@Model.MyPayslip.JobGrade</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-4">
+                            <table>
+                                <tr>
+                                    <td style="text-align: left; padding-right: 10px; vertical-align: top; font-size: 14px; font-weight: bold;">Payment Dt</td>
+                                    <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top; font-size: 14px;">@Model.MyPayslip.DateOfPayment</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left; padding-right: 20px; vertical-align: top; font-size: 14px; font-weight: bold;">Dt Engaged</td>
+                                    <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top; font-size: 14px;">@Model.MyPayslip.DateEngaged</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left; padding-right: 20px; vertical-align: top; font-size: 14px; font-weight: bold;">Account No</td>
+                                    <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top; font-size: 14px;">@Model.MyPayslip.AccountNumber</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left; padding-right: 20px; vertical-align: top; font-size: 14px; font-weight: bold;">Branch Code</td>
+                                    <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top; font-size: 14px;">@Model.MyPayslip.BankCode</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <!--end col-->
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-6" style="border:1px solid black;">
+                            <p style="text-align: center; vertical-align: top; font-size: 16px; font-weight: bold;">EARNINGS</p>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <td width="200">Description</td>
+                                        <td width="300">Hrs/Unit</td>
+                                        <td width="200">Amount</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Basic Salary</td>
+                                        <td></td>
+                                        <td>@Model.MyPayslip.BasicSalary</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Transport Allowance</td>
+                                        <td></td>
+                                        <td>@Model.MyPayslip.TransportAllow</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Meal Allowance</td>
+                                        <td></td>
+                                        <td>@Model.MyPayslip.MealAllow</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Utility Allowance</td>
+                                        <td></td>
+                                        <td>@Model.MyPayslip.UtilityAllow</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Education Allowance</td>
+                                        <td></td>
+                                        <td>@Model.MyPayslip.EducationAllow</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Medical Allowance</td>
+                                        <td></td>
+                                        <td>@Model.MyPayslip.MedicalAllow</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Vehicle Maintenance</td>
+                                        <td></td>
+                                        <td>@Model.MyPayslip.VehicleMaintenanceAllow</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Hazard Allowance</td>
+                                        <td></td>
+                                        <td>@Model.MyPayslip.HazardAllow</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left; vertical-align: top; font-size: 14px; font-weight: bold;">Total Earnings</td>
+                                        <td></td>
+                                        <td style="text-align: left; vertical-align: top; font-size: 14px; font-weight: bold;">@Model.MyPayslip.TotalEarnings</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-6" style="border:1px solid black;">
+                            <p style="text-align: center; vertical-align: top; font-size: 16px; font-weight: bold;">DEDUCTIONS</p>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <td width="200">Description</td>
+                                        <td width="200">Hrs/Unit</td>
+                                        <td width="200">Amount</td>
+                                        <td width="200">Opening Balance</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Tax</td>
+                                        <td></td>
+                                        <td>@Model.MyPayslip.Tax</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nat. Housing Fund</td>
+                                        <td></td>
+                                        <td>@Model.MyPayslip.NHF</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pension</td>
+                                        <td></td>
+                                        <td>@Model.MyPayslip.Pension</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cooperative</td>
+                                        <td></td>
+                                        <td>@Model.MyPayslip.CooperativeDed</td>
+                                    </tr>
+                                    <tr>
+                                        <td>NDDC AUPTRE SSA</td>
+                                        <td></td>
+                                        <td>@Model.MyPayslip.SSA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>NDDC JSA</td>
+                                        <td></td>
+                                        <td>@Model.MyPayslip.JSA</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left; vertical-align: top; font-size: 14px; font-weight: bold;">Total Deductions</td>
+                                        <td></td>
+                                        <td style="text-align: left; vertical-align: top; font-size: 14px; font-weight: bold;">@Model.MyPayslip.TotalDeductions</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6" style="border:1px solid black;">
+                            <p style="text-align: center; vertical-align: top; font-size: 16px; font-weight: bold;">YEAR TO DATE TOTALS</p>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td>Taxable Perks</td>
+                                    <td>0.00</td>
+                                </tr>
+                                <tr>
+                                    <td>Tax Paid</td>
+                                    <td>@Model.MyPayslip.Tax</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-6" style="border:1px solid black;">
+                            <p style="text-align: center; vertical-align: top; font-size: 16px; font-weight: bold;"></p>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                               
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                           <br />
+                            <img src="~/images/dynamicsimage.png" alt="" height="50" width="200">
+                        </div>
+                        <div class="col-6" style="border:1px solid black;">
+                            
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td style="text-align: left; vertical-align: top; font-size: 20px; font-weight: bold;">NETT PAY</td>
+                                    <td style="text-align: left; vertical-align: top; font-size: 20px; font-weight: bold;">@Model.MyPayslip.NetPay</td>
+                                </tr>
+                                
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--end col-->
+    </div>
+    
+}
+
+@*<component type="typeof(NddcPayroll.Web.MyComponents.PaySlip.EmployeePaySlipComp)" param-EmpId="@Model.MyEmpId" render-mode="ServerPrerendered" />*@
