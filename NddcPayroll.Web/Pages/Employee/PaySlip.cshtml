@@ -27,8 +27,8 @@
         <div class="card overflow-hidden">
             <div class="card-body bg-marketplace d-flex">
                 <div class="flex-grow-1">
-                    <h4 class="fs-18 lh-base mb-0">Payroll Listings Summary Report <br></h4>
-                    <p class="mb-0 mt-2 pt-1 text-muted">View Summary Report of Benefits and Deductions for Entire Workforce</p>
+                    <h4 class="fs-18 lh-base mb-0">Employee Payslip <br></h4>
+                    <p class="mb-0 mt-2 pt-1 text-muted">View Summary of Selected Employee Payslip</p>
                     <div class="d-flex gap-3 mt-4 col-md-4">
                         <select class="form-select" asp-for="@Model.PayrollJournalTitleId" asp-items="@(new SelectList(Model.PayrollJournalTitles, "Id", "JournalName"))">
                             <option selected="">Choose...</option>

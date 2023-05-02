@@ -71,7 +71,7 @@ namespace NddcPayroll.Web.Pages.Employee
             url = url.Substring(0, url.LastIndexOf('/'));
 
             //Convert existing current page URL to PDF.
-            PdfDocument document = htmlConverter.Convert($"https://localhost:7248/pdfpages/employeepayslip/{EmpId.Value}/{PayrollJournalTitleId}");
+            PdfDocument document = htmlConverter.Convert($"https://payroll.nddc.gov.ng/pdfpages/employeepayslip/{EmpId.Value}/{PayrollJournalTitleId}");
 
             //Saving the PDF to the MemoryStream.
             MemoryStream stream = new MemoryStream();
