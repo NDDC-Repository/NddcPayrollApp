@@ -44,7 +44,7 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddRazorPages(options => {
     options.Conventions.AllowAnonymousToPage("/Index");
     options.Conventions.AllowAnonymousToPage("/Reports/PayrollSummaryByDept");
-    options.Conventions.AllowAnonymousToPage("/pdfpages/employeepayslip");
+    options.Conventions.AllowAnonymousToPage("/PdfPages/EmployeePayslip/");
 })
 .AddMvcOptions(options => { })
 .AddMicrosoftIdentityUI();

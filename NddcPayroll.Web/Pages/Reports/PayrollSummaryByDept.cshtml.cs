@@ -52,7 +52,7 @@ namespace NddcPayroll.Web.Pages.Reports
             url = url.Substring(0, url.LastIndexOf('/'));
 
             //Convert existing current page URL to PDF.
-            PdfDocument document = htmlConverter.Convert("https://localhost:7248/Reports/PayrollSummaryByDept");
+            PdfDocument document = htmlConverter.Convert("https://payroll.nddc.gov.ng/Reports/PayrollSummaryByDept");
 
             //Saving the PDF to the MemoryStream.
             MemoryStream stream = new MemoryStream();
