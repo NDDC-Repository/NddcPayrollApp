@@ -81,10 +81,9 @@ namespace NddcPayroll.Web.Pages.Employee
             ////Download the PDF document in the browser.
             //return File(stream.ToArray(), System.Net.Mime.MediaTypeNames.Application.Pdf, "Output5.pdf");
 
-            //    return RedirectToPage($"PdfPages/EmployeePayslip", new { EmpId = EmpId.Value, PayrollJoId = PayrollJournalTitleId });
-            }
+            return RedirectToPage($"/PdfPages/EmployeePayslip", new { EmpId = EmpId.Value, PayrollJoId = PayrollJournalTitleId });
         }
 
 
     }
-
+}
