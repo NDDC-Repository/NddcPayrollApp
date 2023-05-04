@@ -28,6 +28,11 @@ namespace NddcPayrollLibrary.Model.Employee
         public decimal MedicalAllow { get; set; }
         public decimal VehicleMaintenanceAllow { get; set; }
         public decimal HazardAllow { get; set; }
+        public decimal HousingAllow { get; set; }
+        public decimal FurnitureAllow { get; set; }
+        public decimal SecurityAllow { get; set; }
+        public decimal DomesticServantAllow { get; set; }
+        public decimal DriverAllow { get; set; }
 
         public decimal Tax { get; set; }
         public decimal NHF { get; set; }
@@ -35,6 +40,8 @@ namespace NddcPayrollLibrary.Model.Employee
         public decimal CooperativeDed { get; set; }
         public decimal SSA { get; set; }
         public decimal JSA { get; set; }
+        public decimal VoluntaryPension { get; set; }
+        public decimal Insurance { get; set; }
         public decimal TotalEarnings { get; set; }
         public decimal TotalDeductions { get; set; }
         public decimal NetPay { get; set; }
