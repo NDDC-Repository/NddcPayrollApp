@@ -600,7 +600,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
 
         public void ClearCoopValues()
         {
-            db.SaveData("Update Employees Set CooperativeDed = 0.00", new { }, connectionStringName, false);
+            db.SaveData("Update Employees Set CooperativeDed = 0.00 Where CooperativeDed > 0", new { }, connectionStringName, false);
         }
 
         public void RecalculateManualForDeductions(string empCode)

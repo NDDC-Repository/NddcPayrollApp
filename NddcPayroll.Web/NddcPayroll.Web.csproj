@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="itext7.pdfhtml" Version="4.0.4" />
     <PackageReference Include="Microsoft.Identity.Web" Version="1.25.10" />
     <PackageReference Include="Microsoft.Identity.Web.UI" Version="1.25.10" />
     <PackageReference Include="Syncfusion.Blazor.Charts" Version="20.4.0.50" />

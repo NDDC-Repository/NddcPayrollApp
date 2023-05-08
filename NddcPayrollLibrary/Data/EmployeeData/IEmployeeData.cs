@@ -35,5 +35,6 @@ namespace NddcPayrollLibrary.Data.EmployeeData
         void UpdateNhf(string EmployeeCode, double nhfAmount);
         void UpdateAnalysisDetails(int JobTitleId, int DeptId, string Paypoint, int EmpId);
         MyPaySlipModel GetEmployeePaySlip(int empId, int payrollJournalId);
+        List<MyPaySlipModel> GetEmployeePaySlipByDept(int departmentId, int payrollJournalId);
     }
 }

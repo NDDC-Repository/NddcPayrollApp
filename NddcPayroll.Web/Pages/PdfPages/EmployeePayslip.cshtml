@@ -37,7 +37,12 @@
 
 </head>
 <body>
-    <div class="row">
+   @* <form method="post">
+        <input type="hidden" name="GridHtml" />
+        <input type="submit" id="btnSubmit" value="Export" asp-page-handler="Export" />
+    </form>*@
+    <div id="Grid">
+        <div class="row">
         <div class="col-lg-6">
             <div class="card">
                 @*<div class="card-header align-items-center d-flex">
@@ -297,7 +302,7 @@
                                         <tr>
                                             <td>Pension</td>
                                             <td></td>
-                                            <td>@Model.MyPayslip.Pension</td>
+                                            <td>@string.Format("{0:N}", Model.MyPayslip.Pension)</td>
                                         </tr>
                                     }
                                     @if (Model.MyPayslip.CooperativeDed > 0)
@@ -445,5 +450,16 @@
         </div>
         <!--end col-->
     </div>
+    </div>
+
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#btnSubmit").click(function () {
+                $("input[name='GridHtml']").val($("#Grid").html());
+            });
+        });
+    </script>
 </body>
 </html>

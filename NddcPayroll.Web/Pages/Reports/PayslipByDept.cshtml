@@ -1,0 +1,491 @@
+﻿@page
+@model NddcPayroll.Web.Pages.Reports.PayslipByDeptModel
+@{
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <h4 class="mb-sm-0">Pay Slip By Department</h4>
+
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Reports</a></li>
+                    <li class="breadcrumb-item active">Payslip</li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<form method="post">
+    <div class="row">
+        <div class="col-12">
+            <div class="card overflow-hidden">
+                <div class="card-body bg-marketplace d-flex">
+                    <div class="flex-grow-1">
+                        <h4 class="fs-18 lh-base mb-0">Payslip By Department <br></h4>
+                        <p class="mb-0 mt-2 pt-1 text-muted">View Payslip By Depertment </p>
+                        <div class="d-flex gap-3 mt-4 col-md-4">
+                            <select class="form-select" asp-for="@Model.PayrollJournalTitleId">
+                                <option selected-disabled="false" value="0">Select Payslip Period</option>
+                                @foreach (var item in Model.JournalTitles)
+                                {
+                                    <option value="@item.Id">@item.JournalName - @item.MonthYear</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="d-flex gap-3 mt-4 col-md-4">
+                            <select class="form-select" asp-for="@Model.DepartmentId">
+                                <option selected-disabled="false" value="0">Select Department</option>
+                                @foreach (var item in Model.Departments)
+                                {
+                                    <option value="@item.Id">@item.DepartmentName </option>
+                                }
+                            </select>
+                        </div>
+                        <div class="d-flex gap-3 mt-4">
+                            @*<a @onclick="GenerateReport" class="btn btn-primary">Generate Report </a>*@
+                            <button type="submit" class="btn btn-primary">View Pay Slips</button>
+                            @*<input type="hidden" name="GridHtml" />
+                            <input type="submit" id="btnSubmit" value="Export" asp-page-handler="Export" />*@
+                        </div>
+
+                    </div>
+                    <img src="assets/images/bg-d.png" alt="" class="img-fluid">
+                </div>
+            </div>
+        </div><!--end col-->
+
+    </div>
+</form>
+
+@if (Model.PaySlips != null)
+{
+    <div id="Grid">
+        @foreach (var item in Model.PaySlips)
+        {
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card">
+                        @*<div class="card-header align-items-center d-flex">
+                <h4 class="card-title mb-0 flex-grow-1">Input Sizing</h4>
+                </div><!-- end card header -->*@
+                        <div class="card-body">
+                            <div class="row" style="border:1px solid black;">
+                                <div class="col-4">
+                                    <table style="font-size: 10px;">
+                                        <tr>
+                                            <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top; font-weight: bold;">Co. Name</td>
+                                            <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top;">NIGER DELTA DEVELOPMENT <br /> COMMISSION</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top; font-weight: bold;">Emp Code</td>
+                                            <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top;">@item.EmployeeCode</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top; font-weight: bold;">Emp Name</td>
+                                            <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top;">@item.FirstName @item.LastName</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; padding-right: 10px; vertical-align: top; font-weight: bold;">Emp Address</td>
+                                            <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top;">Eastern Byepass, Marine Base <br /> Port Harcourt <br />084</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="col-4">
+                                    <table style="font-size: 10px;">
+                                        <tr>
+                                            <td style="text-align: left; padding-right: 10px; vertical-align: top; font-weight: bold;">Co. Address</td>
+                                            <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top;">Eastern Byepass, Marine Base <br /> Port Harcourt <br />084</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; padding-right: 20px; vertical-align: top; font-weight: bold;">Department</td>
+                                            <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top;">@item.DepartmentName</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; padding-right: 20px; vertical-align: top; font-weight: bold;">Job Title</td>
+                                            <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top;">@item.JobTitle</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; padding-right: 20px; vertical-align: top; font-weight: bold;">Job Grade</td>
+                                            <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top;">@item.JobGrade</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="col-4">
+                                    <table style="font-size: 10px;">
+                                        <tr>
+                                            <td style="text-align: left; padding-right: 10px; vertical-align: top; font-weight: bold;">Payment Dt</td>
+                                            <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top;">@item.DateOfPayment</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; padding-right: 20px; vertical-align: top; font-weight: bold;">Dt Engaged</td>
+                                            <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top;">@item.DateEngaged.ToShortDateString()</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; padding-right: 20px; vertical-align: top; font-weight: bold;">Account No</td>
+                                            <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top;">@item.AccountNumber</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; padding-right: 20px; vertical-align: top; font-weight: bold;">Branch Code</td>
+                                            <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top;">@item.BankCode</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <!--end col-->
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-6" style="border:1px solid black;">
+                                    <p style="text-align: center; vertical-align: top; font-size: 14px; font-weight: bold;">EARNINGS</p>
+                                    <table style="font-size: 10px;">
+                                        <thead>
+                                            <tr>
+                                                <td width="300"><b>Description</b></td>
+                                                <td width="200"><b>Hrs/Unit</b></td>
+                                                <td width="200"><b>Amount</b></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (item.BasicSalary > 0)
+                                            {
+                                                <tr>
+                                                    <td>Basic Salary</td>
+                                                    <td></td>
+                                                    <td>@string.Format("{0:N}", item.BasicSalary)</td>
+                                                </tr>
+                                            }
+                                            @if (item.HousingAllow > 0)
+                                            {
+                                                <tr>
+                                                    <td>Housing Allowance</td>
+                                                    <td></td>
+                                                    <td>@string.Format("{0:N}", item.HousingAllow)</td>
+                                                </tr>
+                                            }
+                                            @if (item.FurnitureAllow > 0)
+                                            {
+                                                <tr>
+                                                    <td>Furniture Allowance</td>
+                                                    <td></td>
+                                                    <td>@string.Format("{0:N}", item.FurnitureAllow)</td>
+                                                </tr>
+                                            }
+                                            @if (item.TransportAllow > 0)
+                                            {
+                                                <tr>
+                                                    <td>Transport Allowance</td>
+                                                    <td></td>
+                                                    <td>@string.Format("{0:N}", item.TransportAllow)</td>
+                                                </tr>
+                                            }
+                                            @if (item.MealAllow > 0)
+                                            {
+                                                <tr>
+                                                    <td>Meal Allowance</td>
+                                                    <td></td>
+                                                    <td>@string.Format("{0:N}", item.MealAllow)</td>
+                                                </tr>
+                                            }
+                                            @if (item.UtilityAllow > 0)
+                                            {
+                                                <tr>
+                                                    <td>Utility Allowance</td>
+                                                    <td></td>
+                                                    <td>@string.Format("{0:N}", item.UtilityAllow)</td>
+                                                </tr>
+                                            }
+                                            @if (item.SecurityAllow > 0)
+                                            {
+                                                <tr>
+                                                    <td>Security Allowance</td>
+                                                    <td></td>
+                                                    <td>@string.Format("{0:N}", item.SecurityAllow)</td>
+                                                </tr>
+                                            }
+                                            @if (item.DomesticServantAllow > 0)
+                                            {
+                                                <tr>
+                                                    <td>Domestic Servant Allowance</td>
+                                                    <td></td>
+                                                    <td>@string.Format("{0:N}", item.DomesticServantAllow)</td>
+                                                </tr>
+                                            }
+                                            @if (item.DriverAllow > 0)
+                                            {
+                                                <tr>
+                                                    <td>Driver Allowance</td>
+                                                    <td></td>
+                                                    <td>@string.Format("{0:N}", item.DriverAllow)</td>
+                                                </tr>
+                                            }
+                                            @if (item.EducationAllow > 0)
+                                            {
+                                                <tr>
+                                                    <td>Education Allowance</td>
+                                                    <td></td>
+                                                    <td>@string.Format("{0:N}", item.EducationAllow)</td>
+                                                </tr>
+                                            }
+                                            @if (item.MedicalAllow > 0)
+                                            {
+                                                <tr>
+                                                    <td>Medical Allowance</td>
+                                                    <td></td>
+                                                    <td>@string.Format("{0:N}", item.MedicalAllow)</td>
+                                                </tr>
+                                            }
+                                            @if (item.VehicleMaintenanceAllow > 0)
+                                            {
+                                                <tr>
+                                                    <td>Vehicle Maintenance</td>
+                                                    <td></td>
+                                                    <td>@string.Format("{0:N}", item.VehicleMaintenanceAllow)</td>
+                                                </tr>
+                                            }
+                                            @if (item.HazardAllow > 0)
+                                            {
+                                                <tr>
+                                                    <td>Hazard Allowance</td>
+                                                    <td></td>
+                                                    <td>@string.Format("{0:N}", item.HazardAllow)</td>
+                                                </tr>
+                                            }
+
+
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align: left; vertical-align: top; font-size: 14px; font-weight: bold;">Total Earnings</td>
+                                                <td></td>
+                                                <td style="text-align: left; vertical-align: top; font-size: 14px; font-weight: bold;">@string.Format("{0:N}", item.TotalEarnings)</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-6" style="border:1px solid black;">
+                                    <p style="text-align: center; vertical-align: top; font-size: 14px; font-weight: bold;">DEDUCTIONS</p>
+                                    <table style="font-size: 10px;">
+                                        <thead style="font-weight: bold;">
+                                            <tr>
+                                                <td width="200">Description</td>
+                                                <td width="200">Hrs/Unit</td>
+                                                <td width="200">Amount</td>
+                                                <td width="200">Opening Balance</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (item.Tax > 0)
+                                            {
+                                                <tr>
+                                                    <td>Tax</td>
+                                                    <td></td>
+                                                    <td>@string.Format("{0:N}", item.Tax)</td>
+                                                </tr>
+                                            }
+                                            @if (item.NHF > 0)
+                                            {
+                                                <tr>
+                                                    <td>Nat. Housing Fund</td>
+                                                    <td></td>
+                                                    <td>@string.Format("{0:N}", item.NHF)</td>
+                                                </tr>
+                                            }
+                                            @if (item.Pension > 0)
+                                            {
+                                                <tr>
+                                                    <td>Pension</td>
+                                                    <td></td>
+                                                    <td>@string.Format("{0:N}", item.Pension)</td>
+                                                </tr>
+                                            }
+                                            @if (item.CooperativeDed > 0)
+                                            {
+                                                <tr>
+                                                    <td>Cooperative</td>
+                                                    <td></td>
+                                                    <td>@string.Format("{0:N}", item.CooperativeDed)</td>
+                                                </tr>
+                                            }
+                                            @if (item.SSA > 0)
+                                            {
+                                                <tr>
+                                                    <td>NDDC AUPTRE SSA</td>
+                                                    <td></td>
+                                                    <td>@string.Format("{0:N}", item.SSA)</td>
+                                                </tr>
+                                            }
+                                            @if (item.JSA > 0)
+                                            {
+                                                <tr>
+                                                    <td>NDDC JSA</td>
+                                                    <td></td>
+                                                    <td>@string.Format("{0:N}", item.JSA)</td>
+                                                </tr>
+                                            }
+                                            @if (item.VoluntaryPension > 0)
+                                            {
+                                                <tr>
+                                                    <td>Voluntary Pension</td>
+                                                    <td></td>
+                                                    <td>@string.Format("{0:N}", item.VoluntaryPension)</td>
+                                                </tr>
+                                            }
+                                            @if (item.Insurance > 0)
+                                            {
+                                                <tr>
+                                                    <td>Insurance</td>
+                                                    <td></td>
+                                                    <td>@string.Format("{0:N}", item.Insurance)</td>
+                                                </tr>
+                                            }
+
+
+
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td style="text-align: left; vertical-align: top; font-size: 14px; font-weight: bold;">Total Deductions</td>
+                                                <td></td>
+                                                <td style="text-align: left; vertical-align: top; font-size: 14px; font-weight: bold;">@string.Format("{0:N}", item.TotalDeductions)</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6" style="border:1px solid black;">
+                                    <p style="text-align: center; vertical-align: top; font-size: 14px; font-weight: bold;">YEAR TO DATE TOTALS</p>
+                                    <table style="font-size: 10px;">
+                                        <tr>
+                                            <td width="600" style="text-align: left; vertical-align: top; font-size: 14px; font-weight: bold;">Taxable Perks</td>
+                                            <td width="300">0.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="600" style="text-align: left; vertical-align: top; font-size: 14px; font-weight: bold;">Tax Paid</td>
+                                            <td width="300">@string.Format("{0:N}", item.Tax)</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="col-6" style="border:1px solid black;">
+                                    <p style="text-align: center; vertical-align: top; font-size: 16px; font-weight: bold;"></p>
+                                    <table class="table table-borderless">
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <br />
+                                    <img src="~/images/dynamicsimage.png" alt="" height="50" width="200">
+                                </div>
+                                <div class="col-6" style="border:1px solid black;">
+
+                                    <table class="table table-borderless">
+                                        <tr>
+                                            <td style="text-align: left; vertical-align: top; font-size: 20px; font-weight: bold;">NETT PAY</td>
+                                            <td style="text-align: left; vertical-align: top; font-size: 20px; font-weight: bold;">@string.Format("{0:N}", item.NetPay)</td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!--end col-->
+            </div>
+            <div style="break-after:page"></div>
+        }
+    </div>
+}
+
+@section scripts {
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#btnSubmit").click(function () {
+                $("input[name='GridHtml']").val($("#Grid").html());
+            });
+        });
+    </script>
+}

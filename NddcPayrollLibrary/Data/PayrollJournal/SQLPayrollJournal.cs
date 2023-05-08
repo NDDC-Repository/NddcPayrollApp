@@ -63,7 +63,7 @@ namespace NddcPayrollLibrary.Data.PayrollJournal
             }
         }
 
-        public void ClearOnetimeData()
+        public async void ClearOnetimeData()
         {
             List<MyPayrollJournalModel> Employees = new List<MyPayrollJournalModel>();
 
@@ -78,7 +78,7 @@ namespace NddcPayrollLibrary.Data.PayrollJournal
 
                     if (employee.TaxCalc == "Automatic")
                     {
-                        repDb.UpdateEmployeesPayrollByEmpIdAsync(employee.Id);
+                        await repDb.UpdateEmployeesPayrollByEmpIdAsync(employee.Id);
                     }
                     if (employee.TaxCalc == "Manual")
                     {
@@ -92,7 +92,8 @@ namespace NddcPayrollLibrary.Data.PayrollJournal
 
                     if (employee.TaxCalc == "Automatic")
                     {
-                        repDb.UpdateEmployeesPayrollByEmpIdAsync(employee.Id);
+                        await repDb.UpdateEmployeesPayrollByEmpIdAsync(employee.Id);
+                        //await(Task.Run(() => repDb.UpdateEmployeesPayrollByEmpIdAsync(employee.Id)));
                     }
                     if (employee.TaxCalc == "Manual")
                     {
