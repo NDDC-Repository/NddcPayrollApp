@@ -3,63 +3,67 @@
 @{
 }
 
-<div class="row">
-    <div class="col-12">
-        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-            <h4 class="mb-sm-0">Pay Slip By Department</h4>
-
-            <div class="page-title-right">
-                <ol class="breadcrumb m-0">
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Reports</a></li>
-                    <li class="breadcrumb-item active">Payslip</li>
-                </ol>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<form method="post">
+@if (Model.PaySlips == null)
+{
     <div class="row">
         <div class="col-12">
-            <div class="card overflow-hidden">
-                <div class="card-body bg-marketplace d-flex">
-                    <div class="flex-grow-1">
-                        <h4 class="fs-18 lh-base mb-0">Payslip By Department <br></h4>
-                        <p class="mb-0 mt-2 pt-1 text-muted">View Payslip By Depertment </p>
-                        <div class="d-flex gap-3 mt-4 col-md-4">
-                            <select class="form-select" asp-for="@Model.PayrollJournalTitleId">
-                                <option selected-disabled="false" value="0">Select Payslip Period</option>
-                                @foreach (var item in Model.JournalTitles)
-                                {
-                                    <option value="@item.Id">@item.JournalName - @item.MonthYear</option>
-                                }
-                            </select>
-                        </div>
-                        <div class="d-flex gap-3 mt-4 col-md-4">
-                            <select class="form-select" asp-for="@Model.DepartmentId">
-                                <option selected-disabled="false" value="0">Select Department</option>
-                                @foreach (var item in Model.Departments)
-                                {
-                                    <option value="@item.Id">@item.DepartmentName </option>
-                                }
-                            </select>
-                        </div>
-                        <div class="d-flex gap-3 mt-4">
-                            @*<a @onclick="GenerateReport" class="btn btn-primary">Generate Report </a>*@
-                            <button type="submit" class="btn btn-primary">View Pay Slips</button>
-                            <input type="hidden" name="GridHtml" />
-                            <input type="submit" id="btnSubmit" value="Export" asp-page-handler="Export" />
-                        </div>
+            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <h4 class="mb-sm-0">Pay Slip By Department</h4>
 
-                    </div>
-                    <img src="assets/images/bg-d.png" alt="" class="img-fluid">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Reports</a></li>
+                        <li class="breadcrumb-item active">Payslip</li>
+                    </ol>
                 </div>
-            </div>
-        </div><!--end col-->
 
+            </div>
+        </div>
     </div>
-</form>
+
+    <form method="post">
+        <div class="row">
+            <div class="col-12">
+                <div class="card overflow-hidden">
+                    <div class="card-body bg-marketplace d-flex">
+                        <div class="flex-grow-1">
+                            <h4 class="fs-18 lh-base mb-0">Payslip By Department <br></h4>
+                            <p class="mb-0 mt-2 pt-1 text-muted">View Payslip By Depertment </p>
+                            <div class="d-flex gap-3 mt-4 col-md-4">
+                                <select class="form-select" asp-for="@Model.PayrollJournalTitleId">
+                                    <option selected-disabled="false" value="0">Select Payslip Period</option>
+                                    @foreach (var item in Model.JournalTitles)
+                                    {
+                                        <option value="@item.Id">@item.JournalName - @item.MonthYear</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="d-flex gap-3 mt-4 col-md-4">
+                                <select class="form-select" asp-for="@Model.DepartmentId">
+                                    <option selected-disabled="false" value="0">Select Department</option>
+                                    @foreach (var item in Model.Departments)
+                                    {
+                                        <option value="@item.Id">@item.DepartmentName </option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="d-flex gap-3 mt-4">
+                                @*<a @onclick="GenerateReport" class="btn btn-primary">Generate Report </a>*@
+                                <button type="submit" class="btn btn-primary">View Pay Slips</button>
+                                @*<input type="hidden" name="GridHtml" />
+                                <input type="submit" id="btnSubmit" value="Export" asp-page-handler="Export" />*@
+                            </div>
+
+                        </div>
+                        <img src="assets/images/bg-d.png" alt="" class="img-fluid">
+                    </div>
+                </div>
+            </div><!--end col-->
+
+        </div>
+    </form>
+}
+
 
 @if (Model.PaySlips != null)
 {
