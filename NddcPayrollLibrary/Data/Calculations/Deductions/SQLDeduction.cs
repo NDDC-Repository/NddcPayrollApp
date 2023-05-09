@@ -608,7 +608,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
             decimal totalEarnings = db.LoadData<decimal, dynamic>("select sum(BasicSalary + MedicalAllow + TransportAllow + HousingAllow + FurnitureAllow + MealAllow + UtilityAllow + EducationAllow + SecurityAllow + DomesticServantAllow + DriverAllow + VehicleAllow + EntertainmentAllow + NewspaperAllow + HazardAllow + SecretarialAllow + LeaveAllow + ActingAllow + ShiftAllow + UniformAllow) from employees where EmployeeCode = @EmployeeCode",
                 new { EmployeeCode = empCode }, connectionStringName, false).FirstOrDefault();
 
-            decimal totalDeductions = db.LoadData<decimal, dynamic>("select sum(Tax + VoluntaryPension + Insurance + CooperativeDed + Pension + JSA + SSA + NHF) from Employees where EmployeeCode = @EmployeeCode",
+            decimal totalDeductions = db.LoadData<decimal, dynamic>("select sum(Tax + VoluntaryPension + CooperativeDed + Pension + JSA + SSA + NHF) from Employees where EmployeeCode = @EmployeeCode",
                 new { EmployeeCode = empCode }, connectionStringName, false).FirstOrDefault();
 
             decimal netPay = totalEarnings - totalDeductions;

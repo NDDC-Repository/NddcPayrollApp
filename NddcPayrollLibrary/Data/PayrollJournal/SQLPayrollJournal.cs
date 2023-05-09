@@ -111,7 +111,7 @@ namespace NddcPayrollLibrary.Data.PayrollJournal
             decimal tax = dedDb.GetPAYEAmountManual(totalEarnings, insurance, pension, nhf, empId, taxAdjustment);
             db.SaveData("Update Employees Set Tax = @Tax Where Id = @ID", new { Tax = tax, Id = empId }, connectionStringName, false);
 
-            decimal totalDeductions = db.LoadData<decimal, dynamic>("select sum(Tax + VoluntaryPension + Insurance + CooperativeDed + Pension + JSA + SSA + NHF) from Employees where Id = @Id",
+            decimal totalDeductions = db.LoadData<decimal, dynamic>("select sum(Tax + VoluntaryPension + CooperativeDed + Pension + JSA + SSA + NHF) from Employees where Id = @Id",
                 new { Id = empId }, connectionStringName, false).FirstOrDefault();
 
             decimal netPay = totalEarnings - totalDeductions;
