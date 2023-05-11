@@ -229,7 +229,22 @@
                                             <td>@string.Format("{0:N}", Model.MyPayslip.HazardAllow)</td>
                                         </tr>
                                     }
-                                    
+                                    @if (Model.MyPayslip.EntertainmentAllow > 0)
+                                    {
+                                        <tr>
+                                            <td>Entartainment Allowance</td>
+                                            <td></td>
+                                            <td>@string.Format("{0:N}", Model.MyPayslip.EntertainmentAllow)</td>
+                                        </tr>
+                                    }
+                                    @if (Model.MyPayslip.NewspaperAllow > 0)
+                                    {
+                                        <tr>
+                                            <td>Newspaper Allowance</td>
+                                            <td></td>
+                                            <td>@string.Format("{0:N}", Model.MyPayslip.NewspaperAllow)</td>
+                                        </tr>
+                                    }
                                     
                                     <tr>
                                         <td></td>

@@ -45,5 +45,7 @@ namespace NddcPayrollLibrary.Model.Employee
         public decimal TotalEarnings { get; set; }
         public decimal TotalDeductions { get; set; }
         public decimal NetPay { get; set; }
+        public decimal EntertainmentAllow { get; set; }
+        public decimal NewspaperAllow { get; set; }
     }
 }

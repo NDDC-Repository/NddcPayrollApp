@@ -259,6 +259,22 @@
                                                     <td>@string.Format("{0:N}", item.HazardAllow)</td>
                                                 </tr>
                                             }
+                                            @if (item.EntertainmentAllow > 0)
+                                            {
+                                                <tr>
+                                                    <td>Entartainment Allowance</td>
+                                                    <td></td>
+                                                    <td>@string.Format("{0:N}", item.EntertainmentAllow)</td>
+                                                </tr>
+                                            }
+                                            @if (item.NewspaperAllow > 0)
+                                            {
+                                                <tr>
+                                                    <td>Newspaper Allowance</td>
+                                                    <td></td>
+                                                    <td>@string.Format("{0:N}", item.NewspaperAllow)</td>
+                                                </tr>
+                                            }
 
 @*
                                             <tr>
