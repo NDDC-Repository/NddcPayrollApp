@@ -25,6 +25,7 @@ namespace NddcPayroll.Web.Pages.PdfPages
         {
             this.empDb = empDb;
         }
+        string BaseHref => $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
         public void OnGet(int? EmpId, int? PayrollJoId)
         {
             //MyEmpId = EmpId.Value;
@@ -41,6 +42,7 @@ namespace NddcPayroll.Web.Pages.PdfPages
                 PdfDocument pdfDocument = new PdfDocument(writer);
                 pdfDocument.SetDefaultPageSize(PageSize.A4);
                 ConverterProperties converterProperties = new ConverterProperties();
+                converterProperties.SetBaseUri(BaseHref);
                 HtmlConverter.ConvertToPdf(stream, pdfDocument, converterProperties);
                 pdfDocument.Close();
                 return File(byteArrayOutputStream.ToArray(), "application/pdf", "Grid.pdf");

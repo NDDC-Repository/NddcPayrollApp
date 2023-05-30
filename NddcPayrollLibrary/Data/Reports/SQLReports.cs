@@ -522,6 +522,56 @@ namespace NddcPayrollLibrary.Data.Reports
 
             //return Reports;
         }
+        
+        public void UpdateEmployeesPayrollByEmpId(int empId)
+        {
+
+            //MyPayRollListModel reportModel;
+            List<EmployeeModel> Employees = new List<EmployeeModel>();
+            List<Task<decimal>> tasks = new List<Task<decimal>>();
+
+            string SQL = "SELECT Id, EmployeeCode From Employees Where Id = @Id And TaxCalc = 'Automatic'";
+
+            Employees = db.LoadData<EmployeeModel, dynamic>(SQL, new { @Id = empId }, connectionStringName, false).ToList();
+            foreach (var item in Employees)
+            {
+                EmployeeModel employee = new EmployeeModel();
+
+                //item.BasicSalary = payDb.GetBasicSalary(item.Id);
+                employee.TotalEarnings = payDb.GetMonthlyGross(item.Id);
+                //tasks.Add(Task.Run(() => employee.EmployeeCode = item.EmployeeCode));
+                employee.EmployeeCode = item.EmployeeCode;
+                employee.TotalDeductions = dedDb.GetTotalDeductions(item.Id);
+                employee.BasicSalary = payDb.GetBasicSalary(item.Id);
+                employee.TransportAllow = allowDb.GetTransportAllowance(item.Id);
+                employee.HousingAllow = allowDb.GetHousingAllowance(item.Id);
+                employee.FurnitureAllow = allowDb.GetFurnitureAllowance(item.Id);
+                employee.MealAllow = allowDb.GetMealAllowance(item.Id);
+                employee.UtilityAllow = allowDb.GetUtilityAllowance(item.Id);
+                employee.EducationAllow = allowDb.GetEducationAllowance(item.Id);
+                employee.SecurityAllow = allowDb.GetSecurityAllowance(item.Id);
+                employee.DomesticServantAllow = allowDb.GetDomesticServantAllowance(item.Id);
+                employee.MedicalAllow = allowDb.GetMedicalAllowance(item.Id);
+                employee.VehicleAllow = allowDb.GetVehicleMaintenanceAllowance(item.Id);
+                employee.HazardAllow = allowDb.GetHazardAllowance(item.Id);
+                employee.DriverAllow = allowDb.GetDriverAllowance(item.Id);
+                employee.EntertainmentAllow = allowDb.GetEntertainmentAllow(item.Id);
+                employee.NewspaperAllow = allowDb.GetNewspaperAllow(item.Id);
+                employee.Tax = dedDb.GetPAYEAmount(item.Id);
+                employee.NHF = dedDb.GetNHFAmount(item.Id);
+                employee.Pension = dedDb.GetPensionAmount(item.Id);
+                employee.JSA = dedDb.GetJSA(item.Id);
+                employee.SSA = dedDb.GetSSA(item.Id);
+                employee.EmployerPension = dedDb.GetEmployerPensionAmount(item.Id);
+                //tasks.Add(Task.Run(() => employee.MonthlyGross = dedDb.GetSSA(item.Id)));
+                employee.NetPay = payDb.GetMonthlyGross(item.Id) - dedDb.GetTotalDeductions(item.Id);
+
+                empDb.UpdateEmployeePayroll(employee);
+            }
+
+
+            //return Reports;
+        }
         public async Task<List<MyRemitaUploadModel>> GetRemitaReportAsync()
         {
 

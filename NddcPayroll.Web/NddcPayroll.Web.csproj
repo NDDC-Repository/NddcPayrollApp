@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Pages\PdfPages\PayrollSummaryByDeptRpt.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="itext7.pdfhtml" Version="4.0.4" />
     <PackageReference Include="Microsoft.Identity.Web" Version="1.25.10" />
     <PackageReference Include="Microsoft.Identity.Web.UI" Version="1.25.10" />
@@ -21,6 +25,18 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NddcPayrollLibrary\NddcPayrollLibrary.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\PdfPages\PayrollSummaryByDeptRpt.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\PdfPages\PayrollSummaryByDeptRpt.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\PdfPages\PayrollSummaryByDeptRpt.cshtml" />
   </ItemGroup>
 
 </Project>

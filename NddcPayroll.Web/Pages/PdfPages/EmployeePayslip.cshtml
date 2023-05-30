@@ -4,44 +4,109 @@
     Layout = "";
 }
 
-<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="light" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable">
+<!DOCTYPE html>
+<html>
 <head>
-    <meta charset="utf-8" />
+    @*<meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - NDDC Payroll</title>
+    <title>@ViewData["Title"] - NDDC Payroll</title>*@
     @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WebTemplateTheme.styles.css" asp-append-version="true" />*@
 
-    <base href="~/" />
+   
     <!-- App favicon -->
     <link rel="shortcut icon" href="~/images/favicon.ico">
     <!-- jsvectormap css -->
-    <link href="~/libs/jsvectormap/css/jsvectormap.min.css" rel="stylesheet" type="text/css" />
+    @*<link href="~/libs/jsvectormap/css/jsvectormap.min.css" rel="stylesheet" type="text/css" />*@
 
     <!--Swiper slider css-->
-    <link href="~/libs/swiper/swiper-bundle.min.css" rel="stylesheet" type="text/css" />
+    @*<link href="~/libs/swiper/swiper-bundle.min.css" rel="stylesheet" type="text/css" />*@
 
     <!-- Layout config Js -->
-    <script src="~/js/layout.js"></script>
+    @*<script src="~/js/layout.js"></script>*@
     <!-- Bootstrap Css -->
     <link href="~/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <!-- Icons Css -->
-    <link href="~/css/icons.min.css" rel="stylesheet" type="text/css" />
+    @*<link href="~/css/icons.min.css" rel="stylesheet" type="text/css" />*@
     <!-- App Css-->
-    <link href="~/css/app.min.css" rel="stylesheet" type="text/css" />
+    @*<link href="~/css/app.min.css" rel="stylesheet" type="text/css" />*@
     <!-- custom Css-->
-    <link href="~/css/custom.min.css" rel="stylesheet" type="text/css" />
-    <link href="_content/Syncfusion.Blazor.Themes/bootstrap5.css" rel="stylesheet" />
-    <script src="_content/Syncfusion.Blazor.Core/scripts/syncfusion-blazor.min.js" type="text/javascript"></script>
+    @*<link href="~/css/custom.min.css" rel="stylesheet" type="text/css" />*@
+    @*<link href="_content/Syncfusion.Blazor.Themes/bootstrap5.css" rel="stylesheet" />
+    <script src="_content/Syncfusion.Blazor.Core/scripts/syncfusion-blazor.min.js" type="text/javascript"></script>*@
 
 </head>
 <body>
-   @* <form method="post">
+    @*<form method="post">
         <input type="hidden" name="GridHtml" />
         <input type="submit" id="btnSubmit" value="Export" asp-page-handler="Export" />
     </form>*@
     <div id="Grid">
+        @*<table style="border:1px solid black;">
+            <tr>
+                <td>
+                    <table style="font-size: 10px;">
+                        <tr>
+                            <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top; font-weight: bold;">Co. Name</td>
+                            <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top;">NIGER DELTA DEVELOPMENT <br /> COMMISSION</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top; font-weight: bold;">Emp Code</td>
+                            <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top;">@Model.MyPayslip.EmployeeCode</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top; font-weight: bold;">Emp Name</td>
+                            <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top;">@Model.MyPayslip.FirstName @Model.MyPayslip.LastName</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; padding-right: 10px; vertical-align: top; font-weight: bold;">Emp Address</td>
+                            <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top;">Eastern Byepass, Marine Base <br /> Port Harcourt <br />084</td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table style="font-size: 10px;">
+                        <tr>
+                            <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top; font-weight: bold;">Co. Name</td>
+                            <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top;">NIGER DELTA DEVELOPMENT <br /> COMMISSION</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top; font-weight: bold;">Emp Code</td>
+                            <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top;">@Model.MyPayslip.EmployeeCode</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top; font-weight: bold;">Emp Name</td>
+                            <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top;">@Model.MyPayslip.FirstName @Model.MyPayslip.LastName</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; padding-right: 10px; vertical-align: top; font-weight: bold;">Emp Address</td>
+                            <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top;">Eastern Byepass, Marine Base <br /> Port Harcourt <br />084</td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table style="font-size: 10px;">
+                        <tr>
+                            <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top; font-weight: bold;">Co. Name</td>
+                            <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top;">NIGER DELTA DEVELOPMENT <br /> COMMISSION</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top; font-weight: bold;">Emp Code</td>
+                            <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top;">@Model.MyPayslip.EmployeeCode</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top; font-weight: bold;">Emp Name</td>
+                            <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top;">@Model.MyPayslip.FirstName @Model.MyPayslip.LastName</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; padding-right: 10px; vertical-align: top; font-weight: bold;">Emp Address</td>
+                            <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top;">Eastern Byepass, Marine Base <br /> Port Harcourt <br />084</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>*@
         <div class="row">
         <div class="col-lg-6">
             <div class="card">
@@ -51,6 +116,7 @@
                 <div class="card-body">
                     <div class="row" style="border:1px solid black;">
                         <div class="col-4">
+                            
                             <table style="font-size: 10px;">
                                 <tr>
                                     <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top; font-weight: bold;">Co. Name</td>

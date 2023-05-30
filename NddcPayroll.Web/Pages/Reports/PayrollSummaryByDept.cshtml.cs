@@ -27,23 +27,23 @@ namespace NddcPayroll.Web.Pages.Reports
 
         public IActionResult OnPostAsync()
         {
-            string cookieName = ".AspNetCore.Identity.Application";
-            //Get cookie value from HttpRequest object for the requested page.
-            string cookieValue = string.Empty;
-            if (Request.Cookies[cookieName] != null)
-            {
-                cookieValue = Request.Cookies[cookieName];
-            }
+            //string cookieName = ".AspNetCore.Identity.Application";
+            ////Get cookie value from HttpRequest object for the requested page.
+            //string cookieValue = string.Empty;
+            //if (Request.Cookies[cookieName] != null)
+            //{
+            //    cookieValue = Request.Cookies[cookieName];
+            //}
 
             //Initialize the HTML to PDF converter with the Blink rendering engine.
             HtmlToPdfConverter htmlConverter = new HtmlToPdfConverter();
 
             BlinkConverterSettings blinkConverterSettings = new BlinkConverterSettings();
 
-            blinkConverterSettings.ViewPortSize = new Syncfusion.Drawing.Size(1440, 0);
+            blinkConverterSettings.ViewPortSize = new Syncfusion.Drawing.Size(800, 0);
 
             //Add cookies as name and value pair.
-            blinkConverterSettings.Cookies.Add(cookieName, cookieValue);
+            //blinkConverterSettings.Cookies.Add(cookieName, cookieValue);
 
             //Assign Blink converter settings to HTML converter.
             htmlConverter.ConverterSettings = blinkConverterSettings;

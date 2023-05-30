@@ -608,6 +608,11 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
             decimal totalEarnings = db.LoadData<decimal, dynamic>("select sum(BasicSalary + MedicalAllow + TransportAllow + HousingAllow + FurnitureAllow + MealAllow + UtilityAllow + EducationAllow + SecurityAllow + DomesticServantAllow + DriverAllow + VehicleAllow + EntertainmentAllow + NewspaperAllow + HazardAllow + SecretarialAllow + LeaveAllow + ActingAllow + ShiftAllow + UniformAllow) from employees where EmployeeCode = @EmployeeCode",
                 new { EmployeeCode = empCode }, connectionStringName, false).FirstOrDefault();
 
+            int empId = db.LoadData<int, dynamic>("Select Id From Employees Where EmployeeCode = @EmployeeCode", new { EmployeeCode = empCode }, connectionStringName, false).First();
+            
+            decimal tax = GetPAYEAmount(empId);
+            db.SaveData("Update Employees Set Tax = @Tax Where EmployeeCode = @EmployeeCode", new { Tax = tax, EmployeeCode = empCode }, connectionStringName, false);
+
             decimal totalDeductions = db.LoadData<decimal, dynamic>("select sum(Tax + VoluntaryPension + CooperativeDed + Pension + JSA + SSA + NHF) from Employees where EmployeeCode = @EmployeeCode",
                 new { EmployeeCode = empCode }, connectionStringName, false).FirstOrDefault();
 

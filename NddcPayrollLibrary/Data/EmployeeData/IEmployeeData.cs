@@ -36,5 +36,6 @@ namespace NddcPayrollLibrary.Data.EmployeeData
         void UpdateAnalysisDetails(int JobTitleId, int DeptId, string Paypoint, int EmpId);
         MyPaySlipModel GetEmployeePaySlip(int empId, int payrollJournalId);
         List<MyPaySlipModel> GetEmployeePaySlipByDept(int departmentId, int payrollJournalId);
+        void UpdateLeaveAllowance(string EmployeeCode, double leaveAllowance);
     }
 }

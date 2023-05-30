@@ -1,0 +1,417 @@
+﻿@model NddcPayroll.Web.Pages.testModel
+@using NddcPayrollLibrary.Model
+@*@{
+}*@
+
+<!DOCTYPE html>
+<html>
+<head>
+    @*<meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - NDDC Payroll</title>*@
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WebTemplateTheme.styles.css" asp-append-version="true" />
+
+
+   
+
+</head>
+<body>
+    <h3 style="font-weight:bold">PAYROLL SUMMARY BY DEPARTMENT</h3>
+    <br />
+    <h5>001 NIGER DELTA DEVELOPMENT COMMISSION</h5>
+    <P>Period Ending: 2023/05/31</P>
+    <br />
+    @foreach (var item in Model.PayrollSumList)
+    {
+        
+        <table class="table table-bordered table-success">
+            <tr>
+                <td><b>Department: @item.DepartmentName</b> </td>
+            </tr>
+        </table>
+        @*<div><b>Department: @item.DepartmentName</b></div>*@
+        <!-- Bordered Tables -->
+        <table class="table table-bordered table-nowrap">
+            <thead class="table-success">
+                <tr>
+                    <th scope="col">Earning</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Deduction</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">CC Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">Basic Salary</th>
+                    <td>@string.Format("{0:N}", item.BasicSalary)</td>
+                    <td class="fw-bold">Tax</td>
+                    <td>@string.Format("{0:N}", @item.Tax)</td>
+                    <td>-</td>
+
+                </tr>
+                <tr>
+                    <th scope="row">Transport Allowance</th>
+                    <td>@string.Format("{0:N}", @item.TransportAllow)</td>
+                    <td class="fw-bold">Nat. Housing Fund</td>
+                    <td>@string.Format("{0:N}", @item.NHF)</td>
+                    <td>-</td>
+
+                </tr>
+                <tr>
+                    <th scope="row">Meal Allowance</th>
+                    <td>@string.Format("{0:N}", @item.MealAllow)</td>
+                    <td class="fw-bold">Pension</td>
+                    <td>@string.Format("{0:N}", @item.Pension)</td>
+                    <td>@string.Format("{0:N}", @item.CooporativeDed)</td>
+
+                </tr>
+                <tr>
+                    <th scope="row">Utility Allowance</th>
+                    <td>@string.Format("{0:N}", @item.UtilityAllow)</td>
+                    <td class="fw-bold">NDDC AUPTRE JSA</td>
+                    <td>@string.Format("{0:N}", @item.JSA)</td>
+                    <td>-</td>
+
+                </tr>
+                <tr>
+                    <th scope="row">Education Allowance</th>
+                    <td>@string.Format("{0:N}", @item.EducationAllow)</td>
+                    <td class="fw-bold">Cooporative</td>
+                    <td>@string.Format("{0:N}", @item.CooporativeDed)</td>
+                    <td>-</td>
+
+                </tr>
+                <tr>
+                    <th scope="row">Security Allowance</th>
+                    <td>@string.Format("{0:N}", @item.SecurityAllow)</td>
+                    <td class="fw-bold">NDDC AUPTRE SSA</td>
+                    <td>@string.Format("{0:N}", @item.SSA)</td>
+                    <td>-</td>
+
+                </tr>
+                <tr>
+                    <th scope="row">Domestic Servant</th>
+                    <td>@string.Format("{0:N}", @item.DomesticServantAllow)</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+                <tr>
+                    <th scope="row">Medical Allowance</th>
+                    <td>@string.Format("{0:N}", @item.MedicalAllow)</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+                <tr>
+                    <th scope="row">Driver's Allowance</th>
+                    <td>@string.Format("{0:N}", @item.DriverAllow)</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+                <tr>
+                    <th scope="row">Vehicle Maintenance</th>
+                    <td>@string.Format("{0:N}", @item.VehicleAllow)</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+                <tr>
+                    <th scope="row">Hazard Allowance</th>
+                    <td>@string.Format("{0:N}", @item.HazardAllow)</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+                <tr>
+                    <th scope="row" class="fw-bold">Shift Allowance</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+                <tr>
+                    <th scope="row" class="fw-bold">Secretarial Allowance</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+                <tr>
+                    <th scope="row"></th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+                <tr>
+                    <th scope="row" class="fw-bold">Totals</th>
+                    <td class="fw-bold">@string.Format("{0:N}", item.TotalEarnings)</td>
+                    <td></td>
+                    <td class="fw-bold">@string.Format("{0:N}", item.TotalDeductions)</td>
+                    <td></td>
+
+                </tr>
+                <tr>
+                    <th scope="row"></th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+                <tr>
+                    <th scope="row" class="fw-bold">Net Pay</th>
+                    <td class="fw-bold">@string.Format("{0:N}", item.NetPay)</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+                <tr>
+                    <th scope="row"></th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+                <tr>
+                    <th scope="row" class="fw-bold">Salary Cost</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+                <tr>
+                    <th scope="row"></th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+                <tr>
+                    <th scope="row" class="fw-bold">Employee Count</th>
+                    <td class="fw-bold">@item.EmployeeCount</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+            </tbody>
+        </table>
+
+        <div style="page-break-after:always"></div>
+        
+    }
+
+
+
+    @foreach (var item in Model.PayrollTotals)
+    {
+        <table class="table table-bordered table-success">
+            <tr>
+                <td><b>Department: Grand Total</b> </td>
+            </tr>
+        </table>
+        <!-- Bordered Tables -->
+        <table class="table table-bordered table-nowrap">
+            <thead class="table-success">
+                <tr>
+                    <th scope="col">Earning</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Deduction</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">CC Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">Basic Salary</th>
+                    <td>@string.Format("{0:N}", item.BasicSalary)</td>
+                    <td class="fw-bold">Tax</td>
+                    <td>@string.Format("{0:N}", @item.Tax)</td>
+                    <td>-</td>
+
+                </tr>
+                <tr>
+                    <th scope="row">Transport Allowance</th>
+                    <td>@string.Format("{0:N}", @item.TransportAllow)</td>
+                    <td class="fw-bold">Nat. Housing Fund</td>
+                    <td>@string.Format("{0:N}", @item.NHF)</td>
+                    <td>-</td>
+
+                </tr>
+                <tr>
+                    <th scope="row">Meal Allowance</th>
+                    <td>@string.Format("{0:N}", @item.MealAllow)</td>
+                    <td class="fw-bold">Pension</td>
+                    <td>@string.Format("{0:N}", @item.Pension)</td>
+                    <td>@string.Format("{0:N}", @item.CooporativeDed)</td>
+
+                </tr>
+                <tr>
+                    <th scope="row">Utility Allowance</th>
+                    <td>@string.Format("{0:N}", @item.UtilityAllow)</td>
+                    <td class="fw-bold">NDDC AUPTRE JSA</td>
+                    <td>@string.Format("{0:N}", @item.JSA)</td>
+                    <td>-</td>
+
+                </tr>
+                <tr>
+                    <th scope="row">Education Allowance</th>
+                    <td>@string.Format("{0:N}", @item.EducationAllow)</td>
+                    <td class="fw-bold">Cooporative</td>
+                    <td>@string.Format("{0:N}", @item.CooporativeDed)</td>
+                    <td>-</td>
+
+                </tr>
+                <tr>
+                    <th scope="row">Security Allowance</th>
+                    <td>@string.Format("{0:N}", @item.SecurityAllow)</td>
+                    <td class="fw-bold">NDDC AUPTRE SSA</td>
+                    <td>@string.Format("{0:N}", @item.SSA)</td>
+                    <td>-</td>
+
+                </tr>
+                <tr>
+                    <th scope="row">Domestic Servant</th>
+                    <td>@string.Format("{0:N}", @item.DomesticServantAllow)</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+                <tr>
+                    <th scope="row">Medical Allowance</th>
+                    <td>@string.Format("{0:N}", @item.MedicalAllow)</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+                <tr>
+                    <th scope="row">Driver's Allowance</th>
+                    <td>@string.Format("{0:N}", @item.DriverAllow)</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+                <tr>
+                    <th scope="row">Vehicle Maintenance</th>
+                    <td>@string.Format("{0:N}", @item.VehicleAllow)</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+                <tr>
+                    <th scope="row">Hazard Allowance</th>
+                    <td>@string.Format("{0:N}", @item.HazardAllow)</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+                <tr>
+                    <th scope="row" class="fw-bold">Shift Allowance</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+                <tr>
+                    <th scope="row" class="fw-bold">Secretarial Allowance</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+                <tr>
+                    <th scope="row"></th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+                <tr>
+                    <th scope="row" class="fw-bold">Totals</th>
+                    <td class="fw-bold">@string.Format("{0:N}", item.TotalEarnings)</td>
+                    <td></td>
+                    <td class="fw-bold">@string.Format("{0:N}", item.TotalDeductions)</td>
+                    <td></td>
+
+                </tr>
+                <tr>
+                    <th scope="row"></th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+                <tr>
+                    <th scope="row" class="fw-bold">Net Pay</th>
+                    <td class="fw-bold">@string.Format("{0:N}", item.NetPay)</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+                <tr>
+                    <th scope="row"></th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+                <tr>
+                    <th scope="row" class="fw-bold">Salary Cost</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+                <tr>
+                    <th scope="row"></th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+                <tr>
+                    <th scope="row" class="fw-bold">Employee Count</th>
+                    <td class="fw-bold">@item.EmployeeCount</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+            </tbody>
+        </table>
+
+
+    }
+</body>
+</html>

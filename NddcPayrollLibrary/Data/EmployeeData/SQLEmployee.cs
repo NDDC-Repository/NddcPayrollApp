@@ -308,6 +308,21 @@ namespace NddcPayrollLibrary.Data.EmployeeData
 
 
         }
+        public void UpdateLeaveAllowance(string EmployeeCode, double leaveAllowance)
+        {
+
+            string SQL = "Update Employees Set LeaveAllow = @LeaveAllow where EmployeeCode = @EmployeeCode";
+
+            db.SaveData(SQL,
+               new
+               {
+                   LeaveAllow = leaveAllowance,
+                   EmployeeCode = EmployeeCode
+               },
+                connectionStringName, false);
+
+
+        }
         public void UpdateNhf(string EmployeeCode, double nhfAmount)
         {
 
