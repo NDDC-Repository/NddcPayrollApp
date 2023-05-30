@@ -1,0 +1,34 @@
+﻿@font-face {
+  font-family: "Open Sans";
+  src: url(../fonts/OpenSans-Regular.ttf) format("truetype"),
+      url(../fonts/OpenSans-Bold.ttf) format("truetype");
+}
+
+body {
+  font-family: "Open Sans";
+  font-size:0.9rem;
+}
+
+h1, h2, h3, h4 {
+  font-weight:normal;
+}
+
+table {
+    page-break-inside: auto;
+}
+
+tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+}
+
+thead {
+    display: table-header-group;
+}
+
+tfoot {
+    display: table-footer-group;
+}
+.align-center{
+    text-align:center;
+}

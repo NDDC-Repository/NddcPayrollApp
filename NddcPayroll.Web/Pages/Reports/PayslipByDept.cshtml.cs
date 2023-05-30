@@ -13,6 +13,7 @@ using iText.Html2pdf;
 using iText.IO.Source;
 using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
+using Org.BouncyCastle.Ocsp;
 
 namespace NddcPayroll.Web.Pages.Reports
 {
@@ -43,12 +44,16 @@ namespace NddcPayroll.Web.Pages.Reports
             JournalTitles = payJoDb.GetPayrollJournalTitles();
             Departments = compDb.GetAllDepartments();
         }
-        public void OnPost()
+        public IActionResult OnPost()
         {
-            PaySlips = empDb.GetEmployeePaySlipByDept(DepartmentId, PayrollJournalTitleId);
+            //PaySlips = empDb.GetEmployeePaySlipByDept(DepartmentId, PayrollJournalTitleId);
 
-            JournalTitles = payJoDb.GetPayrollJournalTitles();
-            Departments = compDb.GetAllDepartments();
+            //JournalTitles = payJoDb.GetPayrollJournalTitles();
+            //Departments = compDb.GetAllDepartments();
+
+            //return RedirectToAction($"/payslipdept", new { departmentId = DepartmentId, payrollJournalTitleId = PayrollJournalTitleId });
+
+            return RedirectToPage($"/payslipdept", new { handler = "ReportFromPartial", departmentId = DepartmentId, payrollJournalTitleId = PayrollJournalTitleId });
         }
 
         public FileResult OnPostExport(string GridHtml)

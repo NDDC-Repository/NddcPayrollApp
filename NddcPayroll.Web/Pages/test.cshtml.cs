@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using NddcPayroll.Web.Renderers;
 using NddcPayrollLibrary.Data.Reports;
 using NddcPayrollLibrary.Model.Report;
+using Syncfusion.Blazor.Charts.Chart.Internal;
 using System.Net.Mime;
 
 namespace NddcPayroll.Web.Pages
@@ -23,6 +24,8 @@ namespace NddcPayroll.Web.Pages
         string BaseHref => $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
         public async Task<FileResult> OnGetReportFromPartialAsync()
         {
+            string printDate = DateTime.Now.ToString();
+
             PayrollSumList = await Task.Run(() => repDb.GetPayrollSummaryByDeptReportAsync());
             PayrollTotals = await Task.Run(() => repDb.GetPayrollTotalsReportAsync());
             var html = await renderer.RenderPartialToStringAsync("_PayrollSummaryRpt", this);
@@ -30,7 +33,7 @@ namespace NddcPayroll.Web.Pages
             converterProperties.SetBaseUri(BaseHref);
             using var stream = new MemoryStream();
             HtmlConverter.ConvertToPdf(html, stream, converterProperties);
-            return File(stream.ToArray(), MediaTypeNames.Application.Pdf, "Reorder Report (iText).pdf");
+            return File(stream.ToArray(), MediaTypeNames.Application.Pdf, $"PayrollByDept-{printDate}.pdf");
         }
     }
 }

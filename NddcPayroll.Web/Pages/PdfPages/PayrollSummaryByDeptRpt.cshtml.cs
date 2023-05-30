@@ -26,6 +26,8 @@ namespace NddcPayroll.Web.Pages.PdfPages
         string BaseHref => $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
         public async Task<FileResult> OnGetReportFromPartialAsync()
         {
+            string printDate = DateTime.Now.ToString();
+
             PayrollSumList = await Task.Run(() => repDb.GetPayrollSummaryByDeptReportAsync());
             PayrollTotals = await Task.Run(() => repDb.GetPayrollTotalsReportAsync());
             var html = await renderer.RenderPartialToStringAsync("_PayrollSummaryRpt", this);
@@ -33,7 +35,7 @@ namespace NddcPayroll.Web.Pages.PdfPages
             converterProperties.SetBaseUri(BaseHref);
             using var stream = new MemoryStream();
             HtmlConverter.ConvertToPdf(html, stream, converterProperties);
-            return File(stream.ToArray(), MediaTypeNames.Application.Pdf, "Reorder Report (iText).pdf");
+            return File(stream.ToArray(), MediaTypeNames.Application.Pdf, $"PayrollByDept-{printDate}.pdf");
         }
     }
 }
