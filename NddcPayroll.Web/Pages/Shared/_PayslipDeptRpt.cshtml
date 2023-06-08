@@ -19,37 +19,47 @@
 
 </head>
 <body>
+    <style>
+        table {
+            font-family: Courier, monospace;
+            width: 100%;
+        }
+
+        td {
+            text-align: left;
+        }
+    </style>
     @*<h3 style="font-weight:bold">PAYROLL SUMMARY BY DEPARTMENT</h3>
     <br />
     <h5>001 NIGER DELTA DEVELOPMENT COMMISSION</h5>
     <P>Period Ending: 2023/05/31</P>
     <br />*@
 
-   @* @{
+    @{
         int r = 0;
-    }*@
+    }
 
     @foreach (var item in Model.PaySlips)
     {
-        @*r = r + 1;*@
+        r = r + 1;
         <div class="row" style="border:1px solid black;">
             <div class="col-4">
                 <table style="font-size: 10px;">
                     <tr>
-                        <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top; font-weight: bold;">Co. Name</td>
-                        <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top;">NIGER DELTA DEVELOPMENT <br /> COMMISSION</td>
+                        <td style="text-align: left; margin: 0 0 0 0px; vertical-align: top; font-weight: bold;">Co. Name</td>
+                        <td style="text-align: left; margin: 0 0 0 0px; vertical-align: top;">NIGER DELTA DEVELOPMENT <br /> COMMISSION</td>
                     </tr>
                     <tr>
-                        <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top; font-weight: bold;">Emp Code</td>
-                        <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top;">@item.EmployeeCode</td>
+                        <td style="text-align: left; margin: 0 0 0 0px; vertical-align: top; font-weight: bold;">Emp Code</td>
+                        <td style="text-align: left; margin: 0 0 0 0px; vertical-align: top;">@item.EmployeeCode</td>
                     </tr>
                     <tr>
-                        <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top; font-weight: bold;">Emp Name</td>
-                        <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top;">@item.FirstName @item.LastName</td>
+                        <td style="text-align: left; margin: 0 0 0 0px; vertical-align: top; font-weight: bold;">Emp Name</td>
+                        <td style="text-align: left; margin: 0 0 0 0px; vertical-align: top;">@item.FirstName @item.LastName</td>
                     </tr>
                     <tr>
                         <td style="text-align: left; padding-right: 10px; vertical-align: top; font-weight: bold;">Emp Address</td>
-                        <td style="text-align: left; margin: 0 0 0 1px; vertical-align: top;">Eastern Byepass, Marine Base <br /> Port Harcourt, 084</td>
+                        <td style="text-align: left; margin: 0 0 0 0px; vertical-align: top;">Eastern Byepass, Marine Base <br /> Port Harcourt, 084</td>
                     </tr>
                 </table>
             </div>
@@ -98,12 +108,12 @@
 
         <div class="row">
             <div class="col-6" style="border:1px solid black;">
-                <p style="text-align: center; vertical-align: top; font-size: 12px; font-weight: bold;">EARNINGS</p>
+                <div style="text-align: center; vertical-align: top; font-size: 12px; font-weight: bold;">EARNINGS</div>
                 <table style="font-size: 10px;">
                     <thead>
                         <tr>
-                            <td width="300"><b>Description</b></td>
-                            <td width="200"><b>Hrs/Unit</b></td>
+                            <td width="400"><b>Description</b></td>
+                            <td width="100"><b>Hrs/Unit</b></td>
                             <td width="200"><b>Amount</b></td>
                         </tr>
                     </thead>
@@ -212,6 +222,46 @@
                                 <td>@string.Format("{0:N}", item.HazardAllow)</td>
                             </tr>
                         }
+                        @if (item.LeaveAllow > 0)
+                        {
+                            <tr>
+                                <td>Leave Allowance</td>
+                                <td></td>
+                                <td>@string.Format("{0:N}", item.LeaveAllow)</td>
+                            </tr>
+                        }
+                         @if (item.SecretarialAllow > 0)
+                        {
+                            <tr>
+                                <td>Secretarial Allowance</td>
+                                <td></td>
+                                <td>@string.Format("{0:N}", item.SecretarialAllow)</td>
+                            </tr>
+                        }
+                        @if (item.ActingAllow > 0)
+                        {
+                            <tr>
+                                <td>Acting Allowance</td>
+                                <td></td>
+                                <td>@string.Format("{0:N}", item.ActingAllow)</td>
+                            </tr>
+                        }
+                        @if (item.ShiftAllow > 0)
+                        {
+                            <tr>
+                                <td>Shift Allowance</td>
+                                <td></td>
+                                <td>@string.Format("{0:N}", item.ShiftAllow)</td>
+                            </tr>
+                        }
+                        @if (item.UniformAllow > 0)
+                        {
+                            <tr>
+                                <td>Uniform Allowance</td>
+                                <td></td>
+                                <td>@string.Format("{0:N}", item.UniformAllow)</td>
+                            </tr>
+                        }
                         @if (item.EntertainmentAllow > 0)
                         {
                             <tr>
@@ -238,7 +288,7 @@
                 </table>
             </div>
             <div class="col-6" style="border:1px solid black;">
-                <p style="text-align: center; vertical-align: top; font-size: 12px; font-weight: bold;">DEDUCTIONS</p>
+                <div style="text-align: center; vertical-align: top; font-size: 12px; font-weight: bold;">DEDUCTIONS</div>
                 <table style="font-size: 10px;">
                     <thead style="font-weight: bold;">
                         <tr>
@@ -332,10 +382,10 @@
             </div>
         </div>
 
-        @*if (r % 2 == 0)
+        if (r % 2 == 0)
         {
             <div style="page-break-after:always"></div>
-        }*@
+        }
     }
 </body>
 </html>

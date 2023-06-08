@@ -33,7 +33,11 @@ namespace NddcPayrollLibrary.Model.Employee
         public decimal SecurityAllow { get; set; }
         public decimal DomesticServantAllow { get; set; }
         public decimal DriverAllow { get; set; }
-
+        public decimal LeaveAllow { get; set; }
+        public decimal SecretarialAllow { get; set; }
+        public decimal ActingAllow { get; set; }
+        public decimal ShiftAllow { get; set; }
+        public decimal UniformAllow { get; set; }
         public decimal Tax { get; set; }
         public decimal NHF { get; set; }
         public decimal Pension { get; set; }

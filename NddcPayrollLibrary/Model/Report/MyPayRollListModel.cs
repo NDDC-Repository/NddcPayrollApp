@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Security.Principal;
 using System.Text;
@@ -9,14 +10,22 @@ namespace NddcPayrollLibrary.Model.Report
 {
     public class MyPayRollListModel
     {
+        [DisplayNameAttribute("S/N")]
         public int SrNo { get; set; }
+        [Bindable(false)]
         public int Id { get; set; }
+        [DisplayNameAttribute("Department")]
         public string DepartmentName { get; set; }
         public string Category { get; set; }
+        [DisplayNameAttribute("Job Grade")]
         public string GradeLevel { get; set; }
+        [DisplayNameAttribute("Employee Code")]
         public string EmployeeCode { get; set; }
+        [DisplayNameAttribute("Last Name")]
         public string LastName { get; set; }
+        [DisplayNameAttribute("First Name")]
         public string FirstName { get; set; }
+        [DisplayNameAttribute("Basic Salary")]
         public decimal BasicSalary { get; set; }
         public decimal TransportAllowance { get; set; }
         public decimal HousingAllowance { get; set; }

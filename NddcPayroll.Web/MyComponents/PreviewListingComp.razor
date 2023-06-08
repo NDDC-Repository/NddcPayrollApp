@@ -2,7 +2,10 @@
 @using Syncfusion.Blazor.Grids
 @using NddcPayrollLibrary.Data.Reports;
 @using NddcPayrollLibrary.Model.Report;
+@using Syncfusion.XlsIO;
 @inject IReportsData db;
+@using System.IO;
+@inject Microsoft.JSInterop.IJSRuntime JS
 
 <div class="card">
     <div class="card-body">
@@ -18,6 +21,8 @@
             <div class="col-sm-auto ms-auto">
                 <div class="list-grid-nav hstack gap-1">
                     <button @onclick="GenerateReport" class="btn btn-primary addMembers-modal"><i class="ri-profile-line me-1 align-bottom"></i> Preview Listing</button>
+                    <button @onclick="ExcelExport" class="btn btn-primary addMembers-modal"><i class="ri-profile-line me-1 align-bottom"></i> Export To Excel</button>
+                    
                     @*<button type="button" id="dropdownMenuLink1" data-bs-toggle="dropdown" aria-expanded="false" class="btn btn-soft-info btn-icon fs-14"><i class="ri-more-2-fill"></i></button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink1" style="">
                         <li><a class="dropdown-item" href="#">Save Report</a></li>
@@ -427,6 +432,29 @@ else if (ShowGrid == true)
         OpsTime = watch.ElapsedMilliseconds / 1000;
         ShowAnim = false;
         ShowGrid = true;
+    }
+
+    private async Task ExcelExport()
+    {
+        using (ExcelEngine excelEngine = new ExcelEngine())
+        {
+            IApplication application = excelEngine.Excel;
+            application.DefaultVersion = ExcelVersion.Excel2013;
+            IWorkbook workbook = application.Workbooks.Create(1);
+            IWorksheet worksheet = workbook.Worksheets[0];
+
+            //Import the data to worksheet
+            PayrollList = await Task.Run(() => db.GetPayrollListReport2Async());
+            worksheet.ImportData(PayrollList, 2, 1, false);
+
+            //Saving the workbook as stream
+            FileStream stream = new FileStream("ImportFromDT.xlsx", FileMode.Create, FileAccess.ReadWrite);
+            //workbook.SaveAs(stream);
+
+            await JS.InvokeVoidAsync("downloadFileFromStream", "test.xlsx", stream);
+            
+            stream.Dispose();
+        }
     }
 
 }
