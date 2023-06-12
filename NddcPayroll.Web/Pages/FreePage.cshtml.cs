@@ -86,8 +86,11 @@ namespace NddcPayroll.Web.Pages
 
                 int mCount = PayrollList.Count();
 
-                worksheet[$"C{mCount + 8}"].Text = "Totals";
-                worksheet.Range[$"C{mCount + 8}"].CellStyle.Font.Bold = true;
+                worksheet[$"B{mCount + 8}"].Text = "Totals";
+                worksheet[$"B{mCount + 8}"].CellStyle.Font.Bold = true;
+                worksheet.Range[$"H{mCount + 8}"].Formula = "=SUM(H7:H" + (mCount + 7) + ")";
+
+                worksheet.Columns[7].NumberFormat = "#,###.##";
 
                 worksheet.Range["A7"].FreezePanes();
 

@@ -12,8 +12,6 @@ namespace NddcPayrollLibrary.Model.Report
     {
         [DisplayNameAttribute("S/N")]
         public int SrNo { get; set; }
-        [Bindable(false)]
-        public int Id { get; set; }
         [DisplayNameAttribute("Department")]
         public string DepartmentName { get; set; }
         public string Category { get; set; }
@@ -21,42 +19,80 @@ namespace NddcPayrollLibrary.Model.Report
         public string GradeLevel { get; set; }
         [DisplayNameAttribute("Employee Code")]
         public string EmployeeCode { get; set; }
-        [DisplayNameAttribute("Last Name")]
+        [DisplayNameAttribute("Surname         ")]
         public string LastName { get; set; }
-        [DisplayNameAttribute("First Name")]
+        [DisplayNameAttribute("Full Names            ")]
         public string FirstName { get; set; }
-        [DisplayNameAttribute("Basic Salary")]
+        
+        [DisplayNameAttribute("ED-Basic Salary  ")]
         public decimal BasicSalary { get; set; }
-        public decimal TransportAllowance { get; set; }
-        public decimal HousingAllowance { get; set; }
-        public decimal FurnitureAllowance { get; set; }
-        public decimal MealAllowance { get; set; }
-        public decimal UtilityAllowance { get; set; }
-        public decimal EducationAllowance { get; set; }
-        public decimal SecurityAllowance { get; set; }
-        public decimal DomesticServantAllowance { get; set; }
-        public decimal MedicalAllowance { get; set; }
-        public decimal DriversAllowance { get; set; }
-        public decimal VehicleMaintenanceAllowance { get; set; }
-        public decimal HazardAllowance { get; set; }
-        public decimal TaxDeduction { get; set; }
-        public decimal NHFDeduction { get; set; }
-        public decimal PensionDeduction { get; set; }
-        public decimal JSADeduction { get; set; }
-        public decimal SSADeduction { get; set; }
-        public decimal TotalEarnings { get; set; }
-        public decimal TotalDeductions { get; set; }
-        public decimal NetPay { get; set; }
-        public string BankCode { get; set; }
-        public string AccountNumber { get; set; }
-        public string BankName { get; set; }
-        public decimal SecretarialAllow { get; set; }
-        public decimal CooperativeDed { get; set; }
-        public decimal VoluntaryPension { get; set; }
-        public decimal EntertainmentAllow { get; set; }
-        public decimal NewspaperAllow { get; set; }
+        [DisplayNameAttribute("ED-Salary Arreas  ")]
         public decimal Arreas { get; set; }
-        public decimal LeaveAllow { get; set; } 
+        [DisplayNameAttribute("ED-Leave Allowance  ")]
+        public decimal LeaveAllow { get; set; }
+        [Bindable(false)]
+        public int Id { get; set; }
+        [DisplayNameAttribute("ED-Transport Allow")]
+        public decimal TransportAllowance { get; set; }
+        [DisplayNameAttribute("ED-Housing Allow")]
+        public decimal HousingAllowance { get; set; }
+        [DisplayNameAttribute("ED-Furniture Allow")]
+        public decimal FurnitureAllowance { get; set; }
+        [DisplayNameAttribute("ED-Meal Allow")]
+        public decimal MealAllowance { get; set; }
+        [DisplayNameAttribute("ED-Utility Allow")]
+        public decimal UtilityAllowance { get; set; }
+        [DisplayNameAttribute("ED-Education Allow")]
+        public decimal EducationAllowance { get; set; }
+        [DisplayNameAttribute("ED-Security Allow")]
+        public decimal SecurityAllowance { get; set; }
+        [DisplayNameAttribute("ED-Domestic Servan")]
+        public decimal DomesticServantAllowance { get; set; }
+        [DisplayNameAttribute("ED-Medical Allow")]
+        public decimal MedicalAllowance { get; set; }
+        [DisplayNameAttribute("ED-Driver's Allow")]
+        public decimal DriversAllowance { get; set; }
+        [DisplayNameAttribute("ED-Vehicle Mainten")]
+        public decimal VehicleMaintenanceAllowance { get; set; }
+        [DisplayNameAttribute("ED-Hazard Allow")]
+        public decimal HazardAllowance { get; set; }
+        [DisplayNameAttribute("ED-Entertainment")]
+        public decimal EntertainmentAllow { get; set; }
+        [DisplayNameAttribute("ED-Newspaper")]
+        public decimal NewspaperAllow { get; set; }
+        [DisplayNameAttribute("ED-Secretarial Alw")]
+        public decimal SecretarialAllow { get; set; }
+        [DisplayNameAttribute("DD-Tax           ")]
+        public decimal TaxDeduction { get; set; }
+        [DisplayNameAttribute("DD-Nat. HousingFund")]
+        public decimal NHFDeduction { get; set; }
+        [DisplayNameAttribute("DD-Pension      ")]
+        public decimal PensionDeduction { get; set; }
+        [DisplayNameAttribute("DD-Cooperative")]
+        public decimal CooperativeDed { get; set; }
+        [DisplayNameAttribute("DD-Voluntary Pens")]
+        public decimal VoluntaryPension { get; set; }
+        [DisplayNameAttribute("DD-NDDC AUPTRE JSA")]
+        public decimal JSADeduction { get; set; }
+        [DisplayNameAttribute("DD-NDDC AUPTRE SSA")]
+        public decimal SSADeduction { get; set; }
+        [DisplayNameAttribute("Total Earnings")]
+        public decimal TotalEarnings { get; set; }
+        [DisplayNameAttribute("Total Deductions")]
+        public decimal TotalDeductions { get; set; }
+        [DisplayNameAttribute("Net Pay          ")]
+        public decimal NetPay { get; set; }
+        [Bindable(false)]
+        public string BankCode { get; set; }
+        [Bindable(false)]
+        public string AccountNumber { get; set; }
+        [Bindable(false)]
+        public string BankName { get; set; }
+        
+       
+      
+        
+       
 
     }
 }

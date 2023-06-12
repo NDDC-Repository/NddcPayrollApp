@@ -16,5 +16,15 @@ namespace NddcPayrollLibrary.Model.Payroll
         public DateTime CurrentPeriod { get; set; }
         public DateTime DateCreated { get; set; }
         public string CreatedBy { get; set; }
+        private string myFullDesc;
+        public string FullDescription
+        {
+            get
+            {
+                myFullDesc = $"{JournalName} {MonthYear}";
+                return myFullDesc;
+            }
+
+        }
     }
 }

@@ -1,0 +1,54 @@
+﻿@page
+@model NddcPayroll.Web.Pages.Reports.PayrollListingsReportModel
+@{
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <h4 class="mb-sm-0">Starter</h4>
+
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li>
+                    <li class="breadcrumb-item active">Payroll Listings Report</li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<form method="post">
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card overflow-hidden">
+            <div class="card-body bg-marketplace d-flex">
+                <div class="flex-grow-1">
+                    <h4 class="fs-18 lh-base mb-0">Payroll Listings Report <br></h4>
+                    <p class="mb-0 mt-2 pt-1 text-muted">View Payroll Listings Report by Period</p>
+                    <div class="d-flex gap-3 mt-4 col-md-4">
+                        @*<select class="form-select" @bind="payrollJournalTitleId">
+                            <option selected-disabled="false" value="0">Select Payroll List</option>
+                            @foreach (var item in JournalTitles)
+                            {
+                                <option value="@item.Id">@item.JournalName - @item.MonthYear</option>
+                            }
+                        </select>*@
+                        <select class="form-select" asp-for="@Model.PayrollJournalTitleId" asp-items="@(new SelectList(Model.JournalTitles, "Id", "FullDescription"))">
+                            <option selected="">Choose...</option>
+                        </select>
+                    </div>
+                    <div class="d-flex gap-3 mt-4">
+                        
+                            <button type="submit" class="btn btn-primary">Export</button>
+                        
+                    </div>
+
+                </div>
+                <img src="assets/images/bg-d.png" alt="" class="img-fluid">
+            </div>
+        </div>
+    </div><!--end col-->
+</div>
+</form>
