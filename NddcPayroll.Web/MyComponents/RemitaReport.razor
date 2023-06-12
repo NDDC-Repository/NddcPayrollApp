@@ -56,6 +56,7 @@ else if (ShowGrid == true)
         <GridEvents OnToolbarClick="ToolbarBtnClickHandler" TValue="MyRemitaUploadModel"></GridEvents>
         <GridColumns>
             <GridColumn HeaderText="BANK CODE" Width="100" Field="@nameof(MyRemitaUploadModel.BankCode)"></GridColumn>
+            <GridColumn HeaderText="EMP CODE" Width="100" Field="@nameof(MyRemitaUploadModel.EmployeeCode)"></GridColumn>
             <GridColumn HeaderText="ACCOUNT NUMBER" Width="120" Field="@nameof(MyRemitaUploadModel.AccountNumber)"></GridColumn>
             <GridColumn HeaderText="ACCOUNT TYPE" Width="120" Field="@nameof(MyRemitaUploadModel.AccountType)"></GridColumn>
             <GridColumn HeaderText="PAYABLE AMOUNT" Width="150"  Format="N" Field="@nameof(MyRemitaUploadModel.PayableAmount)"></GridColumn>

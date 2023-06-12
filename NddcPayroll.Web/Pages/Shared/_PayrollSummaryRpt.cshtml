@@ -19,10 +19,11 @@
 
 </head>
 <body>
-    <div style="font-weight:bold; font-size:18px">PAYROLL SUMMARY BY DEPARTMENT</div>
+    <div style="font-weight:bold; font-size:16px">PAYROLL SUMMARY BY DEPARTMENT</div>
    <br />
-    <div style="font-weight:bold; font-size:16px">001 NIGER DELTA DEVELOPMENT COMMISSION</div>
-    <div style="font-size:14px">Period Ending: 2023/05/31</div>
+    <div style="font-weight:bold; font-size:14px">001 NIGER DELTA DEVELOPMENT COMMISSION</div>
+    <div style="font-size:14px">Period Ending: 30th @DateTime.Now.ToString("MMMM yyyy")</div>
+    <div style="font-size:14px">Printed on: @DateTime.Now.ToString()</div>
     <br />
     @foreach (var item in Model.PayrollSumList)
     {
@@ -34,7 +35,7 @@
         </table>
         @*<div><b>Department: @item.DepartmentName</b></div>*@
         <!-- Bordered Tables -->
-        <table class="table table-bordered table-nowrap">
+        <table class="table table-bordered table-nowrap" style="font-size:12px">
             <thead class="table-success">
                 <tr>
                     <th scope="col">Earning</th>
@@ -66,7 +67,7 @@
                     <td>@string.Format("{0:N}", @item.MealAllow)</td>
                     <td class="fw-bold">Pension</td>
                     <td>@string.Format("{0:N}", @item.Pension)</td>
-                    <td>@string.Format("{0:N}", @item.CooporativeDed)</td>
+                    <td>@string.Format("{0:N}", @item.EmployerPension)</td>
 
                 </tr>
                 <tr>
@@ -262,7 +263,7 @@
                     <td>@string.Format("{0:N}", @item.MealAllow)</td>
                     <td class="fw-bold">Pension</td>
                     <td>@string.Format("{0:N}", @item.Pension)</td>
-                    <td>@string.Format("{0:N}", @item.CooporativeDed)</td>
+                    <td>@string.Format("{0:N}", @item.EmployerPension)</td>
 
                 </tr>
                 <tr>

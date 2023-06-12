@@ -26,6 +26,7 @@ namespace NddcPayrollLibrary.Model.Report
         public decimal Tax { get; set; }
         public decimal NHF { get; set; }
         public decimal Pension { get; set; }
+        public decimal EmployerPension { get; set; }
         public decimal JSA { get; set; }
         public decimal SSA { get; set; }
         public decimal TotalEarnings { get; set; }

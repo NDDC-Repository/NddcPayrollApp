@@ -21,6 +21,8 @@ namespace NddcPayroll.Web.Pages.Reports
         public int PayrollJournalTitleId { get; set; }
         public List<MyPayrollJournalTitleModel> JournalTitles { get; set; }
         public List<MyPayRollListModel> PayrollListings { get; set; }
+        public List<PayrollListingModel2> PayrollListings2 { get; set; }
+
         public PayrollListingsReportModel(IPayrollJournalData payJor, IReportsData repDb, IHelperData helpDb)
         {
             this.payJor = payJor;
@@ -43,8 +45,11 @@ namespace NddcPayroll.Web.Pages.Reports
                 application.DefaultVersion = ExcelVersion.Xlsx;
 
                 //Create a workbook
-                IWorkbook workbook = application.Workbooks.Create(1);
-                IWorksheet worksheet = workbook.Worksheets[0];
+                IWorkbook workbook = application.Workbooks.Create(0);
+                IWorksheet worksheet = workbook.Worksheets.Create("Payroll Listing-1");
+                IWorksheet worksheet2 = workbook.Worksheets.Create("Payroll Listing-2(Audit)");
+
+                //IWorksheet worksheet = workbook.Worksheets[0];
 
                 //Adding a picture
                 //FileStream imageStream = new FileStream("AdventureCycles-Logo.png", FileMode.Open, FileAccess.Read);
@@ -217,6 +222,114 @@ namespace NddcPayroll.Web.Pages.Reports
                 worksheet.Columns[34].NumberFormat = "#,###.##";
 
                 worksheet.Range["A7"].FreezePanes();
+
+
+
+
+
+
+
+
+
+
+                //Start the second sheet
+
+                List<PayrollListingModel2> Reports = new List<PayrollListingModel2>();
+                foreach (var item in PayrollListings)
+                {
+                    PayrollListingModel2 payList = new();
+
+                    payList.SrNo = item.SrNo;
+                    payList.DepartmentName = item.DepartmentName;
+                    payList.Category = item.Category;
+                    payList.GradeLevel = item.GradeLevel;
+                    payList.EmployeeCode = item.EmployeeCode;
+                    payList.FirstName = item.FirstName;
+                    payList.LastName = item.LastName;
+                    payList.BasicSalary = item.BasicSalary;
+                    payList.TotalEarnings = item.TotalEarnings;
+                    payList.TotalDeductions = item.TotalDeductions;
+                    payList.NetPay = item.NetPay;
+                    payList.BankCode = item.BankCode;
+                    payList.AccountNumber = item.AccountNumber;
+                    payList.BankName = item.BankName;
+                    
+                    Reports.Add(payList);
+                }
+
+
+                //Disable gridlines in the worksheet
+                worksheet2.IsGridLinesVisible = true;
+                worksheet2.Workbook.StandardFont = "Arial";
+
+                //Enter text to the cell B1 and apply formatting.
+                worksheet2.Range["B1"].Text = "Payroll Listing Report";
+                worksheet2.Range["B1"].CellStyle.Font.Bold = true;
+                //worksheet.Range["D1"].CellStyle.Font.RGBColor = Color.FromArgb(42, 118, 189);
+                worksheet2.Range["B1"].CellStyle.Font.Size = 16;
+
+                //Merge cells
+                worksheet2.Range["B1:I1"].Merge();
+
+                //Enter text to the cell B2 and apply formatting.
+                worksheet2.Range["B2"].Text = "001-NIGER DELTA DEVELOPMENT COMMISSION";
+                worksheet2.Range["B2"].CellStyle.Font.Bold = false;
+                //worksheet.Range["D1"].CellStyle.Font.RGBColor = Color.FromArgb(42, 118, 189);
+                worksheet2.Range["B2"].CellStyle.Font.Size = 11;
+
+                //Merge cells
+                worksheet2.Range["B2:I2"].Merge();
+
+                //Enter text to the cell B3 and apply formatting.
+                worksheet2.Range["B3"].Text = $"Current Period: {currPeriod.ToShortDateString()}";
+                worksheet2.Range["B23"].CellStyle.Font.Bold = false;
+                //worksheet.Range["D1"].CellStyle.Font.RGBColor = Color.FromArgb(42, 118, 189);
+                worksheet2.Range["B3"].CellStyle.Font.Size = 11;
+
+                //Merge cells
+                worksheet2.Range["B3:I3"].Merge();
+
+                //Enter text to the cell B4 and apply formatting.
+                worksheet2.Range["B4"].Text = $"Printed on: {DateTime.Now.ToString()} for Current Period {currPeriod.ToShortDateString()}";
+                worksheet2.Range["B4"].CellStyle.Font.Bold = true;
+                //worksheet.Range["D1"].CellStyle.Font.RGBColor = Color.FromArgb(42, 118, 189);
+                worksheet2.Range["B4"].CellStyle.Font.Size = 11;
+
+                //Merge cells
+                worksheet2.Range["B4:I4"].Merge();
+                //Apply alignment in the cell D1
+                //worksheet.Range["D1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignRight;
+                //worksheet.Range["D1"].CellStyle.VerticalAlignment = ExcelVAlign.VAlignTop;
+
+                worksheet2.ImportData(Reports, 6, 1, true);
+                worksheet2.Range["A6:AI6"].AutofitColumns();
+                worksheet2.Range["A6:AI6"].CellStyle.Font.Bold = true;
+                worksheet2.Range["A6:AI6"].CellStyle.Font.Size = 11;
+
+                worksheet2[$"B{mCount + 8}"].Text = "Totals";
+                worksheet2[$"B{mCount + 8}"].CellStyle.Font.Bold = true;
+
+                worksheet2.Range[$"H{mCount + 8}"].Formula = "=SUM(H7:H" + (mCount + 7) + ")";
+                worksheet2.Range[$"H{mCount + 8}"].CellStyle.Font.Bold = true;
+
+                worksheet2.Range[$"I{mCount + 8}"].Formula = "=SUM(I7:I" + (mCount + 7) + ")";
+                worksheet2.Range[$"I{mCount + 8}"].CellStyle.Font.Bold = true;
+
+                worksheet2.Range[$"J{mCount + 8}"].Formula = "=SUM(J7:J" + (mCount + 7) + ")";
+                worksheet2.Range[$"J{mCount + 8}"].CellStyle.Font.Bold = true;
+
+                worksheet2.Range[$"K{mCount + 8}"].Formula = "=SUM(K7:K" + (mCount + 7) + ")";
+                worksheet2.Range[$"K{mCount + 8}"].CellStyle.Font.Bold = true;
+
+                worksheet2.Columns[7].NumberFormat = "#,###.##";
+                worksheet2.Columns[8].NumberFormat = "#,###.##";
+                worksheet2.Columns[9].NumberFormat = "#,###.##";
+                worksheet2.Columns[10].NumberFormat = "#,###.##";
+
+                worksheet2.Range["A7"].FreezePanes();
+
+
+
 
 
 

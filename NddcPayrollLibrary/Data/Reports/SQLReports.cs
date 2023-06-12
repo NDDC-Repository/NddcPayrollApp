@@ -229,8 +229,8 @@ namespace NddcPayrollLibrary.Data.Reports
 
             string SQL = "SELECT ROW_NUMBER() OVER (ORDER BY PayrollJournals.Id DESC) As SrNo, PayrollJournals.Id, PayrollJournals.EmployeeCode, PayrollJournals.FirstName, PayrollJournals.BasicSalary, " +
                 "PayrollJournals.LastName, PayrollJournals.Email, PayrollJournals.Category, (TransportAllow) As TransportAllowance, (HousingAllow) As HousingAllowance, (FurnitureAllow) As FurnitureAllowance, (MealAllow) As MealAllowance, (UtilityAllow) As UtilityAllowance, " +
-                "(EducationAllow) As EducationAllowance, (DomesticServantAllow) As DomesticServantAllowance, (DriverAllow) As DriversAllowance, (VehicleAllow) As VehicleMaintenanceAllowance, (HazardAllow) As HazardAllowance, (Tax) As TaxDeduction, (NHF) As NHFDeduction, (JSA) As JSADeduction, (SSA) As SSADeduction, TotalEarnings, TotalDeductions, " +
-                "NetPay, (Pension) As PensionDeduction, (MedicalAllow) As MedicalAllowance, (SecurityAllow) As SecurityAllowance, GradeLevel.GradeLevel, Departments.DepartmentName, Arreas, LeaveAllow, EntertainmentAllow, NewspaperAllow, SecretarialAllow, CooperativeDed, VoluntaryPension FROM PayrollJournals LEFT JOIN GradeLevel ON PayrollJournals.GradeLevelId = " +
+                "(EducationAllow) As EducationAllowance, (DomesticServantAllow) As DomesticServantAllowance, (DriverAllow) As DriversAllowance, (VehicleAllow) As VehicleMaintenanceAllowance, (HazardAllow) As HazardAllowance, (Tax) As TaxDeduction, BankCode, BankName, AccountNumber, (NHF) As NHFDeduction, (JSA) As JSADeduction, (SSA) As SSADeduction, TotalEarnings, TotalDeductions, " +
+                "NetPay, (Pension) As PensionDeduction, (MedicalAllow) As MedicalAllowance, (SecurityAllow) As SecurityAllowance, GradeLevel.GradeLevel, (Departments.Code) As DepartmentName, Arreas, LeaveAllow, EntertainmentAllow, NewspaperAllow, SecretarialAllow, CooperativeDed, VoluntaryPension FROM PayrollJournals LEFT JOIN GradeLevel ON PayrollJournals.GradeLevelId = " +
                 "GradeLevel.Id LEFT JOIN Departments ON PayrollJournals.DepartmentId = Departments.Id LEFT JOIN JobTitles ON PayrollJournals.JobTitleId = " +
                 "JobTitles.Id Where PayrollJournals.PayrollJournalTitleId = @PayrollJournalTitleId ORDER BY PayrollJournals.Id DESC";
 
@@ -270,7 +270,7 @@ namespace NddcPayrollLibrary.Data.Reports
                 "Sum(Employees.HazardAllow) As HazardAllow, Sum(Employees.Tax) As Tax, Sum(Employees.NHF) As NHF, " +
                 "Sum(Employees.JSA) As JSA, Sum(Employees.SSA) As SSA, Sum(Employees.TotalEarnings) As TotalEarnings, " +
                 "Sum(Employees.NetPay) As NetPay, Sum(Employees.BasicSalary) As BasicSalary, " +
-                "Sum(Employees.MonthlyGross) As MonthlyGross, Sum(Employees.Pension) As Pension, DepartmentId, " +
+                "Sum(Employees.MonthlyGross) As MonthlyGross, Sum(Employees.Pension) As Pension, Sum(Employees.EmployerPension) As EmployerPension, DepartmentId, " +
                 "Departments.DepartmentName FROM  Employees LEFT JOIN Departments ON Employees.DepartmentId = Departments.Id " +
                 " Where Employees.Archived = 0 Group By DepartmentId, Departments.DepartmentName";
 
@@ -304,7 +304,7 @@ namespace NddcPayrollLibrary.Data.Reports
                 "Sum(Employees.HazardAllow) As HazardAllow, Sum(Employees.Tax) As Tax, Sum(Employees.NHF) As NHF, " +
                 "Sum(Employees.JSA) As JSA, Sum(Employees.SSA) As SSA, Sum(Employees.TotalEarnings) As TotalEarnings, " +
                 "Sum(Employees.NetPay) As NetPay, Sum(Employees.BasicSalary) As BasicSalary, " +
-                "Sum(Employees.MonthlyGross) As MonthlyGross, Sum(Employees.Pension) As Pension FROM  Employees" +
+                "Sum(Employees.MonthlyGross) As MonthlyGross, Sum(Employees.Pension) As Pension, Sum(Employees.EmployerPension) As EmployerPension FROM  Employees" +
                 " Where Employees.Archived = 0";
 
             await (Task.Run(() => PayrollSummaryList = db.LoadData<MyPayrollSummaryByDepartmentModel, dynamic>(SQL, new { }, connectionStringName, false).ToList()));
@@ -582,7 +582,7 @@ namespace NddcPayrollLibrary.Data.Reports
             //string SQL = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, Employees.Id, Employees.EmployeeCode, (Employees.FirstName + ' ' + Employees.LastName) As EmployeeName, Employees.BankCode, Employees.AccountNumber FROM Employees ORDER BY Employees.Id ASC";
             string SQL2 = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, Employees.Id, Employees.EmployeeCode, (Employees.FirstName + ' ' + Employees.LastName) As EmployeeName, Employees.BankCode, Employees.AccountNumber, (Employees.NetPay) As PayableAmount FROM Employees Where Archived = 0 ORDER BY Employees.Id ASC";
 
-            Reports = db.LoadData<MyRemitaUploadModel, dynamic>(SQL2, new { }, connectionStringName, false).ToList();
+            await (Task.Run(() => Reports = db.LoadData<MyRemitaUploadModel, dynamic>(SQL2, new { }, connectionStringName, false).ToList()));
             //foreach (var item in Reports)
             //{
                 

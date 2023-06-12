@@ -10,6 +10,7 @@ namespace NddcPayrollLibrary.Model.Report
     {
         public int Id { get; set; }
         public string BankCode { get; set; }
+        public string EmployeeCode { get; set; }
         public string AccountNumber { get; set; }
         public string AccountType { get; set; } = "20";
         public decimal PayableAmount { get; set; }
