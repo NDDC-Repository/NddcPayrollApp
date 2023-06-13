@@ -15,7 +15,7 @@
 
 
 <SfUploader AutoUpload="false">
-    <UploaderEvents ValueChange="OnChange"></UploaderEvents>
+    <UploaderEvents ValueChange="OnChange" OnRemove="OnRemove"></UploaderEvents>
 </SfUploader>
 
 @if (ShowAnim == true)
@@ -83,6 +83,8 @@
             //convert to dynamic list and append to Grid.
             GenerateListFromTable(table);
             UpdateDb(worksheet, table);
+
+
         }
 
         ShowAnim = false;
@@ -124,7 +126,29 @@
         CustomerList = list;
     }
 
+    public void OnRemove(RemovingEventArgs args)
+    {
+        var fileName = args.FilesData[0].Name;
+        if (fileName.Contains(".xlsx.xlsx"))
 
+        {
+
+            fileName = fileName.Substring(0, fileName.Length - 4);
+
+        }
+
+        var filePath = "wwwroot" + $@"\Data\" + fileName;
+
+        if (System.IO.File.Exists(filePath))
+
+        {
+
+            System.IO.File.Delete(filePath);
+
+        }
+
+       
+    }
 
     //public List<LifeAssuranceModel> CustomerList2;
     //public LifeAssuranceModel LifeAssure { get; set; }

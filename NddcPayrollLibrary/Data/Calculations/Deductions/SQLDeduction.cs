@@ -1,7 +1,9 @@
 ﻿using NddcPayrollLibrary.Data.EmployeeData;
 using NddcPayrollLibrary.Data.Payroll;
 using NddcPayrollLibrary.Databases;
+using NddcPayrollLibrary.Model.Employee;
 using NddcPayrollLibrary.Model.Enums;
+using NddcPayrollLibrary.Model.Payroll;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -600,7 +602,17 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
 
         public void ClearCoopValues()
         {
-            db.SaveData("Update Employees Set CooperativeDed = 0.00 Where CooperativeDed > 0", new { }, connectionStringName, false);
+            List<EmployeeModel> Employees = new List<EmployeeModel>();
+
+            Employees = db.LoadData<EmployeeModel, dynamic>("Select Id, EmployeeCode From Employees Where CooperativeDed > 0", new { }, connectionStringName, false);
+
+            foreach (var item in Employees)
+            {
+                db.SaveData("Update Employees Set CooperativeDed = 0.00 Where EmployeeCode = @EmployeeCode", new { item.EmployeeCode }, connectionStringName, false);
+
+                RecalculateManualForDeductions(item.EmployeeCode);
+            }
+            
         }
 
         public void RecalculateManualForDeductions(string empCode)

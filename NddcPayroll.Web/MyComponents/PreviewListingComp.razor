@@ -7,36 +7,7 @@
 @using System.IO;
 @inject Microsoft.JSInterop.IJSRuntime JS
 
-<div class="card">
-    <div class="card-body">
-        <div class="row g-2">
-            <div class="col-sm-4">
-                <div class="search-box">
-                    @*<input type="text" class="form-control" id="searchMemberList" placeholder="Search for name or designation...">
-                    <i class="ri-search-line search-icon"></i>*@
-                    <h4 class="fs-18 lh-base mb-0">Payroll Listings Report</h4>
-                </div>
-            </div>
-            <!--end col-->
-            <div class="col-sm-auto ms-auto">
-                <div class="list-grid-nav hstack gap-1">
-                    <button @onclick="GenerateReport" class="btn btn-primary addMembers-modal"><i class="ri-profile-line me-1 align-bottom"></i> Preview Listing</button>
-                    <button @onclick="ExcelExport" class="btn btn-primary addMembers-modal"><i class="ri-profile-line me-1 align-bottom"></i> Export To Excel</button>
-                    
-                    @*<button type="button" id="dropdownMenuLink1" data-bs-toggle="dropdown" aria-expanded="false" class="btn btn-soft-info btn-icon fs-14"><i class="ri-more-2-fill"></i></button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink1" style="">
-                        <li><a class="dropdown-item" href="#">Save Report</a></li>
-                        <li><a class="dropdown-item" href="#">Post Journal</a></li>
-                        <li><a class="dropdown-item" href="#">Retreive Saved Report</a></li>
-                    </ul>*@
 
-                </div>
-            </div>
-            <!--end col-->
-        </div>
-        <!--end row-->
-    </div>
-</div>
 
 @if (ShowAnim == true)
 {
@@ -52,7 +23,7 @@ else if (ShowGrid == true)
 {
 
     <p>Time Elasped: @OpsTime Seconds</p>
-    <SfGrid @ref="SfEmployeeGrid" DataSource="PayrollList" AllowResizing="true" EnableVirtualization="true" ShowColumnChooser="true" EnableHeaderFocus="true" Height="600" AllowExcelExport="true" AllowPaging="true" AllowFiltering="true" AllowSorting="true" AllowGrouping="true" Toolbar="@toolbar">
+    <SfGrid @ref="SfEmployeeGrid" DataSource="PayrollList" AllowResizing="true" EnableVirtualization="true" ShowColumnChooser="true" EnableHeaderFocus="true" Height="600" AllowExcelExport="false" AllowPaging="true" AllowFiltering="true" AllowSorting="true" AllowGrouping="true" Toolbar="@toolbar">
         <GridPageSettings PageSize="50" PageSizes="@(new string[] { "20", "50", "100", "200", "500", "All" })"></GridPageSettings>
         <GridAggregates>
             <GridAggregate>
@@ -391,7 +362,7 @@ else if (ShowGrid == true)
     public string Message { get; set; }
     public List<MyPayRollListModel> PayrollList { get; set; }
 
-    private List<object> toolbar = new List<object> { "Search", "ExcelExport", "ColumnChooser" };
+    private List<object> toolbar = new List<object> { "Search", "ColumnChooser" };
     private SfGrid<MyPayRollListModel>? SfEmployeeGrid { get; set; }
 
     //protected override async Task OnInitializedAsync()
@@ -421,12 +392,14 @@ else if (ShowGrid == true)
     public double OpsTime { get; set; }
     public bool ShowAnim { get; set; }
     public bool ShowGrid { get; set; }
-    private async Task GenerateReport()
+   
+    protected override async Task OnInitializedAsync()
     {
         ShowAnim = true;
         var watch = System.Diagnostics.Stopwatch.StartNew();
         Message = "Loading Report Please Wait ........";
         PayrollList = await Task.Run(() => db.GetPayrollListReport2Async());
+
         //Message = "";
         watch.Stop();
         OpsTime = watch.ElapsedMilliseconds / 1000;
