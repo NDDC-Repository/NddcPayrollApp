@@ -23,7 +23,12 @@ namespace NddcPayroll.Web.Pages.Payroll
         public async Task<IActionResult> OnPostAsync()
         {
             PayrollListings = await Task.Run(() => repDb.GetPayrollListReport2Async());
-            string currPeriod = DateTime.Now.ToString();
+
+            int year = DateTime.Now.Year;
+            int month = DateTime.Now.Month;
+            int dayInMonth = DateTime.DaysInMonth(year, month);
+            string currPeriod = dayInMonth + " " + DateTime.Now.ToString("MMMM yyyy");
+
             using (ExcelEngine excelEngine = new ExcelEngine())
             {
                 IApplication application = excelEngine.Excel;

@@ -1,5 +1,6 @@
 ﻿@page "/runpayroll"
 
+
 @using NddcPayrollLibrary.Data.Payroll;
 @using NddcPayrollLibrary.Data.PayrollJournal;
 @using NddcPayrollLibrary.Model.Payroll;
@@ -23,59 +24,62 @@
         </div>
     </div>
 </div>
-
-@if (ShowAnim == true)
-{
-    @*<div class="spinner-grow text-primary" role="status">
-        <span>Loading Report Please Wait...</span>
+<EditForm Model="@JournalTitle" OnValidSubmit="ExecutePayroll">
+    <DataAnnotationsValidator />
+    @if (ShowAnim == true)
+    {
+        @*<div class="spinner-grow text-primary" role="status">
+    <span>Loading Report Please Wait...</span>
     </div>*@
-    <div class="text-center mb-3">
-        <a href="javascript:void(0);" class="text-success"><i class="mdi mdi-loading mdi-spin fs-40 align-middle me-2"></i> Executing Payroll Please Wait </a>
-    </div>
-    @*<h4>@Message</h4>*@
-}
+        <div class="text-center mb-3">
+            <a href="javascript:void(0);" class="text-success"><i class="mdi mdi-loading mdi-spin fs-40 align-middle me-2"></i> Executing Payroll Please Wait </a>
+        </div>
+        @*<h4>@Message</h4>*@
+    }
 
-@if (HideControl == false)
-{
-    <div class="row">
-        <div class="col-lg-8">
-            <div class="card">
-                @*<div class="card-header align-items-center d-flex">
-            <h4 class="card-title mb-0 flex-grow-1">New Bank</h4>
-            </div>*@<!-- end card header -->
-                <div class="card-body">
-                    @* <form>*@
-                    <div class="row mb-3">
-                        <div class="col-3">
-                            <label class="form-label">Batch Name</label>
+    @if (HideControl == false)
+    {
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card">
+                    @*<div class="card-header align-items-center d-flex">
+                <h4 class="card-title mb-0 flex-grow-1">New Bank</h4>
+                </div>*@<!-- end card header -->
+                    <div class="card-body">
+                        @* <form>*@
+                        <div class="row mb-3">
+                            <div class="col-3">
+                                <label class="form-label">Batch Name</label>
+                            </div>
+
+                            <div class="col-9">
+                                <InputText class="form-control" @bind-Value="@JournalTitle.JournalName" placeholder="Enter Batch Name" />
+                                <ValidationMessage For="() => JournalTitle.JournalName" />
+                            </div>
                         </div>
 
-                        <div class="col-9">
-                            <input class="form-control" @bind="@JournalTitle.JournalName" placeholder="Enter Batch Name">
+
+                        <div class="row mb-3">
+                            <div class="col-3">
+                                <label class="form-label">Current Period</label>
+                            </div>
+                            <div class="col-9">
+                                <input type="date" @bind="@JournalTitle.CurrentPeriod" class="form-control" id="exampleInputdate">
+                            </div>
                         </div>
+
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-primary">Process Payroll</button>
+                        </div>
+                        @* </form>*@
                     </div>
-
-
-                    <div class="row mb-3">
-                        <div class="col-3">
-                            <label class="form-label">Current Period</label>
-                        </div>
-                        <div class="col-9">
-                            <input type="date" @bind="@JournalTitle.CurrentPeriod" class="form-control" id="exampleInputdate">
-                        </div>
-                    </div>
-
-                    <div class="text-end">
-                        <button type="submit" @onclick="ExecutePayroll" class="btn btn-primary">Process Payroll</button>
-                    </div>
-                    @* </form>*@
                 </div>
             </div>
+            <!--end col-->
         </div>
-        <!--end col-->
-    </div>
-}
+    }
 
+</EditForm>
 
 @code {
 
