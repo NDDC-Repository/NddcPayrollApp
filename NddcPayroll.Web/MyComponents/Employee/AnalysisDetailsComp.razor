@@ -61,12 +61,16 @@
 
             </div>
             <div class="d-flex align-items-start gap-3 mt-4 mb-4">
+                <CascadingAuthenticationState>
+                    <AuthorizeView Roles="Admin" Context="innerContext">
+                        <button type="submit" @onclick="UpdateDetails" class="btn btn-success btn-label right ms-auto nexttab nexttab">
+                            <i class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>
+                            Update
+                        </button>
+                        <p>@Message</p>
+                    </AuthorizeView>
+                </CascadingAuthenticationState>
                 
-                <button type="submit" @onclick="UpdateDetails" class="btn btn-success btn-label right ms-auto nexttab nexttab">
-                    <i class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>
-                    Update
-                </button>
-                <p>@Message</p>
             </div>
             <!--end col-->
         </div>

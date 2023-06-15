@@ -49,9 +49,14 @@ else
         </div>
     </div>
     <div class="col-md-4">
-        <div class="mt-4">
-            <button @onclick="RecalculateAndSave" class="btn btn-danger">Recalculate Emoluments</button>
-        </div>
+            <CascadingAuthenticationState>
+                <AuthorizeView Roles="Admin" Context="innerContext">
+                    <div class="mt-4">
+                        <button @onclick="RecalculateAndSave" class="btn btn-danger">Recalculate Emoluments</button>
+                    </div>
+                </AuthorizeView>
+            </CascadingAuthenticationState>
+       
     </div>
 
     <div class="col-md-12 mt-4"><h4>Allowances</h4></div>
@@ -370,11 +375,17 @@ else
     <div class="col-md-12 mt-4"></div>
 
 </div>
+
 <div class="row">
     <div class="col-md-4">
         <div class="mb-3">
-                <button @onclick="SaveEmployeeLink" class="btn btn-primary">Save Changes</button>
-                    <label>@Message</label>
+                <CascadingAuthenticationState>
+                    <AuthorizeView Roles="Admin" Context="innerContext">
+                        <button @onclick="SaveEmployeeLink" class="btn btn-primary">Save Changes</button>
+                        <label>@Message</label>
+                    </AuthorizeView>
+                </CascadingAuthenticationState>
+                
         </div>
     </div>
    

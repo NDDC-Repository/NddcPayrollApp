@@ -169,30 +169,21 @@
                                     <i data-feather="user" class="icon-dual"></i> <span data-key="t-dashboards">Employee</span>
                                 </a>
                             </li>
-                            <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Reports</span></li>
-                            <li class="nav-item">
-                                <a class="nav-link menu-link" href="/Reports/ReportsList">
-                                    <i data-feather="archive" class="icon-dual"></i> <span data-key="t-dashboards">Report List </span>
-                                </a>
-                            </li>
-                            @*<li class="nav-item">
-                                <a class="nav-link menu-link" href="/Reports/RemitaUploadReport">
-                                    <i data-feather="archive" class="icon-dual"></i> <span data-key="t-dashboards">Remita Upload Report</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link menu-link" href="/Reports/NHFReportSummary">
-                                    <i data-feather="archive" class="icon-dual"></i> <span data-key="t-dashboards">NHF Summary Report</span>
-                                </a>
-                            </li>*@
-                            @*<li class="nav-item">
-                                <a class="nav-link menu-link" href="widgets.html">
-                                    <i data-feather="copy" class="icon-dual"></i> <span data-key="t-dashboards">Leave</span>
-                                </a>
-                            </li>*@
+                             @if (User.IsInRole("Admin") || User.IsInRole("Super"))
+                            {
+                                <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Reports</span></li>
+                                <li class="nav-item">
+                                    <a class="nav-link menu-link" href="/Reports/ReportsList">
+                                        <i data-feather="archive" class="icon-dual"></i> <span data-key="t-dashboards">Report List </span>
+                                    </a>
+                                </li>
+                            }
+                            
+                           
 
 
                             <!-- Company Menu -->
+                           
                             <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Company</span></li>
                             <li class="nav-item">
                                 <a class="nav-link menu-link @ViewData["JobTitles"]" href="/Company/JobTitles">
@@ -219,56 +210,58 @@
                                     <i data-feather="dollar-sign" class="icon-dual"></i> <span data-key="t-dashboards">Banks</span>
                                 </a>
                             </li>
+                            @if (User.IsInRole("Admin") || User.IsInRole("Super"))
+                            {
+                                <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Payroll</span></li>
+                                <li class="nav-item">
+                                    <a class="nav-link menu-link @ViewData["Benefits"]" href="/Payroll/PreviewListing">
+                                        <i data-feather="file-text" class="icon-dual"></i> <span data-key="t-dashboards">Preview Listing</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link menu-link @ViewData["Benefits"]" href="/Payroll/RunPayroll">
+                                        <i data-feather="play-circle" class="icon-dual"></i> <span data-key="t-dashboards">Run Payroll</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link menu-link @ViewData["Benefits"]" href="/Payroll/ResetOnetimeData">
+                                        <i data-feather="play-circle" class="icon-dual"></i> <span data-key="t-dashboards">Reset Onetime Data</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link menu-link @ViewData["Benefits"]" href="/Payroll/Benefits">
+                                        <i data-feather="layers" class="icon-dual"></i> <span data-key="t-dashboards">Benefits</span>
+                                    </a>
+                                </li>
 
+                                <li class="nav-item">
+                                    <a class="nav-link menu-link" href="widgets.html">
+                                        <i data-feather="user-minus" class="icon-dual"></i> <span data-key="t-dashboards">Deductions</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link menu-link" href="widgets.html">
+                                        <i data-feather="bar-chart-2" class="icon-dual"></i> <span data-key="t-dashboards">PAYE</span>
+                                    </a>
+                                </li>
+                            }
                             <!-- Payroll Menu -->
-                            <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Payroll</span></li>
-                            <li class="nav-item">
-                                <a class="nav-link menu-link @ViewData["Benefits"]" href="/Payroll/PreviewListing">
-                                    <i data-feather="file-text" class="icon-dual"></i> <span data-key="t-dashboards">Preview Listing</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link menu-link @ViewData["Benefits"]" href="/Payroll/RunPayroll">
-                                    <i data-feather="play-circle" class="icon-dual"></i> <span data-key="t-dashboards">Run Payroll</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link menu-link @ViewData["Benefits"]" href="/Payroll/ResetOnetimeData">
-                                    <i data-feather="play-circle" class="icon-dual"></i> <span data-key="t-dashboards">Reset Onetime Data</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link menu-link @ViewData["Benefits"]" href="/Payroll/Benefits">
-                                    <i data-feather="layers" class="icon-dual"></i> <span data-key="t-dashboards">Benefits</span>
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link menu-link" href="widgets.html">
-                                    <i data-feather="user-minus" class="icon-dual"></i> <span data-key="t-dashboards">Deductions</span>
-                                </a>
-                            </li>
-                             <li class="nav-item">
-                                <a class="nav-link menu-link" href="widgets.html">
-                                    <i data-feather="bar-chart-2" class="icon-dual"></i> <span data-key="t-dashboards">PAYE</span>
-                                </a>
-                            </li>
-                            <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Data Management</span></li>
-                            @*<li class="nav-item">
-                                <a class="nav-link menu-link @ViewData["Benefits"]" href="/DataManagement/ExcelUploads/UpdateInsurance">
-                                    <i data-feather="layers" class="icon-dual"></i> <span data-key="t-dashboards">Update Insurance</span>
-                                </a>
-                            </li>*@
-                             <li class="nav-item">
-                                <a class="nav-link menu-link @ViewData["Benefits"]" href="/DataManagement/ExcelUploads/UpdateCooporativeData">
-                                    <i data-feather="layers" class="icon-dual"></i> <span data-key="t-dashboards">Update Cooporative</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link menu-link @ViewData["Benefits"]" href="/DataManagement/ExcelUploads/UploadLeaveAllowance">
-                                    <i data-feather="layers" class="icon-dual"></i> <span data-key="t-dashboards">Upload Leave Allowance</span>
-                                </a>
-                            </li>
+                            @if (User.IsInRole("Admin")) 
+                            {
+                                <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Data Management</span></li>
+                           
+                                <li class="nav-item">
+                                    <a class="nav-link menu-link @ViewData["Benefits"]" href="/DataManagement/ExcelUploads/UpdateCooporativeData">
+                                        <i data-feather="layers" class="icon-dual"></i> <span data-key="t-dashboards">Update Cooporative</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link menu-link @ViewData["Benefits"]" href="/DataManagement/ExcelUploads/UploadLeaveAllowance">
+                                        <i data-feather="layers" class="icon-dual"></i> <span data-key="t-dashboards">Upload Leave Allowance</span>
+                                    </a>
+                                </li>
+                            }
+                            
                             @*<li class="nav-item">
                                 <a class="nav-link menu-link @ViewData["Benefits"]" href="/DataManagement/ExcelUploads/UpdateSecretarial">
                                     <i data-feather="layers" class="icon-dual"></i> <span data-key="t-dashboards">Update Secretarial</span>

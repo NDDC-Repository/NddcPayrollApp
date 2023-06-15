@@ -127,12 +127,15 @@
                                                                         <li>
                                                                             @if (item.ExitCondition == "End of Contract" || item.ExitCondition == "End of Appointment" || item.ExitCondition == "Retirement" || item.ExitCondition == "Deceased")
                                                                             {
-                                                                                @item.ExitCondition
-                                                                            }
-                                                                            else
-                                                                            {
-
-                                                                                <a asp-page="UnArchiveEmployee" asp-route-EmpID="@item.Id" class="dropdown-item">Un-Archive</a>
+                                                                        @item.ExitCondition
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        if (User.IsInRole("Admin"))
+                                                                        {
+                                                                            <a asp-page="UnArchiveEmployee" asp-route-EmpID="@item.Id" class="dropdown-item">Un-Archive</a>
+                                                                        }
+                                                                        
                                                                
                                                                             }
                                                                         </li>
@@ -163,10 +166,14 @@
 
                                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                                                         <li><a asp-page="EmployeeDetails" asp-route-EmpID="@item.Id" class="dropdown-item">View Details</a></li>
-                                                                        <li><a asp-page="ArchiveEmployee" asp-route-EmpID="@item.Id" class="dropdown-item">Archive</a></li>
-                                                                        <li><a asp-page="DeleteEmployee" asp-route-EmpID="@item.Id" class="dropdown-item">Delete</a></li>
-                                                                        <li><a class="dropdown-item" asp-page="ManualEntry" asp-route-EmpID="@item.Id">Manual Entry</a></li>
-                                                                        <li><a asp-page="PaySlip" asp-route-EmpID="@item.Id" class="dropdown-item">View Payslip</a></li>
+                                                                        @if (User.IsInRole("Admin"))
+                                                                        {
+                                                                            <li><a asp-page="ArchiveEmployee" asp-route-EmpID="@item.Id" class="dropdown-item">Archive</a></li>
+                                                                            <li><a asp-page="DeleteEmployee" asp-route-EmpID="@item.Id" class="dropdown-item">Delete</a></li>
+                                                                            <li><a class="dropdown-item" asp-page="ManualEntry" asp-route-EmpID="@item.Id">Manual Entry</a></li>
+                                                                            <li><a asp-page="PaySlip" asp-route-EmpID="@item.Id" class="dropdown-item">View Payslip</a></li>
+                                                                        }
+                                                               
                                                                     </ul>
                                                                 </div>
                                                                 
@@ -248,7 +255,11 @@
                                                         else
                                                         {
                                                             <td>
-                                                                <a asp-page="UnArchiveEmployee" asp-route-EmpID="@item.Id" class="btn btn-sm btn-success">Un-Archive</a>
+                                                                @if (User.IsInRole("Admin"))
+                                                                {
+                                                                    <a asp-page="ArchiveEmployee" asp-route-EmpID="@item.Id" class="btn btn-sm btn-danger">Archive</a>
+                                                                }
+                                                                @*<a asp-page="UnArchiveEmployee" asp-route-EmpID="@item.Id" class="btn btn-sm btn-success">Un-Archive</a>*@
                                                             </td>
                                                         }
 

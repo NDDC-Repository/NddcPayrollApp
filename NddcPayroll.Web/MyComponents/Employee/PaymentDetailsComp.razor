@@ -69,8 +69,12 @@
             <input type="text" class="form-control" @bind="@PaymentDetails.SortCode">
         </div>
     </div>
-    <button type="submit" @onclick="UpdateDetails" class="btn btn-primary">Update</button>
-    <p>@Message</p>
+    <CascadingAuthenticationState>
+    <AuthorizeView Roles="Admin" Context="innerContext">
+        <button type="submit" @onclick="UpdateDetails" class="btn btn-primary">Update</button>
+        <p>@Message</p>
+    </AuthorizeView>
+    </CascadingAuthenticationState>
    
     <!--end col-->
 </EditForm>
