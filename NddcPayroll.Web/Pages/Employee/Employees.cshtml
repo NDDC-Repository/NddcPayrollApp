@@ -86,16 +86,16 @@
 
                             <div class="card-body">
 
-                              @*  <div class="live-preview">
-                                    <div class="table-responsive table-card">*@
-                                        <table class="table  table-hover align-middle table-nowrap table-striped-columns mb-0">
+                              @*  <div class="live-preview">*@
+                                    <div class="table-responsive table-card">
+                                        <table class="table table-hover align-middle table-nowrap table-striped-columns mb-0">
                                             <thead class="table-light">
                                                 <tr>
                                                     <th scope="col">S/N</th>
                                                     <th scope="col">Code</th>
                                                     <th scope="col">Full Name</th>
                                                     <th scope="col">Gender</th>
-                                                    <th scope="col">Grade Level</th>
+                                                    <th scope="col">Job Grade</th>
                                                     <th scope="col">Department</th>
                                                     <th scope="col">JobTitle</th>
                                                     <th scope="col">Category</th>
@@ -190,8 +190,8 @@
 
                                             </tbody>
                                         </table>
-                                   @* </div>
-                                </div>*@
+                                  </div>
+                                 @* </div>*@
 
                             </div><!-- end card-body -->
                         </div><!-- end card -->
@@ -211,16 +211,16 @@
 
                             <div class="card-body">
 
-                                @*<div class="live-preview">
-                                    <div class="table-responsive table-card">*@
-                                        <table class="table  table-hover align-middle table-nowrap table-striped-columns mb-0">
+                                @*<div class="live-preview">*@
+                                    <div class="table-responsive table-card">
+                                        <table class="table table-hover align-middle table-nowrap table-striped-columns mb-0">
                                             <thead class="table-light">
                                                 <tr>
                                                     <th scope="col">S/N</th>
                                                     <th scope="col">Code</th>
                                                     <th scope="col">Full Name</th>
-                                                    <th scope="col">Gender</th
-                                                    <th scope="col">Grade Level</th>
+                                                    <th scope="col">Gender</th>
+                                                    <th scope="col">Job Grade</th>
                                                     <th scope="col">Department</th>
                                                     <th scope="col">JobTitle</th>
                                                     <th scope="col">Category</th>
@@ -272,8 +272,8 @@
 
                                             </tbody>
                                         </table>
-                                    @*</div>
-                                </div>*@
+                                   </div>
+                                 @*</div>*@
 
                             </div><!-- end card-body -->
                         </div><!-- end card -->
@@ -283,106 +283,3 @@
         </div>
     </div><!-- end card-body -->
 </div>
-
-
-
-@*<div class="row">
-    <div class="col-xl-12">
-        <div class="card">
-            <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Recently Created Employees</h4>
-
-
-            </div><!-- end card header -->
-
-            <div class="card-body">
-
-                <div class="live-preview">
-                    <div class="table-responsive table-card">
-                        <table class="table  table-hover align-middle table-nowrap table-striped-columns mb-0">
-                            <thead class="table-light">
-                                <tr>
-                                    <th scope="col">S/N</th>
-                                    <th scope="col">Code</th>
-                                    <th scope="col">Full Name</th>
-                                    <th scope="col">Gender</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Grade Level</th>
-                                    <th scope="col">Department</th>
-                                    <th scope="col">JobTitle</th>
-                                    <th scope="col">Category</th>
-                                    
-                                    
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model.Employees)
-                                {
-                                    @if (item.Archived == true)
-                                    {
-                                        <tr class="table-warning">
-                                            <td>@item.SrNo</td>
-                                            <td><a asp-page="EmployeeDetails" asp-route-EmpID="@item.Id" class="fw-medium">@item.EmployeeCode</a></td>
-                                            <td>@item.FullName</td>
-                                            <td>@item.Gender</td>
-                                            <td>@item.Email</td>
-                                            <td>@item.GradeLevel</td>
-                                            <td>@item.DepartmentName</td>
-                                            <td>@item.Description</td>
-                                            <td>@item.Category</td>
-                                            <td>
-                                                <a asp-page="EmployeeDetails" asp-route-EmpID="@item.Id" class="btn btn-sm btn-light">Details</a>
-                                            </td>
-                                            <td>
-                                                Archived
-                                            </td>
-                                            @if (item.ExitCondition == "End of Contract" || item.ExitCondition == "End of Appointment" || item.ExitCondition == "Retirement" || item.ExitCondition == "Deceased")
-                                            {
-                                                <td>@item.ExitCondition</td>
-                                            }
-                                            else
-                                            {
-                                                <td>
-                                                    <a asp-page="UnArchiveEmployee" asp-route-EmpID="@item.Id" class="btn btn-sm btn-success">Un-Archive</a>
-                                                </td>
-                                            }
-                                            
-                                            
-                                        </tr>
-                                    }
-                                    else
-                                    {
-                                        <tr>
-                                            <td>@item.SrNo</td>
-                                            <td><a asp-page="EmployeeDetails" asp-route-EmpID="@item.Id" class="fw-medium">@item.EmployeeCode</a></td>
-                                            <td>@item.FullName</td>
-                                            <td>@item.Gender</td>
-                                            <td>@item.Email</td>
-                                            <td>@item.GradeLevel</td>
-                                            <td>@item.DepartmentName</td>
-                                            <td>@item.Description</td>
-                                            <td>@item.Category</td>
-                                            <td>
-                                                <a asp-page="EmployeeDetails" asp-route-EmpID="@item.Id" class="btn btn-sm btn-light">Details</a>
-                                            </td>
-                                            <td>
-                                                <a asp-page="ArchiveEmployee" asp-route-EmpID="@item.Id" class="btn btn-sm btn-warning">Archive</a>
-                                            </td>
-                                            <td>
-                                                <a asp-page="DeleteEmployee" asp-route-EmpID="@item.Id" class="btn btn-sm btn-danger">Delete</a>
-                                            </td>
-                                        </tr>
-                                    }
-                                    
-                                }
-
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-            </div><!-- end card-body -->
-        </div><!-- end card -->
-    </div><!-- end col -->
-</div>*@

@@ -13,14 +13,14 @@ namespace NddcPayrollLibrary.Model.Employee
         public string EmployeeCode { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        
+        public string OtherNames { get; set; }
         private string myFullName;
 
         public string FullName
         {
             get 
             {
-                myFullName = $"{FirstName} {LastName}";
+                myFullName = $"{FirstName} {LastName} {OtherNames}";
                 return myFullName; 
             }
            
