@@ -10,8 +10,7 @@ namespace NddcPayrollLibrary.Model.Employee
 {
     public class EmployeeModel
     {
-        public int Id { get; set; }
-        [Required(ErrorMessage ="Employee Code is Required")]
+        public int Id { get; set; } 
         public string EmployeeCode { get; set; }
         public string Gender { get; set; }
         public string MaritalStatus { get; set; }
