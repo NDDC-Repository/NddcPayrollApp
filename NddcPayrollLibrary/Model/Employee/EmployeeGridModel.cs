@@ -20,7 +20,7 @@ namespace NddcPayrollLibrary.Model.Employee
         {
             get 
             {
-                myFullName = $"{FirstName} {LastName} {OtherNames}";
+                myFullName = $"{FirstName} {OtherNames} {LastName}";
                 return myFullName; 
             }
            
