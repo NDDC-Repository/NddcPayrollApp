@@ -5,7 +5,7 @@
 @inject IReportsData repDb;
 
 
-<div class="card">
+@*<div class="card">
     <div class="card-body">
         <div class="row g-2">
             <div class="col-sm-4">
@@ -16,8 +16,8 @@
 
         </div>
     </div>
-</div>
-<SfGrid @ref="SfEmployeeGrid" DataSource="PFASummaryList" AllowResizing="true" EnableVirtualization="true" ShowColumnChooser="false" Height="600" AllowExcelExport="true" AllowPaging="false" AllowFiltering="false" AllowSorting="false" AllowGrouping="false" Toolbar="@toolbar">
+</div>*@
+<SfGrid @ref="SfEmployeeGrid" DataSource="PFASummaryList" AllowResizing="true" EnableVirtualization="true" ShowColumnChooser="false" Height="600" AllowExcelExport="false" AllowPaging="false" AllowFiltering="false" AllowSorting="false" AllowGrouping="false" Toolbar="@toolbar">
         
         <GridAggregates>
             <GridAggregate>
@@ -94,7 +94,7 @@
 
     public List<PensionSummaryModel> PFASummaryList { get; set; }
 
-    private List<object> toolbar = new List<object> { "Search", "ExcelExport", "ColumnChooser" };
+    private List<object> toolbar = new List<object> { "Search", "ColumnChooser" };
     private SfGrid<PensionSummaryModel>? SfEmployeeGrid { get; set; }
    
     protected override void OnInitialized()

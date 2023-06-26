@@ -121,7 +121,6 @@
                         </div>
                         <!--end col-->
                     </div>
-                    <br />
                     <div class="row">
                         <div class="col-6" style="border:1px solid black;">
                             <p style="text-align: center; vertical-align: top; font-size: 16px; font-weight: bold;">EARNINGS</p>
@@ -134,76 +133,127 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Basic Salary</td>
-                                        <td></td>
-                                        <td>@Model.MyPayslip.BasicSalary</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Transport Allowance</td>
-                                        <td></td>
-                                        <td>@Model.MyPayslip.TransportAllow</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Meal Allowance</td>
-                                        <td></td>
-                                        <td>@Model.MyPayslip.MealAllow</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Utility Allowance</td>
-                                        <td></td>
-                                        <td>@Model.MyPayslip.UtilityAllow</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Education Allowance</td>
-                                        <td></td>
-                                        <td>@Model.MyPayslip.EducationAllow</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Medical Allowance</td>
-                                        <td></td>
-                                        <td>@Model.MyPayslip.MedicalAllow</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Vehicle Maintenance</td>
-                                        <td></td>
-                                        <td>@Model.MyPayslip.VehicleMaintenanceAllow</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Hazard Allowance</td>
-                                        <td></td>
-                                        <td>@Model.MyPayslip.HazardAllow</td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
+                                    @if (Model.MyPayslip.BasicSalary > 0)
+                                    {
+                                        <tr>
+                                            <td>Basic Salary</td>
+                                            <td></td>
+                                            <td>@string.Format("{0:N}", Model.MyPayslip.BasicSalary)</td>
+                                        </tr>
+                                    }
+                                    @if (Model.MyPayslip.HousingAllow > 0)
+                                    {
+                                        <tr>
+                                            <td>Housing Allowance</td>
+                                            <td></td>
+                                            <td>@string.Format("{0:N}", Model.MyPayslip.HousingAllow)</td>
+                                        </tr>
+                                    }
+                                    @if (Model.MyPayslip.FurnitureAllow > 0)
+                                    {
+                                        <tr>
+                                            <td>Furniture Allowance</td>
+                                            <td></td>
+                                            <td>@string.Format("{0:N}", Model.MyPayslip.FurnitureAllow)</td>
+                                        </tr>
+                                    }
+                                    @if (Model.MyPayslip.TransportAllow > 0)
+                                    {
+                                        <tr>
+                                            <td>Transport Allowance</td>
+                                            <td></td>
+                                            <td>@string.Format("{0:N}", Model.MyPayslip.TransportAllow)</td>
+                                        </tr>
+                                    }
+                                    @if (Model.MyPayslip.MealAllow > 0)
+                                    {
+                                        <tr>
+                                            <td>Meal Allowance</td>
+                                            <td></td>
+                                            <td>@string.Format("{0:N}", Model.MyPayslip.MealAllow)</td>
+                                        </tr>
+                                    }
+                                    @if (Model.MyPayslip.UtilityAllow > 0)
+                                    {
+                                        <tr>
+                                            <td>Utility Allowance</td>
+                                            <td></td>
+                                            <td>@string.Format("{0:N}", Model.MyPayslip.UtilityAllow)</td>
+                                        </tr>
+                                    }
+                                    @if (Model.MyPayslip.SecurityAllow > 0)
+                                    {
+                                        <tr>
+                                            <td>Security Allowance</td>
+                                            <td></td>
+                                            <td>@string.Format("{0:N}", Model.MyPayslip.SecurityAllow)</td>
+                                        </tr>
+                                    }
+                                    @if (Model.MyPayslip.DomesticServantAllow > 0)
+                                    {
+                                        <tr>
+                                            <td>Domestic Servant Allowance</td>
+                                            <td></td>
+                                            <td>@string.Format("{0:N}", Model.MyPayslip.DomesticServantAllow)</td>
+                                        </tr>
+                                    }
+                                    @if (Model.MyPayslip.DriverAllow > 0)
+                                    {
+                                        <tr>
+                                            <td>Driver Allowance</td>
+                                            <td></td>
+                                            <td>@string.Format("{0:N}", Model.MyPayslip.DriverAllow)</td>
+                                        </tr>
+                                    }
+                                    @if (Model.MyPayslip.EducationAllow > 0)
+                                    {
+                                        <tr>
+                                            <td>Education Allowance</td>
+                                            <td></td>
+                                            <td>@string.Format("{0:N}", Model.MyPayslip.EducationAllow)</td>
+                                        </tr>
+                                    }
+                                    @if (Model.MyPayslip.MedicalAllow > 0)
+                                    {
+                                        <tr>
+                                            <td>Medical Allowance</td>
+                                            <td></td>
+                                            <td>@string.Format("{0:N}", Model.MyPayslip.MedicalAllow)</td>
+                                        </tr>
+                                    }
+                                    @if (Model.MyPayslip.VehicleMaintenanceAllow > 0)
+                                    {
+                                        <tr>
+                                            <td>Vehicle Maintenance</td>
+                                            <td></td>
+                                            <td>@string.Format("{0:N}", Model.MyPayslip.VehicleMaintenanceAllow)</td>
+                                        </tr>
+                                    }
+                                    @if (Model.MyPayslip.HazardAllow > 0)
+                                    {
+                                        <tr>
+                                            <td>Hazard Allowance</td>
+                                            <td></td>
+                                            <td>@string.Format("{0:N}", Model.MyPayslip.HazardAllow)</td>
+                                        </tr>
+                                    }
+                                    @if (Model.MyPayslip.EntertainmentAllow > 0)
+                                    {
+                                        <tr>
+                                            <td>Entartainment Allowance</td>
+                                            <td></td>
+                                            <td>@string.Format("{0:N}", Model.MyPayslip.EntertainmentAllow)</td>
+                                        </tr>
+                                    }
+                                    @if (Model.MyPayslip.NewspaperAllow > 0)
+                                    {
+                                        <tr>
+                                            <td>Newspaper Allowance</td>
+                                            <td></td>
+                                            <td>@string.Format("{0:N}", Model.MyPayslip.NewspaperAllow)</td>
+                                        </tr>
+                                    }
+
                                     <tr>
                                         <td style="text-align: left; vertical-align: top; font-size: 14px; font-weight: bold;">Total Earnings</td>
                                         <td></td>
