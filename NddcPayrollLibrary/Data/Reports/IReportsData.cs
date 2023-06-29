@@ -6,6 +6,8 @@ namespace NddcPayrollLibrary.Data.Reports
     {
         List<MyEarningsByDeptChartModel> GetEarningsByDeptData();
         Task<List<MyNHFReportModel>> GetNHFReportAsync();
+        List<MyNHFReportModel> GetNHFReportByPaypoint(string payPoint);
+        List<MyNHFReportModel> GetNHFReportSummary();
         Task<List<MyPayeReportSummaryModel>> GetPayeSummaryReportAsync();
         List<MyPayPointChartModel> GetPayPointData();
         List<MyPayRollListModel> GetPayrollListReport();

@@ -10,6 +10,7 @@ namespace NddcPayrollLibrary.Model.Report
     {
         public int Id { get; set; }
         public string SrNo { get; set; }
+        public int EmpCount { get; set; }
         public string PayPoint { get; set; }
         public string EmployeeCode { get; set; }
         public string NHFNumber { get; set; }

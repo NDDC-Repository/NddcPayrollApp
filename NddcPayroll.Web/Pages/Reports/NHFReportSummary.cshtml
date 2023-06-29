@@ -11,7 +11,7 @@
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li>
-                    <li class="breadcrumb-item active">Starter</li>
+                    <li class="breadcrumb-item active">NHF Report</li>
                 </ol>
             </div>
 
@@ -19,5 +19,28 @@
     </div>
 </div>
 
+<form method="post">
+    <div class="card">
+        <div class="card-body">
+            <div class="row g-2">
+                <div class="col-sm-4">
+                    <div class="search-box">
+                        @*<input type="text" class="form-control" id="searchMemberList" placeholder="Search for name or designation...">
+                        <i class="ri-search-line search-icon"></i>*@
+                        <h4 class="fs-18 lh-base mb-0">NHF By State and Summary Report</h4>
+                    </div>
+                </div>
+                <!--end col-->
+                <div class="col-sm-auto ms-auto">
+                    <div class="list-grid-nav hstack gap-1">
+                        <button class="btn btn-success addMembers-modal"><i class="ri-file-excel-2-fill"></i> Export To Excel</button>
+                    </div>
+                </div>
+                <!--end col-->
+            </div>
+            <!--end row-->
+        </div>
+    </div>
+</form>
 
 <component type="typeof(NddcPayroll.Web.MyComponents.NHFReportComp)" render-mode="ServerPrerendered" />

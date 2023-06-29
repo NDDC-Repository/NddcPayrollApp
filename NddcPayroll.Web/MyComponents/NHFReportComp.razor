@@ -5,13 +5,12 @@
 @inject IReportsData db;
 
 
-<div class="card">
+@*<div class="card">
     <div class="card-body">
         <div class="row g-2">
             <div class="col-sm-4">
                 <div class="search-box">
-                    @*<input type="text" class="form-control" id="searchMemberList" placeholder="Search for name or designation...">
-                    <i class="ri-search-line search-icon"></i>*@
+                   
                     <h4 class="fs-18 lh-base mb-0">NHF By State and Summary Report</h4>
                 </div>
             </div>
@@ -32,7 +31,7 @@
         </div>
         <!--end row-->
     </div>
-</div>
+</div>*@
 
 @if (ShowAnim == true)
 {
@@ -74,14 +73,24 @@ else if (ShowGrid == true)
     private List<object> toolbar = new List<object> { "Search", "ExcelExport", "ColumnChooser" };
     private SfGrid<MyNHFReportModel>? SfEmployeeGrid { get; set; }
 
-    //protected override async Task OnInitializedAsync()
-    //{
-    //    //PayrollList = db.GetPayrollListReport();
-    //    //Message = "";
-    //    //Message = "Loading Report Please Wait ........";
-    //    PayrollList = await Task.Run(() => db.GetPayrollListReport());
 
-    //}
+    public double OpsTime { get; set; }
+    public bool ShowAnim { get; set; }
+    public bool ShowGrid { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+       
+        ShowAnim = true;
+        var watch = System.Diagnostics.Stopwatch.StartNew();
+        Message = "Loading Report Please Wait ........";
+        NHFReportList = await Task.Run(() => db.GetNHFReportAsync());
+        //Message = "";
+        watch.Stop();
+        OpsTime = watch.ElapsedMilliseconds / 1000;
+        ShowAnim = false;
+        ShowGrid = true;
+
+    }
     public async void ToolbarBtnClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
     {
         if (args.Item.Id.Contains("_excelexport"))
@@ -98,9 +107,7 @@ else if (ShowGrid == true)
             Console.Write("Export to Xml functionality");
         }
     }
-    public double OpsTime { get; set; }
-    public bool ShowAnim { get; set; }
-    public bool ShowGrid { get; set; }
+    
     private async Task GenerateReport()
     {
         ShowAnim = true;

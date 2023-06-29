@@ -231,6 +231,13 @@ namespace NddcPayroll.Web.Pages.Reports
                 worksheet.Range["E8"].CellStyle.Font.Size = 9;
                 worksheet.Range["G8"].CellStyle.Font.Size = 9;
 
+                worksheet.PageSetup.Orientation = ExcelPageOrientation.Landscape;
+                worksheet.PageSetup.FitToPagesTall = 0;
+
+                worksheet.PageSetup.LeftFooter = "&KFF0000 Dynamics 365 - Simple Payroll";
+                worksheet.PageSetup.CenterFooter = $"&KFF0000 Printed On: &D at &T";
+                worksheet.PageSetup.RightFooter = "&KFF0000 pages &P- of &N";
+
 
 
 
@@ -329,7 +336,7 @@ namespace NddcPayroll.Web.Pages.Reports
                     newWorkSheet.Range["J8:K8"].CellStyle.Font.Size = 10;
 
                     newWorkSheet.Range["J9"].Text = "INSTRUMENT NO:";
-                    newWorkSheet.Range["K9"].Text = "Cheque";
+                    newWorkSheet.Range["K9"].Text = "";
                     newWorkSheet.Range["J9"].HorizontalAlignment = ExcelHAlign.HAlignRight;
                     newWorkSheet.Range["K9"].HorizontalAlignment = ExcelHAlign.HAlignRight;
                     newWorkSheet.Range["K9"].CellStyle.Font.Bold = true;
@@ -500,6 +507,13 @@ namespace NddcPayroll.Web.Pages.Reports
                     range.BorderAround(ExcelLineStyle.Thin);
 
                     newWorkSheet.TabColor = ExcelKnownColors.Green;
+
+                    newWorkSheet.PageSetup.Orientation = ExcelPageOrientation.Landscape;
+                    newWorkSheet.PageSetup.FitToPagesTall = 0;
+
+                    worksheet.PageSetup.LeftFooter = "&KFF0000 Dynamics 365 - Simple Payroll";
+                    worksheet.PageSetup.CenterFooter = $"&KFF0000 Printed On: &D at &T";
+                    worksheet.PageSetup.RightFooter = "&KFF0000 pages &P- of &N";
                 }
 
 

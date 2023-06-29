@@ -625,6 +625,31 @@ namespace NddcPayrollLibrary.Data.Reports
             return Reports;
         }
 
+        public List<MyNHFReportModel> GetNHFReportByPaypoint(string payPoint)
+        {
+
+            //MyPayRollListModel reportModel;
+            List<MyNHFReportModel> Reports = new List<MyNHFReportModel>();
+
+            string SQL3 = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, Employees.Id, Employees.EmployeeCode, Employees.FirstName, Employees.LastName, Employees.NHFNumber, Employees.PayPoint, (Employees.NHF) As NHFAmount FROM Employees WHERE Archived = 0 And PayPoint = @PayPoint ORDER BY Employees.Id ASC";
+
+            Reports = db.LoadData<MyNHFReportModel, dynamic>(SQL3, new { PayPoint = payPoint }, connectionStringName, false).ToList();
+
+            return Reports;
+        }
+        public List<MyNHFReportModel> GetNHFReportSummary()
+        {
+
+            //MyPayRollListModel reportModel;
+            List<MyNHFReportModel> Reports = new List<MyNHFReportModel>();
+
+            string SQL3 = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.PayPoint ASC) As SrNo, Employees.PayPoint, Count(Employees.EmployeeCode) As EmpCount, Sum(Employees.NHF) As NHFAmount FROM Employees WHERE Archived = 0 Group By PayPoint Order By PayPoint ASC";
+
+            Reports = db.LoadData<MyNHFReportModel, dynamic>(SQL3, new { }, connectionStringName, false).ToList();
+
+            return Reports;
+        }
+
         public List<MyPayPointChartModel> GetPayPointData()
         {
             string sql = "select sum(TotalEarnings) As TotalEarnings, TaxStateProvince From Employees Group By TaxStateProvince";
