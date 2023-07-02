@@ -246,7 +246,7 @@ namespace NddcPayrollLibrary.Data.Reports
             List<MyPayeReportSummaryModel> PayeSummaryList = new List<MyPayeReportSummaryModel>();
             //List<Task<decimal>> tasks = new List<Task<decimal>>();
 
-            string SQL = "Select (TaxStateProvince) As Location,Count(EmployeeCode) As EmployeeCount, Sum(TotalEarnings) As GrossIncome, Sum(Tax) As Tax From Employees Where Archived = 0 Group By TaxStateProvince";
+            string SQL = "Select (TaxStateProvince) As Location, Count(EmployeeCode) As EmployeeCount, Sum(TotalEarnings) As GrossIncome, Sum(Tax) As Tax From Employees Where Archived = 0 Group By TaxStateProvince";
 
             await (Task.Run(() => PayeSummaryList = db.LoadData<MyPayeReportSummaryModel, dynamic>(SQL, new { }, connectionStringName, false).ToList()));
             

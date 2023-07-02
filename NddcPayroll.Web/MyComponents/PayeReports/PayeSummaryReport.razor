@@ -5,13 +5,12 @@
 @inject IReportsData db;
 
 
-<div class="card">
+@*<div class="card">
     <div class="card-body">
         <div class="row g-2">
             <div class="col-sm-4">
                 <div class="search-box">
-                    @*<input type="text" class="form-control" id="searchMemberList" placeholder="Search for name or designation...">
-                    <i class="ri-search-line search-icon"></i>*@
+                   
                     <h4 class="fs-18 lh-base mb-0">Summary of PAYE Tax Deductions</h4>
                 </div>
             </div>
@@ -31,7 +30,7 @@
         </div>
         <!--end row-->
     </div>
-</div>
+</div>*@
 
 @if (ShowAnim == true)
 {
@@ -116,6 +115,8 @@ else if (ShowGrid == true)
     //    PayrollList = await Task.Run(() => db.GetPayrollListReport());
 
     //}
+   
+
     public async void ToolbarBtnClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
     {
         if (args.Item.Id.Contains("_excelexport"))
@@ -148,5 +149,17 @@ else if (ShowGrid == true)
         ShowGrid = true;
     }
 
+    protected override async Task OnInitializedAsync()
+    {
+        ShowAnim = true;
+        var watch = System.Diagnostics.Stopwatch.StartNew();
+        Message = "Loading Report Please Wait ........";
+        PayeSummaryList = await Task.Run(() => db.GetPayeSummaryReportAsync());
+        //Message = "";
+        watch.Stop();
+        OpsTime = watch.ElapsedMilliseconds / 1000;
+        ShowAnim = false;
+        ShowGrid = true;
+    }
 
 }

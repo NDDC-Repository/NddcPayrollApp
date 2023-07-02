@@ -511,9 +511,9 @@ namespace NddcPayroll.Web.Pages.Reports
                     newWorkSheet.PageSetup.Orientation = ExcelPageOrientation.Landscape;
                     newWorkSheet.PageSetup.FitToPagesTall = 0;
 
-                    worksheet.PageSetup.LeftFooter = "&KFF0000 Dynamics 365 - Simple Payroll";
-                    worksheet.PageSetup.CenterFooter = $"&KFF0000 Printed On: &D at &T";
-                    worksheet.PageSetup.RightFooter = "&KFF0000 pages &P- of &N";
+                    newWorkSheet.PageSetup.LeftFooter = "&KFF0000 Dynamics 365 - Simple Payroll";
+                    newWorkSheet.PageSetup.CenterFooter = $"&KFF0000 Printed On: &D at &T";
+                    newWorkSheet.PageSetup.RightFooter = "&KFF0000 pages &P- of &N";
                 }
 
 

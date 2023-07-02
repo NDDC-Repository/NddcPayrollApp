@@ -103,6 +103,13 @@ namespace NddcPayroll.Web.Pages.Reports
                 worksheet.Range[$"E{i}"].Formula = $"=SUM(E5:E{i-1})";
                 worksheet.Range[$"E{i}"].NumberFormat = "#,###.##";
 
+                worksheet.PageSetup.Orientation = ExcelPageOrientation.Landscape;
+                worksheet.PageSetup.FitToPagesTall = 0;
+
+                worksheet.PageSetup.LeftFooter = "&KFF0000 Dynamics 365 - Simple Payroll";
+                worksheet.PageSetup.CenterFooter = $"&KFF0000 Printed On: &D at &T";
+                worksheet.PageSetup.RightFooter = "&KFF0000 pages &P- of &N";
+
                 //Generate other sheets
                 List<MyPayPointModel> Paypoints = new List<MyPayPointModel>();
                 Paypoints = compDb.GetAllPayPoints();
@@ -116,7 +123,7 @@ namespace NddcPayroll.Web.Pages.Reports
                     newWorkSheet.Workbook.StandardFont = "Arial";
                     newWorkSheet.Range["A1"].ColumnWidth = 2;
 
-                    newWorkSheet.Range["B2"].Text = $"National Housing Fund Listing Report for - {p.Code}";
+                    newWorkSheet.Range["B2"].Text = $"National Housing Fund Listing Report for - {p.PayPoint}";
                     newWorkSheet.Range["B2"].CellStyle.Font.Bold = true;
                     newWorkSheet.Range["B2"].CellStyle.Font.Size = 14;
                     newWorkSheet.Range["B2:H2"].Merge();
@@ -160,6 +167,39 @@ namespace NddcPayroll.Web.Pages.Reports
                     newWorkSheet.Range["H4"].Text = "NHF Amount ";
                     newWorkSheet.Range["H4"].ColumnWidth = 15;
                     newWorkSheet.Range["H4"].BorderAround(ExcelLineStyle.Thin);
+
+
+                    List<MyNHFReportModel> nhfList = new();
+                    nhfList = repDb.GetNHFReportByPaypoint(p.Code);
+                    int g = 5;
+                    foreach (var n in nhfList)
+                    {
+                        newWorkSheet.Range[$"B{g}"].Value = n.SrNo;
+                        newWorkSheet.Range[$"C{g}"].Text = n.PayPoint;
+                        newWorkSheet.Range[$"D{g}"].Text = n.EmployeeCode;
+                        newWorkSheet.Range[$"E{g}"].Text = "";
+                        newWorkSheet.Range[$"F{g}"].Text = n.LastName;
+                        newWorkSheet.Range[$"G{g}"].Text = n.FirstNAme;
+                        newWorkSheet.Range[$"H{g}"].Value2 = n.NHFAmount;
+                        g = g + 1;
+                    }
+
+                    newWorkSheet.Range[$"B5:H{g}"].BorderAround(ExcelLineStyle.Thin);
+                    newWorkSheet.Range[$"B{g}:H{g}"].CellStyle.Font.Bold = true;
+                    newWorkSheet.Range[$"C{g}"].Text = "Totals";
+                    newWorkSheet.Range[$"B{g}:G{g}"].Merge();
+                    newWorkSheet.Range[$"B{g}:G{g}"].BorderAround(ExcelLineStyle.Thin);
+
+                    newWorkSheet.Range[$"H{g}"].Formula = $"=SUM(H5:H{g - 1})";
+                    newWorkSheet.Range[$"H{g}"].BorderAround(ExcelLineStyle.Thin);
+                    newWorkSheet.Range[$"H5:H{g}"].NumberFormat = "#,###.##";
+
+                    newWorkSheet.PageSetup.Orientation = ExcelPageOrientation.Landscape;
+                    newWorkSheet.PageSetup.FitToPagesTall = 0;
+
+                    newWorkSheet.PageSetup.LeftFooter = "&KFF0000 Dynamics 365 - Simple Payroll";
+                    newWorkSheet.PageSetup.CenterFooter = $"&KFF0000 Printed On: &D at &T";
+                    newWorkSheet.PageSetup.RightFooter = "&KFF0000 pages &P- of &N";
                 }
 
 
