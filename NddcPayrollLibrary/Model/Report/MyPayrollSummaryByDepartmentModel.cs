@@ -23,6 +23,7 @@ namespace NddcPayrollLibrary.Model.Report
         public decimal DriverAllow { get; set; }
         public decimal VehicleAllow { get; set; }
         public decimal HazardAllow { get; set; }
+        public decimal ShiftAllow { get; set; }
         public decimal Tax { get; set; }
         public decimal NHF { get; set; }
         public decimal Pension { get; set; }

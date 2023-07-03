@@ -68,7 +68,7 @@ namespace NddcPayroll.Web.Pages.Reports.PayeDeductions
                 range = worksheet.Range["C5"];
                 range.BorderAround(ExcelLineStyle.Thin);
 
-                worksheet.Range["F2"].Text = DateTime.Now.ToString("MMMM yyyy"); ;
+                worksheet.Range["F2"].Text = DateTime.Now.ToString("MMMM yyyy");
                 worksheet.Range["F2"].CellStyle.Font.Bold = true;
                 worksheet.Range["F2"].HorizontalAlignment = ExcelHAlign.HAlignRight;
                 worksheet.Range["F2"].CellStyle.Font.RGBColor = Color.FromArgb(0, 127, 100);

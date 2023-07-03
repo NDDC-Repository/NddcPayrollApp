@@ -267,7 +267,7 @@ namespace NddcPayrollLibrary.Data.Reports
                 "Sum(Employees.EducationAllow) As EducationAllow, Sum(Employees.SecurityAllow) As SecurityAllow, " +
                 "Sum(Employees.MedicalAllow) As MedicalAllow, Sum(Employees.DomesticServantAllow) As DomesticServantAllow, " +
                 "Sum(Employees.DriverAllow) As DriverAllow, Sum(Employees.VehicleAllow) As VehicleAllow, " +
-                "Sum(Employees.HazardAllow) As HazardAllow, Sum(Employees.Tax) As Tax, Sum(Employees.NHF) As NHF, " +
+                "Sum(Employees.HazardAllow) As HazardAllow, Sum(ShiftAllow) As ShiftAllow, Sum(Employees.Tax) As Tax, Sum(Employees.NHF) As NHF, " +
                 "Sum(Employees.JSA) As JSA, Sum(Employees.SSA) As SSA, Sum(Employees.TotalEarnings) As TotalEarnings, " +
                 "Sum(Employees.NetPay) As NetPay, Sum(Employees.BasicSalary) As BasicSalary, " +
                 "Sum(Employees.MonthlyGross) As MonthlyGross, Sum(Employees.Pension) As Pension, Sum(Employees.EmployerPension) As EmployerPension, DepartmentId, " +
@@ -279,7 +279,7 @@ namespace NddcPayrollLibrary.Data.Reports
             foreach (var item in PayrollSummaryList)
             {
                 item.TotalEarnings = (item.BasicSalary + item.TransportAllow + item.MealAllow + item.UtilityAllow + item.EducationAllow + item.SecurityAllow +
-                    item.DomesticServantAllow + item.MedicalAllow + item.DriverAllow + item.VehicleAllow + item.HazardAllow + item.SecretarialAllow);
+                    item.DomesticServantAllow + item.MedicalAllow + item.DriverAllow + item.VehicleAllow + item.HazardAllow + item.SecretarialAllow) + item.ShiftAllow;
                 item.TotalDeductions = (item.Tax + item.NHF + item.Pension + item.JSA + item.CooporativeDed + item.SSA);
                 item.NetPay = item.TotalEarnings - item.TotalDeductions;
             }
@@ -301,7 +301,7 @@ namespace NddcPayrollLibrary.Data.Reports
                 "Sum(Employees.EducationAllow) As EducationAllow, Sum(Employees.SecurityAllow) As SecurityAllow, " +
                 "Sum(Employees.MedicalAllow) As MedicalAllow, Sum(Employees.DomesticServantAllow) As DomesticServantAllow, " +
                 "Sum(Employees.DriverAllow) As DriverAllow, Sum(Employees.VehicleAllow) As VehicleAllow, " +
-                "Sum(Employees.HazardAllow) As HazardAllow, Sum(Employees.Tax) As Tax, Sum(Employees.NHF) As NHF, " +
+                "Sum(Employees.HazardAllow) As HazardAllow, Sum(ShiftAllow) As ShiftAllow, Sum(Employees.Tax) As Tax, Sum(Employees.NHF) As NHF, " +
                 "Sum(Employees.JSA) As JSA, Sum(Employees.SSA) As SSA, Sum(Employees.TotalEarnings) As TotalEarnings, " +
                 "Sum(Employees.NetPay) As NetPay, Sum(Employees.BasicSalary) As BasicSalary, " +
                 "Sum(Employees.MonthlyGross) As MonthlyGross, Sum(Employees.Pension) As Pension, Sum(Employees.EmployerPension) As EmployerPension FROM  Employees" +
@@ -312,7 +312,7 @@ namespace NddcPayrollLibrary.Data.Reports
             foreach (var item in PayrollSummaryList)
             {
                 item.TotalEarnings = (item.BasicSalary + item.TransportAllow + item.MealAllow + item.UtilityAllow + item.EducationAllow + item.SecurityAllow +
-                    item.DomesticServantAllow + item.MedicalAllow + item.DriverAllow + item.VehicleAllow + item.HazardAllow + item.SecretarialAllow);
+                    item.DomesticServantAllow + item.MedicalAllow + item.DriverAllow + item.VehicleAllow + item.HazardAllow + item.SecretarialAllow) + item.ShiftAllow;
                 item.TotalDeductions = (item.Tax + item.NHF + item.Pension + item.JSA + item.CooporativeDed + item.SSA);
                 item.NetPay = item.TotalEarnings - item.TotalDeductions;
             }
