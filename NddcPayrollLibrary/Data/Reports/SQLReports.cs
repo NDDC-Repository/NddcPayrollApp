@@ -327,7 +327,7 @@ namespace NddcPayrollLibrary.Data.Reports
             List<MyStaffPayeDeductionsModel> StaffPayeList = new List<MyStaffPayeDeductionsModel>();
             //List<Task<decimal>> tasks = new List<Task<decimal>>();
 
-            string SQL = "select ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, EmployeeCode, LastName, FirstName, TotalEarnings, Tax From Employees Where TaxStateProvince = @TaxStateProvince And Archived = 0";
+            string SQL = "select ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, EmployeeCode, LastName, FirstName, OtherNames, TotalEarnings, Tax From Employees Where TaxStateProvince = @TaxStateProvince And Archived = 0";
 
             await (Task.Run(() => StaffPayeList = db.LoadData<MyStaffPayeDeductionsModel, dynamic>(SQL, new { TaxStateProvince = staffStateProvince }, connectionStringName, false).ToList()));
 
@@ -631,7 +631,7 @@ namespace NddcPayrollLibrary.Data.Reports
             //MyPayRollListModel reportModel;
             List<MyNHFReportModel> Reports = new List<MyNHFReportModel>();
 
-            string SQL3 = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, Employees.Id, Employees.EmployeeCode, Employees.FirstName, Employees.LastName, Employees.NHFNumber, Employees.PayPoint, (Employees.NHF) As NHFAmount FROM Employees WHERE Archived = 0 And PayPoint = @PayPoint ORDER BY Employees.Id ASC";
+            string SQL3 = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id ASC) As SrNo, Employees.Id, Employees.EmployeeCode, Employees.FirstName, Employees.LastName, Employees.OtherNames, Employees.NHFNumber, Employees.PayPoint, (Employees.NHF) As NHFAmount FROM Employees WHERE Archived = 0 And PayPoint = @PayPoint ORDER BY Employees.Id ASC";
 
             Reports = db.LoadData<MyNHFReportModel, dynamic>(SQL3, new { PayPoint = payPoint }, connectionStringName, false).ToList();
 
@@ -668,7 +668,7 @@ namespace NddcPayrollLibrary.Data.Reports
             List<PensionSummaryModel> Reports = new List<PensionSummaryModel>();
             //List<Task<decimal>> tasks = new List<Task<decimal>>();
 
-            string SQL = "SELECT (PensionAdministrators.Code) As PFACode, (PensionAdministrators.Description) As PFAName, Count(Employees.Id) As EmployeeCount, Sum(Employees.VoluntaryPension) as VoluntaryPension, Sum(Employees.Pension) As EmployeePension, Sum(Employees.EmployerPension) As EmployerPension, Sum(Employees.Pension + Employees.EmployerPension) As Total FROM  Employees LEFT JOIN PensionAdministrators ON Employees.PensionFundId = PensionAdministrators.Id WHERE Employees.PensionFundNumber != '' And Employees.Archived = 0 GROUP BY Code, Description";
+            string SQL = "SELECT (PensionAdministrators.Code) As PFACode, (PensionAdministrators.Description) As PFAName, Count(Employees.Id) As EmployeeCount, Sum(Employees.VoluntaryPension) as VoluntaryPension, Sum(Employees.Pension) As EmployeePension, Sum(Employees.EmployerPension) As EmployerPension, Sum(Employees.Pension + Employees.EmployerPension + Employees.VoluntaryPension) As Total FROM  Employees LEFT JOIN PensionAdministrators ON Employees.PensionFundId = PensionAdministrators.Id WHERE Employees.PensionFundNumber != '' And Employees.Archived = 0 GROUP BY Code, Description";
 
             Reports = db.LoadData<PensionSummaryModel, dynamic>(SQL, new { }, connectionStringName, false).ToList();
 
@@ -681,9 +681,43 @@ namespace NddcPayrollLibrary.Data.Reports
             List<PensionSummaryModel> Reports = new List<PensionSummaryModel>();
             //List<Task<decimal>> tasks = new List<Task<decimal>>();
 
-            string SQL = "SELECT (Employees.EmployeeCode) As EmployeeCode, (Employees.FirstName + ' ' + Employees.LastName) As EmployeeName, (Employees.PensionFundNumber) As RSAPin, (PensionAdministrators.Code) As PFACode, (PensionAdministrators.Description) As PFAName, (Employees.VoluntaryPension) As VoluntaryPension, (Employees.Pension) As EmployeePension, (Employees.EmployerPension) As EmployerPension, (Employees.Pension + Employees.EmployerPension) As Total FROM  Employees LEFT JOIN PensionAdministrators ON Employees.PensionFundId = PensionAdministrators.Id WHERE Employees.PensionFundId = @PensionFundId And Employees.Archived = 0";
+            string SQL = "SELECT (Employees.EmployeeCode) As EmployeeCode, (Employees.LastName + ' ' + Employees.FirstName + ' ' + Employees.OtherNames) As EmployeeName, (Employees.PensionFundNumber) As RSAPin, (PensionAdministrators.Code) As PFACode, (PensionAdministrators.Description) As PFAName, (Employees.VoluntaryPension) As VoluntaryPension, (Employees.Pension) As EmployeePension, (Employees.EmployerPension) As EmployerPension, (Employees.Pension + Employees.EmployerPension) As Total FROM  Employees LEFT JOIN PensionAdministrators ON Employees.PensionFundId = PensionAdministrators.Id WHERE Employees.PensionFundId = @PensionFundId And Employees.Archived = 0";
 
             Reports = db.LoadData<PensionSummaryModel, dynamic>(SQL, new { PensionFundId = pensionFundId }, connectionStringName, false).ToList();
+
+            return Reports;
+        }
+
+        public List<MyVarianceReportModel> GetVarianceEariningsReport(int payrollJournalTitleId)
+        {
+
+            List<MyVarianceReportModel> Reports = new List<MyVarianceReportModel>();
+
+            string SQL = "Select e.EmployeeCode, e.FirstName, e.LastName, e.OtherNames, (p.TotalEarnings) As TotalEarningsPP, (e.TotalEarnings) As TotalEarningsCurr, (e.TotalEarnings - p.TotalEarnings) As EarningsVariance, ((e.TotalEarnings - p.TotalEarnings)/p.TotalEarnings * 100) As EarningsVariancePerc From Employees e Left Join PayrollJournals p on e.EmployeeCode = p.EmployeeCode Where p.PayrollJournalTitleId = @Id";
+
+            Reports = db.LoadData<MyVarianceReportModel, dynamic>(SQL, new { Id = payrollJournalTitleId }, connectionStringName, false).ToList();
+
+            return Reports;
+        }
+        public List<MyVarianceReportModel> GetVarianceDeductionsReport(int payrollJournalTitleId)
+        {
+
+            List<MyVarianceReportModel> Reports = new List<MyVarianceReportModel>();
+
+            string SQL = "Select e.EmployeeCode, e.FirstName, e.LastName, e.OtherNames, (p.TotalDeductions) As TotalDedPP, (e.TotalDeductions) As TotalDedCurr, (e.TotalDeductions - p.TotalDeductions) As DedVariance, ((e.TotalDeductions - p.TotalDeductions)/p.TotalDeductions * 100) As DedVariancePerc From Employees e Left Join PayrollJournals p on e.EmployeeCode = p.EmployeeCode Where p.PayrollJournalTitleId = @Id";
+
+            Reports = db.LoadData<MyVarianceReportModel, dynamic>(SQL, new { Id = payrollJournalTitleId }, connectionStringName, false).ToList();
+
+            return Reports;
+        }
+        public List<MyVarianceReportModel> GetVarianceNetPayReport(int payrollJournalTitleId)
+        {
+
+            List<MyVarianceReportModel> Reports = new List<MyVarianceReportModel>();
+
+            string SQL = "Select e.EmployeeCode, e.FirstName, e.LastName, e.OtherNames, (p.TotalDeductions) As TotalDedPP, (e.TotalDeductions) As TotalDedCurr, (e.TotalDeductions - p.TotalDeductions) As DedVariance, ((e.TotalDeductions - p.TotalDeductions)/p.TotalDeductions * 100) As DedVariancePerc From Employees e Left Join PayrollJournals p on e.EmployeeCode = p.EmployeeCode Where p.PayrollJournalTitleId = @Id";
+
+            Reports = db.LoadData<MyVarianceReportModel, dynamic>(SQL, new { Id = payrollJournalTitleId }, connectionStringName, false).ToList();
 
             return Reports;
         }

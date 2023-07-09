@@ -13,6 +13,7 @@ namespace NddcPayrollLibrary.Model.Report
         public string EmployeeCode { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
+        public string OtherNames { get; set; }
         public decimal TotalEarnings { get; set; }
         public decimal Tax { get; set; }
 

@@ -177,9 +177,9 @@ namespace NddcPayroll.Web.Pages.Reports
                         newWorkSheet.Range[$"B{g}"].Value = n.SrNo;
                         newWorkSheet.Range[$"C{g}"].Text = n.PayPoint;
                         newWorkSheet.Range[$"D{g}"].Text = n.EmployeeCode;
-                        newWorkSheet.Range[$"E{g}"].Text = "";
+                        newWorkSheet.Range[$"E{g}"].Text = n.NHFNumber;
                         newWorkSheet.Range[$"F{g}"].Text = n.LastName;
-                        newWorkSheet.Range[$"G{g}"].Text = n.FirstNAme;
+                        newWorkSheet.Range[$"G{g}"].Text = $"{n.FirstNAme} {n.OtherNames}";
                         newWorkSheet.Range[$"H{g}"].Value2 = n.NHFAmount;
                         g = g + 1;
                     }

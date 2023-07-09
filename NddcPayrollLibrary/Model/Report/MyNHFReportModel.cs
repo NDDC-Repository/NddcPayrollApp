@@ -16,6 +16,7 @@ namespace NddcPayrollLibrary.Model.Report
         public string NHFNumber { get; set; }
         public string FirstNAme { get; set; }
         public string LastName { get; set; }
+        public string OtherNames { get; set; }
         public decimal NHFAmount { get; set; }
         public decimal BasicSalary { get; set; }
     }

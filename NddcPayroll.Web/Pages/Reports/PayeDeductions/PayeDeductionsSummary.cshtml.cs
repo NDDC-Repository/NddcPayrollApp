@@ -247,7 +247,7 @@ namespace NddcPayroll.Web.Pages.Reports.PayeDeductions
                         newWorkSheet.Range[$"D{v}"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
                         newWorkSheet.Range[$"E{v}"].Value2 = s.LastName;
                         //newWorkSheet.Range[$"E{v}"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
-                        newWorkSheet.Range[$"F{v}"].Value2 = s.FirstName;
+                        newWorkSheet.Range[$"F{v}"].Value2 = $"{s.FirstName} {s.OtherNames}";
                         //newWorkSheet.Range[$"F{v}"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
                         newWorkSheet.Range[$"G{v}"].Value2 = s.TotalEarnings;
                         newWorkSheet.Range[$"G{v}"].NumberFormat = "#,###.##";

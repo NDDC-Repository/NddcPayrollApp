@@ -191,7 +191,7 @@ namespace NddcPayroll.Web.Pages.Reports
                     worksheet.Range[$"G{i}"].Value2 = item.EmployerPension;
                     worksheet.Range[$"H{i}"].Value2 = item.EmployeePension;
                     worksheet.Range[$"I{i}"].Value2 = 0.00;
-                    worksheet.Range[$"J{i}"].Value2 = 0.00;
+                    worksheet.Range[$"J{i}"].Value2 = item.VoluntaryPension;
                     worksheet.Range[$"K{i}"].Value2 = item.Total;
                     i =i+1;
                 }

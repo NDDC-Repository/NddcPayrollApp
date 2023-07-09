@@ -383,21 +383,15 @@ else
                     <AuthorizeView Roles="Admin" Context="innerContext">
                         <button @onclick="SaveEmployeeLink" class="btn btn-primary">Save Changes</button>
                         <label>@Message</label>
+                        
                     </AuthorizeView>
                 </CascadingAuthenticationState>
-                
+
         </div>
     </div>
-   
-
 </div>
 
 }
- 
-   
-
-
-
 
 @code {
 
