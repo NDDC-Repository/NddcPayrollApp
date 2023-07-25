@@ -2,9 +2,40 @@
 @using NddcPayrollLibrary.Data.EmployeeData;
 @using NddcPayrollLibrary.Model.Company;
 @using NddcPayrollLibrary.Model.Employee;
+@using Syncfusion.Blazor
+@using Syncfusion.Blazor.Notifications
 
 @inject IEmployeeData empDb;
 @inject ICompanyData compDb;
+
+
+<SfToast ID="toast_success" @ref="ToastObj" Title="Update Success" Timeout="5000" Icon="e-meeting">
+   @* <ToastPosition X="@ToastPosition"></ToastPosition>*@
+    <ToastPosition X="Right" Y="Bottom"></ToastPosition>
+    <ToastTemplates>
+        <Template>
+            
+            <div class="alert alert-success alert-dismissible alert-solid alert-label-icon fade show" role="alert">
+                <i class="ri-notification-off-line label-icon"></i><strong> Changes Saved Successfully!!!</strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </Template>
+    </ToastTemplates>
+</SfToast>
+
+@*<style>
+    #toast_default .e-meeting::before {
+        content: "\e705";
+        font-size: 17px;
+    }
+
+    .bootstrap4 #toast_default .e-meeting::before {
+        content: "\e763";
+        font-size: 20px;
+    }
+
+    
+</style>*@
 
 <EditForm Model="Employee">
     <div class="row">
@@ -188,6 +219,10 @@
 
 @code {
 
+    SfToast ToastObj;
+    private string ToastPosition = "Center";
+    private string ToastContent = "Successfully Updated Personal Details";
+
     public EmployeeModel Employee { get; set; }
 
     public List<MyStatesModel> States { get; set; }
@@ -203,10 +238,14 @@
         Employee = empDb.GetEmployeeDetails(EmpId);
         States = compDb.GetAllStates();
     }
-    private void UpdateDetails()
+    
+    
+    private async Task UpdateDetails()
     {
         empDb.UpdateEmployee(Employee);
-        Message = "Employee Details Successfully Updated";
+        await this.ToastObj.ShowAsync();
+        //Message = "Employee Details Successfully Updated";
     }
 
 }
+

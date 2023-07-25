@@ -41,7 +41,7 @@
 
     @foreach (var item in Model.PaySlips)
     {
-        r = r + 1;
+        //r = r + 1;
         <div class="row" style="border:1px solid black;">
             <div class="col-4">
                 <table style="font-size: 10px;">
@@ -382,10 +382,10 @@
             </div>
         </div>
 
-        if (r % 2 == 0)
+        @*if (r % 2 == 0)
         {
             <div style="page-break-after:always"></div>
-        }
+        }*@
     }
 </body>
 </html>

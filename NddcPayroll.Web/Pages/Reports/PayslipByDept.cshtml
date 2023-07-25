@@ -49,7 +49,7 @@
                             </div>
                             <div class="d-flex gap-3 mt-4">
                                 @*<a @onclick="GenerateReport" class="btn btn-primary">Generate Report </a>*@
-                                <button type="submit" class="btn btn-primary">View Pay Slips</button>
+                                <button type="submit" class="btn btn-primary" asp-page-handler="ExcelExport">View Pay Slips</button>
 
                                 @*<a asp-page="/payslipdept" asp-page-handler="ReportFromPartial" asp-route-departmentId="@Model.DepartmentId" asp-route-payrollJournalTitleId="@Model.PayrollJournalTitleId" asp-ro class="btn btn-outline-primary mx-3"><i class="ri-profile-line me-1 align-bottom"></i>Export To PDF</a>*@
                                 @*<input type="hidden" name="GridHtml" />
