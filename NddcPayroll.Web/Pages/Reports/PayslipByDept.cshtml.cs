@@ -277,10 +277,10 @@ namespace NddcPayroll.Web.Pages.Reports
 
                     worksheet.Range[$"A{i + 1}:F{i + 22}"].RowHeight = 15;
                     worksheet.Range[$"A{i + 22}"].RowHeight = 25;
-                    worksheet.Range[$"C{i + 7}:C{i + 22}"].NumberFormat = "##,##.##";
-                    worksheet.Range[$"E{i + 7}:E{i + 22}"].NumberFormat = "##,##.##";
+                    worksheet.Range[$"C{i + 6}:C{i + 22}"].NumberFormat = "##,##.##";
+                    worksheet.Range[$"E{i + 6}:E{i + 22}"].NumberFormat = "##,##.##";
                     worksheet.Range[$"E{i + 22}"].NumberFormat = "##,##.##";
-                    worksheet.Range[$"C{i + 7}:C{i + 22}"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
+                    worksheet.Range[$"C{i + 6}:C{i + 22}"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
 
 
 
