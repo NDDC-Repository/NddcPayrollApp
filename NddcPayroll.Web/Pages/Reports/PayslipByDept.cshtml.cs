@@ -83,9 +83,9 @@ namespace NddcPayroll.Web.Pages.Reports
                 IWorksheet worksheet = workbook.Worksheets.Create("SUMMARY");
 
                 worksheet.IsGridLinesVisible = false;
-                worksheet.Workbook.StandardFont = "Arial";
+                worksheet.Workbook.StandardFont = "Verdana";
                 worksheet.Workbook.StandardFontSize = 10;
-                worksheet.Zoom = 80;
+                worksheet.Zoom = 100;
 
                 PaySlips = await Task.Run(() => empDb.GetEmployeePaySlipByDept(DepartmentId, PayrollJournalTitleId));
                 int i = 2;
@@ -110,13 +110,13 @@ namespace NddcPayroll.Web.Pages.Reports
                     worksheet.Range[$"A{i + 1}"].Text = "Emp Code";
                     worksheet.Range[$"A{i + 1}"].CellStyle.Font.Bold = true;
                     worksheet.Range[$"B{i + 1}"].Text = p.EmployeeCode;
-                    worksheet.Range[$"C{i + 1}"].Text = "Date Engaged";
+                    worksheet.Range[$"C{i + 1}"].Text = "Department";
                     worksheet.Range[$"C{i + 1}"].CellStyle.Font.Bold = true;
-                    worksheet.Range[$"D{i + 1}"].Value2 = p.DateEngaged;
+                    worksheet.Range[$"D{i + 1}"].Text = p.DepartmentName;
                     worksheet.Range[$"D{i + 1}"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
-                    worksheet.Range[$"E{i + 1}"].Text = "Department";
+                    worksheet.Range[$"E{i + 1}"].Text = "Date Engaged";
                     worksheet.Range[$"E{i + 1}"].CellStyle.Font.Bold = true;
-                    worksheet.Range[$"F{i + 1}"].Text = p.DepartmentName;
+                    worksheet.Range[$"F{i + 1}"].Value2 = p.DateEngaged;
 
                     worksheet.Range[$"A{i + 2}"].Text = "Emp Name";
                     worksheet.Range[$"A{i + 2}"].CellStyle.Font.Bold = true;
@@ -156,60 +156,76 @@ namespace NddcPayroll.Web.Pages.Reports
                     worksheet.Range[$"A{i + 6}:B{i + 6}"].Merge();
                     worksheet.Range[$"C{i + 6}"].Value2 = p.BasicSalary;
 
-                    worksheet.Range[$"A{i + 7}"].Text = "Transport Allowance";
+                    worksheet.Range[$"A{i + 7}"].Text = "Housing Allowance";
                     worksheet.Range[$"A{i + 7}:B{i + 7}"].Merge();
-                    worksheet.Range[$"C{i + 7}"].Value2 = p.TransportAllow;
+                    worksheet.Range[$"C{i + 7}"].Value2 = p.HousingAllow;
 
-                    worksheet.Range[$"A{i + 8}"].Text = "Meal Allowance";
+                    worksheet.Range[$"A{i + 8}"].Text = "Furniture Allowance";
                     worksheet.Range[$"A{i + 8}:B{i + 8}"].Merge();
-                    worksheet.Range[$"C{i + 8}"].Value2 = p.MealAllow;
+                    worksheet.Range[$"C{i + 8}"].Value2 = p.FurnitureAllow;
 
-                    worksheet.Range[$"A{i + 9}"].Text = "Utility Allowance";
+                    worksheet.Range[$"A{i + 9}"].Text = "Transport Allowance";
                     worksheet.Range[$"A{i + 9}:B{i + 9}"].Merge();
-                    worksheet.Range[$"C{i + 9}"].Value2 = p.UtilityAllow;
+                    worksheet.Range[$"C{i + 9}"].Value2 = p.TransportAllow;
 
-                    worksheet.Range[$"A{i + 10}"].Text = "Security Allowance";
+                    worksheet.Range[$"A{i + 10}"].Text = "Meal Allowance";
                     worksheet.Range[$"A{i + 10}:B{i + 10}"].Merge();
-                    worksheet.Range[$"C{i + 10}"].Value2 = p.SecurityAllow;
+                    worksheet.Range[$"C{i + 10}"].Value2 = p.MealAllow;
 
-                    worksheet.Range[$"A{i + 11}"].Text = "Domestic Serv Allowance";
+                    worksheet.Range[$"A{i + 11}"].Text = "Utility Allowance";
                     worksheet.Range[$"A{i + 11}:B{i + 11}"].Merge();
-                    worksheet.Range[$"C{i + 11}"].Value2 = p.DomesticServantAllow;
+                    worksheet.Range[$"C{i + 11}"].Value2 = p.UtilityAllow;
 
-                    worksheet.Range[$"A{i + 12}"].Text = "Driver Allowance";
+                    worksheet.Range[$"A{i + 12}"].Text = "Security Allowance";
                     worksheet.Range[$"A{i + 12}:B{i + 12}"].Merge();
-                    worksheet.Range[$"C{i + 12}"].Value2 = p.DriverAllow;
+                    worksheet.Range[$"C{i + 12}"].Value2 = p.SecurityAllow;
 
-                    worksheet.Range[$"A{i + 13}"].Text = "Education Allowance";
+                    worksheet.Range[$"A{i + 13}"].Text = "Domestic Serv Allowance";
                     worksheet.Range[$"A{i + 13}:B{i + 13}"].Merge();
-                    worksheet.Range[$"C{i + 13}"].Value2 = p.EducationAllow;
+                    worksheet.Range[$"C{i + 13}"].Value2 = p.DomesticServantAllow;
 
-                    worksheet.Range[$"A{i + 14}"].Text = "Medical Allowance";
+                    worksheet.Range[$"A{i + 14}"].Text = "Driver Allowance";
                     worksheet.Range[$"A{i + 14}:B{i + 14}"].Merge();
-                    worksheet.Range[$"C{i + 14}"].Value2 = p.MedicalAllow;
+                    worksheet.Range[$"C{i + 14}"].Value2 = p.DriverAllow;
 
-                    worksheet.Range[$"A{i + 15}"].Text = "Vehicle Maintenance";
+                    worksheet.Range[$"A{i + 15}"].Text = "Education Allowance";
                     worksheet.Range[$"A{i + 15}:B{i + 15}"].Merge();
-                    worksheet.Range[$"C{i + 15}"].Value2 = p.VehicleMaintenanceAllow;
+                    worksheet.Range[$"C{i + 15}"].Value2 = p.EducationAllow;
 
-                    worksheet.Range[$"A{i + 16}"].Text = "Hazard Allowance";
+                    worksheet.Range[$"A{i + 16}"].Text = "Medical Allowance";
                     worksheet.Range[$"A{i + 16}:B{i + 16}"].Merge();
-                    worksheet.Range[$"C{i + 16}"].Value2 = p.HazardAllow;
+                    worksheet.Range[$"C{i + 16}"].Value2 = p.MedicalAllow;
 
-                    worksheet.Range[$"A{i + 17}"].Text = "Total Earnings";
-                    worksheet.Range[$"A{i + 17}"].CellStyle.Font.Bold = true;
+                    worksheet.Range[$"A{i + 17}"].Text = "Vehicle Maintenance";
                     worksheet.Range[$"A{i + 17}:B{i + 17}"].Merge();
-                    worksheet.Range[$"C{i + 17}"].Value2 = p.TotalEarnings;
-                    worksheet.Range[$"C{i + 17}"].CellStyle.Font.Bold = true;
+                    worksheet.Range[$"C{i + 17}"].Value2 = p.VehicleMaintenanceAllow;
 
-                    worksheet.Range[$"A{i + 4}:C{i + 17}"].BorderAround(ExcelLineStyle.Thin);
+                    worksheet.Range[$"A{i + 18}"].Text = "Hazard Allowance";
+                    worksheet.Range[$"A{i + 18}:B{i + 18}"].Merge();
+                    worksheet.Range[$"C{i + 18}"].Value2 = p.HazardAllow;
+
+                    worksheet.Range[$"A{i + 19}"].Text = "Entartainmant Allowance";
+                    worksheet.Range[$"A{i + 19}:B{i + 19}"].Merge();
+                    worksheet.Range[$"C{i + 19}"].Value2 = p.EntertainmentAllow;
+
+                    worksheet.Range[$"A{i + 20}"].Text = "Newspaper Allowance";
+                    worksheet.Range[$"A{i + 20}:B{i + 20}"].Merge();
+                    worksheet.Range[$"C{i + 20}"].Value2 = p.NewspaperAllow;
+
+                    worksheet.Range[$"A{i + 21}"].Text = "Total Earnings";
+                    worksheet.Range[$"A{i + 21}"].CellStyle.Font.Bold = true;
+                    worksheet.Range[$"A{i + 21}:B{i + 21}"].Merge();
+                    worksheet.Range[$"C{i + 21}"].Value2 = p.TotalEarnings;
+                    worksheet.Range[$"C{i + 21}"].CellStyle.Font.Bold = true;
+
+                    worksheet.Range[$"A{i + 4}:C{i + 21}"].BorderAround(ExcelLineStyle.Thin);
 
                     FileStream imageStream = new FileStream("wwwroot/images/dynamicsimage.png", FileMode.Open, FileAccess.Read);
-                    IPictureShape shape = worksheet.Pictures.AddPicture(i + 18, 1, imageStream, 20, 20);
-                    worksheet.Range[$"A{i + 18}"].RowHeight = 25;
-                    worksheet.Range[$"A{i + 18}:C{i + 18}"].Merge();
-                    worksheet.Range[$"A{i + 18}:C{i + 18}"].BorderAround(ExcelLineStyle.Thin);
-                    worksheet.Range[$"A{i + 18}"].VerticalAlignment = ExcelVAlign.VAlignCenter;
+                    IPictureShape shape = worksheet.Pictures.AddPicture(i + 22, 1, imageStream, 20, 20);
+                    worksheet.Range[$"A{i + 22}"].RowHeight = 25;
+                    worksheet.Range[$"A{i + 22}:C{i + 22}"].Merge();
+                    worksheet.Range[$"A{i + 22}:C{i + 22}"].BorderAround(ExcelLineStyle.Thin);
+                    worksheet.Range[$"A{i + 22}"].VerticalAlignment = ExcelVAlign.VAlignCenter;
 
                     //Deductions
                     worksheet.Range[$"D{i + 4}"].Text = "DEDUCTIONS";
@@ -233,21 +249,42 @@ namespace NddcPayroll.Web.Pages.Reports
                     worksheet.Range[$"D{i + 8}"].Text = "Pension";
                     worksheet.Range[$"E{i + 8}"].Value2 = p.Pension;
 
-                    worksheet.Range[$"D{i + 10}"].Text = "Total Deductions";
-                    worksheet.Range[$"E{i + 10}"].Value2 = p.TotalDeductions;
+                    worksheet.Range[$"D{i + 9}"].Text = "Cooperative";
+                    worksheet.Range[$"E{i + 9}"].Value2 = p.CooperativeDed;
 
-                    worksheet.Range[$"D{i + 4}:F{i + 17}"].BorderAround(ExcelLineStyle.Thin);
+                    worksheet.Range[$"D{i + 10}"].Text = "SSA";
+                    worksheet.Range[$"E{i + 10}"].Value2 = p.SSA;
 
-                    worksheet.Range[$"D{i + 18}"].Text = "NET PAY";
-                    worksheet.Range[$"D{i + 18}:F{i + 18}"].CellStyle.Font.Bold = true;
-                    worksheet.Range[$"D{i + 18}:F{i + 18}"].CellStyle.Font.Size = 18;
-                    worksheet.Range[$"E{i + 18}"].Value2 = p.NetPay;
-                    worksheet.Range[$"E{i + 18}:F{i + 18}"].Merge();
-                    worksheet.Range[$"D{i + 18}:F{i + 18}"].BorderAround(ExcelLineStyle.Thin);
-                    worksheet.Range[$"E{i + 18}"].HorizontalAlignment = ExcelHAlign.HAlignRight;
+                    worksheet.Range[$"D{i + 11}"].Text = "JSA";
+                    worksheet.Range[$"E{i + 11}"].Value2 = p.JSA;
+
+                    worksheet.Range[$"D{i + 11}"].Text = "Voluntary Pension";
+                    worksheet.Range[$"E{i + 11}"].Value2 = p.VoluntaryPension;
+
+                    worksheet.Range[$"D{i + 21}"].Text = "Total Deductions";
+                    worksheet.Range[$"E{i + 21}"].Value2 = p.TotalDeductions;
+                    worksheet.Range[$"D{i + 21}:E{i + 21}"].CellStyle.Font.Bold = true;
+
+                    worksheet.Range[$"D{i + 4}:F{i + 22}"].BorderAround(ExcelLineStyle.Thin);
+
+                    worksheet.Range[$"D{i + 22}"].Text = "NET PAY";
+                    worksheet.Range[$"D{i + 22}:F{i + 22}"].CellStyle.Font.Bold = true;
+                    worksheet.Range[$"D{i + 22}:F{i + 22}"].CellStyle.Font.Size = 18;
+                    worksheet.Range[$"E{i + 22}"].Value2 = p.NetPay;
+                    worksheet.Range[$"E{i + 22}:F{i + 22}"].Merge();
+                    worksheet.Range[$"D{i + 22}:F{i + 22}"].BorderAround(ExcelLineStyle.Thin);
+                    worksheet.Range[$"E{i + 22}"].HorizontalAlignment = ExcelHAlign.HAlignRight;
+
+                    worksheet.Range[$"A{i + 1}:F{i + 22}"].RowHeight = 15;
+                    worksheet.Range[$"A{i + 22}"].RowHeight = 25;
+                    worksheet.Range[$"C{i + 7}:C{i + 22}"].NumberFormat = "##,##.##";
+                    worksheet.Range[$"E{i + 7}:E{i + 22}"].NumberFormat = "##,##.##";
+                    worksheet.Range[$"E{i + 22}"].NumberFormat = "##,##.##";
+                    worksheet.Range[$"C{i + 7}:C{i + 22}"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
 
 
-                    i = i +20;
+
+                    i = i + 24;
                 }
 
 
@@ -263,7 +300,7 @@ namespace NddcPayroll.Web.Pages.Reports
 
                 //Download the Excel file in the browser
                 FileStreamResult fileStreamResult = new FileStreamResult(stream, "application/excel");
-                fileStreamResult.FileDownloadName = $"Payroll Summary-{DateTime.Now.ToString()}.xlsx";
+                fileStreamResult.FileDownloadName = $"PayslipsByDept-{DateTime.Now.ToString()}.xlsx";
                 return fileStreamResult;
             }
                
