@@ -83,7 +83,7 @@ namespace NddcPayroll.Web.Pages.Reports
                 IWorksheet worksheet = workbook.Worksheets.Create("SUMMARY");
 
                 worksheet.IsGridLinesVisible = false;
-                worksheet.Workbook.StandardFont = "Verdana";
+                worksheet.Workbook.StandardFont = "Courier New";
                 worksheet.Workbook.StandardFontSize = 10;
                 worksheet.Zoom = 100;
 
