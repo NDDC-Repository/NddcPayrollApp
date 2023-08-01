@@ -104,7 +104,7 @@ namespace NddcPayroll.Web.Pages.Reports
                     worksheet.Range[$"E{i}"].Text = "Payment Dt";
                     worksheet.Range[$"E{i}"].ColumnWidth = 12;
                     worksheet.Range[$"E{i}"].CellStyle.Font.Bold = true;
-                    worksheet.Range[$"F{i}"].Text = "June 2023";
+                    worksheet.Range[$"F{i}"].Text = p.DateOfPayment;
                     worksheet.Range[$"F{i}"].ColumnWidth = 10;
 
                     worksheet.Range[$"A{i + 1}"].Text = "Emp Code";
