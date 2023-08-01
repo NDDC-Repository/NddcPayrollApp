@@ -1,0 +1,305 @@
+﻿@page "/bulkdataupdate"
+
+@using NddcPayrollLibrary.Data.Calculations.Deductions;
+@using NddcPayrollLibrary.Data.EmployeeData;
+@using NddcPayrollLibrary.Data.Helper;
+@using NddcPayrollLibrary.Data.Payroll;
+@using NddcPayrollLibrary.Data.Reports;
+@using Syncfusion.XlsIO;
+@using System.IO;
+@using Syncfusion.Blazor.Grids
+@using Syncfusion.Blazor.Inputs
+@using System.Data
+@using System.Dynamic
+@using System.Data.SqlClient;
+@inject IConfiguration ConfigurationManager
+@inject IEmployeeData empDb
+@inject IDeductionData dedDb
+@inject IPayrollData payDb
+@inject IHelperData helpDb
+@inject IReportsData repDb
+@inject ISqlDataAccess db
+
+
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <select id="ForminputState" @bind="UploadValue" class="form-select" data-choices="" data-choices-sorting="true">
+                    <option selected="">Select Action...</option>
+                    <option value="Cooperative">Upload Cooperative</option>
+                    <option value="LeaveAllowance">Upload Leave Allowance</option>
+                    <option value="Arrears">Upload Arrears</option>
+                    <option value="DateOfBirth">Upload Date of Birth</option>
+                    <option value="DateEngaged">Upload Date Engaged</option>
+                    <option value="PensionNumber">Upload Pension Fund Number</option>
+                </select>
+                <br />
+                <SfUploader AutoUpload="false">
+                    <UploaderEvents ValueChange="OnChange" OnRemove="OnRemove"></UploaderEvents>
+                </SfUploader>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@if (ShowAnim == true)
+{
+    @*<div class="spinner-grow text-primary" role="status">
+        <span>Loading Report Please Wait...</span>
+    </div>*@
+    <div class="text-center mb-3">
+        <a href="javascript:void(0);" class="text-success"><i class="mdi mdi-loading mdi-spin fs-40 align-middle me-2"></i> Uploading Cooperative Data and Recalculating Net Pay .... </a>
+    </div>
+    @*<h4>@Message</h4>*@
+}
+
+@if (Columns != null)
+{
+    <SfGrid @ref="Grid" DataSource="@CustomerList" AllowFiltering="true" AllowPaging="true">
+        <GridColumns>
+            @{
+                foreach (var val in Columns)
+                {
+                    <GridColumn Field="@val"></GridColumn>
+                }
+            }
+        </GridColumns>
+    </SfGrid>
+}
+
+@code {
+
+    public string UploadValue { get; set; }
+    public bool ShowAnim { get; set; }
+    SfGrid<ExpandoObject> Grid;
+    public DataTable table = new DataTable();
+
+    private void OnChange(UploadChangeEventArgs args)
+    {
+        ShowAnim = true;
+
+        foreach (var file in args.Files)
+        {
+            var path = @"wwwroot\" + file.FileInfo.Name;
+            ExcelEngine excelEngine = new ExcelEngine();
+            IApplication application = excelEngine.Excel;
+            application.DefaultVersion = ExcelVersion.Excel2016;
+
+            //get local wwwroot path of application
+            //var check = GetPath(path);
+            //create new filestream into above path
+            FileStream openFileStream = new FileStream(path, FileMode.Create, FileAccess.Write);
+            //write the uploaded memorystream to file stream
+            file.Stream.WriteTo(openFileStream);
+            //again open the filstream from that path
+            FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            //access the workbook from that filtestream
+            IWorkbook workbook = application.Workbooks.Open(fileStream);
+            IWorksheet worksheet = workbook.Worksheets[0];
+            IRange range = worksheet.Range;
+            //get datatable from workbook
+            table = worksheet.ExportDataTable(worksheet.UsedRange, ExcelExportDataTableOptions.ColumnNames);
+            //convert to dynamic list and append to Grid.
+            GenerateListFromTable(table);
+
+            if (UploadValue == "Cooperative")
+            {
+                UpdateCooperative(worksheet, table);
+            }
+            if (UploadValue == "LeaveAllowance")
+            {
+                UpdateLeaveAllowance(worksheet, table);
+            }
+            if (UploadValue == "Arrears")
+            {
+                UpdateArrears(worksheet, table);
+            }
+            if (UploadValue == "DateOfBirth")
+            {
+                UpdateDateOfBirth(worksheet, table);
+            }
+            if (UploadValue == "DateEngaged")
+            {
+                UpdateDateOfEngagement(worksheet, table);
+            }
+            if (UploadValue == "PensionNumber")
+            {
+                UpdatepensionNo(worksheet, table);
+            }
+
+        }
+
+        ShowAnim = false;
+    }
+
+    string[] Columns;
+    public List<ExpandoObject> CustomerList;
+    public void GenerateListFromTable(DataTable input)
+    {
+        var list = new List<ExpandoObject>();
+        Columns = input.Columns.Cast<DataColumn>()
+                             .Select(x => x.ColumnName)
+                             .ToArray();
+        foreach (DataRow row in input.Rows)
+        {
+            System.Dynamic.ExpandoObject e = new System.Dynamic.ExpandoObject();
+            foreach (DataColumn col in input.Columns)
+                e.TryAdd(col.ColumnName, row.ItemArray[col.Ordinal]);
+            list.Add(e);
+        }
+        CustomerList = list;
+    }
+
+
+    private void UpdateCooperative(IWorksheet ws, DataTable input)
+    {
+        dedDb.ClearCoopValues();
+        string empCode;
+        double amount;
+        int r = 2;
+        foreach (DataRow row in input.Rows)
+        {
+
+            //Product p = new Product();
+            empCode = ws[$"A{r}"].Value;
+            amount = ws[$"B{r}"].Number;
+            empDb.UpdateCooporative(empCode, amount);
+            dedDb.RecalculateManualForDeductions(empCode);
+            //listProducts.Add(p);
+            r = r + 1;
+        }
+    }
+    private void UpdateLeaveAllowance(IWorksheet ws, DataTable input)
+    {
+        //dedDb.ClearCoopValues();
+        string empCode;
+        double amount;
+        int r = 2;
+        foreach (DataRow row in input.Rows)
+        {
+
+            //Product p = new Product();
+            empCode = ws[$"A{r}"].Value;
+            amount = ws[$"B{r}"].Number;
+            empDb.UpdateLeaveAllowance(empCode, amount);
+            dedDb.RecalculateManualForDeductions(empCode);
+            //listProducts.Add(p);
+            r = r + 1;
+        }
+    }
+    private void UpdateArrears(IWorksheet ws, DataTable input)
+    {
+        //dedDb.ClearCoopValues();
+        string empCode;
+        double amount;
+        int r = 2;
+        foreach (DataRow row in input.Rows)
+        {
+
+            //Product p = new Product();
+            empCode = ws[$"A{r}"].Value;
+            amount = ws[$"B{r}"].Number;
+            //int EmpId = helpDb.GetAnyRecord<int, string>("Employees", "Id", "EmployeeCode", empCode);
+            int empId = db.LoadData<int, dynamic>("Select Id From Employees Where EmployeeCode = @EmployeeCode", new { EmployeeCode = empCode }, "SqlDb", false).First();
+            payDb.InsertArrearsAmount(amount, empCode);
+            repDb.UpdateEmployeesPayrollByEmpIdAsync(empId);
+            //listProducts.Add(p);
+            r = r + 1;
+        }
+    }
+    private void UpdateDateOfBirth(IWorksheet ws, DataTable input)
+    {
+        //dedDb.ClearCoopValues();
+        string empCode;
+        DateTime dateOfBirth;
+        int r = 2;
+        foreach (DataRow row in input.Rows)
+        {
+
+            //Product p = new Product();
+            empCode = ws[$"A{r}"].Value;
+            dateOfBirth = ws[$"B{r}"].DateTime;
+            if (empCode != "")
+            {
+                db.SaveData("Update Employees Set DateOfBirth = @DateOfBirth Where EmployeeCode = @EmployeeCode", new { DateOfBirth = dateOfBirth, EmployeeCode = empCode }, "SqlDb", false);
+
+            }
+            
+            r = r + 1;
+        }
+    }
+    private void UpdateDateOfEngagement(IWorksheet ws, DataTable input)
+    {
+        //dedDb.ClearCoopValues();
+        string empCode;
+        DateTime dateEngaged;
+        int r = 2;
+        foreach (DataRow row in input.Rows)
+        {
+
+            //Product p = new Product();
+            empCode = ws[$"A{r}"].Value;
+            dateEngaged = ws[$"B{r}"].DateTime;
+            if (empCode != "")
+            {
+                db.SaveData("Update Employees Set DateEngaged = @DateEngaged Where EmployeeCode = @EmployeeCode", new { DateEngaged = dateEngaged, EmployeeCode = empCode }, "SqlDb", false);
+                int empId = db.LoadData<int, dynamic>("Select Id From Employees Where EmployeeCode = @EmployeeCode", new { EmployeeCode = empCode }, "SqlDb", false).First();
+                
+                repDb.UpdateEmployeesPayrollByEmpIdAsync(empId);
+            }
+
+            r = r + 1;
+        }
+    }
+    private void UpdatepensionNo(IWorksheet ws, DataTable input)
+    {
+        //dedDb.ClearCoopValues();
+        string empCode;
+        string pensionNo;
+        int r = 2;
+        foreach (DataRow row in input.Rows)
+        {
+
+            //Product p = new Product();
+            empCode = ws[$"A{r}"].Value;
+            pensionNo = ws[$"B{r}"].Value;
+            if (empCode != "")
+            {
+                db.SaveData("Update Employees Set PensionFundNumber = @PensionFundNumber Where EmployeeCode = @EmployeeCode", new { PensionFundNumber = pensionNo, EmployeeCode = empCode }, "SqlDb", false);
+
+            }
+
+            r = r + 1;
+        }
+    }
+    
+
+    public void OnRemove(RemovingEventArgs args)
+    {
+        var fileName = args.FilesData[0].Name;
+        if (fileName.Contains(".xlsx.xlsx"))
+
+        {
+
+            fileName = fileName.Substring(0, fileName.Length - 4);
+
+        }
+
+        var filePath = "wwwroot" + $@"\Data\" + fileName;
+
+        if (System.IO.File.Exists(filePath))
+
+        {
+
+            System.IO.File.Delete(filePath);
+
+        }
+
+
+    }
+}

@@ -1,3 +1,5 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
@@ -13,12 +15,16 @@ using NddcPayrollLibrary.Data.Payroll;
 using NddcPayrollLibrary.Data.PayrollJournal;
 using NddcPayrollLibrary.Data.Reports;
 using NddcPayrollLibrary.Databases;
+using NddcPayrollLibrary.Model.Employee;
+using NddcPayrollLibrary.Validators;
 using Syncfusion.Blazor;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddTransient<IValidator<EmployeeModel>, EmployeeValidator>();
 builder.Services.AddTransient<ISqlDataAccess, SqlDataAccess>();
 builder.Services.AddTransient<ICompanyData, SQLCompany>();
 builder.Services.AddTransient<IPayrollData, SQLPayroll>();

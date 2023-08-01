@@ -34,5 +34,6 @@ namespace NddcPayrollLibrary.Data.Payroll
         decimal GetSumOfCooperative();
         decimal GetSumOfBasicSalary();
         void AddArrears(int EmpId);
+        void InsertArrearsAmount(double ArreasAmount, string EmpCode);
     }
 }

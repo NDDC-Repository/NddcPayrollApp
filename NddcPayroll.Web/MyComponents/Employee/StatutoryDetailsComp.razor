@@ -177,7 +177,7 @@
     <!--end row-->
     <div class="d-flex align-items-start gap-3 mt-4 mb-4">
         
-        <button type="submit" @onclick="UpdateDetailsAsync" class="btn btn-success btn-label right ms-auto nexttab nexttab">
+        <button type="submit" @onclick="UpdateDetails" class="btn btn-success btn-label right ms-auto nexttab nexttab">
             <i class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>
             Update
         </button>
@@ -217,13 +217,13 @@
         PensionAdmins = compDb.GetAllPensionAdminsList();
     }
 
-    private async Task UpdateDetailsAsync()
+    private void UpdateDetails()
     {
         StatutoryDetails.EmployeeId = EmpId;
         empDb.AddStatutoryDetails(StatutoryDetails);
        
 
-        await(Task.Run(() => repDb.UpdateEmployeesPayrollByEmpIdAsync(EmpId)));
+        repDb.UpdateEmployeesPayrollByEmpIdAsync(EmpId);
 
         Message = "Statutory Details Successfully Updated";
     }

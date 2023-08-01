@@ -19,7 +19,7 @@ namespace NddcPayroll.Web.Pages.Employee
 
         public IEnumerable<MyStatesModel> States { get; set; }
         public IEnumerable<SelectListItem> Categories { get; set; }
-        [BindProperty]
+        [BindProperty (SupportsGet = true)]
         public EmployeeModel Employee { get; set; }
        
 
@@ -31,6 +31,8 @@ namespace NddcPayroll.Web.Pages.Employee
         }
         public void OnGet()
         {
+            Employee.DateOfBirth = DateTime.Now;
+            Employee.DateEngaged = DateTime.Now;
             States = db.GetAllStates();
             Categories = htmlHelper.GetEnumSelectList<Categories>();
         }

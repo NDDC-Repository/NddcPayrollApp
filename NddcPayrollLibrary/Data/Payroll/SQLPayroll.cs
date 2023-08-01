@@ -369,5 +369,9 @@ namespace NddcPayrollLibrary.Data.Payroll
             db.SaveData("Update Employees Set Arreas = @Arreas Where Id = @Id", new { Arreas = arrearsAmount, Id = EmpId }, connectionStringName, false);
 
         }
+        public void InsertArrearsAmount(double ArreasAmount, string EmpCode)
+        {
+            db.SaveData("Update Employees Set Arreas = @Arreas Where EmployeeCode = @EmployeeCode", new { Arreas = ArreasAmount, EmployeeCode = EmpCode }, connectionStringName, false);
+        }
     }
 }

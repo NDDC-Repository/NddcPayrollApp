@@ -81,22 +81,24 @@
                                 <div class="mb-3">
                                     <label asp-for="@Model.Employee.Gender" class="form-label">Gender</label>
                                     <select asp-for="@Model.Employee.Gender" class="form-select" data-choices="" data-choices-sorting="true">
-                                        <option selected="">Choose...</option>
+                                        <option value="">Choose...</option>
                                         <option>Male</option>
                                         <option>Female</option>
                                     </select>
+                                    <span class="text-danger" asp-validation-for="@Model.Employee.Gender"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="mb-3">
                                     <label asp-for="@Model.Employee.MaritalStatus" class="form-label">Marital Status</label>
                                     <select asp-for="@Model.Employee.MaritalStatus" class="form-select" data-choices="" data-choices-sorting="true">
-                                        <option selected="">Choose...</option>
+                                        <option value="">Choose...</option>
                                         <option>Married</option>
                                         <option>Single</option>
                                         <option>Divorced</option>
                                         <option>Widower</option>
                                     </select>
+                                    <span class="text-danger" asp-validation-for="@Model.Employee.MaritalStatus"></span>
                                 </div>
                             </div>
 
@@ -107,6 +109,7 @@
                                 <div class="mb-3">
                                     <label asp-for="@Model.Employee.FirstName" class="form-label">First Name</label>
                                     <input asp-for="@Model.Employee.FirstName" class="form-control" placeholder="Enter First Name" id="firstNameinput">
+                                    <span class="text-danger" asp-validation-for="@Model.Employee.FirstName"></span>
                                 </div>
                             </div>
                             <!--end col-->
@@ -114,6 +117,7 @@
                                 <div class="mb-3">
                                     <label asp-for="@Model.Employee.LastName" class="form-label">Last Name</label>
                                     <input asp-for="@Model.Employee.LastName" class="form-control" placeholder="Enter your lastname" id="lastNameinput">
+                                    <span class="text-danger" asp-validation-for="@Model.Employee.LastName"></span>
                                 </div>
                             </div>
                             <!--end col-->
@@ -156,6 +160,7 @@
                                     <!-- Input Date -->
                                     <div>
                                         <input type="date" asp-for="@Model.Employee.DateOfBirth" class="form-control" id="exampleInputdate">
+                                                        <span class="text-danger" asp-validation-for="@Model.Employee.DateOfBirth"></span>
                                     </div>
                                 </div>
                             </div>
@@ -178,7 +183,7 @@
                                 <div class="mb-3">
                                     <label asp-for="@Model.Employee.SID" class="form-label">State</label>
                                     <select class="form-select" asp-for="@Model.Employee.SID" asp-items="@(new SelectList(Model.States, "Id", "FullDescription"))">
-                                        <option selected="">Choose...</option>
+                                        <option value="0">Choose...</option>
                                     </select>
                                     <span asp-validation-for="@Model.Employee.SID" class="text-danger"></span>
                                 </div>
@@ -261,10 +266,11 @@
                                                 <div class="mb-3">
                                                     <label asp-for="@Model.Employee.EmploymentStatus" class="form-label">Employment Status</label>
                                                     <select id="ForminputState" asp-for="@Model.Employee.EmploymentStatus" class="form-select" data-choices="" data-choices-sorting="true">
-                                                        <option selected="">Choose...</option>
+                                                        <option value="">Choose...</option>
                                                         <option value="New">New</option>
                                                         <option value="Old">Old</option>
                                                     </select>
+                                                    <span class="text-danger" asp-validation-for="@Model.Employee.EmploymentStatus"></span>
                                                 </div>
                                             </div>
                                             <!--end col-->
@@ -273,6 +279,7 @@
                                                     <label asp-for="@Model.Employee.DateEngaged" class="form-label">Date Engaged</label>
                                                     <div>
                                                         <input type="date" asp-for="@Model.Employee.DateEngaged" class="form-control" id="exampleInputdate">
+                                                            <span class="text-danger" asp-validation-for="@Model.Employee.DateEngaged"></span>
                                                     </div>
                                                 </div>
                                             </div>
