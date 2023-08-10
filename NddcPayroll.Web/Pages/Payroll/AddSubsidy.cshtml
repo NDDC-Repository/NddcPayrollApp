@@ -38,6 +38,8 @@
                                 <option selected="">Choose...</option>
                                 </select>
                                 </div>*@
+                                <input type="hidden" asp-for="Subsidy.Id" />
+                                <input type="hidden" asp-for="Subsidy.GradeLevelId" />
                                 <div class="mb-3">
                                     <select class="form-select" asp-for="@Model.Subsidy.SubsidyType">
                                         <option selected="">Choose...</option>
@@ -79,7 +81,7 @@
 
                     
                     <div class="text-end">
-                        <button type="submit" class="btn btn-primary">Add Subsidy</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </form>
             </div>

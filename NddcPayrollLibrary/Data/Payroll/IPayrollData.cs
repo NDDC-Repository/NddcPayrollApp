@@ -35,5 +35,7 @@ namespace NddcPayrollLibrary.Data.Payroll
         decimal GetSumOfBasicSalary();
         void AddArrears(int EmpId);
         void InsertArrearsAmount(double ArreasAmount, string EmpCode);
+        MySubsidiesModel GetSubsidyBySubsId(int id);
+        void UpdateSubsidy(MySubsidiesModel subsidy);
     }
 }

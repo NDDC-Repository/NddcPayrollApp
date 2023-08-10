@@ -92,11 +92,18 @@ namespace NddcPayrollLibrary.Data.Payroll
         {
             return db.LoadData<MySubsidiesModel, dynamic>("Select ROW_NUMBER() OVER (ORDER BY Id ASC) As SrNo, Id, SubsidyType, Amount, Cycle From Subsidies Where GradeLevelId = @GradeLevelId", new { GradeLevelId = gradeLevelId }, connectionStringName, false);
         }
+        public MySubsidiesModel GetSubsidyBySubsId(int id)
+        {
+            return db.LoadData<MySubsidiesModel, dynamic>("Select Id, SubsidyType, Amount, Cycle, GradeLevelId From Subsidies Where Id = @Id", new { Id = id }, connectionStringName, false).FirstOrDefault();
+        }
         public void AddSubsidies(MySubsidiesModel Subsidy)
         {
             db.SaveData("Insert Into Subsidies (SubsidyType, Amount, Cycle, GradeLevelId) values(@SubsidyType, @Amount, @Cycle, @GradeLevelId)", new { Subsidy.SubsidyType, Subsidy.Amount, Subsidy.Cycle, Subsidy.GradeLevelId }, connectionStringName, false);
         }
-
+        public void UpdateSubsidy(MySubsidiesModel subsidy)
+        {
+            db.SaveData("Update Subsidies Set SubsidyType = @SubsidyType, Amount = @Amount, Cycle = @Cycle Where Id = @Id", new { SubsidyType = subsidy.SubsidyType, Amount = subsidy.Amount, Cycle = subsidy.Cycle, Id = subsidy.Id }, connectionStringName, false);
+        }
 
         //Benefits Calculations
         private int GetGradeLevelId(int EmpId)

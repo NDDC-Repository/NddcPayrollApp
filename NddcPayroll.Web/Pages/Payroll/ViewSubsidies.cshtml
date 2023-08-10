@@ -29,12 +29,12 @@
                 </p>*@
             </div>
             <div class="mt-3 mt-lg-0">
-                <div class="col-auto">
+               @* <div class="col-auto">
                     <a asp-page="AddSubsidy" asp-route-gradeLevelID="@Model.Id" class="btn btn-primary">
                         <i class="ri-add-circle-line align-middle me-1"></i>
                         Add Subsidies
                     </a>
-                </div>
+                </div>*@
 
             </div>
         </div><!-- end card header -->
@@ -68,7 +68,7 @@
                                 <td>
                                     <div class="hstack gap-3 fs-15">
                                         @*<a href="javascript:void(0);"><i class="ri-settings-4-line"></i></a>*@
-                                        <a href="javascript:void(0);" class="link-success"><i class="ri-delete-bin-5-line"></i></a>
+                                        <a class="btn btn-sm btn-light" asp-page="AddSubsidy" asp-route-gradeLevelId="@item.Id">Edit Subsidy</a>
                                     </div>
                                     @*<a class="btn btn-sm btn-light" asp-page="AddBenefits" asp-route-salaryScaleId="@item.Id">Add Benefits</a>*@
                                 </td>

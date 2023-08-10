@@ -19,15 +19,32 @@ namespace NddcPayroll.Web.Pages.Payroll
             this.db = db;
             this.repDb = repDb;
         }
-        public void OnGet()
+        public void OnGet(int? gradeLevelId)
         {
+            if (gradeLevelId.HasValue == true)
+            {
+                Subsidy = db.GetSubsidyBySubsId(gradeLevelId.Value);
+            }
+            else
+            {
+                Subsidy = new MySubsidiesModel();
+            }
         }
 
         public IActionResult OnPost(int? gradeLevelID)
         {
-            Subsidy.GradeLevelId = gradeLevelID.Value;
-            db.AddSubsidies(Subsidy);
-            repDb.UpdateEmployeesPayrollByGradeLevelAsync(gradeLevelID.Value);
+            if (gradeLevelID > 0)
+            {
+                db.UpdateSubsidy(Subsidy);
+                repDb.UpdateEmployeesPayrollByGradeLevelAsync(Subsidy.GradeLevelId);
+            }
+            else
+            {
+                Subsidy.GradeLevelId = gradeLevelID.Value;
+                db.AddSubsidies(Subsidy);
+                repDb.UpdateEmployeesPayrollByGradeLevelAsync(gradeLevelID.Value);
+            }
+           
             return RedirectToPage("ViewSubsidies", new { gradeLevelID = gradeLevelID.Value });
         }
     }
