@@ -37,5 +37,6 @@ namespace NddcPayrollLibrary.Data.Payroll
         void InsertArrearsAmount(double ArreasAmount, string EmpCode);
         MySubsidiesModel GetSubsidyBySubsId(int id);
         void UpdateSubsidy(MySubsidiesModel subsidy);
+        void UpdateGradeLevel(int gradeLevelId, string EmpCode);
     }
 }

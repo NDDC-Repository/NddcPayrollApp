@@ -30,9 +30,10 @@
                     <option selected="">Select Action...</option>
                     <option value="Cooperative">Upload Cooperative</option>
                     <option value="LeaveAllowance">Upload Leave Allowance</option>
-                    <option value="Arrears">Upload Arrears</option>
+                    <option value="GradeLevel">Upgrade Grade Level</option>
+                    @* <option value="Arrears">Upload Arrears</option>
                     <option value="DateOfBirth">Upload Date of Birth</option>
-                    <option value="DateEngaged">Upload Date Engaged</option>
+                    <option value="DateEngaged">Upload Date Engaged</option> *@
                     <option value="PensionNumber">Upload Pension Fund Number</option>
                 </select>
                 <br />
@@ -52,9 +53,9 @@
     @*<div class="spinner-grow text-primary" role="status">
         <span>Loading Report Please Wait...</span>
     </div>*@
-    <div class="text-center mb-3">
+    @* <div class="text-center mb-3">
         <a href="javascript:void(0);" class="text-success"><i class="mdi mdi-loading mdi-spin fs-40 align-middle me-2"></i> Uploading Cooperative Data and Recalculating Net Pay .... </a>
-    </div>
+    </div> *@
     @*<h4>@Message</h4>*@
 }
 
@@ -114,6 +115,10 @@
             if (UploadValue == "LeaveAllowance")
             {
                 UpdateLeaveAllowance(worksheet, table);
+            }
+            if (UploadValue == "GradeLevel")
+            {
+                UpdateGradeLevel(worksheet, table);
             }
             if (UploadValue == "Arrears")
             {
@@ -207,6 +212,33 @@
             //int EmpId = helpDb.GetAnyRecord<int, string>("Employees", "Id", "EmployeeCode", empCode);
             int empId = db.LoadData<int, dynamic>("Select Id From Employees Where EmployeeCode = @EmployeeCode", new { EmployeeCode = empCode }, "SqlDb", false).First();
             payDb.InsertArrearsAmount(amount, empCode);
+            repDb.UpdateEmployeesPayrollByEmpIdAsync(empId);
+            //listProducts.Add(p);
+            r = r + 1;
+        }
+    }
+    private void UpdateGradeLevel(IWorksheet ws, DataTable input)
+    {
+        //dedDb.ClearCoopValues();
+        string empCode;
+        string gradeLevel;
+        int r = 2;
+        foreach (DataRow row in input.Rows)
+        {
+
+            //Product p = new Product();
+            empCode = ws[$"A{r}"].Value;
+            gradeLevel = ws[$"B{r}"].Value;
+            //int EmpId = helpDb.GetAnyRecord<int, string>("Employees", "Id", "EmployeeCode", empCode);
+            int empId = db.LoadData<int, dynamic>("Select Id From Employees Where EmployeeCode = @EmployeeCode", new { EmployeeCode = empCode }, "SqlDb", false).First();
+            int gradeLevelId = db.LoadData<int, dynamic>("Select Id From GradeLevel Where GradeLevel = @GradeLevel", new { GradeLevel = gradeLevel }, "SqlDb", false).First();
+
+            payDb.UpdateGradeLevel(gradeLevelId, empCode);
+
+            decimal jsa = dedDb.GetJSA(empId);
+            decimal ssa = dedDb.GetSSA(empId);
+            db.SaveData("Update Employees Set JSA = @JSA, SSA = @SSA Where EmployeeCode = @EmployeeCode", new { JSA = ssa, SSA = ssa, EmployeeCode = empCode }, "SqlDb", false);
+
             repDb.UpdateEmployeesPayrollByEmpIdAsync(empId);
             //listProducts.Add(p);
             r = r + 1;

@@ -380,5 +380,9 @@ namespace NddcPayrollLibrary.Data.Payroll
         {
             db.SaveData("Update Employees Set Arreas = @Arreas Where EmployeeCode = @EmployeeCode", new { Arreas = ArreasAmount, EmployeeCode = EmpCode }, connectionStringName, false);
         }
+        public void UpdateGradeLevel(int gradeLevelId, string EmpCode)
+        {
+            db.SaveData("Update Employees Set GradeLevelId = @GradeLevelId Where EmployeeCode = @EmployeeCode", new { GradeLevelId = gradeLevelId, EmployeeCode = EmpCode }, connectionStringName, false);
+        }
     }
 }

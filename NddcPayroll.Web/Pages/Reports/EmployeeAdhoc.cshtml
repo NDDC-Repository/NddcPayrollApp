@@ -32,7 +32,7 @@
             </div>*@
             <!--end col-->
             
-                <div class="col-sm-auto ms-auto">
+                <div class="col-sm-auto">
                     <div class="list-grid-nav hstack gap-1">
                         <select class="form-select" asp-for="@Model.GradeLevel.Id" asp-items="@(new SelectList(Model.GradeLevels, "Id", "GradeLevel"))">
                             <option selected="">Grade Level - Not Selected</option>
@@ -64,7 +64,7 @@
         <!--end row-->
     </div>
 </div>
- @if (Model.Employees is not null)
+ @if (Model.Employees != null)
     {
         <div class="row">
             <div class="col-xl-12">
