@@ -23,7 +23,8 @@ namespace NddcPayrollLibrary.Model.Report
         public string LastName { get; set; }
         [DisplayNameAttribute("Full Names            ")]
         public string FirstName { get; set; }
-        
+        [DisplayName("Gender")]
+        public string Gender { get; set; }
         [DisplayNameAttribute("ED-Basic Salary  ")]
         public decimal BasicSalary { get; set; }
         [DisplayNameAttribute("ED-Salary Arreas  ")]

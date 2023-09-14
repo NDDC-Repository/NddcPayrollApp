@@ -195,6 +195,77 @@ namespace NddcPayrollLibrary.Data.Reports
             return Reports;
         }
 
+        public List<MyPayRollListModel> GetEmployeeAdhocAsync(int gradeLevelId, string category, int departmentId, string gender)
+        {
+
+            //MyPayRollListModel reportModel;
+            List<MyPayRollListModel> Reports = new List<MyPayRollListModel>();
+            //List<Task<decimal>> tasks = new List<Task<decimal>>();
+
+            bool toggle = false;
+            string glSchema = "";
+
+            if (gradeLevelId != 0)
+            {
+                if (toggle == true)
+                {
+                    glSchema = $"GradeLevelId = {gradeLevelId}";
+                }
+                else
+                {
+                    glSchema = $"Where Employees.GradeLevelId = {gradeLevelId}";
+                    toggle = true;
+                }
+            }
+
+            if (category != "none")
+            {
+                if (toggle == true)
+                {
+                    glSchema = $"{glSchema} And Employees.Category = '{category}'";
+                }
+                else
+                {
+                    glSchema = $"Where Employees.Category = '{category}'";
+                    toggle = true;
+                }
+            }
+            if (departmentId != 0)
+            {
+                if (toggle == true)
+                {
+                    glSchema = $"{glSchema} And Departments.Id = '{departmentId}'";
+                }
+                else
+                {
+                    glSchema = $"Where Departments.Id = '{departmentId}'";
+                    toggle = true;
+                }
+            }
+            if (gender != "none")
+            {
+                if (toggle == true)
+                {
+                    glSchema = $"{glSchema} And Employees.Gender = '{gender}'";
+                }
+                else
+                {
+                    glSchema = $"Where Employees.Gender = '{gender}'";
+                    toggle = true;
+                }
+            }
+            string SQL = "SELECT ROW_NUMBER() OVER (ORDER BY Employees.Id DESC) As SrNo, Employees.Id, Employees.BasicSalary, Employees.EmployeeCode, Employees.FirstName, Employees.Gender, Employees.SecretarialAllow, Employees.CooperativeDed, Employees.VoluntaryPension, Employees.BankCode, Employees.AccountNumber, Banks.BankName, Employees.EntertainmentAllow, Employees.NewspaperAllow, Employees.Arreas, " +
+                "Employees.LastName, Employees.Email, Employees.Category, (TransportAllow) As TransportAllowance, (HousingAllow) As HousingAllowance, (FurnitureAllow) As FurnitureAllowance, (MealAllow) As MealAllowance, (UtilityAllow) As UtilityAllowance, " +
+                "(EducationAllow) As EducationAllowance, (DomesticServantAllow) As DomesticServantAllowance, (DriverAllow) As DriversAllowance, (VehicleAllow) As VehicleMaintenanceAllowance, (HazardAllow) As HazardAllowance, (Tax) As TaxDeduction, (NHF) As NHFDeduction, (JSA) As JSADeduction, (SSA) As SSADeduction, TotalEarnings, TotalDeductions, " +
+                "NetPay, (Pension) As PensionDeduction, (MedicalAllow) As MedicalAllowance, (SecurityAllow) As SecurityAllowance, GradeLevel.GradeLevel, Departments.DepartmentName, Employees.EntertainmentAllow, Employees.NewspaperAllow, Employees.LeaveAllow FROM Employees LEFT JOIN GradeLevel ON Employees.GradeLevelId = " +
+                "GradeLevel.Id LEFT JOIN Departments ON Employees.DepartmentId = Departments.Id LEFT JOIN JobTitles ON Employees.JobTitleId = " +
+                $"JobTitles.Id LEFT JOIN Banks On Employees.BankCode = Banks.Code {glSchema} ORDER BY Employees.Id DESC";
+
+            Reports = db.LoadData<MyPayRollListModel, dynamic>(SQL, new { }, connectionStringName, false).ToList();
+           
+            return Reports;
+        }
+
         public async Task<List<MyPayRollListModel>> GetPayrollListSummaryReportAsync(int payrollJournalTitleId)
         {
 

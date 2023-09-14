@@ -5,6 +5,7 @@ namespace NddcPayrollLibrary.Data.Reports
     public interface IReportsData
     {
         List<MyEarningsByDeptChartModel> GetEarningsByDeptData();
+        List<MyPayRollListModel> GetEmployeeAdhocAsync(int gradeLevelId, string category, int departmentId, string gender);
         Task<List<MyNHFReportModel>> GetNHFReportAsync();
         List<MyNHFReportModel> GetNHFReportByPaypoint(string payPoint);
         List<MyNHFReportModel> GetNHFReportSummary();
