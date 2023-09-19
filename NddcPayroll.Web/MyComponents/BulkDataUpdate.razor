@@ -192,7 +192,9 @@
             empCode = ws[$"A{r}"].Value;
             amount = ws[$"B{r}"].Number;
             empDb.UpdateLeaveAllowance(empCode, amount);
-            dedDb.RecalculateManualForDeductions(empCode);
+            int empId = db.LoadData<int, dynamic>("Select Id From Employees Where EmployeeCode = @EmployeeCode", new { EmployeeCode = empCode }, "SqlDb", false).First();
+            //dedDb.RecalculateManualForDeductions(empCode);
+            repDb.UpdateEmployeesPayrollByEmpIdAsync(empId);
             //listProducts.Add(p);
             r = r + 1;
         }
