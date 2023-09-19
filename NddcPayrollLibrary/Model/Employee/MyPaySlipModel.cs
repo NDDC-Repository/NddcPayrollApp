@@ -34,6 +34,7 @@ namespace NddcPayrollLibrary.Model.Employee
         public decimal DomesticServantAllow { get; set; }
         public decimal DriverAllow { get; set; }
         public decimal LeaveAllow { get; set; }
+        public decimal Arreas { get; set; }
         public decimal SecretarialAllow { get; set; }
         public decimal ActingAllow { get; set; }
         public decimal ShiftAllow { get; set; }

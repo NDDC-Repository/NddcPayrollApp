@@ -199,6 +199,22 @@
                                             <td>@string.Format("{0:N}", Model.MyPayslip.BasicSalary)</td>
                                         </tr>
                                     }
+                                     @if (Model.MyPayslip.LeaveAllow > 0)
+                                    {
+                                        <tr>
+                                            <td>Leave Allowance</td>
+                                            <td></td>
+                                            <td>@string.Format("{0:N}", Model.MyPayslip.LeaveAllow)</td>
+                                        </tr>
+                                    }
+                                     @if (Model.MyPayslip.Arreas > 0)
+                                    {
+                                        <tr>
+                                            <td>Salary Arrears</td>
+                                            <td></td>
+                                            <td>@string.Format("{0:N}", Model.MyPayslip.Arreas)</td>
+                                        </tr>
+                                    }
                                     @if (Model.MyPayslip.HousingAllow > 0)
                                     {
                                         <tr>
