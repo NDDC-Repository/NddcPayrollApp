@@ -41,5 +41,10 @@ namespace NddcPayroll.Web.Pages.DataManagement
             db.UpdateCooporative();
         }
 
+        public void OnPostRemoveTaxAdjust()
+        {
+            db.RemoveTaxAdjustmentsAsync();
+        }
+
     }
 }

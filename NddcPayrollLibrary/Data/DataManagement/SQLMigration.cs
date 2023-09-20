@@ -152,6 +152,25 @@ namespace NddcPayrollLibrary.Data.DataManagement
                 repDb.UpdateEmployeesPayrollByEmpIdAsync(Id);
             }
         }
+        public async Task RemoveTaxAdjustmentsAsync()
+        {
+            string empCode = string.Empty;
+            decimal taxAdj = 0.00M;
+            //int id = 0;
+            MigrationEmployees = db.LoadData<MyEmployeeMigrationModel, dynamic>("Select EmployeeCode As EmpCode, TaxAdjustment From Employees Where TaxAdjustment > 0.00", new { }, connectionStringName, false).ToList();
+            foreach (var employee in MigrationEmployees)
+            {
+                empCode = employee.EmpCode;
+                taxAdj = employee.TaxAdjustment;
+                //id = db.LoadData<int, dynamic>("Select Id From PensionAdministrators Where Code = @Code", new { Code = pensionCode }, connectionStringName, false).FirstOrDefault();
+                db.SaveData("Update Employees Set TaxAdjustment = 0.00 Where EmployeeCode = @EmployeeCode ", new { EmployeeCode = empCode }, connectionStringName, false);
+
+                int Id = db.LoadData<int, dynamic>("select Id from Employees where EmployeeCode = @EmployeeCode",
+                  new { EmployeeCode = empCode }, connectionStringName, false).FirstOrDefault();
+
+                await repDb.UpdateEmployeesPayrollByEmpIdAsync(Id);
+            }
+        }
 
         public List<EmployeeModel> Employees { get; set; }
         public void MigrateEmployees()

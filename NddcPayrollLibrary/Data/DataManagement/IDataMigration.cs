@@ -15,5 +15,6 @@ namespace NddcPayrollLibrary.Data.DataManagement
         void UpdateEmployerPension();
         void MigrateEmployees();
         void UpdateCooporative();
+        Task RemoveTaxAdjustmentsAsync();
     }
 }
