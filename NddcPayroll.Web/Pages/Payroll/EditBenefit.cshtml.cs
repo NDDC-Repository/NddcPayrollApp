@@ -26,10 +26,10 @@ namespace NddcPayroll.Web.Pages.Payroll
             Benefit = payDb.GetBenefitsByBenefitId(benefitId.Value);
         }
 
-        public IActionResult OnPostAsync()
+        public async Task<IActionResult> OnPostAsync()
         {
             payDb.UpdateBenefit(Benefit);
-            repDb.UpdateEmployeesPayrollByGradeLevelAsync(Benefit.GradeLevelID);
+            await Task.Run(() => repDb.UpdateEmployeesPayrollByGradeLevelAsync(Benefit.GradeLevelID));
             return RedirectToPage("Benefits");
         }
        
