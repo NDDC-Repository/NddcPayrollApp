@@ -311,6 +311,38 @@
                                             <td>@string.Format("{0:N}", Model.MyPayslip.HazardAllow)</td>
                                         </tr>
                                     }
+                                    @if (Model.MyPayslip.ShiftAllow > 0)
+                                    {
+                                        <tr>
+                                            <td>Shift Allowance</td>
+                                            <td></td>
+                                            <td>@string.Format("{0:N}", Model.MyPayslip.ShiftAllow)</td>
+                                        </tr>
+                                    }
+                                        @if (Model.MyPayslip.UniformAllow > 0)
+                                        {
+                                            <tr>
+                                                <td>Uniform Allowance</td>
+                                                <td></td>
+                                                <td>@string.Format("{0:N}", Model.MyPayslip.UniformAllow)</td>
+                                            </tr>
+                                        }
+                                        @if (Model.MyPayslip.ActingAllow > 0)
+                                        {
+                                            <tr>
+                                                <td>Acting Allowance</td>
+                                                <td></td>
+                                                <td>@string.Format("{0:N}", Model.MyPayslip.ActingAllow)</td>
+                                            </tr>
+                                        }
+                                        @if (Model.MyPayslip.SecretarialAllow > 0)
+                                        {
+                                            <tr>
+                                                <td>Secretarial Allowance</td>
+                                                <td></td>
+                                                <td>@string.Format("{0:N}", Model.MyPayslip.SecretarialAllow)</td>
+                                            </tr>
+                                        }
                                     @if (Model.MyPayslip.EntertainmentAllow > 0)
                                     {
                                         <tr>
