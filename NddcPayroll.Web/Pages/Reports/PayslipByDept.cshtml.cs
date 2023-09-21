@@ -204,28 +204,44 @@ namespace NddcPayroll.Web.Pages.Reports
                     worksheet.Range[$"A{i + 18}:B{i + 18}"].Merge();
                     worksheet.Range[$"C{i + 18}"].Value2 = p.HazardAllow;
 
-                    worksheet.Range[$"A{i + 19}"].Text = "Entartainmant Allowance";
+                    worksheet.Range[$"A{i + 19}"].Text = "Shift Allowance";
                     worksheet.Range[$"A{i + 19}:B{i + 19}"].Merge();
-                    worksheet.Range[$"C{i + 19}"].Value2 = p.EntertainmentAllow;
+                    worksheet.Range[$"C{i + 19}"].Value2 = p.ShiftAllow;
 
-                    worksheet.Range[$"A{i + 20}"].Text = "Newspaper Allowance";
+                    worksheet.Range[$"A{i + 20}"].Text = "Uniform Allowance";
                     worksheet.Range[$"A{i + 20}:B{i + 20}"].Merge();
-                    worksheet.Range[$"C{i + 20}"].Value2 = p.NewspaperAllow;
+                    worksheet.Range[$"C{i + 20}"].Value2 = p.UniformAllow;
 
-                    worksheet.Range[$"A{i + 21}"].Text = "Total Earnings";
-                    worksheet.Range[$"A{i + 21}"].CellStyle.Font.Bold = true;
+                    worksheet.Range[$"A{i + 21}"].Text = "Secretarial Allowance";
                     worksheet.Range[$"A{i + 21}:B{i + 21}"].Merge();
-                    worksheet.Range[$"C{i + 21}"].Value2 = p.TotalEarnings;
-                    worksheet.Range[$"C{i + 21}"].CellStyle.Font.Bold = true;
+                    worksheet.Range[$"C{i + 21}"].Value2 = p.SecretarialAllow;
 
-                    worksheet.Range[$"A{i + 4}:C{i + 21}"].BorderAround(ExcelLineStyle.Thin);
+                    worksheet.Range[$"A{i + 22}"].Text = "Acting Allowance";
+                    worksheet.Range[$"A{i + 22}:B{i + 22}"].Merge();
+                    worksheet.Range[$"C{i + 22}"].Value2 = p.ActingAllow;
+
+                    worksheet.Range[$"A{i + 23}"].Text = "Entartainmant Allowance";
+                    worksheet.Range[$"A{i + 23}:B{i + 23}"].Merge();
+                    worksheet.Range[$"C{i + 23}"].Value2 = p.EntertainmentAllow;
+
+                    worksheet.Range[$"A{i + 24}"].Text = "Newspaper Allowance";
+                    worksheet.Range[$"A{i + 24}:B{i + 24}"].Merge();
+                    worksheet.Range[$"C{i + 24}"].Value2 = p.NewspaperAllow;
+
+                    worksheet.Range[$"A{i + 25}"].Text = "Total Earnings";
+                    worksheet.Range[$"A{i + 25}"].CellStyle.Font.Bold = true;
+                    worksheet.Range[$"A{i + 25}:B{i + 25}"].Merge();
+                    worksheet.Range[$"C{i + 25}"].Value2 = p.TotalEarnings;
+                    worksheet.Range[$"C{i + 25}"].CellStyle.Font.Bold = true;
+
+                    worksheet.Range[$"A{i + 4}:C{i + 25}"].BorderAround(ExcelLineStyle.Thin);
 
                     FileStream imageStream = new FileStream("wwwroot/images/dynamicsimage.png", FileMode.Open, FileAccess.Read);
-                    IPictureShape shape = worksheet.Pictures.AddPicture(i + 22, 1, imageStream, 20, 20);
-                    worksheet.Range[$"A{i + 22}"].RowHeight = 25;
-                    worksheet.Range[$"A{i + 22}:C{i + 22}"].Merge();
-                    worksheet.Range[$"A{i + 22}:C{i + 22}"].BorderAround(ExcelLineStyle.Thin);
-                    worksheet.Range[$"A{i + 22}"].VerticalAlignment = ExcelVAlign.VAlignCenter;
+                    IPictureShape shape = worksheet.Pictures.AddPicture(i + 26, 1, imageStream, 20, 20);
+                    worksheet.Range[$"A{i + 26}"].RowHeight = 25;
+                    worksheet.Range[$"A{i + 26}:C{i + 26}"].Merge();
+                    worksheet.Range[$"A{i + 26}:C{i + 26}"].BorderAround(ExcelLineStyle.Thin);
+                    worksheet.Range[$"A{i + 26}"].VerticalAlignment = ExcelVAlign.VAlignCenter;
 
                     //Deductions
                     worksheet.Range[$"D{i + 4}"].Text = "DEDUCTIONS";
@@ -261,19 +277,19 @@ namespace NddcPayroll.Web.Pages.Reports
                     worksheet.Range[$"D{i + 11}"].Text = "Voluntary Pension";
                     worksheet.Range[$"E{i + 11}"].Value2 = p.VoluntaryPension;
 
-                    worksheet.Range[$"D{i + 21}"].Text = "Total Deductions";
-                    worksheet.Range[$"E{i + 21}"].Value2 = p.TotalDeductions;
-                    worksheet.Range[$"D{i + 21}:E{i + 21}"].CellStyle.Font.Bold = true;
+                    worksheet.Range[$"D{i + 25}"].Text = "Total Deductions";
+                    worksheet.Range[$"E{i + 25}"].Value2 = p.TotalDeductions;
+                    worksheet.Range[$"D{i + 25}:E{i + 25}"].CellStyle.Font.Bold = true;
 
-                    worksheet.Range[$"D{i + 4}:F{i + 22}"].BorderAround(ExcelLineStyle.Thin);
+                    worksheet.Range[$"D{i + 4}:F{i + 26}"].BorderAround(ExcelLineStyle.Thin);
 
-                    worksheet.Range[$"D{i + 22}"].Text = "NET PAY";
-                    worksheet.Range[$"D{i + 22}:F{i + 22}"].CellStyle.Font.Bold = true;
-                    worksheet.Range[$"D{i + 22}:F{i + 22}"].CellStyle.Font.Size = 18;
-                    worksheet.Range[$"E{i + 22}"].Value2 = p.NetPay;
-                    worksheet.Range[$"E{i + 22}:F{i + 22}"].Merge();
-                    worksheet.Range[$"D{i + 22}:F{i + 22}"].BorderAround(ExcelLineStyle.Thin);
-                    worksheet.Range[$"E{i + 22}"].HorizontalAlignment = ExcelHAlign.HAlignRight;
+                    worksheet.Range[$"D{i + 26}"].Text = "NET PAY";
+                    worksheet.Range[$"D{i + 26}:F{i + 26}"].CellStyle.Font.Bold = true;
+                    worksheet.Range[$"D{i + 26}:F{i + 26}"].CellStyle.Font.Size = 18;
+                    worksheet.Range[$"E{i + 26}"].Value2 = p.NetPay;
+                    worksheet.Range[$"E{i + 26}:F{i + 26}"].Merge();
+                    worksheet.Range[$"D{i + 26}:F{i + 26}"].BorderAround(ExcelLineStyle.Thin);
+                    worksheet.Range[$"E{i + 26}"].HorizontalAlignment = ExcelHAlign.HAlignRight;
 
                     worksheet.Range[$"A{i + 1}:F{i + 22}"].RowHeight = 15;
                     worksheet.Range[$"A{i + 22}"].RowHeight = 25;
@@ -284,7 +300,7 @@ namespace NddcPayroll.Web.Pages.Reports
 
 
 
-                    i = i + 24;
+                    i = i + 28;
                 }
 
 

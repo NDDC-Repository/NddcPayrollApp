@@ -57,6 +57,12 @@ namespace NddcPayrollLibrary.Model.Report
         public decimal VehicleMaintenanceAllowance { get; set; }
         [DisplayNameAttribute("ED-Hazard Allow")]
         public decimal HazardAllowance { get; set; }
+        [DisplayNameAttribute("ED-Acting Allow")]
+        public decimal ActingAllow { get; set; }
+        [DisplayNameAttribute("ED-Shift Allow")]
+        public decimal ShiftAllow { get; set; }
+        [DisplayNameAttribute("ED-Uniform Allow")]
+        public decimal UniformAllow { get; set; }
         [DisplayNameAttribute("ED-Entertainment")]
         public decimal EntertainmentAllow { get; set; }
         [DisplayNameAttribute("ED-Newspaper")]

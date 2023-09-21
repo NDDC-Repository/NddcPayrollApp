@@ -99,9 +99,9 @@ namespace NddcPayroll.Web.Pages.Reports
                 //worksheet.Range["D1"].CellStyle.VerticalAlignment = ExcelVAlign.VAlignTop;
 
                 worksheet.ImportData(PayrollListings, 6, 1, true);
-                worksheet.Range["A6:AI6"].AutofitColumns();
-                worksheet.Range["A6:AI6"].CellStyle.Font.Bold = true;
-                worksheet.Range["A6:AI6"].CellStyle.Font.Size = 11;
+                worksheet.Range["A6:AM6"].AutofitColumns();
+                worksheet.Range["A6:AM6"].CellStyle.Font.Bold = true;
+                worksheet.Range["A6:AM6"].CellStyle.Font.Size = 11;
 
                 int mCount = PayrollListings.Count();
 
@@ -192,6 +192,18 @@ namespace NddcPayroll.Web.Pages.Reports
                 worksheet.Range[$"AI{mCount + 8}"].Formula = "=SUM(AI7:AI" + (mCount + 7) + ")";
                 worksheet.Range[$"AI{mCount + 8}"].CellStyle.Font.Bold = true;
 
+                worksheet.Range[$"AJ{mCount + 8}"].Formula = "=SUM(AJ7:AJ" + (mCount + 7) + ")";
+                worksheet.Range[$"AJ{mCount + 8}"].CellStyle.Font.Bold = true;
+
+                worksheet.Range[$"AK{mCount + 8}"].Formula = "=SUM(AK7:AK" + (mCount + 7) + ")";
+                worksheet.Range[$"AK{mCount + 8}"].CellStyle.Font.Bold = true;
+
+                worksheet.Range[$"AL{mCount + 8}"].Formula = "=SUM(AL7:AL" + (mCount + 7) + ")";
+                worksheet.Range[$"AL{mCount + 8}"].CellStyle.Font.Bold = true;
+
+                worksheet.Range[$"AM{mCount + 8}"].Formula = "=SUM(AM7:AM" + (mCount + 7) + ")";
+                worksheet.Range[$"AM{mCount + 8}"].CellStyle.Font.Bold = true;
+
                 worksheet.Columns[7].NumberFormat = "#,###.##";
                 worksheet.Columns[8].NumberFormat = "#,###.##";
                 worksheet.Columns[9].NumberFormat = "#,###.##";
@@ -220,6 +232,10 @@ namespace NddcPayroll.Web.Pages.Reports
                 worksheet.Columns[32].NumberFormat = "#,###.##";
                 worksheet.Columns[33].NumberFormat = "#,###.##";
                 worksheet.Columns[34].NumberFormat = "#,###.##";
+                worksheet.Columns[35].NumberFormat = "#,###.##";
+                worksheet.Columns[36].NumberFormat = "#,###.##";
+                worksheet.Columns[37].NumberFormat = "#,###.##";
+                worksheet.Columns[38].NumberFormat = "#,###.##";
 
                 worksheet.Range["A7"].FreezePanes();
 
