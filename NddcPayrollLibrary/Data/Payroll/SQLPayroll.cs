@@ -142,6 +142,33 @@ namespace NddcPayrollLibrary.Data.Payroll
             }
             return db.LoadData<int, dynamic>("Select ActingAllow From Employees Where Id = @Id", new { Id = EmpId }, connectionStringName, false).FirstOrDefault();
         }
+        private decimal GetShiftAllowance(int EmpId)
+        {
+            string check = db.LoadData<string, dynamic>("Select ShiftAllow From Employees Where Id = @Id", new { Id = EmpId }, connectionStringName, false).FirstOrDefault();
+            if (check == null)
+            {
+                return 0.00M;
+            }
+            return db.LoadData<int, dynamic>("Select ShiftAllow From Employees Where Id = @Id", new { Id = EmpId }, connectionStringName, false).FirstOrDefault();
+        }
+        private decimal GetUniformAllowance(int EmpId)
+        {
+            string check = db.LoadData<string, dynamic>("Select UniformAllow From Employees Where Id = @Id", new { Id = EmpId }, connectionStringName, false).FirstOrDefault();
+            if (check == null)
+            {
+                return 0.00M;
+            }
+            return db.LoadData<int, dynamic>("Select UniformAllow From Employees Where Id = @Id", new { Id = EmpId }, connectionStringName, false).FirstOrDefault();
+        }
+        private decimal GetSecretarialAllow(int EmpId)
+        {
+            string check = db.LoadData<string, dynamic>("Select SecretarialAllow From Employees Where Id = @Id", new { Id = EmpId }, connectionStringName, false).FirstOrDefault();
+            if (check == null)
+            {
+                return 0.00M;
+            }
+            return db.LoadData<int, dynamic>("Select SecretarialAllow From Employees Where Id = @Id", new { Id = EmpId }, connectionStringName, false).FirstOrDefault();
+        }
         public decimal GetBasicSalary(int EmpId)
         {
             string check = string.Empty;
@@ -243,8 +270,11 @@ namespace NddcPayrollLibrary.Data.Payroll
                 linkedBenefits = GetLinkedBenefitsAmount(empId);
                 decimal subsidyAmount = GetSubsidyAmount(empId);
                 decimal secretarialAllow = allowDb.GetSecretarialAllowance(empId);
+                decimal shiftAllowanc = GetShiftAllowance(empId);
+                decimal uniformAllowance = GetUniformAllowance(empId);
+                decimal actingAllowance = GetActingAllowance(empId);
 
-                decimal totalBenefits = percentageBenefits + linkedBenefits + subsidyAmount + secretarialAllow;
+                decimal totalBenefits = percentageBenefits + linkedBenefits + subsidyAmount + secretarialAllow + shiftAllowanc + uniformAllowance + actingAllowance;
                 return totalBenefits;
             }
             else if (staffCategory == "CONT")
@@ -288,9 +318,12 @@ namespace NddcPayrollLibrary.Data.Payroll
             decimal arreas = GetArreas(empId);
             decimal leaveAllow = GetLeaveAllowance(empId);
             decimal actingAllow = GetActingAllowance(empId);
+            decimal uniformAllow = GetUniformAllowance(empId);
+            decimal shiftAllow = GetShiftAllowance(empId);
+            decimal secretarialAllow = GetSecretarialAllow(empId);
             decimal basicSalary = GetBasicSalary(empId);
             decimal benefitsAmount = GetBenefits(empId);
-            decimal monthlyGross = (basicSalary + benefitsAmount + arreas + leaveAllow);
+            decimal monthlyGross = (basicSalary + benefitsAmount + arreas + leaveAllow + actingAllow + uniformAllow + shiftAllow + secretarialAllow);
             return monthlyGross;
         }
 
