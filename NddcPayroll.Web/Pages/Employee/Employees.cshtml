@@ -258,9 +258,10 @@
                                                             <td>
                                                                 @if (User.IsInRole("Admin"))
                                                                 {
-                                                                    <a asp-page="ArchiveEmployee" asp-route-EmpID="@item.Id" class="btn btn-sm btn-danger">Archive</a>
+                                                                    @* <a asp-page="ArchiveEmployee" asp-route-EmpID="@item.Id" class="btn btn-sm btn-danger">Archive</a> *@
+                                                                <a asp-page="UnArchiveEmployee" asp-route-EmpID="@item.Id" class="btn btn-sm btn-success">Un-Archive</a>
                                                                 }
-                                                                @*<a asp-page="UnArchiveEmployee" asp-route-EmpID="@item.Id" class="btn btn-sm btn-success">Un-Archive</a>*@
+                                                               
                                                             </td>
                                                         }
 

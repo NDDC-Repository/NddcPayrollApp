@@ -40,6 +40,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
         {
             int gradeLevelId = GetGradeLevelId(empId);
             return db.LoadData<int, dynamic>("Select MonthlyGross From GradeLevel Where Id = @GradeLevelId", new { GradeLevelId = gradeLevelId }, connectionStringName, false).First();
+            //return payDb.GetMonthlyGross(empId);
         }
         public decimal GetBasicSalary(int empId)
         {

@@ -392,19 +392,22 @@ else if (ShowGrid == true)
     public double OpsTime { get; set; }
     public bool ShowAnim { get; set; }
     public bool ShowGrid { get; set; }
-   
+
+    bool initial = false;
     protected override async Task OnInitializedAsync()
     {
         ShowAnim = true;
         var watch = System.Diagnostics.Stopwatch.StartNew();
         Message = "Loading Report Please Wait ........";
         PayrollList = await Task.Run(() => db.GetPayrollListReport2Async());
+        //PayrollList = await db.GetPayrollListReport2Async();
 
         //Message = "";
         watch.Stop();
         OpsTime = watch.ElapsedMilliseconds / 1000;
         ShowAnim = false;
         ShowGrid = true;
+        initial = true;
     }
 
     private async Task ExcelExport()
