@@ -50,9 +50,9 @@
 
 @if (ShowAnim == true)
 {
-    @*<div class="spinner-grow text-primary" role="status">
+    <div class="spinner-grow text-primary" role="status">
         <span>Loading Report Please Wait...</span>
-    </div>*@
+    </div>
     @* <div class="text-center mb-3">
         <a href="javascript:void(0);" class="text-success"><i class="mdi mdi-loading mdi-spin fs-40 align-middle me-2"></i> Uploading Cooperative Data and Recalculating Net Pay .... </a>
     </div> *@
@@ -82,7 +82,7 @@
 
     private void OnChange(UploadChangeEventArgs args)
     {
-        ShowAnim = true;
+
 
         foreach (var file in args.Files)
         {
@@ -139,7 +139,7 @@
 
         }
 
-        ShowAnim = false;
+
     }
 
     string[] Columns;
@@ -163,6 +163,8 @@
 
     private void UpdateCooperative(IWorksheet ws, DataTable input)
     {
+        ShowAnim = true;
+
         dedDb.ClearCoopValues();
         string empCode;
         double amount;
@@ -178,6 +180,8 @@
             //listProducts.Add(p);
             r = r + 1;
         }
+
+        ShowAnim = false;
     }
     private void UpdateLeaveAllowance(IWorksheet ws, DataTable input)
     {

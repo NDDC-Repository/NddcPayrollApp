@@ -53,6 +53,7 @@ builder.Services.AddRazorPages(options => {
     options.Conventions.AllowAnonymousToPage("/Index");
     options.Conventions.AllowAnonymousToPage("/Reports/PayrollSummaryByDept");
     options.Conventions.AllowAnonymousToPage("/PdfPages/EmployeePayslip/");
+    options.Conventions.AllowAnonymousToPage("/Identity/VerifyStaff/");
 })
 .AddMvcOptions(options => { })
 .AddMicrosoftIdentityUI();

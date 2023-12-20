@@ -1,0 +1,35 @@
+﻿@page "{EmpId:int?}"
+@model NddcPayroll.Web.Pages.Identity.VerifyStaffModel
+@{
+    Layout = "_BlankLayout";
+}
+
+<div class="d-flex justify-content-center align-items-center" style="height: 80vh;">
+    <div class="card" style="width: 24rem;">
+        <div class="card-body">
+            <h3 class="card-title text-center">Staff Details</h3>
+            @if (!string.IsNullOrEmpty(Model.Employee.FirstName))
+            {
+                <div class="alert alert-success">Verified</div>
+            }
+            <form method="post">
+                <div class="form-group mt-3">
+                    <label for="name">First Name</label>
+                    <input type="text" readonly class="form-control" asp-for=@Model.Employee.FirstName name="name" id="name" required />
+                </div>
+                <div class="form-group mt-3">
+                    <label for="name">Last Name</label>
+                    <input type="text" readonly class="form-control" asp-for=@Model.Employee.LastName name="name" id="name" required />
+                </div>
+                <div class="form-group mt-3">
+                    <label for="name">Staff Category</label>
+                    <input type="text" readonly class="form-control" asp-for=@Model.Employee.Category name="name" id="name" required />
+                </div>
+                @* <div class="d-grid gap-2 mt-3">
+                    <button type="submit" class="btn btn-primary">Pay Now</button>
+                </div> *@
+
+            </form>
+        </div>
+    </div>
+</div>
