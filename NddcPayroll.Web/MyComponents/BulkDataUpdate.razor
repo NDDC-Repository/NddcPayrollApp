@@ -35,6 +35,7 @@
                     <option value="DateOfBirth">Upload Date of Birth</option>
                     <option value="DateEngaged">Upload Date Engaged</option> *@
                     <option value="PensionNumber">Upload Pension Fund Number</option>
+                    <option value="Insurance">Upload Insurance Premium</option>
                 </select>
                 <br />
                 <SfUploader AutoUpload="false">
@@ -136,6 +137,10 @@
             {
                 UpdatepensionNo(worksheet, table);
             }
+            if (UploadValue == "Insurance")
+            {
+                UpdateInsurance(worksheet, table);
+            }
 
         }
 
@@ -176,6 +181,28 @@
             empCode = ws[$"A{r}"].Value;
             amount = ws[$"B{r}"].Number;
             empDb.UpdateCooporative(empCode, amount);
+            dedDb.RecalculateManualForDeductions(empCode);
+            //listProducts.Add(p);
+            r = r + 1;
+        }
+
+        ShowAnim = false;
+    }
+    private void UpdateInsurance(IWorksheet ws, DataTable input)
+    {
+        ShowAnim = true;
+
+        dedDb.ClearInsurance();
+        string empCode;
+        double amount;
+        int r = 2;
+        foreach (DataRow row in input.Rows)
+        {
+
+            //Product p = new Product();
+            empCode = ws[$"A{r}"].Value;
+            amount = ws[$"B{r}"].Number;
+            empDb.UpdateInsurance(empCode, amount);
             dedDb.RecalculateManualForDeductions(empCode);
             //listProducts.Add(p);
             r = r + 1;

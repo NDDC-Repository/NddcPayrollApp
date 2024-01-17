@@ -22,13 +22,11 @@ namespace NddcPayrollLibrary.Data.EmployeeData
     public class SQLEmployee : IEmployeeData
     {
         private readonly ISqlDataAccess db;
-        
         private const string connectionStringName = "SqlDb";
 
         public SQLEmployee(ISqlDataAccess db)
         {
             this.db = db;
-          
         }
 
         public bool EmployeeExists(string EmployeeCode)
@@ -279,7 +277,9 @@ namespace NddcPayrollLibrary.Data.EmployeeData
 
         }
 
-        public void UpdateInsurance(string EmployeeCode, string Amount)
+        
+
+        public void UpdateInsurance(string EmployeeCode, double Amount)
         {
 
             string SQL = "update Employees Set Insurance = @Insurance where EmployeeCode = @EmployeeCode";

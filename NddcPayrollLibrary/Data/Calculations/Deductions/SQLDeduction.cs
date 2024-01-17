@@ -615,6 +615,20 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
             }
             
         }
+        public void ClearInsurance()
+        {
+
+            List<EmployeeModel> Employees = new List<EmployeeModel>();
+
+            Employees = db.LoadData<EmployeeModel, dynamic>("Select Id, EmployeeCode From Employees Where Insurance > 0", new { }, connectionStringName, false);
+
+            foreach (var item in Employees)
+            {
+                db.SaveData("Update Employees Set Insurance = 0.00 Where EmployeeCode = @EmployeeCode", new { item.EmployeeCode }, connectionStringName, false);
+
+                RecalculateManualForDeductions(item.EmployeeCode);
+            }
+        }
 
         public void RecalculateManualForDeductions(string empCode)
         {

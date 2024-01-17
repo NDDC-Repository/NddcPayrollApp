@@ -67,14 +67,14 @@ else
     private void UpdateDb(IWorksheet ws, DataTable input)
     {
         string empCode;
-        string amount;
+        double amount;
         int r = 1;
         foreach (DataRow row in input.Rows)
         {
 
             //Product p = new Product();
             empCode = ws[$"A{r}"].Text;
-            amount = ws[$"B{r}"].Text;
+            amount = ws[$"B{r}"].Number;
             empDb.UpdateInsurance(empCode, amount);
             //listProducts.Add(p);
             r = r + 1;
