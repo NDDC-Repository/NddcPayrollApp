@@ -97,6 +97,12 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
             return db.LoadData<decimal, dynamic>("Select TaxAdjustment From Employees Where Id = @Id", new { Id = empId }, connectionStringName, false).First();
 
         }
+        public decimal GetLoanPayment(int empId)
+        {
+
+            return db.LoadData<decimal, dynamic>("Select LoanPayment From Employees Where Id = @Id", new { Id = empId }, connectionStringName, false).First();
+
+        }
         public decimal GetLeaveAllowance(int empId)
         {
 
@@ -597,7 +603,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
 
         public decimal GetTotalDeductions(int empId)
         {
-            decimal totalDeductions = GetPAYEAmount(empId) + GetNHFAmount(empId) + GetPensionAmount(empId) + GetJSA(empId) + GetSSA(empId) + GetCooperative(empId) + GetVoluntaryPension(empId);
+            decimal totalDeductions = GetPAYEAmount(empId) + GetNHFAmount(empId) + GetPensionAmount(empId) + GetJSA(empId) + GetSSA(empId) + GetCooperative(empId) + GetVoluntaryPension(empId) + GetLoanPayment(empId);
             return totalDeductions;
         }
 
@@ -640,7 +646,7 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
             decimal tax = GetPAYEAmount(empId);
             db.SaveData("Update Employees Set Tax = @Tax Where EmployeeCode = @EmployeeCode", new { Tax = tax, EmployeeCode = empCode }, connectionStringName, false);
 
-            decimal totalDeductions = db.LoadData<decimal, dynamic>("select sum(Tax + VoluntaryPension + CooperativeDed + Pension + JSA + SSA + NHF) from Employees where EmployeeCode = @EmployeeCode",
+            decimal totalDeductions = db.LoadData<decimal, dynamic>("select sum(Tax + VoluntaryPension + CooperativeDed + Pension + JSA + SSA + NHF + LoanPayment) from Employees where EmployeeCode = @EmployeeCode",
                 new { EmployeeCode = empCode }, connectionStringName, false).FirstOrDefault();
 
             decimal netPay = totalEarnings - totalDeductions;

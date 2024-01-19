@@ -18,5 +18,6 @@
         void RecalculateManualForDeductions(string empCode);
         decimal GetPAYEAmountManual(decimal totalEarnings, decimal insurance, decimal pension, decimal nhf, int empId, decimal taxAdjustment);
         void ClearInsurance();
+        decimal GetLoanPayment(int empId);
     }
 }

@@ -277,6 +277,9 @@ namespace NddcPayroll.Web.Pages.Reports
                     worksheet.Range[$"D{i + 11}"].Text = "Voluntary Pension";
                     worksheet.Range[$"E{i + 11}"].Value2 = p.VoluntaryPension;
 
+                    worksheet.Range[$"D{i + 12}"].Text = "Loan Payment";
+                    worksheet.Range[$"E{i + 12}"].Value2 = p.LoanPayment;
+
                     worksheet.Range[$"D{i + 25}"].Text = "Total Deductions";
                     worksheet.Range[$"E{i + 25}"].Value2 = p.TotalDeductions;
                     worksheet.Range[$"D{i + 25}:E{i + 25}"].CellStyle.Font.Bold = true;

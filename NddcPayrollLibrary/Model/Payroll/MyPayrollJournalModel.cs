@@ -102,5 +102,6 @@ namespace NddcPayrollLibrary.Model.Payroll
         public string GradeLevel { get; set; }
         public string DepartmentName { get; set; }
         public string CategoryName { get; set; }
+        public decimal LoanPayment { get; set; }
     }
 }

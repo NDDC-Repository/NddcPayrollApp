@@ -50,5 +50,6 @@ namespace NddcPayrollLibrary.Model.Employee
         public decimal TaxAdjustment { get; set; }
         public decimal EntertainmentAllow { get; set; }
         public decimal NewspaperAllow { get; set; }
+        public decimal LoanPayment { get; set; }
     }
 }

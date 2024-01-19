@@ -182,6 +182,8 @@
             amount = ws[$"B{r}"].Number;
             empDb.UpdateCooporative(empCode, amount);
             dedDb.RecalculateManualForDeductions(empCode);
+            
+            
             //listProducts.Add(p);
             r = r + 1;
         }
@@ -202,8 +204,10 @@
             //Product p = new Product();
             empCode = ws[$"A{r}"].Value;
             amount = ws[$"B{r}"].Number;
+            
             empDb.UpdateInsurance(empCode, amount);
             dedDb.RecalculateManualForDeductions(empCode);
+           
             //listProducts.Add(p);
             r = r + 1;
         }

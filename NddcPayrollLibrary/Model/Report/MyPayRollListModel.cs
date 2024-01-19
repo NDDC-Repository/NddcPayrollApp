@@ -83,6 +83,8 @@ namespace NddcPayrollLibrary.Model.Report
         public decimal JSADeduction { get; set; }
         [DisplayNameAttribute("DD-NDDC AUPTRE SSA")]
         public decimal SSADeduction { get; set; }
+        [DisplayNameAttribute("Loan Payment")]
+        public decimal LoanPayment { get; set; }
         [DisplayNameAttribute("Total Earnings")]
         public decimal TotalEarnings { get; set; }
         [DisplayNameAttribute("Total Deductions")]
@@ -95,11 +97,9 @@ namespace NddcPayrollLibrary.Model.Report
         public string AccountNumber { get; set; }
         [Bindable(false)]
         public string BankName { get; set; }
-        
-       
-      
-        
-       
+
+
+
 
     }
 }

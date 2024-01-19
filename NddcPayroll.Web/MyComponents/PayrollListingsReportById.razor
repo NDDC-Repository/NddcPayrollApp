@@ -287,6 +287,16 @@ else if (ShowGrid == true)
                             }
                         </FooterTemplate>
                     </GridAggregateColumn>
+                     <GridAggregateColumn Field=@nameof(MyPayRollListModel.LoanPayment) Type="AggregateType.Sum" Format="N">
+                        <FooterTemplate>
+                            @{
+                                var aggregate = (context as AggregateTemplateContext);
+                                <div>
+                                    <p>@aggregate.Sum</p>
+                                </div>
+                            }
+                        </FooterTemplate>
+                    </GridAggregateColumn>
                     <GridAggregateColumn Field=@nameof(MyPayRollListModel.TotalEarnings) Type="AggregateType.Sum" Format="N">
                         <FooterTemplate>
                             @{
@@ -358,6 +368,7 @@ else if (ShowGrid == true)
             <GridColumn HeaderText="JSA" Width="120" Format="N" Field="@nameof(MyPayRollListModel.JSADeduction)"></GridColumn>
             <GridColumn HeaderText="Cooperative" Width="120" Format="N" Field="@nameof(MyPayRollListModel.CooperativeDed)"></GridColumn>
             <GridColumn HeaderText="SSA" Width="120" Format="N" Field="@nameof(MyPayRollListModel.SSADeduction)"></GridColumn>
+            <GridColumn HeaderText="Loan Payment" Width="120" Format="N" Field="@nameof(MyPayRollListModel.LoanPayment)"></GridColumn>
             <GridColumn HeaderText="Total Earnings" Format="N" Width="120" Field="@nameof(MyPayRollListModel.TotalEarnings)"></GridColumn>
             <GridColumn HeaderText="Total Deductions" Format="N" Width="120" Field="@nameof(MyPayRollListModel.TotalDeductions)"></GridColumn>
             <GridColumn HeaderText="Net Pay" Width="120" Format="N" Field="@nameof(MyPayRollListModel.NetPay)"></GridColumn>

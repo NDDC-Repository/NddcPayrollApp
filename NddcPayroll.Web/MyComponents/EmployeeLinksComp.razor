@@ -339,7 +339,13 @@ else
             </div>
     </div>
     <div class="row">
-       
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label>Loan Payment</label>
+                    <input type="text" class="form-control" @bind="@Employee.LoanPayment" id="compnayNameinput">
+
+                </div>
+            </div>
             <div class="col-md-4">
                 <div class="mb-3">
                     <label>Total Deductions</label>
@@ -352,7 +358,7 @@ else
   <div class="col-md-12 mt-4"></div>
     <hr />
     <div class="col-md-12 mt-4"></div>
-
+    
         <div class="row">
            <div class="col-md-4">
                 <div class="mb-3">
@@ -437,7 +443,8 @@ else
         Employee.SSA = dedDb.GetSSA(MyEmpId);
         Employee.NHF = dedDb.GetNHFAmount(MyEmpId);
         Employee.EmployerPension = dedDb.GetEmployerPensionAmount(MyEmpId);
-        
+        Employee.LoanPayment = dedDb.GetLoanPayment(MyEmpId);
+
         SetTotalEarnings();
         SetTotalDeductions();
         SetNetPay();
@@ -465,7 +472,7 @@ else
 
     private decimal ComputeDeductions()
     {
-        return Employee.Tax + Employee.VoluntaryPension + Employee.CooperativeDed + Employee.Pension + Employee.JSA + Employee.SSA + Employee.NHF;
+        return Employee.Tax + Employee.VoluntaryPension + Employee.CooperativeDed + Employee.Pension + Employee.JSA + Employee.SSA + Employee.NHF + Employee.LoanPayment;
     }
 
     private void SetTotalEarnings()
