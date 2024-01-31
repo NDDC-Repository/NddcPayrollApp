@@ -212,7 +212,14 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
 
             return pensionAmount + NHFAmount + insurance;
         }
-        public decimal ApplyCompanyReliefManual(decimal myInsurance, decimal pension, decimal nhf)
+		public decimal ApplyCompanyReliefContractStaff(int empId)
+		{
+			
+			decimal insurance = empDb.GetEmployeeInsurance(empId) * 12M;
+
+			return insurance;
+		}
+		public decimal ApplyCompanyReliefManual(decimal myInsurance, decimal pension, decimal nhf)
         {
             //decimal totalEarnings = payDb.GetMonthlyGross(empId) * 12;
             //decimal pensionAmount = ((decimal)8 / (decimal)100) * totalEarnings;
@@ -224,7 +231,13 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
 
             return pensionAmount + NHFAmount + insurance;
         }
-        private decimal GetCRATotal(int empId)
+		public decimal ApplyCompanyReliefManualContractStaff(decimal myInsurance)
+		{
+			decimal insurance = myInsurance * 12M;
+
+			return insurance;
+		}
+		private decimal GetCRATotal(int empId)
         {
             decimal relief = ApplyCompanyRelief(empId);
             decimal originalEarnings = payDb.GetMonthlyGross(empId) * 12M;
@@ -333,9 +346,9 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
                 decimal OriginalTotalEarnings = payDb.GetMonthlyGross(empId) * (decimal)12;
                 //decimal craTotalEarnings = GetCRATotal(empId);
                 decimal stateReliefAmount = ApplyStateRelief(OriginalTotalEarnings);
-                //decimal companyReliefAmount = ApplyCompanyRelief(empId);
-                //decimal totalRelief = stateReliefAmount + companyReliefAmount;
-                decimal taxabaleIncome = OriginalTotalEarnings - stateReliefAmount;
+                decimal companyReliefAmount = ApplyCompanyReliefContractStaff(empId);
+                decimal totalRelief = stateReliefAmount + companyReliefAmount;
+                decimal taxabaleIncome = OriginalTotalEarnings - totalRelief;
 
                 decimal levelTax = taxabaleIncome;
                 decimal taxValue = 0.00M;
@@ -516,9 +529,9 @@ namespace NddcPayrollLibrary.Data.Calculations.Deductions
                 decimal OriginalTotalEarnings = totalEarnings * (decimal)12;
                 //decimal craTotalEarnings = GetCRATotal(empId);
                 decimal stateReliefAmount = ApplyStateRelief(OriginalTotalEarnings);
-                //decimal companyReliefAmount = ApplyCompanyRelief(empId);
-                //decimal totalRelief = stateReliefAmount + companyReliefAmount;
-                decimal taxabaleIncome = OriginalTotalEarnings - stateReliefAmount;
+                decimal companyReliefAmount = ApplyCompanyReliefManualContractStaff(insurance);
+                decimal totalRelief = stateReliefAmount + companyReliefAmount;
+                decimal taxabaleIncome = OriginalTotalEarnings - totalRelief;
 
                 decimal levelTax = taxabaleIncome;
                 decimal taxValue = 0.00M;

@@ -84,7 +84,7 @@ namespace NddcPayroll.Web.Pages.Reports
 
                 worksheet.IsGridLinesVisible = false;
                 worksheet.Workbook.StandardFont = "Courier New";
-                worksheet.Workbook.StandardFontSize = 10;
+                worksheet.Workbook.StandardFontSize = 12;
                 worksheet.Zoom = 100;
 
                 PaySlips = await Task.Run(() => empDb.GetEmployeePaySlipByDept(DepartmentId, PayrollJournalTitleId));
@@ -105,7 +105,7 @@ namespace NddcPayroll.Web.Pages.Reports
                     worksheet.Range[$"E{i}"].ColumnWidth = 12;
                     worksheet.Range[$"E{i}"].CellStyle.Font.Bold = true;
                     worksheet.Range[$"F{i}"].Text = p.DateOfPayment;
-                    worksheet.Range[$"F{i}"].ColumnWidth = 10;
+                    worksheet.Range[$"F{i}"].ColumnWidth = 13;
 
                     worksheet.Range[$"A{i + 1}"].Text = "Emp Code";
                     worksheet.Range[$"A{i + 1}"].CellStyle.Font.Bold = true;
@@ -228,20 +228,24 @@ namespace NddcPayroll.Web.Pages.Reports
                     worksheet.Range[$"A{i + 24}:B{i + 24}"].Merge();
                     worksheet.Range[$"C{i + 24}"].Value2 = p.NewspaperAllow;
 
-                    worksheet.Range[$"A{i + 25}"].Text = "Total Earnings";
-                    worksheet.Range[$"A{i + 25}"].CellStyle.Font.Bold = true;
-                    worksheet.Range[$"A{i + 25}:B{i + 25}"].Merge();
-                    worksheet.Range[$"C{i + 25}"].Value2 = p.TotalEarnings;
-                    worksheet.Range[$"C{i + 25}"].CellStyle.Font.Bold = true;
+					worksheet.Range[$"A{i + 25}"].Text = "Leave Allowance";
+					worksheet.Range[$"A{i + 25}:B{i + 25}"].Merge();
+					worksheet.Range[$"C{i + 25}"].Value2 = p.LeaveAllow;
 
-                    worksheet.Range[$"A{i + 4}:C{i + 25}"].BorderAround(ExcelLineStyle.Thin);
+					worksheet.Range[$"A{i + 26}"].Text = "Total Earnings";
+                    worksheet.Range[$"A{i + 26}"].CellStyle.Font.Bold = true;
+                    worksheet.Range[$"A{i + 26}:B{i + 26}"].Merge();
+                    worksheet.Range[$"C{i + 26}"].Value2 = p.TotalEarnings;
+                    worksheet.Range[$"C{i + 26}"].CellStyle.Font.Bold = true;
+
+                    worksheet.Range[$"A{i + 4}:C{i + 26}"].BorderAround(ExcelLineStyle.Thin);
 
                     FileStream imageStream = new FileStream("wwwroot/images/dynamicsimage.png", FileMode.Open, FileAccess.Read);
-                    IPictureShape shape = worksheet.Pictures.AddPicture(i + 26, 1, imageStream, 20, 20);
-                    worksheet.Range[$"A{i + 26}"].RowHeight = 25;
-                    worksheet.Range[$"A{i + 26}:C{i + 26}"].Merge();
-                    worksheet.Range[$"A{i + 26}:C{i + 26}"].BorderAround(ExcelLineStyle.Thin);
-                    worksheet.Range[$"A{i + 26}"].VerticalAlignment = ExcelVAlign.VAlignCenter;
+                    IPictureShape shape = worksheet.Pictures.AddPicture(i + 27, 1, imageStream, 20, 20);
+                    worksheet.Range[$"A{i + 27}"].RowHeight = 25;
+                    worksheet.Range[$"A{i + 27}:C{i + 27}"].Merge();
+                    worksheet.Range[$"A{i + 27}:C{i + 27}"].BorderAround(ExcelLineStyle.Thin);
+                    worksheet.Range[$"A{i + 27}"].VerticalAlignment = ExcelVAlign.VAlignCenter;
 
                     //Deductions
                     worksheet.Range[$"D{i + 4}"].Text = "DEDUCTIONS";
@@ -280,30 +284,30 @@ namespace NddcPayroll.Web.Pages.Reports
                     worksheet.Range[$"D{i + 12}"].Text = "Loan Payment";
                     worksheet.Range[$"E{i + 12}"].Value2 = p.LoanPayment;
 
-                    worksheet.Range[$"D{i + 25}"].Text = "Total Deductions";
-                    worksheet.Range[$"E{i + 25}"].Value2 = p.TotalDeductions;
-                    worksheet.Range[$"D{i + 25}:E{i + 25}"].CellStyle.Font.Bold = true;
+                    worksheet.Range[$"D{i + 26}"].Text = "Total Deductions";
+                    worksheet.Range[$"E{i + 26}"].Value2 = p.TotalDeductions;
+                    worksheet.Range[$"D{i + 26}:E{i + 26}"].CellStyle.Font.Bold = true;
 
-                    worksheet.Range[$"D{i + 4}:F{i + 26}"].BorderAround(ExcelLineStyle.Thin);
+                    worksheet.Range[$"D{i + 4}:F{i + 27}"].BorderAround(ExcelLineStyle.Thin);
 
-                    worksheet.Range[$"D{i + 26}"].Text = "NET PAY";
-                    worksheet.Range[$"D{i + 26}:F{i + 26}"].CellStyle.Font.Bold = true;
-                    worksheet.Range[$"D{i + 26}:F{i + 26}"].CellStyle.Font.Size = 18;
-                    worksheet.Range[$"E{i + 26}"].Value2 = p.NetPay;
-                    worksheet.Range[$"E{i + 26}:F{i + 26}"].Merge();
-                    worksheet.Range[$"D{i + 26}:F{i + 26}"].BorderAround(ExcelLineStyle.Thin);
-                    worksheet.Range[$"E{i + 26}"].HorizontalAlignment = ExcelHAlign.HAlignRight;
+                    worksheet.Range[$"D{i + 27}"].Text = "NET PAY";
+                    worksheet.Range[$"D{i + 27}:F{i + 27}"].CellStyle.Font.Bold = true;
+                    worksheet.Range[$"D{i + 27}:F{i + 27}"].CellStyle.Font.Size = 18;
+                    worksheet.Range[$"E{i + 27}"].Value2 = p.NetPay;
+                    worksheet.Range[$"E{i + 27}:F{i + 27}"].Merge();
+                    worksheet.Range[$"D{i + 27}:F{i + 27}"].BorderAround(ExcelLineStyle.Thin);
+                    worksheet.Range[$"E{i + 27}"].HorizontalAlignment = ExcelHAlign.HAlignRight;
 
                     worksheet.Range[$"A{i + 1}:F{i + 22}"].RowHeight = 15;
-                    worksheet.Range[$"A{i + 22}"].RowHeight = 25;
-                    worksheet.Range[$"C{i + 6}:C{i + 22}"].NumberFormat = "##,##.##";
-                    worksheet.Range[$"E{i + 6}:E{i + 22}"].NumberFormat = "##,##.##";
-                    worksheet.Range[$"E{i + 22}"].NumberFormat = "##,##.##";
-                    worksheet.Range[$"C{i + 6}:C{i + 22}"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
+                    worksheet.Range[$"A{i + 26}"].RowHeight = 25;
+                    worksheet.Range[$"C{i + 6}:C{i + 26}"].NumberFormat = "##,##.##";
+                    worksheet.Range[$"E{i + 6}:E{i + 27}"].NumberFormat = "##,##.##";
+                    worksheet.Range[$"E{i + 26}"].NumberFormat = "##,##.##";
+                    worksheet.Range[$"C{i + 6}:C{i + 26}"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
 
 
 
-                    i = i + 28;
+                    i = i + 30;
                 }
 
 
