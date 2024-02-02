@@ -126,9 +126,13 @@
                                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                                                         <li><a asp-page="EmployeeDetails" asp-route-EmpID="@item.Id" class="dropdown-item">Details</a></li>
                                                                         <li>
-                                                                            @if (item.ExitCondition == "End of Contract" || item.ExitCondition == "End of Appointment" || item.ExitCondition == "Retirement" || item.ExitCondition == "Deceased")
+                                                                    @if (item.ExitCondition == "End of Contract" || item.ExitCondition == "End of Appointment" || item.ExitCondition == "Retirement" || item.ExitCondition == "Deceased")
+                                                                    {
+                                                                            <label class="dropdown-item">Reason: @item.ExitCondition</label>  <br />
+                                                                            if (User.IsInRole("Admin"))
                                                                             {
-                                                                        @item.ExitCondition
+                                                                                <a asp-page="UnArchiveEmployee" asp-route-EmpID="@item.Id" class="dropdown-item">Un-Archive</a>
+                                                                            }
                                                                     }
                                                                     else
                                                                     {
@@ -138,9 +142,9 @@
                                                                         }
                                                                         
                                                                
-                                                                            }
+                                                                    }
                                                                         </li>
-                                                                        <li><a class="dropdown-item" href="#"> Archived</a></li>
+                                                                        <li><label class="dropdown-item">User Was Archived</label></li>
                                                                     </ul>
                                                                 </div>
                                                                 
